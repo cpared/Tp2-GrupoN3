@@ -1,6 +1,6 @@
 TP2-GrupoN3
 
-#Entrega 1 (Jueves 7 de Nobiembre)
+Entrega 1 (Jueves 7 de Nobiembre)
 
 ###	Pruebas entidades:
 -	Una Unidad movible se puede mover en todas las direcciones.
