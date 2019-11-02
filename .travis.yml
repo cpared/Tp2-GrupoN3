@@ -5,10 +5,12 @@ jdk:
 compiler:
   - 9
 
-branches:
-  only:
-  - desarrollo
-  - master
-
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn test
+
+branches:
+  only:
+  - test
+  - master
+
+
