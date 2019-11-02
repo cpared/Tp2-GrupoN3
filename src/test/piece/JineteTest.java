@@ -4,4 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JineteTest {
     @Test
+    void testIsTrue(){
+        assertTrue(true);
+    }
 }
