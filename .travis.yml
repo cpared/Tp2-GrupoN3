@@ -1,11 +1,6 @@
 language: java
-jdk:
-  - oraclejdk9
 
-compiler:
-  - 9
-
-script: mvn test
+script: mvn test -B
 
 branches:
   only:
