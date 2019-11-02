@@ -1,10 +1,14 @@
 language: java
-jvm:
-  - 9
+jdk:
+  - oraclejdk9
+
 compiler:
   - 9
-  -
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: mvn test -B
+
 branches:
-  - test
+  only:
+  - desarrollo
+  - master
+
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn test
