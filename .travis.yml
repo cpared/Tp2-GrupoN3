@@ -1,4 +1,4 @@
-lenguage: java
+language: java
 jvm:
   - 9
 compiler:
