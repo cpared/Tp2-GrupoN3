@@ -1,5 +1,8 @@
 language: java
 
+compiler:
+  -javac
+
 script: mvn test -B
 
 branches:
