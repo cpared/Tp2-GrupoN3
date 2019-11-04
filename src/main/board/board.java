@@ -1,14 +1,15 @@
-import Cell
-class Board{
-    public void movePiece(cell,destinationCell){
-        if(distance(cell,destinationCell) < 1) {
+class Board {
+    public void movePiece(Cell originCell, Cell destinationCell) {
+        if (originCell.distance(destinationCell) < 1) {
             throw Exception CanNotMakeThatMoveException;
         }
-        piece = deletePieceFromCell(cell);
+        Piece piece;
+        piece = originCell.deletePieceFromCell();
         try {
-            putPieceInCell(destinationCell);
+            destinationCell.putPieceInCell(piece);
+        } catch (Exception OccupiedCellException) {
+            originCell.putPieceInCell(piece);
+            throw CanNotMakeThatMoveException;
         }
-        catch (Exception OcupiedCellException){
-            putPieceInCell(Cell)
-            throw CanNotMakeThatMoveException
-        }
+    }
+}
