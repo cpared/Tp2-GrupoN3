@@ -2,7 +2,17 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 class Board {
-    private ArrayList<ArrayList> cellArray;
+    private ArrayList<ArrayList<Cell>> cellArray = new ArrayList<ArrayList<Cell>>();
+
+    Board() {
+        for (int i = 0; i < 20; i += 1){
+            this.cellArray.add(new ArrayList<Cell>());
+            for (int j =0; j<20 ;j++) {
+                this.cellArray.get(i).add(new Cell ());
+            }
+        }
+    }
+
     public void placePiece(Piece piece,int row, int column){
         //smt to check teams or zones, to discuss with the team
         Cell cell = this.getCell(row,column);
@@ -25,7 +35,7 @@ class Board {
     }
 
     private Cell getCell(int row, int column) {
-        return (Cell) this.cellArray.get(row).get(column);
+        return this.cellArray.get(row).get(column);
     }
 
     private int distance(int firstRow, int firstColumn, int secondRow, int secondColumn) {
