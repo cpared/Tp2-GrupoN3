@@ -1,6 +1,6 @@
 class Board {
     public void movePiece(Cell originCell, Cell destinationCell) {
-        if (originCell.distance(destinationCell) < 1) {
+        if (distance(originCell,destinationCell) < 1) {
             throw Exception CanNotMakeThatMoveException;
         }
         Piece piece;
@@ -11,5 +11,8 @@ class Board {
             originCell.putPieceInCell(piece);
             throw CanNotMakeThatMoveException;
         }
+    }
+
+    private int distance(Cell originCell, Cell destinationCell) {
     }
 }

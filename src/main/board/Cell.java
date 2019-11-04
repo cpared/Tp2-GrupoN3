@@ -1,8 +1,5 @@
 public class Cell {
     private Piece piece = null;
-    public int distance(Cell destinationCell) {
-        return 1;
-    }
 
     public void putPieceInCell(Piece pieceNew) {
         if (this.getPiece() != null){
