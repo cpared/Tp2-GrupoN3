@@ -16,14 +16,24 @@ class Board {
     public void placePiece(Piece piece,int row, int column){
         //smt to check teams or zones, to discuss with the team
         Cell cell = this.getCell(row,column);
-        cell.putPieceInCell(piece);
+        //cell.putPieceInCell(piece);
+        try {
+            cell.putPieceInCell(piece);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
-    public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
+
+    //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
+    public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) throws CanNotMakeThatMoveException {
         if (distance(firstRow,firstColumn,secondRow,secondColumn) > 1) {
-            throw Exception CanNotMakeThatMoveException;
+    //        throw Exception CanNotMakeThatMoveException;
+            throw new CanNotMakeThatMoveException();
         }
         Cell originCell = this.getCell(firstRow,firstColumn);
         Cell destinationCell = this.getCell(secondRow,secondColumn);
+
+        /*
         Piece piece;
         piece = originCell.deletePieceFromCell();
         try {
@@ -31,7 +41,17 @@ class Board {
         } catch (Exception OccupiedCellException) {
             originCell.putPieceInCell(piece);
             throw CanNotMakeThatMoveException;
+        } */
+
+
+        try{
+            Piece piece = originCell.deletePieceFromCell();
+            destinationCell.putPieceInCell(piece);
+        } catch (Exception e) {
+            e.getMessage();
         }
+
+
     }
 
     private Cell getCell(int row, int column) {
