@@ -2,11 +2,14 @@ import java.lang.Exception;
 
 public class CanNotMakeThatMoveException extends Exception {
 
-    static final String ERROR_MSG = "Piece cannot move in that direction";
+    private static final String ERROR_MSG = "Piece cannot move in that direction";
 
-    public CanNotMakeThatMoveException (){}
+    public CanNotMakeThatMoveException (){
 
-    public String showMessage (){
+    }
+
+    @Override
+    public String getMessage (){
 
         return ERROR_MSG;
     }
