@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 language: java
 
 compiler:
@@ -9,9 +8,3 @@ script: mvn test -B
 branches:
   only:
   - test
-  - master
-
-
-=======
-lenguage: java
->>>>>>> Stashed changes
