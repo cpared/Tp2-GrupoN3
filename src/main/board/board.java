@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 class Board {
-    private ArrayList<ArrayList<Cell>> cellArray = new ArrayList<ArrayList<Cell>>();
+    private ArrayList<ArrayList<Cell>> cellArray;
 
     Board() {
+        cellArray = new ArrayList<ArrayList<Cell>>();
         for (int i = 0; i < 20; i += 1){
             this.cellArray.add(new ArrayList<Cell>());
             for (int j =0; j<20 ;j++) {
@@ -16,12 +17,12 @@ class Board {
     public void placePiece(Piece piece,int row, int column){
         //smt to check teams or zones, to discuss with the team
         Cell cell = this.getCell(row,column);
-        //cell.putPieceInCell(piece);
-        try {
+        cell.putPieceInCell(piece);
+        /*try {
             cell.putPieceInCell(piece);
         } catch (Exception e) {
             e.getMessage();
-        }
+        }*/
     }
 
     //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
@@ -33,23 +34,22 @@ class Board {
         Cell originCell = this.getCell(firstRow,firstColumn);
         Cell destinationCell = this.getCell(secondRow,secondColumn);
 
-        /*
+
         Piece piece;
         piece = originCell.deletePieceFromCell();
         try {
             destinationCell.putPieceInCell(piece);
         } catch (Exception OccupiedCellException) {
             originCell.putPieceInCell(piece);
-            throw CanNotMakeThatMoveException;
-        } */
+            throw new CanNotMakeThatMoveException();
+        }
 
-
-        try{
+        /*try{
             Piece piece = originCell.deletePieceFromCell();
             destinationCell.putPieceInCell(piece);
         } catch (Exception e) {
             e.getMessage();
-        }
+        }*/
 
 
     }
@@ -63,4 +63,7 @@ class Board {
     }
 
 
+    public Piece removePiece(int row, int column) {
+        return this.getCell(row,column).deletePieceFromCell();
+    }
 }

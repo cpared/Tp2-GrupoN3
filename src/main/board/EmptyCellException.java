@@ -1,4 +1,4 @@
-public class EmptyCellException extends Exception {
+public class EmptyCellException extends RuntimeException {
 
     private static final String ERROR_MSG = "Cell is empty";
 

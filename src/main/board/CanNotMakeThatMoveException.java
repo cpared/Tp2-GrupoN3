@@ -1,6 +1,6 @@
 import java.lang.Exception;
 
-public class CanNotMakeThatMoveException extends Exception {
+public class CanNotMakeThatMoveException extends RuntimeException{
 
     private static final String ERROR_MSG = "Piece cannot move in that direction";
 

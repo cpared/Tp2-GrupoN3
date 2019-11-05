@@ -1,4 +1,4 @@
-public class OccupiedCellException extends Exception{
+public class OccupiedCellException extends RuntimeException{
 
     private static final String ERROR_MSG = "Cell is occupied";
 
