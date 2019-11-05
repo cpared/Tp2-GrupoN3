@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 language: java
 
 compiler:
@@ -11,3 +12,6 @@ branches:
   - master
 
 
+=======
+lenguage: java
+>>>>>>> Stashed changes

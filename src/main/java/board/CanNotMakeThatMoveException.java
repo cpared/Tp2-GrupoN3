@@ -1,3 +1,5 @@
+package board;
+
 import java.lang.Exception;
 
 public class CanNotMakeThatMoveException extends RuntimeException{

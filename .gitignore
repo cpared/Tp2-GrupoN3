@@ -9,5 +9,9 @@ bin/
 build.xml.old
 *.jar
 .idea
+<<<<<<< Updated upstream
 *.iml
 target
+=======
+*.iml
+>>>>>>> Stashed changes
