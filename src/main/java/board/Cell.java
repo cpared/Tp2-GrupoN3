@@ -1,5 +1,5 @@
 package board;
-
+import piece.Piece;
 public class Cell {
     private Piece piece = null;
 

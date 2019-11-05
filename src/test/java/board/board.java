@@ -2,7 +2,7 @@ package board;
 
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
-
+import piece.Piece;
 import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
     Board board = new Board();

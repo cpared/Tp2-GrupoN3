@@ -1,5 +1,5 @@
 package board;
-
+import piece.Piece;
 import java.util.ArrayList;
 import java.lang.Math;
 
@@ -27,8 +27,8 @@ class Board {
         }*/
     }
 
-    //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
-    public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) throws CanNotMakeThatMoveException {
+    public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
+    //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) throws CanNotMakeThatMoveException {
         if (distance(firstRow,firstColumn,secondRow,secondColumn) > 1) {
     //        throw Exception CanNotMakeThatMoveException;
             throw new CanNotMakeThatMoveException();
