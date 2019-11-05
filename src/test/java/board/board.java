@@ -3,10 +3,13 @@ package board;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
 import piece.Piece;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
-    Board board = new Board();
-    Piece piece = new Piece();
+    private Board board = new Board();
+    private Piece piece = new Piece();
     @Test
     void test00TheBoardCanBeCreated(){
         assertNotNull(board);
@@ -19,7 +22,7 @@ class BoardTest {
         try {
             method = Board.class.getDeclaredMethod("getCell", int.class, int.class);
             method.setAccessible(true);
-            assertNotNull(method.invoke(board, 5, 7));
+            assertThat(method.invoke(board, 5, 7),instanceOf(Cell.class));
         } catch (Exception e) {
             fail();
         }
@@ -32,6 +35,7 @@ class BoardTest {
             fail();
         }
         catch (EmptyCellException e) {
+            assert true;
         }
     }
 
@@ -42,6 +46,7 @@ class BoardTest {
             fail();
         }
         catch (CanNotMakeThatMoveException e) {
+            assert true;
         }
     }
     @Test
@@ -78,7 +83,12 @@ class BoardTest {
             fail();
         }
         catch (CanNotMakeThatMoveException e){
-
+            assert true;
         }
+    }
+    @Test
+    void test08WhenYouPopSomethingOfACellIsAPiece(){
+        board.placePiece(piece,3,3);
+        assertThat(board.removePiece(3,3),instanceOf(Piece.class));
     }
 }
