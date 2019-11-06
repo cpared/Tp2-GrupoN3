@@ -91,4 +91,15 @@ class BoardTest {
         board.placePiece(piece,3,3);
         assertThat(board.removePiece(3,3),instanceOf(Piece.class));
     }
+    @Test
+    void test09CanPutAPieceIfTheCellIsAlreadyOccupied(){
+        board.placePiece(piece,3,3);
+        try{
+            board.placePiece(piece,3,3);
+            fail();
+        }
+        catch(OccupiedCellException e){
+            assert true;
+        }
+    }
 }
