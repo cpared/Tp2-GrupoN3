@@ -1,4 +1,8 @@
 package board;
+
+
+import piece.Gold;
+import piece.Blue;
 import piece.Piece;
 import java.util.ArrayList;
 import java.lang.Math;
@@ -8,10 +12,16 @@ public class Board {
 
     public Board() {
         cellArray = new ArrayList<ArrayList<Cell>>();
-        for (int i = 0; i < 20; i += 1){
+        for (int i = 0; i < 10; i += 1){
             this.cellArray.add(new ArrayList<Cell>());
             for (int j =0; j<20 ;j++) {
-                this.cellArray.get(i).add(new Cell ());
+                this.cellArray.get(i).add(new Cell (new Gold()));
+            }
+        }
+        for (int i = 10; i<20; i++){
+            this.cellArray.add(new ArrayList<Cell>());
+            for (int j =0; j<20 ;j++) {
+                this.cellArray.get(i).add(new Cell (new Blue()));
             }
         }
     }
@@ -19,7 +29,7 @@ public class Board {
     public void placePiece(Piece piece,int row, int column){
         //smt to check teams or zones, to discuss with the team
         Cell cell = this.getCell(row,column);
-        cell.putPieceInCell(piece);
+        cell.putPieceInCell(piece,piece.getTeam());
         /*try {
             cell.putPieceInCell(piece);
         } catch (Exception e) {
