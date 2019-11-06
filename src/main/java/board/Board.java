@@ -39,11 +39,11 @@ public class Board {
 
     public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
     //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) throws CanNotMakeThatMoveException {
-        if (distance(firstRow,firstColumn,secondRow,secondColumn) > 1) {
+        Cell originCell = this.getCell(firstRow,firstColumn);
+        if (distance(firstRow,firstColumn,secondRow,secondColumn) > originCell.getPiece().move()) {
     //        throw Exception CanNotMakeThatMoveException;
             throw new CanNotMakeThatMoveException();
         }
-        Cell originCell = this.getCell(firstRow,firstColumn);
         Cell destinationCell = this.getCell(secondRow,secondColumn);
 
 

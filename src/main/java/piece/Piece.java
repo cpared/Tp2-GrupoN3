@@ -10,4 +10,7 @@ public class Piece {
     public Team getTeam() {
         return this.team;
     }
+    public int move(){
+        return 1;
+    }
 }
