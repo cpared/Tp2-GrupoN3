@@ -1,12 +1,12 @@
 package board;
 import piece.Piece;
-public class Cell {
+class Cell {
     private Piece piece = null;
 
    // public void putPieceInCell(Piece pieceNew) {
-   public void putPieceInCell(Piece pieceNew) throws  OccupiedCellException {
+   public void putPieceInCell(Piece pieceNew){
         if (this.getPiece() != null){
-            //throw Exception OcuppiedCellException;
+            //throw Exception OccupiedCellException;
             throw new OccupiedCellException();
         }
         this.piece = pieceNew;

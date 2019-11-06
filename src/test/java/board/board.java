@@ -60,39 +60,12 @@ class BoardTest {
         assertEquals(poppedPiece,piece);
     }
     @Test
-    void test06CanMoveAPieceFromRow3AndColumn3InAllPossibleWays(){
-        board.placePiece(piece,3,3);
-        for (int i =2;i<5;i++) {
-            for (int j = 2; j < 5; j++) {
-                if (i == 3 && j == 3) {
-                    continue;
-                }
-                board.movePiece(3, 3, i, j);
-                board.movePiece(i, j, 3, 3);
-            }
-        }
-
-    }
-    @Test
-    void test07APieceCanNotMoveToAnOccupiedCell(){
-        board.placePiece(piece,3,3);
-        board.placePiece(piece,3,4);
-
-        try{
-            board.movePiece(3,3,3,4);
-            fail();
-        }
-        catch (CanNotMakeThatMoveException e){
-            assert true;
-        }
-    }
-    @Test
-    void test08WhenYouPopSomethingOfACellIsAPiece(){
+    void test06WhenYouPopSomethingOfACellIsAPiece(){
         board.placePiece(piece,3,3);
         assertThat(board.removePiece(3,3),instanceOf(Piece.class));
     }
     @Test
-    void test09CanPutAPieceIfTheCellIsAlreadyOccupied(){
+    void test07CanPutAPieceIfTheCellIsAlreadyOccupied(){
         board.placePiece(piece,3,3);
         try{
             board.placePiece(piece,3,3);

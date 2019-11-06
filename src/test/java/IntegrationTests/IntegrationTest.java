@@ -1,6 +1,5 @@
 package IntegrationTests;
-
-import board.Board;
+import board.*;
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
 import piece.Piece;

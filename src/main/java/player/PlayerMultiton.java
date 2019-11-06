@@ -3,7 +3,7 @@ package player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerMultiton {
+/*public class PlayerMultiton {
 
     private static Map instances = new HashMap();
     public static enum keys { Instance1, Instance2 };
@@ -24,7 +24,7 @@ public class PlayerMultiton {
         return instance;
     }
 }
-
+*/
 /*
 
 public class PlayerMultiton {
