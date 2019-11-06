@@ -2,7 +2,7 @@ package IntegrationTests;
 import board.*;
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
-import piece.Piece;
+import piece.*;
 import player.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +13,7 @@ class IntegrationTest {
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays(){
 
         Board board = new Board();
-        Piece piece = new Piece();
+        Piece piece = new Piece(new Gold());
 
         board.placePiece(piece,3,3);
         for (int i =2;i<5;i++) {
@@ -30,7 +30,7 @@ class IntegrationTest {
     @Test
     void test01APieceCanNotMoveToAnOccupiedCell(){
         Board board = new Board();
-        Piece piece = new Piece();
+        Piece piece = new Piece(new Gold());
 
         board.placePiece(piece,3,3);
         board.placePiece(piece,3,4);
@@ -42,6 +42,18 @@ class IntegrationTest {
         catch (CanNotMakeThatMoveException e){
             assert true;
         }
+    }
+    @Test
+    void test06(){
+
+    }
+    @Test
+    void test07(){
+
+    }
+    @Test
+    void test08(){
+
     }
 
     @Test

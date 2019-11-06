@@ -40,15 +40,14 @@ public class Board {
     public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) {
     //public void movePiece(int firstRow,int firstColumn,int secondRow,int secondColumn) throws CanNotMakeThatMoveException {
         Cell originCell = this.getCell(firstRow,firstColumn);
-        if (distance(firstRow,firstColumn,secondRow,secondColumn) > originCell.getPiece().move()) {
+        Piece piece = originCell.deletePieceFromCell();
+        if (distance(firstRow,firstColumn,secondRow,secondColumn) > piece.move()) {
     //        throw Exception CanNotMakeThatMoveException;
+            originCell.putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
         Cell destinationCell = this.getCell(secondRow,secondColumn);
 
-
-        Piece piece;
-        piece = originCell.deletePieceFromCell();
         try {
             destinationCell.putPieceInCell(piece);
         } catch (Exception OccupiedCellException) {

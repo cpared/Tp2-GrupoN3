@@ -1,9 +1,7 @@
 package piece;
 
 public class Piece {
-    private Team team = new Gold();
-    public Piece(){
-    }
+    private Team team;
     public Piece(Team team){
         this.team = team;
     }

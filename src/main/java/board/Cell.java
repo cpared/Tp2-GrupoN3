@@ -16,7 +16,7 @@ class Cell {
         this.piece = pieceNew;
     }
 
-    public Piece getPiece() {
+    private Piece getPiece() {
         return this.piece;
     }
     public void putPieceInCell(Piece pieceNew, Team team){

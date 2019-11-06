@@ -2,14 +2,15 @@ package board;
 
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
-import piece.Piece;
+import piece.*;
+
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
     private Board board = new Board();
-    private Piece piece = new Piece();
+    private Piece piece = new Piece(new Gold());
     @Test
     void test00TheBoardCanBeCreated(){
         assertNotNull(board);
@@ -42,6 +43,7 @@ class BoardTest {
     @Test
     void test03CanNotMoveToACellThatHasADistanceGreaterThan1(){
         try{
+            board.placePiece(piece,0,0);
             board.movePiece(0,0,19,19);
             fail();
         }
