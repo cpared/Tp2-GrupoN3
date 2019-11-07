@@ -59,7 +59,7 @@ public class Game {
 
     public void removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException {
         this.endGame ();
-        player.pieceHasBeenRemoved ();
+        player.removePieceFromTeam ();
         board.removePiece ( row, column );
     }
 

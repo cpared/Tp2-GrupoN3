@@ -20,17 +20,6 @@ public class Player {
         this.team = team;
     }
 
-    public void name () {
-        String entry = "";
-        Scanner in = new Scanner ( System.in );
-        while (entry.toLowerCase ().equals ( "" )) {
-            System.out.println ( "Enter your name: \"" );
-            entry = in.nextLine ();
-            System.out.println ( "Your name is: " + entry );
-        }
-        this.name = entry;
-    }
-
     public String getName () {
         return this.name;
     }
@@ -70,7 +59,7 @@ public class Player {
         return this.team;
     }
 
-    public void pieceHasBeenRemoved () {
+    public void removePieceFromTeam () {
         this.team.subtractPieceFromTeam ();
     }
 
