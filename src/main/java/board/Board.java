@@ -1,8 +1,8 @@
 package board;
 
-
-import piece.Gold;
-import piece.Blue;
+import team.*;
+import team.Gold;
+import team.Blue;
 import piece.Piece;
 import java.util.ArrayList;
 import java.lang.Math;
