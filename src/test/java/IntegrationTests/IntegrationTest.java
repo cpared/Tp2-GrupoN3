@@ -215,6 +215,10 @@ class IntegrationTest {
             Piece soldier = game.playerChoosesPiece ( player1 , "SOLDIER");
             Piece rider = game.playerChoosesPiece ( player1 , "RIDER");
             Piece catapult = game.playerChoosesPiece (player1 , "CATAPULT");
+            Piece rider2 = game.playerChoosesPiece ( player1 , "RIDER");
+            Piece catapult2 = game.playerChoosesPiece (player1 , "CATAPULT");
+            Piece rider3 = game.playerChoosesPiece (player1 , "RIDER");
+            Piece catapult3 = game.playerChoosesPiece (player1 , "CATAPULT");
         } catch (PlayerHas20PointsOnlyException e) {
             e.printStackTrace ();
         }
