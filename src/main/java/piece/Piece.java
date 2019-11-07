@@ -2,7 +2,7 @@ package piece;
 import team.*;
 public class Piece {
     private Team team;
-    public Piece(Team team){
+    public void Piece(Team team){
         this.team = team;
     }
     public Team getTeam() {
@@ -11,4 +11,5 @@ public class Piece {
     public int move(){
         return 1;
     }
+
 }
