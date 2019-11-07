@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Player {
     private String name;
     private int points;
-    private Team team = new Team();
+    private Team team;
 
     public Player (String name) {
         this.points = 20;
