@@ -3,7 +3,7 @@ package player;
 import board.Board;
 import piece.Piece;
 import piece.PieceFactory;
-import team.Blue;
+
 import team.Team;
 
 import java.util.Scanner;
@@ -39,7 +39,7 @@ public class Player {
         return this.points;
     }
 
-    public void subtractPoints (int pointsToSubtract) throws PlayerHas20PointsOnlyException{
+    private void subtractPoints (int pointsToSubtract) throws PlayerHas20PointsOnlyException{
         if (this.points < pointsToSubtract) throw new PlayerHas20PointsOnlyException ();
 
         this.points = this.points - pointsToSubtract;
@@ -67,4 +67,5 @@ public class Player {
     public Team getTeam () {
         return this.team;
     }
+
 }

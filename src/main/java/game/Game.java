@@ -65,4 +65,8 @@ public class Game {
     private boolean gameHasEnded () {
         return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
     }
+
+    public void playerAttacks (int row, int column) throws GameHasEndedException {
+        this.removePieceFromBoard ( row, column );
+    }
 }

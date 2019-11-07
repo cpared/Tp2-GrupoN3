@@ -218,6 +218,7 @@ class IntegrationTest {
             Piece rider2 = game.playerChoosesPiece ( player1 , "RIDER");
             Piece catapult2 = game.playerChoosesPiece (player1 , "CATAPULT");
             Piece rider3 = game.playerChoosesPiece (player1 , "RIDER");
+            // it has no points left up to here.
             Piece catapult3 = game.playerChoosesPiece (player1 , "CATAPULT");
         } catch (PlayerHas20PointsOnlyException e) {
             e.printStackTrace ();
@@ -231,27 +232,41 @@ class IntegrationTest {
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
         Player player1 = game.getPlayer1 ();
+
+        //chooses all his pieces.
+        Piece catapult1 = game.playerChoosesPiece (player1 , "CATAPULT");
+        Piece catapult2 = game.playerChoosesPiece (player1 , "CATAPULT");
+        Piece catapult3 = game.playerChoosesPiece (player1 , "CATAPULT");
+        Piece catapult4 = game.playerChoosesPiece (player1 , "CATAPULT");
+        //places his pieces on the board.
+        game.playerPlacesPieceOnBoard ( player1, catapult1, 9, 0 );
+        game.playerPlacesPieceOnBoard ( player1, catapult2, 9, 1 );
+        game.playerPlacesPieceOnBoard ( player1, catapult3, 9, 2 );
+        game.playerPlacesPieceOnBoard ( player1, catapult4, 9, 3 );
+
         game.newPlayer ( "Alan12" );
         Player player2 = game.getPlayer2 ();
 
-        Piece soldier = game.playerChoosesPiece ( player1 , "SOLDIER");
-        Piece rider = game.playerChoosesPiece ( player1 , "RIDER");
-        Piece catapult = game.playerChoosesPiece (player1 , "CATAPULT");
-        game.playerPlacesPieceOnBoard ( player1, soldier, 9, 0 );
-        game.playerPlacesPieceOnBoard ( player1, rider, 9, 1 );
-        game.playerPlacesPieceOnBoard ( player1, catapult, 9, 2 );
-        /*
-        Piece soldier2 = game.playerChoosesPiece ( player2 , "SOLDIER");
-        Piece rider2 = game.playerChoosesPiece ( player2 , "RIDER");
-        Piece catapult2 = game.playerChoosesPiece (player2 , "CATAPULT");
-        game.playerPlacesPieceOnBoard ( player2, soldier2,8,8 );
-        game.playerPlacesPieceOnBoard ( player2, rider2,12,12 );
-        game.playerPlacesPieceOnBoard ( player2, catapult2,3,3 );
-        */
+        //chooses all his pieces.
+        Piece catapult5 = game.playerChoosesPiece (player2 , "CATAPULT");
+        Piece catapult6 = game.playerChoosesPiece (player2 , "CATAPULT");
+        Piece catapult7 = game.playerChoosesPiece (player2 , "CATAPULT");
+        Piece catapult8 = game.playerChoosesPiece (player2 , "CATAPULT");
 
-        game.removePieceFromBoard ( 3, 4 );
-        game.removePieceFromBoard ( 2, 2 );
-        game.removePieceFromBoard ( 1, 4 );
-        //aca try catch
+        //places his pieces on the board.
+        game.playerPlacesPieceOnBoard ( player2, catapult5, 11, 0 );
+        game.playerPlacesPieceOnBoard ( player2, catapult6, 11, 1 );
+        game.playerPlacesPieceOnBoard ( player2, catapult7, 11, 2 );
+        game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
+
+        try {
+            game.playerAttacks ( 9, 0 );
+            game.playerAttacks ( 9, 1 );
+            game.playerAttacks ( 9, 2 );
+            game.playerAttacks ( 9, 3 );
+        } catch (GameHasEndedException e) {
+            e.printStackTrace ();
+        }
+
     }
 }
