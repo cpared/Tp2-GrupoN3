@@ -49,7 +49,7 @@ public class Player {
         Piece piece = new Piece(new Team());
         int points= 0;
         this.subtractPoints ( points );
-        team.addMember ( piece );
+        //team.addMember ( piece );
         return piece;
     }
 

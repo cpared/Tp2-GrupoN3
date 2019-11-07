@@ -59,14 +59,6 @@ class IntegrationTest {
         board.placePiece(piece,3,3);
 
     }
-    @Test
-    void test07(){
-
-    }
-    @Test
-    void test08(){
-
-    }
 
     @Test
     void Test02AnAlliedInfantrySoldierAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted(){

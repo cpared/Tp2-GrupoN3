@@ -16,7 +16,10 @@ class Cell {
         this.piece = pieceNew;
     }
 
-    private Piece getPiece() {
+    public Piece getPiece() {
+        if (this.getPiece() == null) {
+            throw new EmptyCellException();
+        }
         return this.piece;
     }
     public void putPieceInCell(Piece pieceNew, Team team){
@@ -26,11 +29,7 @@ class Cell {
         putPieceInCell(pieceNew);
     }
     //public Piece deletePieceFromCell() {
-    public Piece deletePieceFromCell() throws EmptyCellException{
-        if (this.getPiece() == null){
-            //throw Exception EmptyCellException;
-            throw new EmptyCellException();
-        }
+    public Piece deletePieceFromCell(){
         Piece poppedPiece = this.piece;
         this.piece = null;
         return poppedPiece;
