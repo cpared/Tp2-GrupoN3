@@ -62,7 +62,7 @@ public class Game {
         if (state) { throw new GameHasEndedException (); }
     }
 
-    public Piece playerChoosesPiece(Player player) throws PlayerHas20PointsOnlyException {
+    public Piece playerChoosesPiece(Player player ) throws PlayerHas20PointsOnlyException {
         return player.choosePiece ();
     }
 
