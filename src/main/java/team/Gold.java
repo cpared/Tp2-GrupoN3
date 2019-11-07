@@ -1,5 +1,5 @@
 package team;
 
-public class Gold extends Team{
+public class Gold extends Team {
 
 }

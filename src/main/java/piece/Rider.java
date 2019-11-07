@@ -1,4 +1,5 @@
 package piece;
+import team.*;
 
 public class Rider extends Piece{
     private Team team;

@@ -5,6 +5,7 @@ public class Piece {
     public void Piece(Team team){
         this.team = team;
     }
+
     public Team getTeam() {
         return this.team;
     }

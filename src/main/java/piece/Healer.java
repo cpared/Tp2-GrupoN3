@@ -1,4 +1,5 @@
 package piece;
+import team.*;
 
 public class Healer extends Piece{
     private Team team;

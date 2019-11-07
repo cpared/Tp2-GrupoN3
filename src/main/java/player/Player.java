@@ -2,6 +2,7 @@ package player;
 
 import board.Board;
 import piece.Piece;
+import team.Blue;
 import team.Team;
 
 import java.util.Scanner;
@@ -58,6 +59,10 @@ public class Player {
 
     public void movePiece( Piece piece, Board board, int firstRow,int firstColumn,int secondRow,int secondColumn) {
         board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
+    }
+
+    public Team getTeam () {
+        return this.team;
     }
 }
 

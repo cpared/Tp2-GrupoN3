@@ -1,5 +1,5 @@
 package team;
 
-public class Blue extends Team{
+public class Blue extends Team {
 
 }

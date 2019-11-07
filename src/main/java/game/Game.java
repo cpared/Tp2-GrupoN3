@@ -4,22 +4,17 @@ import player.Player;
 import board.*;
 import piece.*;
 import player.PlayerHas20PointsOnlyException;
-
+import team.*;
 
 public class Game {
-    //private Face face;
     public Board board = new Board();
     public Player player1;
     public Player player2;
 
     public Game() throws ThereAreOnlyTwoPlayersPerGameException {
-        //newPlayer ("Rose");
-        //newPlayer ("Mike");
     }
 
     public void newPlayer (String name) throws ThereAreOnlyTwoPlayersPerGameException {
-        //InitialFace initial = new InitialFace (name);
-
         Player player = new Player ( name );
         if (this.player1 == null) {
             this.player1 = player;
@@ -43,4 +38,11 @@ public class Game {
         Piece piece= player.choosePiece ();
     }
 
+    private Team assignTeam() throws ThereCantBeTwoPlayersOnTheSameTeamException {
+        if (this.player1 == null) {
+            return new Gold ();
+        } else if (this.player2 == null) {
+            return new Blue ();
+        } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
+    }
 }

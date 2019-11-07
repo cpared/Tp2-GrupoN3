@@ -1,5 +1,5 @@
 package piece;
-
+import team.*;
 public class Soldier extends Piece{
     private Team team;
     private int cost = 1;

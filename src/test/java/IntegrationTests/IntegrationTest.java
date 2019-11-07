@@ -1,10 +1,17 @@
 package IntegrationTests;
+import Face.ThereAreOnlyTwoPlayersPerGameException;
 import board.*;
 import board.CanNotMakeThatMoveException;
+import game.Game;
+import game.ThereCantBeTwoPlayersOnTheSameTeamException;
 import org.junit.jupiter.api.Test;
-import team.*;
+import piece.Piece;
+//import team.*;
+import player.PlayerHas20PointsOnlyException;
+import team.Gold;
+import team.Blue;
 import piece.*;
-import player.Player;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -201,11 +208,19 @@ class IntegrationTest {
     }
 
     @Test
-    public void test11PlayerCantChooseMorePiecesThanWhatHisPointsAllow () {
-
-
-
+    public void test11PlayerCantChooseMorePiecesThanWhatHisPointsAllow () throws ThereAreOnlyTwoPlayersPerGameException, PlayerHas20PointsOnlyException, ThereCantBeTwoPlayersOnTheSameTeamException {
+        Game game = new Game ();
+        game.newPlayer ( "Player0005667" );
+        try {
+            game.playerChoosePiece ( game.getPlayer1 () );
+            game.playerChoosePiece ( game.getPlayer1 () );
+            game.playerChoosePiece ( game.getPlayer1 () );
+        } catch (PlayerHas20PointsOnlyException e) {
+            e.printStackTrace ();
+        }
+        assertEquals ( 0, game.getPlayer1 ().obtainPoints () );
     }
+
     @Test
     public void test12PlayerThatHasNoPiecesLostTheGame () {
 

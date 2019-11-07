@@ -1,4 +1,5 @@
 package piece;
+import team.*;
 
 public class Catapult extends Piece{
     private Team team;

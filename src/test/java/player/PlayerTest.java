@@ -4,25 +4,27 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
+import team.*;
 
 class PlayerTest {
     //Initiation tests.
+    private Team team= new Blue();
     @Test
-    public void test01NewPlayerHas20Points () {
-        Player player = new Player ("Mike");
+     void test01NewPlayerHas20Points () {
+        Player player = new Player ("Mike", team);
         assertEquals ( 20, player.obtainPoints () );
     }
 
     @Test
-    public void test02NewPlayerWithNamePepeIsNamedPepe () {
-        Player player = new Player ( "Pepe" );
+     void test02NewPlayerWithNamePepeIsNamedPepe () {
+        Player player = new Player ( "Pepe", team );
         assertEquals ( "Pepe", player.obtainName () );
     }
 
     //Point tests.
     @Test
-    public void test03Subtracting8PointsFromPlayerLeavesPlayerWith12Points () {
-        Player player = new Player ("Lola");
+     void test03Subtracting8PointsFromPlayerLeavesPlayerWith12Points () {
+        Player player = new Player ("Lola", team);
         try {
             player.subtractPoints ( 8 );
         } catch (PlayerHas20PointsOnlyException e) {
@@ -32,8 +34,8 @@ class PlayerTest {
     }
 
     @Test
-    public void test04Subtracting20PointsFromPlayerLeavesPlayerWith0Points () {
-        Player player = new Player ("Archie");
+     void test04Subtracting20PointsFromPlayerLeavesPlayerWith0Points () {
+        Player player = new Player ("Archie",team);
         try {
             player.subtractPoints ( 2 );
             player.subtractPoints ( 18 );
@@ -44,8 +46,8 @@ class PlayerTest {
     }
 
     @Test
-    public void test05Subtracting30PointsFromPlayerRaisesError () {
-        Player player = new Player ("Player0003");
+     void test05Subtracting30PointsFromPlayerRaisesError () {
+        Player player = new Player ("Player0003", team);
 
         try {
             player.subtractPoints ( 30 );
