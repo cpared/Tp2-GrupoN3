@@ -2,7 +2,7 @@ package piece;
 import team.*;
 public class Piece {
     private Team team;
-    public Piece(Team team){
+    public void Piece(Team team){
         this.team = team;
     }
     public Team getTeam() {
@@ -12,12 +12,4 @@ public class Piece {
         return 1;
     }
 
-    public void attack(Piece receivingPiece) {
-    }
-
-    public void distanceAttack(Piece receivingPiece) {
-    }
-
-    public void heal(Piece receivingPiece) {
-    }
 }
