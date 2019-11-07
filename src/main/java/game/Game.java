@@ -49,7 +49,6 @@ public class Game {
 
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
         this.endGame ();
-        System.out.println ( this.gameHasEnded () );
         player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
     }
 
@@ -57,10 +56,10 @@ public class Game {
         player.placePieceOnBoard ( piece, this.board, row, column );
     }
 
-    public void removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException {
+    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException {
         this.endGame ();
         player.removePieceFromTeam ();
-        board.removePiece ( row, column );
+        return board.removePiece ( row, column );
     }
 
     public Piece playerChoosesPiece ( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
