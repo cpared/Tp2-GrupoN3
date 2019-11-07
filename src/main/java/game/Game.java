@@ -45,4 +45,20 @@ public class Game {
             return new Blue ();
         } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
     }
+
+    public void playerMovesPieceOnBoard (int firstRow,int firstColumn,int secondRow,int secondColumn) {
+        this.board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
+    }
+
+    public void playerPlacesPieceOnBoard ( Piece piece,int row, int column) {
+        board.placePiece ( piece, row, column);
+    }
+
+    public void removePieceFromBoard (int row, int column){
+        board.removePiece ( row, column );
+    }
+
+    public Piece playerChoosesPiece(Player player) throws PlayerHas20PointsOnlyException {
+        return player.choosePiece ();
+    }
 }
