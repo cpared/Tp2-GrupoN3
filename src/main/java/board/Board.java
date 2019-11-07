@@ -95,4 +95,3 @@ public class Board {
         originPiece.heal(receivingPiece);
     }
 }
-}

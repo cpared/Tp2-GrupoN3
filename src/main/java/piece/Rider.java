@@ -8,9 +8,10 @@ public class Rider extends Piece{
     private int bodyAttack = 5;
     private int distanceAttack = 15;
 
-    void Rider(Team team){
-        this.team = team;
+    public Rider(Team team) {
+        super(team);
     }
+
 
     public int getBodyAttack(){
         return this.bodyAttack;
@@ -28,12 +29,13 @@ public class Rider extends Piece{
         return this.cost;
     }
 
-    public void recibeAttack(int damage){
-        this.life -= damage;
+    @Override
+    public void attack(Piece piece) {
+        piece.getAttacked(this.bodyAttack);
     }
 
-    public void recibeHeal(int heal){
-        this.life += heal;
+    @Override
+    public void distanceAttack(Piece receivingPiece) {
+        receivingPiece.getAttacked(this.distanceAttack);
     }
-
 }
