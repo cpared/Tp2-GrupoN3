@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.*;
 
-class GameTest {
+/*class GameTest {
 
     // Tests related to the players.
     @Test
@@ -70,4 +70,4 @@ class GameTest {
         Assertions.assertEquals ( Gold.class, game.getPlayer1 ().getTeam ().getClass () );
         Assertions.assertEquals ( Blue.class, game.getPlayer2 ().getTeam ().getClass () );
     }
-}
+}*/

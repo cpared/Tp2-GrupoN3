@@ -6,7 +6,7 @@ import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
 import team.*;
 
-class PlayerTest {
+/*class PlayerTest {
     //Initiation tests.
     private Team team= new Blue();
     @Test
@@ -63,4 +63,4 @@ class PlayerTest {
 
 
     //Board tests.
-}
+}*/

@@ -1,4 +1,5 @@
 package piece;
+import board.CanNotMakeThatMoveException;
 import team.*;
 
 public class Catapult extends Piece{
@@ -8,8 +9,8 @@ public class Catapult extends Piece{
     private int bodyAttack = 0;
     private int distanceAttack = 20;
 
-    void Catapult(Team team){
-        this.team = team;
+    public Catapult(Team team) {
+        super(team);
     }
 
     public int getBodyAttack(){
@@ -34,5 +35,15 @@ public class Catapult extends Piece{
 
     public void recibeHeal(int heal){
         this.life += heal;
+    }
+
+    @Override
+    public int move() {
+        return 0;
+    }
+
+    @Override
+    public void distanceAttack(Piece receivingPiece) {
+        receivingPiece.getAttacked(this.distanceAttack);
     }
 }
