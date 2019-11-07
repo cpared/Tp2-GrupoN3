@@ -44,7 +44,9 @@ public class Game {
         } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
     }
 
-    public void playerMovesPieceOnBoard (Player player, int firstRow,int firstColumn,int secondRow,int secondColumn) {
+    public void playerMovesPieceOnBoard (Player player, int firstRow,int firstColumn,int secondRow,int secondColumn) throws GameHasEndedException {
+        this.endGame ();
+        System.out.println ( this.gameHasEnded () );
         player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
     }
 
@@ -52,10 +54,10 @@ public class Game {
         player.placePieceOnBoard ( piece, this.board, row, column);
     }
 
-    public void removePieceFromBoard (int row, int column) throws GameHasEndedException {
+    public void removePieceFromBoard ( Player player, int row, int column) throws GameHasEndedException {
+        this.endGame ();
+        player.pieceHasBeenRemoved();
         board.removePiece ( row, column );
-        boolean state = gameHasEnded ();
-        if (state) { throw new GameHasEndedException (); }
     }
 
     public Piece playerChoosesPiece( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
@@ -66,7 +68,13 @@ public class Game {
         return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
     }
 
-    public void playerAttacks (int row, int column) throws GameHasEndedException {
-        this.removePieceFromBoard ( row, column );
+    public void playerAttacks (Player player, int row, int column) throws GameHasEndedException {
+        this.endGame ();
+        this.removePieceFromBoard (player, row, column );
+    }
+
+    private void endGame () throws GameHasEndedException {
+        boolean state = gameHasEnded ();
+        if (state) { throw new GameHasEndedException (); }
     }
 }

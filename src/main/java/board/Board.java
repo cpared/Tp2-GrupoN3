@@ -1,5 +1,6 @@
 package board;
 
+import player.Player;
 import team.Gold;
 import team.Blue;
 import piece.Piece;
@@ -71,7 +72,6 @@ public class Board {
     private int distance(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         return Math.max(Math.abs(firstRow - secondRow), Math.abs(secondColumn - firstColumn));
     }
-
 
     public Piece removePiece(int row, int column) {
         return this.getCell(row,column).deletePieceFromCell();

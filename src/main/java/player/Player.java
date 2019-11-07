@@ -68,4 +68,8 @@ public class Player {
         return this.team;
     }
 
+    public void pieceHasBeenRemoved () {
+        this.team.subtractPieceFromTeam ();
+    }
+
 }

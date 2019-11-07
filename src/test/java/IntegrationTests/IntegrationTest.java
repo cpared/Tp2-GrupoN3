@@ -7,7 +7,6 @@ import game.GameHasEndedException;
 import game.ThereCantBeTwoPlayersOnTheSameTeamException;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
-//import team.*;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import team.Gold;
@@ -232,7 +231,8 @@ class IntegrationTest {
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
         Player player1 = game.getPlayer1 ();
-
+        Object GameHasEndedException = new GameHasEndedException ();
+        
         //chooses all his pieces.
         Piece catapult1 = game.playerChoosesPiece (player1 , "CATAPULT");
         Piece catapult2 = game.playerChoosesPiece (player1 , "CATAPULT");
@@ -260,13 +260,17 @@ class IntegrationTest {
         game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
 
         try {
-            game.playerAttacks ( 9, 0 );
-            game.playerAttacks ( 9, 1 );
-            game.playerAttacks ( 9, 2 );
-            game.playerAttacks ( 9, 3 );
+            game.playerAttacks ( player1, 9, 0 );
+            game.playerAttacks ( player1,9, 1 );
+            game.playerAttacks ( player1,9, 2 );
+            game.playerAttacks ( player1,9, 3 );
+            //it should not move.
+            //game.playerAttacks ( 11, 3 );
+            game.playerMovesPieceOnBoard ( player2, 11, 0, 12,0);
         } catch (GameHasEndedException e) {
             e.printStackTrace ();
         }
+        assertEquals (0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam ());
 
     }
 }
