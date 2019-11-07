@@ -8,6 +8,3 @@ script: mvn test -B
 branches:
   only:
   - test
-  - master
-
-
