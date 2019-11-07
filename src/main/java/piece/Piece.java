@@ -11,4 +11,13 @@ public class Piece {
     public int move(){
         return 1;
     }
+
+    public void attack(Piece receivingPiece) {
+    }
+
+    public void distanceAttack(Piece receivingPiece) {
+    }
+
+    public void heal(Piece receivingPiece) {
+    }
 }

@@ -1,5 +1,5 @@
 package piece;
-
+import team.*;
 public class Rider {
     private Team team;
     private int cost = 3;

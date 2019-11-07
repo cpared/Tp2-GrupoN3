@@ -76,4 +76,23 @@ public class Board {
     public Piece removePiece(int row, int column) {
         return this.getCell(row,column).deletePieceFromCell();
     }
+
+    public void bodyAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+        Piece originPiece = this.getCell(firstRow,firstColumn).getPiece();
+        Piece receivingPiece = this.getCell(secondRow,secondColumn).getPiece();
+        originPiece.attack(receivingPiece);
+    }
+
+    public void distanceAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+        Piece originPiece = this.getCell(firstRow,firstColumn).getPiece();
+        Piece receivingPiece = this.getCell(secondRow,secondColumn).getPiece();
+        originPiece.distanceAttack(receivingPiece);
+    }
+
+    public void heal(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+        Piece originPiece = this.getCell(firstRow,firstColumn).getPiece();
+        Piece receivingPiece = this.getCell(secondRow,secondColumn).getPiece();
+        originPiece.heal(receivingPiece);
+    }
+}
 }
