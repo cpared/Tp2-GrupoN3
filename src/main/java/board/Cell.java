@@ -9,15 +9,15 @@ class Cell {
     }
    // public void putPieceInCell(Piece pieceNew) {
     public void putPieceInCell(Piece pieceNew){
-        if (this.getPiece() != null){
+        if (this.piece != null){
             //throw Exception OccupiedCellException;
             throw new OccupiedCellException();
         }
         this.piece = pieceNew;
     }
 
-    public Piece getPiece() {
-        if (this.getPiece() == null) {
+    Piece getPiece() {
+        if (this.piece == null) {
             throw new EmptyCellException();
         }
         return this.piece;

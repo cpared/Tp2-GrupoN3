@@ -31,4 +31,8 @@ public class Soldier extends Piece{
     public void attack(Piece piece){
         piece.getAttacked(this.bodyAttack);
     }
+    @Override
+    public void getAttacked(int damage){
+        this.life -= damage;
+    }
 }

@@ -38,4 +38,8 @@ public class Rider extends Piece{
     public void distanceAttack(Piece receivingPiece) {
         receivingPiece.getAttacked(this.distanceAttack);
     }
+    @Override
+    public void getAttacked(int damage){
+        this.life -= damage;
+    }
 }

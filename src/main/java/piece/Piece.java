@@ -12,7 +12,7 @@ public class Piece {
         return this.team;
     }
     public int move(){
-        return 1;
+        return 3;
     }
     public void attack(Piece piece){
         throw new CanNotMakeThatMoveException(); //Raise another error is correct, but this for now

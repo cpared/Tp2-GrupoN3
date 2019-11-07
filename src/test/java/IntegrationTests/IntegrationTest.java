@@ -98,7 +98,7 @@ class IntegrationTest {
         assertEquals(100, rider.getLife());
         assertEquals(100, soldier.getLife());
         board.bodyAttack(9,0,10,0);
-        assertEquals(90, soldier.getLife());
+        assertEquals(95, soldier.getLife());
     }
 
     @Test
