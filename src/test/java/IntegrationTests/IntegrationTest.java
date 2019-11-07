@@ -18,12 +18,13 @@ import piece.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationTest {
+    private PieceFactory factory  = new PieceFactory ();
 
     @Test
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays () {
 
         Board board = new Board ();
-        Piece piece = new Piece ( new Gold () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
 
         board.placePiece ( piece, 3, 3 );
         for (int i = 2; i < 5; i++) {
@@ -40,7 +41,7 @@ class IntegrationTest {
     @Test
     void test01APieceCanNotMoveToAnOccupiedCell () {
         Board board = new Board ();
-        Piece piece = new Piece ( new Gold () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
 
         board.placePiece ( piece, 3, 3 );
         board.placePiece ( piece, 3, 4 );
@@ -56,7 +57,7 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceInAnEmptyAllyCell () {
         Board board = new Board ();
-        Piece piece = new Piece ( new Gold () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
 
         board.placePiece ( piece, 3, 3 );
 
@@ -164,7 +165,7 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell () {
         Board board = new Board ();
-        Piece piece = new Piece ( new Gold () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
 
         board.placePiece ( piece, 3, 3 );
 
@@ -173,8 +174,8 @@ class IntegrationTest {
     @Test
     void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell () {
         Board board = new Board ();
-        Piece piece = new Piece ( new Gold () );
-        Piece pieceThatOccupiesCell = new Piece ( new Gold () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
+        Piece pieceThatOccupiesCell = factory.getPiece ("RIDER", new Gold () );
 
         board.placePiece ( pieceThatOccupiesCell, 3, 3 );
 
@@ -188,7 +189,7 @@ class IntegrationTest {
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell () {
         Board board = new Board ();
-        Piece piece = new Piece ( new Blue () );
+        Piece piece = factory.getPiece ("SOLDIER", new Gold () );
 
         try {
             board.placePiece ( piece, 3, 3 );
@@ -209,10 +210,11 @@ class IntegrationTest {
     public void test11PlayerCantChooseMorePiecesThanWhatHisPointsAllow () throws ThereAreOnlyTwoPlayersPerGameException, PlayerHas20PointsOnlyException, ThereCantBeTwoPlayersOnTheSameTeamException {
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
+        Player player1 = game.getPlayer1 ();
         try {
-            game.playerChoosePiece ( game.getPlayer1 () );
-            game.playerChoosePiece ( game.getPlayer1 () );
-            game.playerChoosePiece ( game.getPlayer1 () );
+            Piece soldier = game.playerChoosesPiece ( player1 , "SOLDIER");
+            Piece rider = game.playerChoosesPiece ( player1 , "RIDER");
+            Piece catapult = game.playerChoosesPiece (player1 , "CATAPULT");
         } catch (PlayerHas20PointsOnlyException e) {
             e.printStackTrace ();
         }
@@ -228,20 +230,20 @@ class IntegrationTest {
         game.newPlayer ( "Alan12" );
         Player player2 = game.getPlayer2 ();
 
-        Piece soldier = game.playerChoosesPiece ( player1 );
-        Piece rider = game.playerChoosesPiece ( player1 );
-        Piece catapult = game.playerChoosesPiece (player1 );
+        Piece soldier = game.playerChoosesPiece ( player1 , "SOLDIER");
+        Piece rider = game.playerChoosesPiece ( player1 , "RIDER");
+        Piece catapult = game.playerChoosesPiece (player1 , "CATAPULT");
         game.playerPlacesPieceOnBoard ( player1, soldier, 9, 0 );
         game.playerPlacesPieceOnBoard ( player1, rider, 9, 1 );
         game.playerPlacesPieceOnBoard ( player1, catapult, 9, 2 );
-
-        Piece soldier2 = game.playerChoosesPiece ( player2 );
-        Piece rider2 = game.playerChoosesPiece ( player2 );
-        Piece catapult2 = game.playerChoosesPiece ( player2 );
+        /*
+        Piece soldier2 = game.playerChoosesPiece ( player2 , "SOLDIER");
+        Piece rider2 = game.playerChoosesPiece ( player2 , "RIDER");
+        Piece catapult2 = game.playerChoosesPiece (player2 , "CATAPULT");
         game.playerPlacesPieceOnBoard ( player2, soldier2,8,8 );
         game.playerPlacesPieceOnBoard ( player2, rider2,12,12 );
         game.playerPlacesPieceOnBoard ( player2, catapult2,3,3 );
-
+        */
 
         game.removePieceFromBoard ( 3, 4 );
         game.removePieceFromBoard ( 2, 2 );

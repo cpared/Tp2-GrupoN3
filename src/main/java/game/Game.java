@@ -8,8 +8,8 @@ import team.*;
 
 public class Game {
     public Board board = new Board();
-    public Player player1;
-    public Player player2;
+    private Player player1;
+    private Player player2;
 
     public Game() {
     }
@@ -36,10 +36,6 @@ public class Game {
 
     public Board getBoard () { return this.board;}
 
-    public void playerChoosePiece(Player player) throws PlayerHas20PointsOnlyException {
-        Piece piece= player.choosePiece ();
-    }
-
     private Team assignTeam() throws ThereCantBeTwoPlayersOnTheSameTeamException {
         if (this.player1 == null) {
             return new Gold ();
@@ -62,8 +58,8 @@ public class Game {
         if (state) { throw new GameHasEndedException (); }
     }
 
-    public Piece playerChoosesPiece(Player player ) throws PlayerHas20PointsOnlyException {
-        return player.choosePiece ();
+    public Piece playerChoosesPiece( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
+        return player.choosePiece ( pieceName );
     }
 
     private boolean gameHasEnded () {

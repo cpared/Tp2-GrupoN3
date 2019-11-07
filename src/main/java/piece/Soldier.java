@@ -1,6 +1,7 @@
 package piece;
+import board.CanNotMakeThatMoveException;
 import team.*;
-public class Soldier extends Piece{
+public class Soldier implements Piece {
     private Team team;
     private int cost = 1;
     private int life = 100;
@@ -15,7 +16,7 @@ public class Soldier extends Piece{
     public int getBodyAttack(){
         return this.bodyAttack;
     }
-
+    @Override
     public int getLife(){
         return this.life;
     }
@@ -23,7 +24,7 @@ public class Soldier extends Piece{
     public int getDistanceAttack(){
         return this.distanceAttack;
     }
-
+    @Override
     public int getCost(){
         return this.cost;
     }
@@ -40,7 +41,21 @@ public class Soldier extends Piece{
         this.life -= damage;
     }
     @Override
-    public void getHeal(int heal){
+    public void getHealed(int heal){
         this.life += heal;
     }
+    @Override
+    public int move(){
+        return 3;
+    }
+    @Override
+    public void distanceAttack(Piece receivingPiece) {
+        throw new CanNotMakeThatMoveException(); //Raise another error is correct, but this for now
+    }
+    @Override
+    public void heal(Piece receivingPiece) {
+        throw new CanNotMakeThatMoveException();
+    }
+
+
 }

@@ -10,7 +10,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
     private Board board = new Board();
-    private Piece piece = new Piece(new Gold());
+    private PieceFactory factory = new PieceFactory ();
+    private Piece piece = factory.getPiece ( "SOLDIER", new Gold() );
+
     @Test
     void test00TheBoardCanBeCreated(){
         assertNotNull(board);

@@ -2,6 +2,7 @@ package player;
 
 import board.Board;
 import piece.Piece;
+import piece.PieceFactory;
 import team.Blue;
 import team.Team;
 
@@ -11,6 +12,7 @@ public class Player {
     private String name;
     private int points;
     private Team team;
+    private PieceFactory factory= new PieceFactory();
 
     public Player (String name, Team team) {
         this.points = 20;
@@ -46,11 +48,11 @@ public class Player {
 
     public String obtainName () { return this.name; }
 
-    public Piece choosePiece() throws PlayerHas20PointsOnlyException {
-        Piece piece = new Piece(new Team());
-        int points= 0;
-        this.subtractPoints ( points );
-        //team.addMember ( piece );
+    public Piece choosePiece( String pieceName) throws PlayerHas20PointsOnlyException {
+        Piece piece = this.factory.getPiece ( pieceName, this.team );
+        this.subtractPoints ( piece.getCost() );
+        team.addPieceToTeam ();
+
         return piece;
     }
 
