@@ -11,8 +11,9 @@ public class Team {
         this.pieces = this.pieces + 1;
     }
 
-    public void subtractPieceFromTeam () {
-        this.pieces = this.pieces - 1;
+    public void subtractPieceFromTeam () throws NoMembersLeftException{
+        if (this.pieces == 0){ throw new NoMembersLeftException (); }
+        else this.pieces = this.pieces - 1;
     }
 
     public int numberOfMembersStillOnTeam () {

@@ -224,7 +224,7 @@ class PlayerTest {
     }
 
     @Test
-    void test18PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException {
+    void test18PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.choosePiece ( "HEALER" );

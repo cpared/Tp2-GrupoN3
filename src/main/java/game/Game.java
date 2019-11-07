@@ -56,7 +56,7 @@ public class Game {
         player.placePieceOnBoard ( piece, this.board, row, column );
     }
 
-    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException {
+    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         this.endGame ();
         player.removePieceFromTeam ();
         return board.removePiece ( row, column );
@@ -70,7 +70,7 @@ public class Game {
         return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
     }
 
-    public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException {
+    public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         this.endGame ();
         this.removePieceFromBoard ( player, row, column );
     }

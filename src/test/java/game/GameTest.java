@@ -101,7 +101,7 @@ class GameTest {
     }
 
     @Test
-    void test07APieceOnTheBoardCanBeRemoved () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException {
+    void test07APieceOnTheBoardCanBeRemoved () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException, NoMembersLeftException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
@@ -120,7 +120,7 @@ class GameTest {
     }
 
     @Test
-    void test08PlayerCanMoveAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException {
+    void test08PlayerCanMoveAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException, NoMembersLeftException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
@@ -155,6 +155,8 @@ class GameTest {
             game.playerAttacks ( game.getPlayer1 (),2,0 );
         } catch (GameHasEndedException e) {
             e.getMessage ();
+        } catch (NoMembersLeftException e) {
+            e.printStackTrace ();
         }
         //Assert
         Assertions.assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );

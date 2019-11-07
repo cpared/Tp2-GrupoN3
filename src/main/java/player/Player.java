@@ -4,6 +4,7 @@ import board.Board;
 import piece.Piece;
 import piece.PieceFactory;
 
+import team.NoMembersLeftException;
 import team.Team;
 
 import java.util.Scanner;
@@ -59,7 +60,7 @@ public class Player {
         return this.team;
     }
 
-    public void removePieceFromTeam () {
+    public void removePieceFromTeam () throws NoMembersLeftException {
         this.team.subtractPieceFromTeam ();
     }
 

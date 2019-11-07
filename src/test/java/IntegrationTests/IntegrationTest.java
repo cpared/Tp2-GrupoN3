@@ -13,6 +13,7 @@ import player.PlayerHas20PointsOnlyException;
 import team.Gold;
 import team.Blue;
 import piece.*;
+import team.NoMembersLeftException;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -275,6 +276,8 @@ class IntegrationTest {
             //Assert
         } catch (GameHasEndedException e) {
             assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
+        } catch (NoMembersLeftException e) {
+            e.printStackTrace ();
         }
     }
 }
