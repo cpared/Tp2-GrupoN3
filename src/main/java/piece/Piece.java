@@ -8,6 +8,9 @@ public class Piece {
         this.team = team;
     }
 
+    public Piece() {
+    }
+
     public Team getTeam() {
         return this.team;
     }
@@ -21,7 +24,7 @@ public class Piece {
         return life;
     }
     public void getHeal(int heal){
-        this.life += heal;
+        throw new CanNotMakeThatMoveException();
     }
     public void distanceAttack(Piece receivingPiece) {
         throw new CanNotMakeThatMoveException(); //Raise another error is correct, but this for now
@@ -31,6 +34,6 @@ public class Piece {
         throw new CanNotMakeThatMoveException();
     }
     public void getAttacked(int damage){
-        this.life -= damage;
+
     }
 }

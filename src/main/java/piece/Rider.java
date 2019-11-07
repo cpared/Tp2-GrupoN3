@@ -9,7 +9,7 @@ public class Rider extends Piece{
     private int distanceAttack = 15;
 
     public Rider(Team team) {
-        super(team);
+        this.team = team;
     }
 
 
@@ -41,5 +41,13 @@ public class Rider extends Piece{
     @Override
     public void getAttacked(int damage){
         this.life -= damage;
+    }
+    @Override
+    public void getHeal(int heal){
+        this.life += heal;
+    }
+    @Override
+    public Team getTeam(){
+        return this.team;
     }
 }

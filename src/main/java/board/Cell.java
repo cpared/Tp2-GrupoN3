@@ -30,7 +30,7 @@ class Cell {
     }
     //public Piece deletePieceFromCell() {
     public Piece deletePieceFromCell(){
-        Piece poppedPiece = this.piece;
+        Piece poppedPiece = this.getPiece();
         this.piece = null;
         return poppedPiece;
     }

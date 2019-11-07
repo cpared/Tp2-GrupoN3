@@ -8,7 +8,7 @@ public class Soldier extends Piece{
     private int distanceAttack = 0;
 
     public Soldier(Team team) {
-        super(team);
+        this.team = team;
     }
 
 
@@ -32,7 +32,15 @@ public class Soldier extends Piece{
         piece.getAttacked(this.bodyAttack);
     }
     @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
     public void getAttacked(int damage){
         this.life -= damage;
+    }
+    @Override
+    public void getHeal(int heal){
+        this.life += heal;
     }
 }
