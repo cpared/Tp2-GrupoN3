@@ -10,7 +10,7 @@ public class Catapult extends Piece{
     private int distanceAttack = 20;
 
     public Catapult(Team team) {
-        super(team);
+        this.team = team;
     }
 
     public int getBodyAttack(){
@@ -41,9 +41,16 @@ public class Catapult extends Piece{
     public int move() {
         return 0;
     }
-
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
     @Override
     public void distanceAttack(Piece receivingPiece) {
         receivingPiece.getAttacked(this.distanceAttack);
+    }
+    @Override
+    public void getAttacked(int damage){
+        this.life -= damage;
     }
 }

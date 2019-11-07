@@ -149,7 +149,7 @@ class IntegrationTest {
 
         board.heal(9,0,9,1);
         assertEquals(75, healer.getLife());
-        assertEquals(100, soldier.getLife());
+        assertEquals(110, soldier.getLife());
         assertEquals(100, rider.getLife());
     }
 
