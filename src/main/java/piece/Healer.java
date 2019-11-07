@@ -22,4 +22,12 @@ public class Healer extends Piece{
     public int getHeal(){
         return this.heal;
     }
+
+    public void recibeAttack(int damage){
+        this.life -= damage;
+    }
+
+    public void recibeHeal(int heal){
+        this.life += heal;
+    }
 }
