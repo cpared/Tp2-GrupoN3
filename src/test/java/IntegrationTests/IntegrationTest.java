@@ -155,6 +155,52 @@ class IntegrationTest {
     }
 
     @Test
+    void test06CanPlaceAnAllyPieceToAnEmptyAllyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Gold());
+
+        board.placePiece(piece,3,3);
+
+    }
+
+    @Test
+    void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Gold());
+        Piece pieceThatOccupiesCell = new Piece(new Gold());
+
+        board.placePiece(pieceThatOccupiesCell,3,3);
+
+        try{
+            board.placePiece(piece,3,3);
+        }
+        catch (OccupiedCellException e){
+            assert true;
+        }
+    }
+
+    @Test
+    void test08cannotPlaceAnAllyPieceInAnEnemyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Blue());
+
+        try{
+            board.placePiece(piece,3,3);
+        }
+        catch (EnemyCellException e){
+            assert true;
+        }
+    }
+
+    @Test
+    void test09BoardIsProperlyCreated(){
+        Board board = new Board();
+
+        assertNotNull(board);
+
+    }
+
+    @Test
     public void test11PlayerCantChooseMorePiecesThanWhatHisPointsAllow () {
 
 
