@@ -26,4 +26,12 @@ public class Catapult extends Piece{
     public int getCost(){
         return this.cost;
     }
+
+    public void recibeAttack(int damage){
+        this.life -= damage;
+    }
+
+    public void recibeHeal(int heal){
+        this.life += heal;
+    }
 }
