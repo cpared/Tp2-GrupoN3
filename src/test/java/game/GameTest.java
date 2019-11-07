@@ -1,10 +1,9 @@
 package game;
 
-import Face.ThereAreOnlyTwoPlayersPerGameException;
+import player.ThereAreOnlyTwoPlayersPerGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
-import piece.Soldier;
 import player.PlayerHas20PointsOnlyException;
 import team.*;
 

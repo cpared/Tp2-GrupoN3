@@ -1,19 +1,13 @@
 package IntegrationTests;
 
-import Face.ThereAreOnlyTwoPlayersPerGameException;
 import board.*;
 import board.CanNotMakeThatMoveException;
-import game.Game;
-import game.GameHasEndedException;
-import game.ThereCantBeTwoPlayersOnTheSameTeamException;
+import game.*;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
-import player.Player;
-import player.PlayerHas20PointsOnlyException;
-import team.Gold;
-import team.Blue;
+import player.*;
+import team.*;
 import piece.*;
-import team.NoMembersLeftException;
 
 
 import static org.junit.jupiter.api.Assertions.*;

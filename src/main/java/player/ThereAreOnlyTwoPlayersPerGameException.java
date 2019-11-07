@@ -1,5 +1,5 @@
 
-package Face;
+package player;
 
 public class ThereAreOnlyTwoPlayersPerGameException extends Exception {
     private static final String ERROR_MSG = "Game has only two players.";

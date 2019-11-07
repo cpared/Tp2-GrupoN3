@@ -1,10 +1,10 @@
 package game;
 
-import Face.*;
 import player.Player;
 import board.*;
 import piece.*;
 import player.PlayerHas20PointsOnlyException;
+import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.*;
 
 public class Game {
