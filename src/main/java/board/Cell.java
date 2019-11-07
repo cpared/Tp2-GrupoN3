@@ -21,7 +21,7 @@ class Cell {
     }
     public void putPieceInCell(Piece pieceNew, Team team){
         if (team.getClass() != this.team.getClass()){
-            throw new EmptyCellException();
+            throw new EnemyCellException();
         }
         putPieceInCell(pieceNew);
     }
