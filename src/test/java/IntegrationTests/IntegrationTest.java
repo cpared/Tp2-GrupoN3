@@ -69,8 +69,8 @@ class IntegrationTest {
         Board board = new Board ();
         Gold gold = new Gold ();
         Blue blue = new Blue ();
-        Soldier soldier = new Soldier ( gold );
-        Healer healer = new Healer ( blue );
+        Piece soldier = factory.getPiece ( "SOLDIER", gold );
+        Piece healer = factory.getPiece ( "HEALER", blue );
 
         //Act
         board.placePiece ( soldier, 9, 0 );
@@ -90,8 +90,8 @@ class IntegrationTest {
         Board board = new Board ();
         Gold gold = new Gold ();
         Blue blue = new Blue ();
-        Rider rider = new Rider ( gold );
-        Soldier soldier = new Soldier ( blue );
+        Piece soldier = factory.getPiece ( "SOLDIER", blue );
+        Piece rider = factory.getPiece ( "RIDER", gold );
 
         //Act
         board.placePiece ( rider, 9, 0 );
@@ -116,8 +116,8 @@ class IntegrationTest {
         Board board = new Board ();
         Gold gold = new Gold ();
         Blue blue = new Blue ();
-        Catapult catapult = new Catapult ( gold );
-        Soldier soldier = new Soldier ( blue );
+        Piece soldier = factory.getPiece ( "SOLDIER", blue );
+        Piece catapult = factory.getPiece ( "catapult", gold );
 
         //Act
         board.placePiece ( catapult, 0, 0 );
@@ -136,9 +136,9 @@ class IntegrationTest {
         Board board = new Board ();
         Gold gold = new Gold ();
         Blue blue = new Blue ();
-        Healer healer = new Healer ( gold );
-        Soldier soldier = new Soldier ( gold );
-        Rider rider = new Rider ( blue );
+        Piece soldier = factory.getPiece ( "SOLDIER", gold );
+        Piece healer = factory.getPiece ( "healer", gold );
+        Piece rider = factory.getPiece ( "rider", blue );
 
         //Act
         board.placePiece ( healer, 9, 0 );
@@ -164,23 +164,27 @@ class IntegrationTest {
 
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell () {
+        //Assemble
         Board board = new Board ();
         Piece piece = factory.getPiece ( "SOLDIER", new Gold () );
-
+        //Act
         board.placePiece ( piece, 3, 3 );
-
+        //Assert
+        assertEquals ( piece, board.removePiece ( 3,3 ) );
     }
 
     @Test
     void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell () {
+        //Assemble
         Board board = new Board ();
         Piece piece = factory.getPiece ( "SOLDIER", new Gold () );
         Piece pieceThatOccupiesCell = factory.getPiece ( "RIDER", new Gold () );
-
+        //Act
         board.placePiece ( pieceThatOccupiesCell, 3, 3 );
 
         try {
             board.placePiece ( piece, 3, 3 );
+            //Assemble
         } catch (OccupiedCellException e) {
             assert true;
         }
@@ -188,11 +192,13 @@ class IntegrationTest {
 
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell () {
+        //Assemble
         Board board = new Board ();
         Piece piece = factory.getPiece ( "SOLDIER", new Gold () );
-
+        //Act
         try {
             board.placePiece ( piece, 3, 3 );
+            //Assert
         } catch (EnemyCellException e) {
             assert true;
         }
@@ -200,17 +206,19 @@ class IntegrationTest {
 
     @Test
     void test09BoardIsProperlyCreated () {
+        //Assemble & Act
         Board board = new Board ();
-
+        //Assert
         assertNotNull ( board );
-
     }
 
     @Test
     void test11PlayerCantChooseMorePiecesThanWhatHisPointsAllow () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
+        //Assemble
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
         Player player1 = game.getPlayer1 ();
+        //Act
         try {
             Piece soldier = game.playerChoosesPiece ( player1, "SOLDIER" );
             Piece rider = game.playerChoosesPiece ( player1, "RIDER" );
@@ -218,28 +226,27 @@ class IntegrationTest {
             Piece rider2 = game.playerChoosesPiece ( player1, "RIDER" );
             Piece catapult2 = game.playerChoosesPiece ( player1, "CATAPULT" );
             Piece rider3 = game.playerChoosesPiece ( player1, "RIDER" );
-            // it has no points left up to here.
+
             Piece catapult3 = game.playerChoosesPiece ( player1, "CATAPULT" );
+            fail();
+            //Assert
         } catch (PlayerHas20PointsOnlyException e) {
-            e.printStackTrace ();
+            assertEquals ( 0, game.getPlayer1 ().obtainPoints () );
         }
-        assertEquals ( 0, game.getPlayer1 ().obtainPoints () );
     }
 
     @Test
     void test12PlayerThatHasNoPiecesLostTheGame () throws PlayerHas20PointsOnlyException, ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
-
+        //Assemble
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
         Player player1 = game.getPlayer1 ();
-        Object GameHasEndedException = new GameHasEndedException ();
 
-        //chooses all his pieces.
         Piece catapult1 = game.playerChoosesPiece ( player1, "CATAPULT" );
         Piece catapult2 = game.playerChoosesPiece ( player1, "CATAPULT" );
         Piece catapult3 = game.playerChoosesPiece ( player1, "CATAPULT" );
         Piece catapult4 = game.playerChoosesPiece ( player1, "CATAPULT" );
-        //places his pieces on the board.
+
         game.playerPlacesPieceOnBoard ( player1, catapult1, 9, 0 );
         game.playerPlacesPieceOnBoard ( player1, catapult2, 9, 1 );
         game.playerPlacesPieceOnBoard ( player1, catapult3, 9, 2 );
@@ -248,29 +255,26 @@ class IntegrationTest {
         game.newPlayer ( "Alan12" );
         Player player2 = game.getPlayer2 ();
 
-        //chooses all his pieces.
         Piece catapult5 = game.playerChoosesPiece ( player2, "CATAPULT" );
         Piece catapult6 = game.playerChoosesPiece ( player2, "CATAPULT" );
         Piece catapult7 = game.playerChoosesPiece ( player2, "CATAPULT" );
         Piece catapult8 = game.playerChoosesPiece ( player2, "CATAPULT" );
 
-        //places his pieces on the board.
         game.playerPlacesPieceOnBoard ( player2, catapult5, 11, 0 );
         game.playerPlacesPieceOnBoard ( player2, catapult6, 11, 1 );
         game.playerPlacesPieceOnBoard ( player2, catapult7, 11, 2 );
         game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
-
+        //Act
         try {
             game.playerAttacks ( player1, 9, 0 );
             game.playerAttacks ( player1, 9, 1 );
             game.playerAttacks ( player1, 9, 2 );
             game.playerAttacks ( player1, 9, 3 );
-            //it should not move.
             game.playerMovesPieceOnBoard ( player2, 11, 0, 12, 0 );
+            fail();
+            //Assert
         } catch (GameHasEndedException e) {
-            e.printStackTrace ();
+            assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
         }
-        assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
-
     }
 }
