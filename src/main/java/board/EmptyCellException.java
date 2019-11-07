@@ -4,12 +4,12 @@ public class EmptyCellException extends RuntimeException {
 
     private static final String ERROR_MSG = "Cell is empty";
 
-    public EmptyCellException (){
+    public EmptyCellException () {
 
     }
 
     @Override
-    public String getMessage (){
+    public String getMessage () {
 
         return ERROR_MSG;
     }

@@ -12,174 +12,174 @@ import static org.junit.jupiter.api.Assertions.*;
 class SoldierTest {
 
     @Test
-    void test00CreateSoldierWithATeamAndGetTheCorrectTeam(){
+    void test00CreateSoldierWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
 
         //Assert
-        assertEquals(gold, soldier.getTeam());
+        assertEquals ( gold, soldier.getTeam () );
 
     }
 
     @Test
-    void test01CreateSoldierAndGetLifeIs100(){
+    void test01CreateSoldierAndGetLifeIs100 () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
 
         //Assert
-        assertEquals(100, soldier.getLife());
+        assertEquals ( 100, soldier.getLife () );
     }
 
     @Test
-    void test02SoldierGetCostIs1(){
+    void test02SoldierGetCostIs1 () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
 
         //Assert
-        assertEquals(1, soldier.getCost());
+        assertEquals ( 1, soldier.getCost () );
     }
 
     @Test
-    void test03soldierReceiveDamageFromAnotherTeamPieceAndReduceHisLife(){
+    void test03soldierReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold();
-        Blue blue = new Blue();
-        Soldier soldier = new Soldier(gold);
-        Soldier blueSoldier = new Soldier(blue);
+        Gold gold = new Gold ();
+        Blue blue = new Blue ();
+        Soldier soldier = new Soldier ( gold );
+        Soldier blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack(soldier);
+        blueSoldier.attack ( soldier );
 
         //Assert
-        assertEquals(90, soldier.getLife());
+        assertEquals ( 90, soldier.getLife () );
     }
 
     @Test
-    void test04SoldierReceiveDamageAndReduceHisLife(){
+    void test04SoldierReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked(20);
+        soldier.getAttacked ( 20 );
 
         //Assert
-        assertEquals(80, soldier.getLife());
+        assertEquals ( 80, soldier.getLife () );
     }
 
     @Test
-    void test05SoldierReceiveDamageAndReduceHisLifeToCero(){
+    void test05SoldierReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked(100);
+        soldier.getAttacked ( 100 );
 
         //Assert
-        assertEquals(0, soldier.getLife());
+        assertEquals ( 0, soldier.getLife () );
     }
 
     @Test
-    void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero(){
+    void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked(120);
+        soldier.getAttacked ( 120 );
 
         //Assert
-        assertEquals(0, soldier.getLife());
+        assertEquals ( 0, soldier.getLife () );
     }
 
     @Test
-    void test07soldierUseBodyAttackAndHisDamageIs10(){
+    void test07soldierUseBodyAttackAndHisDamageIs10 () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
-
-        //Act
-
-        //Assert
-        assertEquals(10, soldier.getBodyAttack());
-    }
-
-    @Test
-    void test08soldierUseDistanceAttackAndHisDamageIs0(){
-        //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
 
         //Assert
-        assertEquals(0, soldier.getDistanceAttack());
+        assertEquals ( 10, soldier.getBodyAttack () );
     }
 
     @Test
-    void test09soldierGetMoveIs3(){
+    void test08soldierUseDistanceAttackAndHisDamageIs0 () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
 
         //Assert
-        assertEquals(3, soldier.move());
+        assertEquals ( 0, soldier.getDistanceAttack () );
     }
 
     @Test
-    void test10SoldierReceiveHealAndHisLifeUp(){
+    void test09soldierGetMoveIs3 () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
-        Healer healer = new Healer(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked(20);
-        healer.heal(soldier);
 
         //Assert
-        assertEquals(95, soldier.getLife());
+        assertEquals ( 3, soldier.move () );
     }
 
     @Test
-    void test11soldierReceiveHealWithOutDamageAndHisLifeCantUp(){
+    void test10SoldierReceiveHealAndHisLifeUp () {
         //Assign
-        Gold gold = new Gold();
-        Soldier soldier = new Soldier(gold);
-        Healer healer = new Healer(gold);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
+        Healer healer = new Healer ( gold );
 
         //Act
-        healer.heal(soldier);
+        soldier.getAttacked ( 20 );
+        healer.heal ( soldier );
 
         //Assert
-        assertEquals(100, soldier.getLife());
+        assertEquals ( 95, soldier.getLife () );
     }
 
     @Test
-    void test12soldierMakeDistanceAttackAndTheOtherPieceReceiveDamage(){
+    void test11soldierReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
-        Gold gold = new Gold();
-        Blue blue = new Blue();
-        Soldier soldier = new Soldier(gold);
-        Healer healer = new Healer(blue);
+        Gold gold = new Gold ();
+        Soldier soldier = new Soldier ( gold );
+        Healer healer = new Healer ( gold );
+
+        //Act
+        healer.heal ( soldier );
+
+        //Assert
+        assertEquals ( 100, soldier.getLife () );
+    }
+
+    @Test
+    void test12soldierMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
+        //Assign
+        Gold gold = new Gold ();
+        Blue blue = new Blue ();
+        Soldier soldier = new Soldier ( gold );
+        Healer healer = new Healer ( blue );
 
         //Act - Assert
         try {
-            soldier.distanceAttack(healer);
-        } catch(CanNotMakeThatMoveException e) {
-            assertThat(e.getMessage(), containsString("Piece cannot move in that direction"));
+            soldier.distanceAttack ( healer );
+        } catch (CanNotMakeThatMoveException e) {
+            assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
         }
     }
 

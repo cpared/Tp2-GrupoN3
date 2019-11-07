@@ -9,7 +9,7 @@ public class PlayerHas20PointsOnlyException extends Exception {
     }
 
     @Override
-    public String getMessage (){
+    public String getMessage () {
         return ERROR_MSG;
     }
 }

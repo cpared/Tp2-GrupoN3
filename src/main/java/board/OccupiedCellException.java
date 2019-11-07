@@ -1,15 +1,15 @@
 package board;
 
-public class OccupiedCellException extends RuntimeException{
+public class OccupiedCellException extends RuntimeException {
 
     private static final String ERROR_MSG = "Cell is occupied";
 
-    public OccupiedCellException(){
+    public OccupiedCellException () {
 
     }
 
     @Override
-    public String getMessage (){
+    public String getMessage () {
 
         return ERROR_MSG;
     }

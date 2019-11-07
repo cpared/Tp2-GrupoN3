@@ -1,4 +1,5 @@
 package piece;
+
 import board.CanNotMakeThatMoveException;
 import team.*;
 
@@ -9,55 +10,62 @@ public class Rider implements Piece {
     private int bodyAttack = 5;
     private int distanceAttack = 15;
 
-    public Rider(Team team) {
+    public Rider ( Team team ) {
         this.team = team;
     }
 
-    public int getBodyAttack(){
+    public int getBodyAttack () {
         return this.bodyAttack;
     }
+
     @Override
-    public int getLife(){
+    public int getLife () {
         return this.life;
     }
 
-    public int getDistanceAttack(){
+    public int getDistanceAttack () {
         return this.distanceAttack;
     }
+
     @Override
-    public int getCost(){
+    public int getCost () {
         return this.cost;
     }
 
     @Override
-    public void attack(Piece piece) {
-        piece.getAttacked(this.bodyAttack);
+    public void attack ( Piece piece ) {
+        piece.getAttacked ( this.bodyAttack );
     }
 
     @Override
-    public void distanceAttack(Piece receivingPiece) {
-        receivingPiece.getAttacked(this.distanceAttack);
+    public void distanceAttack ( Piece receivingPiece ) {
+        receivingPiece.getAttacked ( this.distanceAttack );
     }
+
     @Override
-    public void getAttacked(int damage){
+    public void getAttacked ( int damage ) {
         this.life -= damage;
-        if(this.life < 0) this.life = 0;
+        if (this.life < 0) this.life = 0;
     }
+
     @Override
-    public void getHealed(int heal){
+    public void getHealed ( int heal ) {
         this.life += heal;
-        if(this.life > 100) this.life = 100;
+        if (this.life > 100) this.life = 100;
     }
+
     @Override
-    public Team getTeam(){
+    public Team getTeam () {
         return this.team;
     }
+
     @Override
-    public int move(){
+    public int move () {
         return 3;
     }
+
     @Override
-    public void heal(Piece receivingPiece) {
+    public void heal ( Piece receivingPiece ) {
         throw new CanNotMakeThatMoveException ();
     }
 }

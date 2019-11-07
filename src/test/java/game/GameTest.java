@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.*;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 class GameTest {
 
     // Tests related to the players.
@@ -37,25 +39,26 @@ class GameTest {
     }
 
     @Test
-     void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
         Game game = new Game ();
         try {
             game.newPlayer ( "Rose" );
             game.newPlayer ( "Patty" );
             game.newPlayer ( "Alfred" );
-
+            fail ();
+            //Assert
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
-            e.printStackTrace ();
+            Assertions.assertEquals ( "Rose", game.getPlayer1 ().getName () );
+            Assertions.assertEquals ( "Patty", game.getPlayer2 ().getName () );
         }
-        Assertions.assertEquals ( "Rose", game.getPlayer1 ().getName () );
-        Assertions.assertEquals ( "Patty", game.getPlayer2 ().getName () );
+
     }
 
     // Tests related to teams.
     @Test
-     void test04GameAssignsTwoDifferentTeams () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test04GameAssignsTwoDifferentTeams () throws ThereAreOnlyTwoPlayersPerGameException {
         Game game = new Game ();
         try {
             game.newPlayer ( "Rose" );
