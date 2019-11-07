@@ -1,6 +1,6 @@
 package board;
 import piece.Piece;
-import piece.Team;
+import team.*;
 class Cell {
     private Piece piece = null;
     private Team team;

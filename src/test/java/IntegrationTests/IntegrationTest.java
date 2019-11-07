@@ -2,6 +2,7 @@ package IntegrationTests;
 import board.*;
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
+import team.*;
 import piece.*;
 import player.Player;
 
@@ -44,7 +45,11 @@ class IntegrationTest {
         }
     }
     @Test
-    void test06(){
+    void test06CanPlaceAnAllyPieceInAnEmptyAllyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Gold());
+
+        board.placePiece(piece,3,3);
 
     }
     @Test

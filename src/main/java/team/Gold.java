@@ -1,4 +1,4 @@
-package piece;
+package team;
 
 public class Gold extends Team{
 

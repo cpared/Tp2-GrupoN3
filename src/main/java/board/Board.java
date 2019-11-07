@@ -1,6 +1,5 @@
 package board;
 
-import team.*;
 import team.Gold;
 import team.Blue;
 import piece.Piece;

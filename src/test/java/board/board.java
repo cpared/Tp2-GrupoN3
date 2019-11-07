@@ -3,7 +3,7 @@ package board;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
 import piece.*;
-
+import team.*;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;

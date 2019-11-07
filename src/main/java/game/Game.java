@@ -7,7 +7,7 @@ import player.PlayerHas20PointsOnlyException;
 
 
 public class Game {
-    private Face face;
+    //private Face face;
     public Board board = new Board();
     public Player player1;
     public Player player2;

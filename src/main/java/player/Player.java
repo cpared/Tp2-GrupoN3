@@ -45,7 +45,7 @@ public class Player {
     public String obtainName () { return this.name; }
 
     public Piece choosePiece() throws PlayerHas20PointsOnlyException {
-        Piece piece = new Piece();
+        Piece piece = new Piece(new Team());
         int points= 0;
         this.subtractPoints ( points );
         team.addMember ( piece );

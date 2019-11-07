@@ -1,5 +1,5 @@
 package piece;
-
+import team.*;
 public class Piece {
     private Team team;
     public Piece(Team team){
