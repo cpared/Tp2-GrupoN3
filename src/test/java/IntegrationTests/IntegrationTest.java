@@ -7,6 +7,7 @@ import game.ThereCantBeTwoPlayersOnTheSameTeamException;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 //import team.*;
+import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import team.Gold;
 import team.Blue;
@@ -95,17 +96,16 @@ class IntegrationTest {
         board.placePiece ( soldier, 10, 0 );
 
         //Assert
-<<<<<<< HEAD
         assertEquals ( 100, rider.getLife () );
         assertEquals ( 100, soldier.getLife () );
         board.bodyAttack ( 9, 0, 10, 0 );
         assertEquals ( 90, soldier.getLife () );
-=======
+
         assertEquals(100, rider.getLife());
         assertEquals(100, soldier.getLife());
         board.bodyAttack(9,0,10,0);
         assertEquals(95, soldier.getLife());
->>>>>>> test
+
     }
 
     @Test
@@ -219,24 +219,25 @@ class IntegrationTest {
     }
 
     @Test
-    public void test12PlayerThatHasNoPiecesLostTheGame () throws PlayerHas20PointsOnlyException, ThereAreOnlyTwoPlayersPerGameException {
+    public void test12PlayerThatHasNoPiecesLostTheGame () throws PlayerHas20PointsOnlyException, ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
 
         Game game = new Game ();
         game.newPlayer ( "Player0005667" );
-        Piece soldier = game.playerChoosesPiece ( game.getPlayer1 () );
-        Piece rider = game.playerChoosesPiece ( game.getPlayer1 () );
-        Piece catapult = game.playerChoosesPiece ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( soldier, 3, 4 );
-        game.playerPlacesPieceOnBoard ( rider, 2, 2 );
-        game.playerPlacesPieceOnBoard ( catapult, 1, 4 );
+        Player player1 = game.getPlayer1 ();
+        Piece soldier = game.playerChoosesPiece ( player1 );
+        Piece rider = game.playerChoosesPiece ( player1 );
+        Piece catapult = game.playerChoosesPiece (player1 );
+        game.playerPlacesPieceOnBoard ( player1, soldier, 3, 4 );
+        game.playerPlacesPieceOnBoard ( player1, rider, 2, 2 );
+        game.playerPlacesPieceOnBoard ( player1, catapult, 1, 4 );
         /*
         game.newPlayer ( "Alan12" );
         Piece soldier2 = game.playerChoosesPiece ( game.getPlayer2 () );
         Piece rider2 = game.playerChoosesPiece ( game.getPlayer2 () );
         Piece catapult2 = game.playerChoosesPiece ( game.getPlayer2 () );
-        game.playerPlacesPiece ( soldier,8,8 );
-        game.playerPlacesPiece ( soldier,12,12 );
-        game.playerPlacesPiece ( soldier,3,3 );
+        game.playerPlacesPieceOnBoard ( soldier,8,8 );
+        game.playerPlacesPieceOnBoard ( soldier,12,12 );
+        game.playerPlacesPieceOnBoard ( soldier,3,3 );
         */
 
         game.removePieceFromBoard ( 3, 4 );

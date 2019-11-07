@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.*;
 
-/*class GameTest {
+class GameTest {
 
     // Tests related to the players.
     @Test
-     void test01NewGameWithPlayerMikeHasMikeAsAPlayer () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test01NewGameWithPlayerMikeHasMikeAsAPlayer () throws ThereAreOnlyTwoPlayersPerGameException {
         Game game = new Game ();
         try {
             game.newPlayer ( "Mike" );
@@ -22,14 +22,13 @@ import team.*;
     }
 
     @Test
-     void test02NewGameWithPlayerMikeAndWithPlayerRickHasBothPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test02NewGameWithPlayerMikeAndWithPlayerRickHasBothPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
         Game game = new Game ();
         try {
             game.newPlayer ( "Mike" );
             game.newPlayer ( "Rick" );
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
-
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
             e.printStackTrace ();
         }
@@ -70,4 +69,4 @@ import team.*;
         Assertions.assertEquals ( Gold.class, game.getPlayer1 ().getTeam ().getClass () );
         Assertions.assertEquals ( Blue.class, game.getPlayer2 ().getTeam ().getClass () );
     }
-}*/
+}

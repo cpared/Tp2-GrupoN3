@@ -12,9 +12,10 @@ public class Player {
     private int points;
     private Team team;
 
-    public Player (String name) {
+    public Player (String name, Team team) {
         this.points = 20;
         this.name = name;
+        this.team = team;
     }
 
     public void name(){
@@ -57,7 +58,7 @@ public class Player {
         board.placePiece ( piece, row, column );
     }
 
-    public void movePiece( Piece piece, Board board, int firstRow,int firstColumn,int secondRow,int secondColumn) {
+    public void movePiece( Board board, int firstRow,int firstColumn,int secondRow,int secondColumn) {
         board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
     }
 
@@ -65,33 +66,3 @@ public class Player {
         return this.team;
     }
 }
-
-
-/*
-package team;
-import piece.Piece;
-
-import java.util.ArrayList;
-
-public class Team {
-    private ArrayList<Piece> pieces;
-
-    public Team () {
-        pieces = new ArrayList<Piece> (  );
-    }
-
-    public void addMember (Piece piece){
-        pieces.add ( piece );
-    }
-
-    public ArrayList<Piece> getMembers () {
-        return pieces;
-    }
-
-    public boolean teamHasNoMembers() {
-        return this.pieces.size () == 0;
-    }
-}
-
-
-*/

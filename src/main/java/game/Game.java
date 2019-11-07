@@ -11,11 +11,13 @@ public class Game {
     public Player player1;
     public Player player2;
 
-    public Game() throws ThereAreOnlyTwoPlayersPerGameException {
+    public Game() {
     }
 
-    public void newPlayer (String name) throws ThereAreOnlyTwoPlayersPerGameException {
-        Player player = new Player ( name );
+    public void newPlayer (String name) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
+        Team team = this.assignTeam ();
+
+        Player player = new Player ( name , team);
         if (this.player1 == null) {
             this.player1 = player;
         } else if (this.player2 == null) {
@@ -46,19 +48,25 @@ public class Game {
         } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
     }
 
-    public void playerMovesPieceOnBoard (int firstRow,int firstColumn,int secondRow,int secondColumn) {
-        this.board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
+    public void playerMovesPieceOnBoard (Player player, int firstRow,int firstColumn,int secondRow,int secondColumn) {
+        player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
     }
 
-    public void playerPlacesPieceOnBoard ( Piece piece,int row, int column) {
-        board.placePiece ( piece, row, column);
+    public void playerPlacesPieceOnBoard ( Player player,Piece piece,int row, int column) {
+        player.placePieceOnBoard ( piece, this.board, row, column);
     }
 
-    public void removePieceFromBoard (int row, int column){
+    public void removePieceFromBoard (int row, int column) throws GameHasEndedException {
         board.removePiece ( row, column );
+        boolean state = gameHasEnded ();
+        if (state) { throw new GameHasEndedException (); }
     }
 
     public Piece playerChoosesPiece(Player player) throws PlayerHas20PointsOnlyException {
         return player.choosePiece ();
+    }
+
+    private boolean gameHasEnded () {
+        return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
     }
 }
