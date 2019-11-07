@@ -13,8 +13,8 @@ public class Catapult implements Piece {
         this.team = team;
     }
 
-    public int getBodyAttack(){
-        return this.bodyAttack;
+    public void getBodyAttack(){
+        throw new CanNotMakeThatMoveException();
     }
     @Override
     public int getLife(){
@@ -44,6 +44,7 @@ public class Catapult implements Piece {
     @Override
     public void getAttacked(int damage){
         this.life -= damage;
+        if(this.life < 0) this.life = 0;
     }
     @Override
     public void attack(Piece piece){
@@ -51,7 +52,7 @@ public class Catapult implements Piece {
     }
     @Override
     public void getHealed(int heal){
-        this.life += heal;
+        throw new CanNotMakeThatMoveException();
     }
     @Override
     public void heal(Piece receivingPiece) {

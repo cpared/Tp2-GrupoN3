@@ -41,10 +41,12 @@ public class Rider implements Piece {
     @Override
     public void getAttacked(int damage){
         this.life -= damage;
+        if(this.life < 0) this.life = 0;
     }
     @Override
     public void getHealed(int heal){
         this.life += heal;
+        if(this.life > 100) this.life = 100;
     }
     @Override
     public Team getTeam(){

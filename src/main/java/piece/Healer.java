@@ -12,6 +12,14 @@ public class Healer implements Piece {
         this.team = team;
     }
 
+    public int getDistanceAttack(){
+        throw new CanNotMakeThatMoveException();
+    }
+
+    public int getBodyAttack(){
+        throw new CanNotMakeThatMoveException();
+    }
+
     @Override
     public int getLife(){
         return life;
@@ -23,6 +31,7 @@ public class Healer implements Piece {
     @Override
     public void getHealed(int heal){
         this.life += heal;
+        if(this.life > 75) this.life = 75;
     }
     @Override
     public void heal(Piece piece){
@@ -35,6 +44,7 @@ public class Healer implements Piece {
     @Override
     public void getAttacked(int damage){
         this.life -= damage;
+        if(this.life < 0) this.life = 0;
     }
     @Override
     public Team getTeam(){
