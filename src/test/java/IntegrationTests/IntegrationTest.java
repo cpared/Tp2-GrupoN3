@@ -2,7 +2,9 @@ package IntegrationTests;
 import board.*;
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
-import piece.Piece;
+import piece.*;
+import piece.Blue;
+import piece.Gold;
 import player.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -135,6 +137,52 @@ class IntegrationTest {
         assertEquals(75, healer.getLife());
         assertEquals(100, soldier.getLife());
         assertEquals(100, rider.getLife());
+    }
+
+    @Test
+    void test06CanPlaceAnAllyPieceToAnEmptyAllyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Gold());
+
+        board.placePiece(piece,3,3);
+
+    }
+
+    @Test
+    void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Gold());
+        Piece pieceThatOccupiesCell = new Piece(new Gold());
+
+        board.placePiece(pieceThatOccupiesCell,3,3);
+
+        try{
+            board.placePiece(piece,3,3);
+        }
+        catch (OccupiedCellException e){
+            assert true;
+        }
+    }
+
+    @Test
+    void test08cannotPlaceAnAllyPieceInAnEnemyCell(){
+        Board board = new Board();
+        Piece piece = new Piece(new Blue());
+
+        try{
+            board.placePiece(piece,3,3);
+        }
+        catch (EnemyCellException e){
+            assert true;
+        }
+    }
+
+    @Test
+    void test09BoardIsProperlyCreated(){
+        Board board = new Board();
+
+        assertNotNull(board);
+
     }
 
     @Test
