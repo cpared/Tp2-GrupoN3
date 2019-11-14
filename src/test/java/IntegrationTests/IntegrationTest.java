@@ -272,7 +272,7 @@ class IntegrationTest {
             fail();
             //Assert
         } catch (GameHasEndedException e) {
-            assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
+            assertEquals ( 0, game.getPlayer1 ().numberOfPiecesOnTeam () );
         } catch (NoMembersLeftException e) {
             e.printStackTrace ();
         }

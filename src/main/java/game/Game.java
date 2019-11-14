@@ -69,7 +69,7 @@ public class Game {
     */
 
     private boolean gameHasEnded () {
-        return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
+        return this.player1.numberOfPiecesOnTeam () == 0 || this.player2.numberOfPiecesOnTeam () == 0;
     }
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {

@@ -1,9 +1,7 @@
 package player;
 
 import board.Board;
-import board.OccupiedCellException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +27,7 @@ class PlayerTest {
         //Act
         Player player = new Player ( "Pepe", team );
         //Assert
-        assertEquals ( "Pepe", player.name () );
+        assertEquals ( "Pepe", player.name );
     }
 
     //Point tests.
@@ -160,19 +158,9 @@ class PlayerTest {
     }
 
     // Tests related to teams.
-    @Test
-    void test12PlayerHasAnAssignedTeam () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        Team assignedTeam = player.getTeam ();
-
-        //Assert
-        assertEquals ( Blue.class, assignedTeam.getClass () );
-    }
 
     @Test
-    void test13PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
+    void test12PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
@@ -181,6 +169,6 @@ class PlayerTest {
         //Act
         player.removePieceFromTeam ();
         //Assert
-        assertEquals ( 0, player.getTeam ().numberOfMembersStillOnTeam () );
+        assertEquals ( 0, player.numberOfPiecesOnTeam () );
     }
 }

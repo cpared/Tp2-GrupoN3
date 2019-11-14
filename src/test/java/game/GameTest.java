@@ -69,15 +69,21 @@ class GameTest {
         try {
             game.newPlayer ( "Rose" );
             game.newPlayer ( "Patty" );
+            game.playerChoosesCatapult ( game.getPlayer1 () );
+            game.playerChoosesCatapult ( game.getPlayer2 () );
+            game.playerChoosesCatapult ( game.getPlayer2 () );
+
 
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
             e.printStackTrace ();
+        } catch (PlayerHas20PointsOnlyException e) {
+            e.printStackTrace ();
         }
         //Assert
-        Assertions.assertEquals ( Gold.class, game.getPlayer1 ().getTeam ().getClass () );
-        Assertions.assertEquals ( Blue.class, game.getPlayer2 ().getTeam ().getClass () );
+        Assertions.assertNotEquals (  game.getPlayer2 ().numberOfPiecesOnTeam () , game.getPlayer1 ().numberOfPiecesOnTeam () );
+
     }
 
     // Tests related to moves.
@@ -164,6 +170,6 @@ class GameTest {
             e.printStackTrace ();
         }
         //Assert
-        Assertions.assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
+        Assertions.assertEquals ( 0, game.getPlayer1 ().numberOfPiecesOnTeam () );
     }
 }

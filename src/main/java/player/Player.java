@@ -10,7 +10,7 @@ import team.Team;
 import java.util.Scanner;
 
 public class Player {
-    private String name;
+    public String name;
     private Team team;
     private PieceFactory factory;
 
@@ -20,20 +20,12 @@ public class Player {
         this.factory = new PieceFactory ( this.team );
     }
 
-    public String name () {
-        return this.name;
-    }
-
     public void placePieceOnBoard ( Piece piece, Board board, int row, int column ) {
         board.placePiece ( piece, row, column );
     }
 
     public void movePiece ( Board board, int firstRow, int firstColumn, int secondRow, int secondColumn ) {
         board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
-    }
-
-    public Team getTeam () {
-        return this.team;
     }
 
     public void removePieceFromTeam () throws NoMembersLeftException {
@@ -66,6 +58,10 @@ public class Player {
         team.addPieceToTeam ();
 
         return catapult;
+    }
+
+    public int numberOfPiecesOnTeam () {
+        return this.team.numberOfMembersStillOnTeam ();
     }
 
 }
