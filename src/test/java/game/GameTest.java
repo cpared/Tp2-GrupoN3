@@ -19,7 +19,7 @@ class GameTest {
         //Act
         game.newPlayer ( "Mike" );
         //Assert
-        Assertions.assertEquals ( "Mike", game.getPlayer1 ().getName () );
+        Assertions.assertNotNull ( game.getPlayer1( ) );
     }
 
     @Test
@@ -30,8 +30,8 @@ class GameTest {
         game.newPlayer ( "Mike" );
         game.newPlayer ( "Rick" );
         //Assert
-        Assertions.assertEquals ( "Mike", game.getPlayer1 ().getName () );
-        Assertions.assertEquals ( "Rick", game.getPlayer2 ().getName () );
+        Assertions.assertNotEquals (  game.getPlayer1 (), game.getPlayer2 () );
+
     }
 
     @Test
@@ -48,8 +48,8 @@ class GameTest {
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
-            Assertions.assertEquals ( "Rose", game.getPlayer1 ().getName () );
-            Assertions.assertEquals ( "Patty", game.getPlayer2 ().getName () );
+            Assertions.assertEquals ( "Rose", game.getPlayer1 ().name () );
+            Assertions.assertEquals ( "Patty", game.getPlayer2 ().name () );
         }
 
     }

@@ -20,7 +20,7 @@ public class Player {
         this.factory = new PieceFactory ( this.team );
     }
 
-    public String getName () {
+    public String name () {
         return this.name;
     }
 

@@ -29,7 +29,7 @@ class PlayerTest {
         //Act
         Player player = new Player ( "Pepe", team );
         //Assert
-        assertEquals ( "Pepe", player.getName () );
+        assertEquals ( "Pepe", player.name () );
     }
 
     //Point tests.
