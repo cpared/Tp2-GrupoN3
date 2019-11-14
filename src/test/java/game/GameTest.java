@@ -82,9 +82,9 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         //Act
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         //Assert
-        Assertions.assertEquals ( 19, game.getPlayer1 ().obtainPoints () );
+        Assertions.assertNotNull ( piece );
     }
 
     @Test
@@ -92,7 +92,7 @@ class GameTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         //Act
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
         //Assert
@@ -105,11 +105,11 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece2= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece2= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
+        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
 
         //Act
@@ -124,11 +124,11 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece2= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece2= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
+        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
 
         //Act
@@ -144,9 +144,9 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
+        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
 
         //Act

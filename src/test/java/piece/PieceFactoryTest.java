@@ -1,14 +1,15 @@
 package piece;
 
 import org.junit.jupiter.api.Test;
+import player.PlayerHas20PointsOnlyException;
 import team.Team;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PieceFactoryTest {
     //Assemble
-    private PieceFactory factory = new PieceFactory ();
     private Team team = new Team ();
+    private PieceFactory factory = new PieceFactory ( team );
 
     // verifies board creation.
     @Test
@@ -18,67 +19,48 @@ class PieceFactoryTest {
 
     // verifies that factory creates correct objects of each type.
     @Test
-    void test01WhenAskedToCreateARiderFactoryCreatesARider () {
+    void test01WhenAskedToCreateARiderFactoryCreatesARider () throws PlayerHas20PointsOnlyException {
         //Act
-        Piece piece = factory.getPiece ( "RIDER", team );
+        Piece piece = factory.createRider ();
         //Assert
         assertEquals ( Rider.class, piece.getClass () );
     }
 
     @Test
-    void test02WhenAskedToCreateAHealerFactoryCreatesAHealer () {
+    void test02WhenAskedToCreateAHealerFactoryCreatesAHealer () throws PlayerHas20PointsOnlyException {
         //Act
-        Piece piece = factory.getPiece ( "HEALER", team );
+        Piece piece = factory.createHealer ();
         //Assert
         assertEquals ( Healer.class, piece.getClass () );
     }
 
     @Test
-    void test03WhenAskedToCreateASoldierFactoryCreatesASoldier () {
+    void test03WhenAskedToCreateASoldierFactoryCreatesASoldier () throws PlayerHas20PointsOnlyException {
         //Act
-        Piece piece = factory.getPiece ( "SOLDIER", team );
+        Piece piece = factory.createSoldier ();
         //Assert
         assertEquals ( Soldier.class, piece.getClass () );
     }
 
     @Test
-    void test04WhenAskedToCreateACatapultFactoryCreatesACatapult () {
+    void test04WhenAskedToCreateACatapultFactoryCreatesACatapult () throws PlayerHas20PointsOnlyException {
         //Act
-        Piece piece = factory.getPiece ( "CATAPULT", team );
+        Piece piece = factory.createCatapult ();
         //Assert
         assertEquals ( Catapult.class, piece.getClass () );
-    }
-
-    // checks border cases.
-    @Test
-    void test05FactoryCreatesPieceWhenItReceivesParameterInLowercase () {
-        //Act
-        Piece piece = factory.getPiece ( "catapult", team );
-        //Assert
-        assertEquals ( Catapult.class, piece.getClass () );
-    }
-
-    @Test
-    void test05FactoryCreatesPieceWhenItReceivesParameterWithMixedLowercaseAndUppercase () {
-        //Act
-        Piece piece = factory.getPiece ( "catAPult", team );
-        //Assert
-        assertEquals ( Catapult.class, piece.getClass () );
-    }
-
-    @Test
-    void test07FactoryCreatesPieceWhenItReceivesParameterWithExtraSpaces () {
-        //Act
-        Piece piece = factory.getPiece ( "RIDER ", team );
-        //Assert
-        assertEquals ( Rider.class, piece.getClass () );
-    }
-
-    @Test
-    void test08FactoryDoesNotCreateAPieceWhenItDoesntReceiveAParameter () {
-        //Act
-        Piece piece = factory.getPiece ( null, team );
-        //Assert
-        assertNull ( piece );
     }
 }
+
+/*
+    @Test
+    void test13PlayerChoosingAHealerSubtracts3PointFromPlayer () throws PlayerHas20PointsOnlyException {
+        //Assemble
+        Player player = new Player ( "Player0003", team );
+        //Act
+        player.chooseHealer ( );
+
+        //Assert
+        assertEquals ( 18, player.obtainPoints () );
+    }
+
+ */

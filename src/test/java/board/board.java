@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Method;
 
 import piece.*;
+import player.PlayerHas20PointsOnlyException;
 import team.*;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -14,8 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
     //Assemble
     private Board board = new Board ();
-    private PieceFactory factory = new PieceFactory ();
-    private Piece piece = factory.getPiece ( "SOLDIER", new Gold () );
+    private PieceFactory factory = new PieceFactory ( new Gold () );
+    private Piece piece = factory.createSoldier ( );
+
+    BoardTest () throws PlayerHas20PointsOnlyException {
+    }
 
     @Test
     void test00TheBoardCanBeCreated () {
