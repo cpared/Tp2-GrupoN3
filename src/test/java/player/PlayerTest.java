@@ -1,9 +1,7 @@
 package player;
 
 import board.Board;
-import board.OccupiedCellException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,11 +15,11 @@ class PlayerTest {
     //Initiation tests.
 
     @Test
-    void test01NewPlayerHas20Points () {
+    void test01NewPlayerIsValid () {
         //Act
         Player player = new Player ( "Mike", team );
         //Assert
-        assertEquals ( 20, player.obtainPoints () );
+        assertNotNull ( player );
     }
 
     @Test
@@ -29,10 +27,11 @@ class PlayerTest {
         //Act
         Player player = new Player ( "Pepe", team );
         //Assert
-        assertEquals ( "Pepe", player.obtainName () );
+        assertEquals ( "Pepe", player.name );
     }
 
     //Point tests.
+    /*
     @Test
     void test03Subtracting8PointsFromPlayerLeavesPlayerWith12Points () {
         //Act
@@ -75,6 +74,8 @@ class PlayerTest {
             assertEquals ( 20, player.obtainPoints () );
         }
     }
+    */
+
 
     //Pieces tests.
     @Test
@@ -83,99 +84,57 @@ class PlayerTest {
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.choosePiece ( "SOLDIER" );
+        Piece piece = player.chooseSoldier ( );
 
         //Assert
         assertEquals ( Soldier.class, piece.getClass () );
     }
 
     @Test
-    void test07PlayerChoosingASoldierSubtracts1PointFromPlayer () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        player.choosePiece ( "SOLDIER" );
-
-        //Assert
-        assertEquals ( 19, player.obtainPoints () );
-    }
-
-    @Test
-    void test08PlayerCanChooseACatapult () throws PlayerHas20PointsOnlyException {
+    void test07PlayerCanChooseACatapult () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.choosePiece ( "CATAPULT" );
+        Piece piece = player.chooseCatapult ( );
 
         //Assert
         assertEquals ( Catapult.class, piece.getClass () );
     }
 
     @Test
-    void test09PlayerChoosingACatapultSubtracts5PointFromPlayer () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        player.choosePiece ( "CATAPULT" );
-
-        //Assert
-        assertEquals ( 15, player.obtainPoints () );
-    }
-
-    @Test
-    void test10PlayerCanChooseARider () throws PlayerHas20PointsOnlyException {
+    void test8PlayerCanChooseARider () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.choosePiece ( "RIDER" );
+        Piece piece = player.chooseRider ( );
 
         //Assert
         assertEquals ( Rider.class, piece.getClass () );
     }
 
     @Test
-    void test11PlayerChoosingARiderSubtracts3PointFromPlayer () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        player.choosePiece ( "RIDER" );
-
-        //Assert
-        assertEquals ( 17, player.obtainPoints () );
-    }
-
-    @Test
-    void test12PlayerCanChooseAHealer () throws PlayerHas20PointsOnlyException {
+    void test9PlayerCanChooseAHealer () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.choosePiece ( "HEALER" );
+        Piece piece = player.chooseHealer ( );
 
         //Assert
         assertEquals ( Healer.class, piece.getClass () );
     }
 
-    @Test
-    void test13PlayerChoosingAHealerSubtracts3PointFromPlayer () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        player.choosePiece ( "HEALER" );
 
-        //Assert
-        assertEquals ( 18, player.obtainPoints () );
-    }
 
     //Board tests.
     @Test
-    void test14PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
+    void test10PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Board board = new Board ();
-        Piece piece = player.choosePiece ( "HEALER" );
+        Piece piece = player.chooseHealer ( );
 
         //Act
         player.placePieceOnBoard ( piece, board, 11,0 );
@@ -185,24 +144,11 @@ class PlayerTest {
     }
 
     @Test
-    void test15PlayerCanPlaceAPieceOnTheBoardAndMaintainsPoints () throws PlayerHas20PointsOnlyException {
+    void test11PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Board board = new Board ();
-        Piece piece = player.choosePiece ( "HEALER" );
-        //Act
-        player.placePieceOnBoard ( piece, board, 11,0 );
-
-        //Assert
-        assertEquals ( 18, player.obtainPoints () );
-    }
-
-    @Test
-    void test16PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        Board board = new Board ();
-        Piece piece = player.choosePiece ( "HEALER" );
+        Piece piece = player.chooseHealer ( );
         player.placePieceOnBoard ( piece, board, 11,0 );
         //Act
         player.movePiece ( board, 11, 0, 11, 1 );
@@ -212,27 +158,17 @@ class PlayerTest {
     }
 
     // Tests related to teams.
-    @Test
-    void test17PlayerHasAnAssignedTeam () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        Team assignedTeam = player.getTeam ();
-
-        //Assert
-        assertEquals ( Blue.class, assignedTeam.getClass () );
-    }
 
     @Test
-    void test18PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
+    void test12PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Piece piece = player.choosePiece ( "HEALER" );
+        Piece piece = player.chooseHealer ( );
         Board board = new Board ();
         player.placePieceOnBoard ( piece, board, 11,0 );
         //Act
         player.removePieceFromTeam ();
         //Assert
-        assertEquals ( 0, player.getTeam ().numberOfMembersStillOnTeam () );
+        assertEquals ( 0, player.numberOfPiecesOnTeam () );
     }
 }

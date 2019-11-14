@@ -10,42 +10,14 @@ import team.Team;
 import java.util.Scanner;
 
 public class Player {
-    private String name;
-    private int points;
+    public String name;
     private Team team;
-    private PieceFactory factory = new PieceFactory ();
+    private PieceFactory factory;
 
     public Player ( String name, Team team ) {
-        this.points = 20;
         this.name = name;
         this.team = team;
-    }
-
-    public String getName () {
-        return this.name;
-    }
-
-    public int obtainPoints () {
-        return this.points;
-    }
-
-    public void subtractPoints ( int pointsToSubtract ) throws PlayerHas20PointsOnlyException {
-        if (this.points < pointsToSubtract) throw new PlayerHas20PointsOnlyException ();
-
-        this.points = this.points - pointsToSubtract;
-
-    }
-
-    public String obtainName () {
-        return this.name;
-    }
-
-    public Piece choosePiece ( String pieceName ) throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.getPiece ( pieceName, this.team );
-        this.subtractPoints ( piece.getCost () );
-        team.addPieceToTeam ();
-
-        return piece;
+        this.factory = new PieceFactory ( this.team );
     }
 
     public void placePieceOnBoard ( Piece piece, Board board, int row, int column ) {
@@ -56,12 +28,40 @@ public class Player {
         board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
     }
 
-    public Team getTeam () {
-        return this.team;
-    }
-
     public void removePieceFromTeam () throws NoMembersLeftException {
         this.team.subtractPieceFromTeam ();
+    }
+
+    public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
+        Piece soldier = this.factory.createSoldier ( );
+        team.addPieceToTeam ();
+
+        return soldier;
+    }
+
+    public Piece chooseRider () throws PlayerHas20PointsOnlyException {
+        Piece rider = this.factory.createRider ( );
+        team.addPieceToTeam ();
+
+        return rider;
+    }
+
+    public Piece chooseHealer () throws PlayerHas20PointsOnlyException {
+        Piece healer = this.factory.createHealer ( );
+        team.addPieceToTeam ();
+
+        return healer;
+    }
+
+    public Piece chooseCatapult () throws PlayerHas20PointsOnlyException {
+        Piece catapult = this.factory.createCatapult ( );
+        team.addPieceToTeam ();
+
+        return catapult;
+    }
+
+    public int numberOfPiecesOnTeam () {
+        return this.team.numberOfMembersStillOnTeam ();
     }
 
 }

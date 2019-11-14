@@ -62,12 +62,14 @@ public class Game {
         return board.removePiece ( row, column );
     }
 
+    /*
     public Piece playerChoosesPiece ( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
         return player.choosePiece ( pieceName );
     }
+    */
 
     private boolean gameHasEnded () {
-        return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
+        return this.player1.numberOfPiecesOnTeam () == 0 || this.player2.numberOfPiecesOnTeam () == 0;
     }
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
@@ -80,5 +82,21 @@ public class Game {
         if (state) {
             throw new GameHasEndedException ();
         }
+    }
+
+    public Piece playerChoosesSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
+        return player.chooseSoldier ( );
+    }
+
+    public Piece playerChoosesHealer ( Player player ) throws PlayerHas20PointsOnlyException {
+        return player.chooseHealer ( );
+    }
+
+    public Piece playerChoosesRider ( Player player ) throws PlayerHas20PointsOnlyException {
+        return player.chooseRider ( );
+    }
+
+    public Piece playerChoosesCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
+        return player.chooseCatapult ( );
     }
 }
