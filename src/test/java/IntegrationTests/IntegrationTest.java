@@ -274,4 +274,16 @@ class IntegrationTest {
             e.printStackTrace ();
         }
     }
+    @Test
+    void test13CanMoveAGroupOfSoldiersAsABattalion(){
+        Team team = new Team();
+        Board board = new Board(team,"does not matter");
+        Piece soldier = factory.getPiece ( "SOLDIER",  team );
+        Piece anotherSoldier = factory.getPiece ( "SOLDIER",  team );
+        Piece yetAnotherOne = factory.getPiece ( "SOLDIER",  team );
+        board.placePiece(soldier,1,2);
+        board.placePiece(anotherSoldier,1,3);
+        board.placePiece(yetAnotherOne,1,4);
+        board.moveAsBattalion(1,4,1,5);
+    }
 }
