@@ -1,5 +1,6 @@
 package game;
 
+import player.Player;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,21 +36,26 @@ class GameTest {
     }
 
     @Test
-    void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
         //Assemble
         Game game = new Game ();
         //Act
+
+        game.newPlayer ( "Rose" );
+        game.newPlayer ( "Patty" );
+        Player player1 = game.getPlayer1 ( );
+        Player player2 = game.getPlayer2 ( );
+
         try {
-            game.newPlayer ( "Rose" );
-            game.newPlayer ( "Patty" );
             game.newPlayer ( "Alfred" );
             fail ();
+
             //Assert
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
-            Assertions.assertEquals ( "Rose", game.getPlayer1 ().name () );
-            Assertions.assertEquals ( "Patty", game.getPlayer2 ().name () );
+            Assertions.assertEquals ( player1 , game.getPlayer1 () );
+            Assertions.assertEquals ( player2 , game.getPlayer2 () );
         }
 
     }
