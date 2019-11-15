@@ -71,4 +71,8 @@ public class Healer implements Piece {
     public void distanceAttack ( Piece receivingPiece ) {
         throw new CanNotMakeThatMoveException (); //Raise another error is correct, but this for now
     }
+    @Override
+    public boolean isCost (int expectedCost) {
+        return this.cost == expectedCost;
+    }
 }

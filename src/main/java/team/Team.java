@@ -1,10 +1,16 @@
 package team;
 
+import piece.Piece;
+
+import java.util.ArrayList;
+
 public class Team {
     private int pieces;
+    private ArrayList<Piece> piece;
 
     public Team () {
         this.pieces = 0;
+        this.piece = new ArrayList<Piece> ( );
     }
 
     public void addPieceToTeam () {

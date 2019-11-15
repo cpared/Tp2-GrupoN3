@@ -1,6 +1,6 @@
 package player;
 
-public class PlayerHas20PointsOnlyException extends Exception {
+public class PlayerHas20PointsOnlyException extends RuntimeException {
 
     private static final String ERROR_MSG = "Player has only 20 points, subtracting over 20 points is not valid.";
 

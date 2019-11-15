@@ -68,4 +68,9 @@ public class Rider implements Piece {
     public void heal ( Piece receivingPiece ) {
         throw new CanNotMakeThatMoveException ();
     }
+
+    @Override
+    public boolean isCost (int expectedCost) {
+        return this.cost == expectedCost;
+    }
 }

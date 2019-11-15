@@ -70,5 +70,9 @@ public class Soldier implements Piece {
         throw new CanNotMakeThatMoveException ();
     }
 
+    @Override
+    public boolean isCost (int expectedCost) {
+        return this.cost == expectedCost;
+    }
 
 }
