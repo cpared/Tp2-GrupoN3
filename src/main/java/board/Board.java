@@ -130,4 +130,10 @@ public class Board {
             moveInColumn(firstRow,firstColumn,secondColumn);
         }
     }
+
+    public void createBattalion(int i, int i1) {
+    }
+
+    public void dissolvedBattalion(int i, int i1) {
+    }
 }
