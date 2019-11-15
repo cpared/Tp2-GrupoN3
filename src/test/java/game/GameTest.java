@@ -31,7 +31,8 @@ class GameTest {
         game.newPlayer ( "Mike" );
         game.newPlayer ( "Rick" );
         //Assert
-        Assertions.assertNotEquals (  game.getPlayer1 (), game.getPlayer2 () );
+        //TODO check it equals override.
+        Assertions.assertFalse (  game.getPlayer1 ().equals ( game.getPlayer2 () ) );
 
     }
 
@@ -54,8 +55,8 @@ class GameTest {
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
-            Assertions.assertEquals ( player1 , game.getPlayer1 () );
-            Assertions.assertEquals ( player2 , game.getPlayer2 () );
+            Assertions.assertTrue ( player1.equals (  game.getPlayer1 () ) );
+            Assertions.assertTrue ( player2.equals (  game.getPlayer2 () ) );
         }
 
     }
@@ -71,7 +72,7 @@ class GameTest {
             game.newPlayer ( "Patty" );
             game.playerChoosesCatapult ( game.getPlayer1 () );
             game.playerChoosesCatapult ( game.getPlayer2 () );
-            game.playerChoosesCatapult ( game.getPlayer2 () );
+            game.playerChoosesHealer ( game.getPlayer2 () );
 
 
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
@@ -156,20 +157,22 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
+        Player player1 = game.getPlayer1 ();
+        Player player2 = game.getPlayer2 ();
+        Piece piece= game.playerChoosesSoldier ( player1 );
+        game.playerPlacesPieceOnBoard ( player1, piece, 2,0 );
+        Piece piece3= game.playerChoosesSoldier ( player2 );
+        game.playerPlacesPieceOnBoard ( player2, piece3, 11,0 );
 
         //Act
         try{
-            game.playerAttacks ( game.getPlayer1 (),2,0 );
+            game.playerAttacks ( player1,2,0 );
         } catch (GameHasEndedException e) {
             e.getMessage ();
         } catch (NoMembersLeftException e) {
             e.printStackTrace ();
         }
         //Assert
-        Assertions.assertEquals ( 0, game.getPlayer1 ().numberOfPiecesOnTeam () );
+        Assertions.assertTrue (game.isNumberOfMembersOnTeam ( player1 , 0 ) );
     }
 }

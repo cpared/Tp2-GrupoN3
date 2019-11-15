@@ -60,8 +60,15 @@ public class Player {
         return catapult;
     }
 
-    public int numberOfPiecesOnTeam () {
-        return this.team.numberOfMembersStillOnTeam ();
+    public boolean isNumberOfPiecesOnTeam ( int numberOfMembers ) {
+        return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
     }
 
+    public int numberOfPiecesOnTeam ( ) {
+        return this.team.numberOfMembersStillOnTeam ( );
+    }
+
+    public boolean equals ( Player player ) {
+       return this.name == player.name && this.team == player.team;
+    }
 }

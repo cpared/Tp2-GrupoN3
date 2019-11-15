@@ -16,7 +16,11 @@ public class Team {
         else this.pieces = this.pieces - 1;
     }
 
-    public int numberOfMembersStillOnTeam () {
+    public boolean isNumberOfMembersStillOnTeam ( int numberOfMembers ) {
+        return this.pieces == numberOfMembers;
+    }
+
+    public int numberOfMembersStillOnTeam ( ) {
         return this.pieces;
     }
 }

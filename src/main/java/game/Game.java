@@ -69,7 +69,7 @@ public class Game {
     */
 
     private boolean gameHasEnded () {
-        return this.player1.numberOfPiecesOnTeam () == 0 || this.player2.numberOfPiecesOnTeam () == 0;
+        return this.player1.isNumberOfPiecesOnTeam ( 0 ) || this.player2.isNumberOfPiecesOnTeam ( 0 );
     }
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
@@ -98,5 +98,9 @@ public class Game {
 
     public Piece playerChoosesCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
         return player.chooseCatapult ( );
+    }
+    //jason getters
+    public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
+        return player.isNumberOfPiecesOnTeam ( numberOfMembers );
     }
 }

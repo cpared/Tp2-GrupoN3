@@ -39,3 +39,7 @@ public class PieceFactory {
         return catapult;
     }
 }
+
+/*
+game loop pattern.
+ */
