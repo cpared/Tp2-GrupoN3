@@ -13,13 +13,14 @@ import piece.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationTest {
-    private PieceFactory factory = new PieceFactory ( new Gold ());
-    private PieceFactory efactory = new PieceFactory ( new Blue ());
-
+    Team team = new Team();
+    Team team2boludo = new Team();
+    private PieceFactory factory = new PieceFactory ( team);
+    private PieceFactory efactory = new PieceFactory ( team2boludo);
     @Test
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays () throws PlayerHas20PointsOnlyException {
 
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ( );
 
         board.placePiece ( piece, 3, 3 );
@@ -36,7 +37,7 @@ class IntegrationTest {
 
     @Test
     void test01APieceCanNotMoveToAnOccupiedCell () throws PlayerHas20PointsOnlyException {
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ( );
 
         board.placePiece ( piece, 3, 3 );
@@ -52,7 +53,7 @@ class IntegrationTest {
 
     @Test
     void test06CanPlaceAnAllyPieceInAnEmptyAllyCell () throws PlayerHas20PointsOnlyException {
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ( );
 
         board.placePiece ( piece, 3, 3 );
@@ -62,9 +63,7 @@ class IntegrationTest {
     @Test
     void Test02AnAlliedInfantrySoldierAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted () throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board ();
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Board board = new Board (team,team2boludo);
         Piece soldier = factory.createSoldier ( );
         Piece healer = efactory.createHealer ( );
 
@@ -83,9 +82,7 @@ class IntegrationTest {
     @Test
     void Test03AnAlliedRiderAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted () throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board ();
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Board board = new Board (team,team2boludo);
         Piece soldier = efactory.createSoldier ( );
         Piece rider = factory.createRider ( );
 
@@ -109,9 +106,7 @@ class IntegrationTest {
     @Test
     void Test04AnAlliedCatapultAttacksAnEnemyPieceAndItIsVerifiedThatTheCorrespondingLifeIsSubtracted () throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board ();
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Board board = new Board (team,team2boludo);
         Piece soldier = efactory.createSoldier ( );
         Piece catapult = factory.createCatapult ( );
 
@@ -129,9 +124,7 @@ class IntegrationTest {
     @Test
     void Test05AnAlliedHealerHealsAnAlliedPieceAndVerifiesThatTheCorrespondingLifeIsAdded () throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board ();
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Board board = new Board (team,team2boludo);
         Piece soldier = factory.createSoldier ( );
         Piece healer = factory.createHealer ( );
         Piece rider = efactory.createRider ();
@@ -161,7 +154,7 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ();
         //Act
         board.placePiece ( piece, 3, 3 );
@@ -172,7 +165,7 @@ class IntegrationTest {
     @Test
     void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ( );
         Piece pieceThatOccupiesCell = factory.createRider ( );
         //Act
@@ -189,7 +182,7 @@ class IntegrationTest {
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         Piece piece = factory.createSoldier ();
         //Act
         try {
@@ -203,7 +196,7 @@ class IntegrationTest {
     @Test
     void test09BoardIsProperlyCreated () {
         //Assemble & Act
-        Board board = new Board ();
+        Board board = new Board (team,team2boludo);
         //Assert
         assertNotNull ( board );
     }
@@ -277,13 +270,15 @@ class IntegrationTest {
             e.printStackTrace ();
         }
     }
+
+    //ENTREGA 2
     @Test
     void test13CanMoveAGroupOfSoldiersAsABattalion(){
         Team team = new Team();
-        Board board = new Board(team,"does not matter");
-        Piece soldier = factory.getPiece ( "SOLDIER",  team );
-        Piece anotherSoldier = factory.getPiece ( "SOLDIER",  team );
-        Piece yetAnotherOne = factory.getPiece ( "SOLDIER",  team );
+        Board board = new Board(team,team2boludo);
+        Piece soldier = factory.createSoldier ( );
+        Piece anotherSoldier = factory.createSoldier ( );;
+        Piece yetAnotherOne = factory.createSoldier ( );
         board.placePiece(soldier,1,2);
         board.placePiece(anotherSoldier,1,3);
         board.placePiece(yetAnotherOne,1,4);

@@ -9,7 +9,7 @@ import java.lang.Math;
 public class Board {
     private ArrayList<ArrayList<Cell>> cellArray;
 
-    public Board(Object firstTeam, Object secondTeam) {
+    public Board(Team firstTeam, Team secondTeam) {
         cellArray = new ArrayList<ArrayList<Cell>>();
         for (int i = 0; i < 10; i += 1) {
             this.cellArray.add(new ArrayList<Cell>());

@@ -2,8 +2,6 @@ package piece;
 
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
-import team.Blue;
-import team.Gold;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;

@@ -1,12 +1,8 @@
 package piece;
 
 
-import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
-import team.Blue;
-import team.Gold;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RiderTest {

@@ -1,7 +1,7 @@
 
 package player;
 
-public class ThereAreOnlyTwoPlayersPerGameException extends Exception {
+public class ThereAreOnlyTwoPlayersPerGameException extends RuntimeException {
     private static final String ERROR_MSG = "Game has only two players.";
 
     public ThereAreOnlyTwoPlayersPerGameException () {

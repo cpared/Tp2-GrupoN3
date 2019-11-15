@@ -43,7 +43,7 @@ class BattalionCriteriaTest {
     }
 
     @Test
-    void test02FilteringByBattalionCriteriaLeaves3oldiers (){
+    void test02FilteringByBattalionCriteriaLeaves3Soldiers (){
         //Assemble
         Piece rider1 = factory.createRider ();
         Piece rider2 = factory.createRider ();
