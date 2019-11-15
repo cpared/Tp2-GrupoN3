@@ -27,26 +27,6 @@ public class Game {
 
     }
 
-    public Player getPlayer1 () {
-        return this.player1;
-    }
-
-    public Player getPlayer2 () {
-        return this.player2;
-    }
-
-    public Board getBoard () {
-        return this.board;
-    }
-
-    private Team assignTeam () throws ThereCantBeTwoPlayersOnTheSameTeamException {
-        if (this.player1 == null) {
-            return new Gold ();
-        } else if (this.player2 == null) {
-            return new Blue ();
-        } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
-    }
-
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
         this.endGame ();
         player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
@@ -62,26 +42,10 @@ public class Game {
         return board.removePiece ( row, column );
     }
 
-    /*
-    public Piece playerChoosesPiece ( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
-        return player.choosePiece ( pieceName );
-    }
-    */
-
-    private boolean gameHasEnded () {
-        return this.player1.isNumberOfPiecesOnTeam ( 0 ) || this.player2.isNumberOfPiecesOnTeam ( 0 );
-    }
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         this.endGame ();
         this.removePieceFromBoard ( player, row, column );
-    }
-
-    private void endGame () throws GameHasEndedException {
-        boolean state = gameHasEnded ();
-        if (state) {
-            throw new GameHasEndedException ();
-        }
     }
 
     public Piece playerChoosesSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
@@ -102,5 +66,40 @@ public class Game {
     //jason getters
     public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
         return player.isNumberOfPiecesOnTeam ( numberOfMembers );
+    }
+
+
+    // Private methods.
+    private boolean gameHasEnded () {
+        return this.player1.isNumberOfPiecesOnTeam ( 0 ) || this.player2.isNumberOfPiecesOnTeam ( 0 );
+    }
+
+    private void endGame () throws GameHasEndedException {
+        boolean state = gameHasEnded ();
+        if (state) {
+            throw new GameHasEndedException ();
+        }
+    }
+
+    private Team assignTeam () throws ThereCantBeTwoPlayersOnTheSameTeamException {
+        if (this.player1 == null) {
+            return new Gold ();
+        } else if (this.player2 == null) {
+            return new Blue ();
+        } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
+    }
+
+
+    // This getters are only for testing, they dont belong in the model.
+    public Player getPlayer1 () {
+        return this.player1;
+    }
+
+    public Player getPlayer2 () {
+        return this.player2;
+    }
+
+    public Board getBoard () {
+        return this.board;
     }
 }
