@@ -26,5 +26,7 @@ public interface Piece {
 
     public int getCost ();
 
+    public boolean isCost (int expectedCost);
+
 }
 

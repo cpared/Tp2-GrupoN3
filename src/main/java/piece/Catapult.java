@@ -68,4 +68,9 @@ public class Catapult implements Piece {
         throw new CanNotMakeThatMoveException ();
     }
 
+    @Override
+    public boolean isCost (int expectedCost) {
+        return this.cost == expectedCost;
+    }
+
 }

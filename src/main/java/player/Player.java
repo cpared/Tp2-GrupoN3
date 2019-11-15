@@ -10,7 +10,7 @@ import team.Team;
 import java.util.Scanner;
 
 public class Player {
-    public String name;
+    private String name;
     private Team team;
     private PieceFactory factory;
 
@@ -60,8 +60,21 @@ public class Player {
         return catapult;
     }
 
-    public int numberOfPiecesOnTeam () {
-        return this.team.numberOfMembersStillOnTeam ();
+    public boolean isNumberOfPiecesOnTeam ( int numberOfMembers ) {
+        return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
     }
 
+    public int numberOfPiecesOnTeam ( ) {
+        return this.team.numberOfMembersStillOnTeam ( );
+    }
+
+    public boolean equals ( Player player ) {
+       return this.name.equals ( player.name ) && this.team.equals ( player.team );
+    }
+
+
+    // This getter is only for testing, they dont belong in the model.
+    public String name () {
+        return this.name;
+    }
 }
