@@ -14,7 +14,7 @@ public class BattalionCriteria implements Criteria{
         if (soldierPieces.size () == 3) {
             return soldierPieces;
         }
-        if (soldierPieces.size () > 3) {
+        while (soldierPieces.size () > 3) {
             soldierPieces.remove ( 3 );
             return soldierPieces;
         }

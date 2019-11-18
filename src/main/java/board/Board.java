@@ -32,9 +32,11 @@ public class Board {
 
     public void movePiece(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         Cell originCell = this.getCell(firstRow, firstColumn);
-        Piece piece = originCell.deletePieceFromCell();
+        movePiece(originCell.deletePieceFromCell(),firstRow,firstColumn,secondRow,secondColumn);
+    }
+    private void movePiece(Piece piece,int firstRow,int firstColumn, int secondRow,int secondColumn){
         if (distance(firstRow, firstColumn, secondRow, secondColumn) > piece.move()) {
-            originCell.putPieceInCell(piece);
+            this.getCell(firstRow, firstColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
         Cell destinationCell = this.getCell(secondRow, secondColumn);
@@ -42,11 +44,13 @@ public class Board {
         try {
             destinationCell.putPieceInCell(piece);
         } catch (Exception OccupiedCellException) {
-            originCell.putPieceInCell(piece);
+            this.getCell(firstRow, firstColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
     }
+    private void movePiece(Battalion piece,int firstRow,int firstColumn, int secondRow,int secondColumn){
 
+    }
     private Cell getCell(int row, int column) {
         return this.cellArray.get(row).get(column);
     }
@@ -77,63 +81,15 @@ public class Board {
         originPiece.heal(receivingPiece);
     }
 
-    private void moveInRow(int firstRow, int firstColumn, int secondRow) {
-        int counter = 0;
-        for (int i = -2; i < 3 && counter < 3; i++) {
-            try {
-                movePiece(firstRow, firstColumn - i, secondRow, firstColumn - i);
-                counter += 1;
-            } catch (CanNotMakeThatMoveException e) {
-                for (int j = -2; j < i; j++) {
-                    try {
-                        movePiece(secondRow, firstColumn - j, firstRow, firstColumn - j);
-                    } catch (Exception f) {
-                        continue;
-                    }
-                    if (3 - i < 3) {
-                        //CHANGE IN A FUTURE INTO A NEW EXCEPTION
-                        throw new CanNotMakeThatMoveException();
-                    }
-                }
-                counter = 0;
-            }
-        }
-    }
-    private void moveInColumn(int firstRow, int firstColumn, int secondColumn) {
-        int counter = 0;
-        for (int i = -2; i < 3 && counter < 3; i++) {
-            try {
-                movePiece(firstRow-i, firstColumn, firstRow - i, secondColumn);
-                counter += 1;
-            } catch (CanNotMakeThatMoveException e) {
-                for (int j = -2; j < i; j++) {
-                    try {
-                        movePiece(firstRow -j, secondColumn, firstRow -j, secondColumn - j);
-                    } catch (Exception f) {
-                        continue;
-                    }
-                    if (3 - i < 3) {
-                        //CHANGE IN A FUTURE INTO A NEW EXCEPTION
-                        throw new CanNotMakeThatMoveException();
-                    }
-                }
-                counter = 0;
-            }
-        }
-    }
-
-    public void moveAsBattalion(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+    public void createBattalion(int firstRow, int firstColumn) {
         try {
-            moveInRow(firstRow, firstColumn, secondRow);
+            Battalion battalion = new Battalion(cellArray.subList(firstRow - 2, firstRow + 2).get(firstColumn));
         }
-        catch (CanNotMakeThatMoveException e){
-            moveInColumn(firstRow,firstColumn,secondColumn);
+        catch (CanNotMakeBattalion e){
+            Battalion battalion = new Battalion(cellArray.get(firstRow).subList(firstColumn -2, firstColumn +2));
         }
     }
 
-    public void createBattalion(int i, int i1) {
-    }
-
-    public void dissolvedBattalion(int i, int i1) {
+    public void dissolvedBattalion(int firstRow, int firstColumn) {
     }
 }
