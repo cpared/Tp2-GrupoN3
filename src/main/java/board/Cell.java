@@ -44,4 +44,14 @@ class Cell {
         return poppedPiece;
     }
 
+    public Battalion getBattalion() {
+        if (this.battalion == null) {
+            throw new EmptyCellException ();
+        }
+        return this.battalion;
+    }
+
+    public void popBattalion() {
+        this.battalion = null;
+    }
 }

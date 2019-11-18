@@ -14,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     //Assemble
-    private Board board = new Board ();
-    private PieceFactory factory = new PieceFactory ( new Gold () );
+    Team team = new Team();
+    private Board board = new Board (team,new Team());
+    private PieceFactory factory = new PieceFactory ( team );
     private Piece piece = factory.createSoldier ( );
 
     BoardTest () throws PlayerHas20PointsOnlyException {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.lang.Math;
 
 public class Board {
-    private ArrayList<ArrayList<Cell>> cellArray;
+    protected ArrayList<ArrayList<Cell>> cellArray;
 
     public Board(Team firstTeam, Team secondTeam) {
         cellArray = new ArrayList<ArrayList<Cell>>();
@@ -31,10 +31,14 @@ public class Board {
     }
 
     public void movePiece(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        Cell originCell = this.getCell(firstRow, firstColumn);
-        movePiece(originCell.deletePieceFromCell(),firstRow,firstColumn,secondRow,secondColumn);
+        try {
+            moveBattalion(firstRow, firstColumn, secondRow, secondColumn);
+        } catch(NoBattalionFound e) {
+            movePiec(firstRow, firstColumn, secondRow, secondColumn);
+        }
     }
-    private void movePiece(Piece piece,int firstRow,int firstColumn, int secondRow,int secondColumn){
+    protected void movePiec(int firstRow,int firstColumn, int secondRow,int secondColumn){
+        Piece piece = this.getCell(firstRow, firstColumn).getPiece();
         if (distance(firstRow, firstColumn, secondRow, secondColumn) > piece.move()) {
             this.getCell(firstRow, firstColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
@@ -48,8 +52,14 @@ public class Board {
             throw new CanNotMakeThatMoveException();
         }
     }
-    private void movePiece(Battalion piece,int firstRow,int firstColumn, int secondRow,int secondColumn){
-
+    private void moveBattalion(int firstRow,int firstColumn, int secondRow,int secondColumn){
+        Battalion battalion = this.getCell(firstRow,firstColumn).getBattalion();
+        try {
+            battalion.movePieces(firstRow, firstColumn, secondRow, secondColumn);
+        }
+        catch (Exception e){
+            dissolveBattalion(firstRow,firstColumn);
+        }
     }
     private Cell getCell(int row, int column) {
         return this.cellArray.get(row).get(column);
@@ -82,14 +92,10 @@ public class Board {
     }
 
     public void createBattalion(int firstRow, int firstColumn) {
-        try {
-            Battalion battalion = new Battalion(cellArray.subList(firstRow - 2, firstRow + 2).get(firstColumn));
-        }
-        catch (CanNotMakeBattalion e){
-            Battalion battalion = new Battalion(cellArray.get(firstRow).subList(firstColumn -2, firstColumn +2));
-        }
+        new Battalion(firstRow,firstColumn,this);
     }
 
-    public void dissolvedBattalion(int firstRow, int firstColumn) {
+    public void dissolveBattalion(int firstRow, int firstColumn) {
+        this.getCell(firstRow,firstColumn).getBattalion().destroyBattalion();
     }
 }

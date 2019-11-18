@@ -275,11 +275,9 @@ class IntegrationTest {
     //ENTREGA 2
     @Test
     void test13CanMoveAGroupOfSoldiersAsABattalion() {
-        Team team = new Team();
         Board board = new Board(team, team2boludo);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
-        ;
         Piece yetAnotherOne = factory.createSoldier();
         board.placePiece(soldier, 1, 2);
         board.placePiece(anotherSoldier, 1, 3);
@@ -293,14 +291,13 @@ class IntegrationTest {
         Board board = new Board(team, team2boludo);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
-        ;
         Piece yetAnotherOne = factory.createSoldier();
         Piece sol = factory.createCatapult();
         board.placePiece(soldier, 1, 2);
         board.placePiece(anotherSoldier, 1, 3);
         board.placePiece(yetAnotherOne, 1, 4);
-        board.placePiece(sol, 2, 3);
         board.createBattalion(1, 3);
+        board.placePiece(sol, 2, 3);
 
         board.movePiece(1, 3, 2, 3);
 
@@ -325,7 +322,7 @@ class IntegrationTest {
         board.movePiece(1, 3, 2, 3);
 
         try {
-            board.dissolvedBattalion(2, 3);
+            board.dissolveBattalion(2, 3);
             fail();
         } catch (Exception e) {
             assertEquals("CRIS SE LA COME", "CRIS SE LA COME");
