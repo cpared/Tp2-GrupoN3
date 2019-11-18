@@ -2,6 +2,7 @@ package piece;
 
 import board.CanNotMakeThatMoveException;
 import org.junit.jupiter.api.Test;
+import team.Team;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
@@ -12,7 +13,7 @@ class HealerTest {
     @Test
     void test00CreateHealerWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -25,7 +26,7 @@ class HealerTest {
     @Test
     void test01CreateHealerAndGetLifeIs75 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -37,7 +38,7 @@ class HealerTest {
     @Test
     void test02HealerGetCostIs2 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -49,8 +50,8 @@ class HealerTest {
     @Test
     void test03HealerReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Healer healer = new Healer ( gold );
         Soldier blueSoldier = new Soldier ( blue );
 
@@ -64,7 +65,7 @@ class HealerTest {
     @Test
     void test04HealerReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -77,7 +78,7 @@ class HealerTest {
     @Test
     void test05HealerReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -90,7 +91,7 @@ class HealerTest {
     @Test
     void test06HealerReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -103,7 +104,7 @@ class HealerTest {
     @Test
     void test07HealerUseBodyAttackAndRaiseAnError () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act - Assert
@@ -117,7 +118,7 @@ class HealerTest {
     @Test
     void test08HealerUseDistanceAttackAndRaiseAnError () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act - Assert
@@ -131,7 +132,7 @@ class HealerTest {
     @Test
     void test09HealerGetMoveIs3 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -143,7 +144,7 @@ class HealerTest {
     @Test
     void test10HealerReceiveHealAndHisLifeUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -157,7 +158,7 @@ class HealerTest {
     @Test
     void test11HealerReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Healer healer = new Healer ( gold );
 
         //Act
@@ -170,8 +171,8 @@ class HealerTest {
     @Test
     void test12HealerMakeDistanceAttackAndRaiseAnError () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Soldier soldier = new Soldier ( gold );
         Healer healer = new Healer ( blue );
 

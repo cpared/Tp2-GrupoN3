@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
+import team.Team;
 class SoldierTest {
 
     @Test
     void test00CreateSoldierWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -25,7 +25,7 @@ class SoldierTest {
     @Test
     void test01CreateSoldierAndGetLifeIs100 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -37,7 +37,7 @@ class SoldierTest {
     @Test
     void test02SoldierGetCostIs1 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -49,8 +49,8 @@ class SoldierTest {
     @Test
     void test03soldierReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Soldier soldier = new Soldier ( gold );
         Soldier blueSoldier = new Soldier ( blue );
 
@@ -64,7 +64,7 @@ class SoldierTest {
     @Test
     void test04SoldierReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -77,7 +77,7 @@ class SoldierTest {
     @Test
     void test05SoldierReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -90,7 +90,7 @@ class SoldierTest {
     @Test
     void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -103,7 +103,7 @@ class SoldierTest {
     @Test
     void test07soldierUseBodyAttackAndHisDamageIs10 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -115,7 +115,7 @@ class SoldierTest {
     @Test
     void test08soldierUseDistanceAttackAndHisDamageIs0 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -127,7 +127,7 @@ class SoldierTest {
     @Test
     void test09soldierGetMoveIs3 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
@@ -139,7 +139,7 @@ class SoldierTest {
     @Test
     void test10SoldierReceiveHealAndHisLifeUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
         Healer healer = new Healer ( gold );
 
@@ -154,7 +154,7 @@ class SoldierTest {
     @Test
     void test11soldierReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
         Healer healer = new Healer ( gold );
 
@@ -168,8 +168,8 @@ class SoldierTest {
     @Test
     void test12soldierMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Soldier soldier = new Soldier ( gold );
         Healer healer = new Healer ( blue );
 

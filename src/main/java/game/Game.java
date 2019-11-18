@@ -1,5 +1,7 @@
 package game;
 
+import Face.*;
+
 import player.Player;
 import board.*;
 import piece.*;
@@ -8,61 +10,90 @@ import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.*;
 
 public class Game {
-    public Board board = new Board ();
+
     private Player player1;
     private Player player2;
+    private Face player1Face;
+    private Face player2Face;
+    private Team team1 = new Team(1);
+    private Team team2 = new Team(2);
+    public Board board = new Board ( team1 , team2 );
 
     public Game () {
+        this.player1Face = new InitialFace ( board );
+        this.player2Face = new InitialFace ( board );
+    }
+
+    public void changeFace ( ) {
+        this.player1Face = new GameFace ( board );
+        this.player2Face = new GameFace ( board );
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
-        Team team = this.assignTeam ();
 
-        Player player = new Player ( name, team );
         if (this.player1 == null) {
-            this.player1 = player;
+            this.player1 = this.player1Face.newPlayer ( name , team1 );
         } else if (this.player2 == null) {
-            this.player2 = player;
-        } else throw new ThereAreOnlyTwoPlayersPerGameException ();
+            this.player2 = this.player2Face.newPlayer ( name , team2 );
+        } else throw new ThereAreOnlyTwoPlayersPerGameException ( );
 
     }
 
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
         this.endGame ();
-        player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
+
+        if (player == player1) {
+            player1Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
+        } else  player2Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
+
     }
 
     public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
-        player.placePieceOnBoard ( piece, this.board, row, column );
+        //player.placePieceOnBoard ( piece, this.board, row, column );
+        if (player == player1) {
+            player1Face.playerPlacesPieceOnBoard ( piece, row, column );
+        } else {
+            player2Face.playerPlacesPieceOnBoard( piece, row, column );
+        }
     }
 
     public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         this.endGame ();
         player.removePieceFromTeam ();
-        return board.removePiece ( row, column );
+        if (player == player1) return player1Face.removePieceFromBoard ( row, column );
+        return player2Face.removePieceFromBoard ( row, column );
+        //return board.removePiece ( row, column );
     }
 
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         this.endGame ();
-        this.removePieceFromBoard ( player, row, column );
+        if (player == player1) {
+            player1Face.playerAttacks ( row, column );
+        } else player2Face.playerAttacks ( row, column );
+        player.removePieceFromTeam ();
     }
 
-    public Piece playerChoosesSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
-        return player.chooseSoldier ( );
+    public Piece playerChoosesSoldier ( Player player ) {
+        if (this.player1 == player) return player1Face.playerChoosesSoldier ();
+        return player2Face.playerChoosesSoldier ();
     }
 
-    public Piece playerChoosesHealer ( Player player ) throws PlayerHas20PointsOnlyException {
-        return player.chooseHealer ( );
+    public Piece playerChoosesHealer ( Player player ) {
+        if (this.player1 == player) return player1Face.playerChoosesHealer ();
+        return player2Face.playerChoosesHealer ();
     }
 
-    public Piece playerChoosesRider ( Player player ) throws PlayerHas20PointsOnlyException {
-        return player.chooseRider ( );
+    public Piece playerChoosesRider ( Player player )  {
+        if (this.player1 == player) return player1Face.playerChoosesRider ();
+        return player2Face.playerChoosesRider ();
     }
 
-    public Piece playerChoosesCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
-        return player.chooseCatapult ( );
+    public Piece playerChoosesCatapult ( Player player ) {
+        if (this.player1 == player) return player1Face.playerChoosesCatapult ();
+        return player2Face.playerChoosesCatapult ();
     }
+
     //jason getters
     public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
         return player.isNumberOfPiecesOnTeam ( numberOfMembers );
@@ -79,14 +110,6 @@ public class Game {
         if (state) {
             throw new GameHasEndedException ();
         }
-    }
-
-    private Team assignTeam () throws ThereCantBeTwoPlayersOnTheSameTeamException {
-        if (this.player1 == null) {
-            return new Gold ();
-        } else if (this.player2 == null) {
-            return new Blue ();
-        } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
     }
 
 

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CatapultCriteriaTest {
     // Assemble
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
-    private PieceFactory factory = new PieceFactory ( new Team () );
+    private PieceFactory factory = new PieceFactory ( new Team (4) );
     private Piece soldier1 = factory.createSoldier ();
     private Piece soldier2 = factory.createSoldier ();
     private Piece soldier3 = factory.createSoldier ();

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PieceFactoryTest {
     //Assemble
-    private Team team = new Team ();
+    private Team team = new Team (1);
     private PieceFactory factory = new PieceFactory ( team );
 
     // verifies board creation.
@@ -50,17 +50,3 @@ class PieceFactoryTest {
         assertEquals ( Catapult.class, piece.getClass () );
     }
 }
-
-/*
-    @Test
-    void test13PlayerChoosingAHealerSubtracts3PointFromPlayer () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Player player = new Player ( "Player0003", team );
-        //Act
-        player.chooseHealer ( );
-
-        //Assert
-        assertEquals ( 18, player.obtainPoints () );
-    }
-
- */
