@@ -35,7 +35,6 @@ public class Board {
     public void movePiece(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         Piece piece = this.getCell(firstRow, firstColumn).getPiece();
         if (distance(firstRow, firstColumn, secondRow, secondColumn) > piece.move()) {
-            this.getCell(firstRow, firstColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
         Cell destinationCell = this.getCell(secondRow, secondColumn);
