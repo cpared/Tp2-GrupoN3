@@ -1,10 +1,12 @@
 package board;
 
+import criteria.RiderCriteria;
 import piece.Piece;
 import team.Team;
 
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.Arrays;
 
 public class Board {
     protected ArrayList<ArrayList<Cell>> cellArray;
@@ -31,13 +33,6 @@ public class Board {
     }
 
     public void movePiece(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        try {
-            moveBattalion(firstRow, firstColumn, secondRow, secondColumn);
-        } catch(NoBattalionFound e) {
-            movePiec(firstRow, firstColumn, secondRow, secondColumn);
-        }
-    }
-    protected void movePiec(int firstRow,int firstColumn, int secondRow,int secondColumn){
         Piece piece = this.getCell(firstRow, firstColumn).getPiece();
         if (distance(firstRow, firstColumn, secondRow, secondColumn) > piece.move()) {
             this.getCell(firstRow, firstColumn).putPieceInCell(piece);
@@ -52,15 +47,7 @@ public class Board {
             throw new CanNotMakeThatMoveException();
         }
     }
-    private void moveBattalion(int firstRow,int firstColumn, int secondRow,int secondColumn){
-        Battalion battalion = this.getCell(firstRow,firstColumn).getBattalion();
-        try {
-            battalion.movePieces(firstRow, firstColumn, secondRow, secondColumn);
-        }
-        catch (Exception e){
-            dissolveBattalion(firstRow,firstColumn);
-        }
-    }
+
     private Cell getCell(int row, int column) {
         return this.cellArray.get(row).get(column);
     }
@@ -74,6 +61,7 @@ public class Board {
     }
 
     public void bodyAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+
         Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
         Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
         originPiece.attack(receivingPiece);
@@ -81,8 +69,17 @@ public class Board {
 
     public void distanceAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
-        Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
-        originPiece.distanceAttack(receivingPiece);
+        ArrayList<Piece> piece = new ArrayList<>(Arrays.asList(originPiece));
+        RiderCriteria criteria = new RiderCriteria();
+        if (criteria.criteria(piece).size() == 1) {
+            riderAttack(firstRow,firstColumn,secondRow,secondColumn);
+        } else {
+            Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
+            originPiece.distanceAttack(receivingPiece);
+        }
+    }
+
+    private void riderAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
     }
 
     public void heal(int firstRow, int firstColumn, int secondRow, int secondColumn) {

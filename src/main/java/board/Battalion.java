@@ -81,45 +81,7 @@ public class Battalion {
         return piece.isCost(1);
     }
 
-    public void movePieces(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        ArrayList<Integer> position = new ArrayList<Integer>(Arrays.asList(firstRow,firstColumn));
-        ArrayList<Integer> destination = new ArrayList<Integer>(Arrays.asList(secondRow,secondColumn));
-        if (!cellPositionsArray.contains(position)){
-            //WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-            //IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-            //WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-            //IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-            throw new NoBattalionFound();
-        }
-        int plusRow = secondRow - firstRow;
-        int plusColumn = secondColumn - firstColumn;
-        if (cellPositionsArray.get(1).equals(destination)){
-            for (int i = cellPositionsArray.size(); i >0 ; i--) {
-                int row = cellPositionsArray.get(i - 1).get(0);
-                int column = cellPositionsArray.get(i - 1).get(1);
-                try {
-                    thisBoard.movePiec(row, column, row + plusRow, column + plusColumn);
-                }
-                catch(Exception e){
-                    this.destroyBattalion();
-                    continue;
-                }
-            }
-        }
-        else {
-            for (ArrayList<Integer> integers : cellPositionsArray) {
-                int row = integers.get(0);
-                int column = integers.get(1);
-                try {
-                    thisBoard.movePiec(row, column, row + plusRow, column + plusColumn);
-                }
-                catch(Exception e){
-                    this.destroyBattalion();
-                    continue;
-                }
-            }
-        }
-    }
+
 
     protected void destroyBattalion() {
         for (ArrayList<Integer> integers : cellPositionsArray) {
