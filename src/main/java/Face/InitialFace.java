@@ -5,9 +5,10 @@ import piece.Piece;
 import player.Player;
 import team.Team;
 
-public class InitialFace implements Face {
+    public class InitialFace implements Face{
     private Player player;
     private Board board;
+    boolean state = false;
 
     public InitialFace ( Board board) {
         this.board = board;
@@ -62,4 +63,5 @@ public class InitialFace implements Face {
         //player.placePieceOnBoard ( this.board, firstRow, firstColumn, secondRow, secondColumn );
         player.movePiece (this.board, firstRow, firstColumn, secondRow, secondColumn );
     }
+
 }

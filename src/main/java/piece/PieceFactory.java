@@ -14,32 +14,30 @@ public class PieceFactory {
     public Piece createSoldier ( )  throws PlayerHas20PointsOnlyException {
         Piece soldier = new Soldier ( this.team );
         if ( soldier.cost > this.playerPoints ) throw new PlayerHas20PointsOnlyException ( );
-        this.playerPoints -= soldier.cost;
+        else this.playerPoints -= soldier.cost;
         return soldier;
     }
 
     public Piece createHealer ( ) throws PlayerHas20PointsOnlyException {
         Piece healer = new Healer ( this.team );
         if ( healer.cost > this.playerPoints ) throw new PlayerHas20PointsOnlyException ( );
-        this.playerPoints -= healer.cost;
+        else this.playerPoints -= healer.cost;
         return healer;
     }
 
     public Piece createRider ( ) throws PlayerHas20PointsOnlyException {
         Piece rider = new Rider ( this.team );
         if ( rider.cost > this.playerPoints ) throw new PlayerHas20PointsOnlyException ( );
-        this.playerPoints -= rider.cost;
+        else this.playerPoints -= rider.cost;
         return rider;
     }
 
     public Piece createCatapult ( ) throws PlayerHas20PointsOnlyException{
         Piece catapult = new Catapult ( this.team );
         if ( catapult.cost > this.playerPoints ) throw new PlayerHas20PointsOnlyException ( );
-        this.playerPoints -= catapult.cost;
+        else this.playerPoints -= catapult.cost;
         return catapult;
     }
 }
 
-/*
-game loop pattern.
- */
+

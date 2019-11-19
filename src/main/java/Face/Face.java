@@ -26,4 +26,5 @@ public interface Face {
     Piece playerChoosesRider ( );
 
     Piece playerChoosesCatapult ( );
+
 }

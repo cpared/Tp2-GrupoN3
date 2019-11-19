@@ -5,7 +5,6 @@ import Face.*;
 import player.Player;
 import board.*;
 import piece.*;
-import player.PlayerHas20PointsOnlyException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.*;
 
@@ -13,92 +12,65 @@ public class Game {
 
     private Player player1;
     private Player player2;
-    private Face player1Face;
-    private Face player2Face;
-    private Team team1 = new Team(1);
-    private Team team2 = new Team(2);
-    public Board board = new Board ( team1 , team2 );
+    private GameState state;
 
     public Game () {
-        this.player1Face = new InitialFace ( board );
-        this.player2Face = new InitialFace ( board );
-    }
-
-    public void changeFace ( ) {
-        this.player1Face = new GameFace ( board );
-        this.player2Face = new GameFace ( board );
+        this.state = new InProgress ();
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
 
         if (this.player1 == null) {
-            this.player1 = this.player1Face.newPlayer ( name , team1 );
+            this.player1 = this.state.newPlayer (name);
         } else if (this.player2 == null) {
-            this.player2 = this.player2Face.newPlayer ( name , team2 );
+            this.player2 = this.state.newPlayer (name);
         } else throw new ThereAreOnlyTwoPlayersPerGameException ( );
 
     }
 
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
-        this.endGame ();
-
-        if (player == player1) {
-            player1Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
-        } else  player2Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
-
+        this.state.playerMovesPieceOnBoard ( player, firstRow, firstColumn, secondRow, secondColumn );
     }
 
     public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
-        //player.placePieceOnBoard ( piece, this.board, row, column );
-        if (player == player1) {
-            player1Face.playerPlacesPieceOnBoard ( piece, row, column );
-        } else {
-            player2Face.playerPlacesPieceOnBoard( piece, row, column );
-        }
+       this.state.playerPlacesPieceOnBoard ( player, piece, row, column  );
     }
 
     public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        this.endGame ();
-        player.removePieceFromTeam ();
-        if (player == player1) return player1Face.removePieceFromBoard ( row, column );
-        return player2Face.removePieceFromBoard ( row, column );
-        //return board.removePiece ( row, column );
+        return this.state.removePieceFromBoard ( player, row, column );
     }
 
-
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        this.endGame ();
-        if (player == player1) {
-            player1Face.playerAttacks ( row, column );
-        } else player2Face.playerAttacks ( row, column );
-        player.removePieceFromTeam ();
+        this.state.playerAttacks ( player, row, column );
     }
 
     public Piece playerChoosesSoldier ( Player player ) {
-        if (this.player1 == player) return player1Face.playerChoosesSoldier ();
-        return player2Face.playerChoosesSoldier ();
+        return this.state.chooseSoldier ( player );
     }
 
     public Piece playerChoosesHealer ( Player player ) {
-        if (this.player1 == player) return player1Face.playerChoosesHealer ();
-        return player2Face.playerChoosesHealer ();
+        return this.state.chooseRider ( player );
     }
 
     public Piece playerChoosesRider ( Player player )  {
-        if (this.player1 == player) return player1Face.playerChoosesRider ();
-        return player2Face.playerChoosesRider ();
+        return this.state.chooseRider ( player );
     }
 
     public Piece playerChoosesCatapult ( Player player ) {
-        if (this.player1 == player) return player1Face.playerChoosesCatapult ();
-        return player2Face.playerChoosesCatapult ();
+        return this.state.chooseCatapult ( player );
     }
 
-    //jason getters
     public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
         return player.isNumberOfPiecesOnTeam ( numberOfMembers );
     }
 
+    public void changeState (GameState newState){
+        this.state = newState;
+    }
+
+    public void playerIsReadyToPlay (Player player) {
+        this.state.playerIsReadyToPlay (player);
+    }
 
     // Private methods.
     private boolean gameHasEnded () {
@@ -123,6 +95,6 @@ public class Game {
     }
 
     public Board getBoard () {
-        return this.board;
+        return this.state.getBoard ();
     }
 }

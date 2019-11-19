@@ -11,6 +11,7 @@ public class GameFace implements Face {
 
     private Player player;
     private Board board;
+    boolean state = false;
 
     public GameFace ( Board board) {
         this.board = board;
@@ -63,4 +64,5 @@ public class GameFace implements Face {
     public Player newPlayer (String name, Team team){
         throw new ThereAreOnlyTwoPlayersPerGameException ();
     }
+
 }

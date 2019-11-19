@@ -243,6 +243,7 @@ class IntegrationTest {
         game.playerPlacesPieceOnBoard(player1, catapult2, 9, 1);
         game.playerPlacesPieceOnBoard(player1, catapult3, 9, 2);
         game.playerPlacesPieceOnBoard(player1, catapult4, 9, 3);
+        game.playerIsReadyToPlay ( player1 );
 
         game.newPlayer("Alan12");
         Player player2 = game.getPlayer2();
@@ -256,14 +257,15 @@ class IntegrationTest {
         game.playerPlacesPieceOnBoard ( player2, catapult6, 11, 1 );
         game.playerPlacesPieceOnBoard ( player2, catapult7, 11, 2 );
         game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
-        game.changeFace ();
+
+        game.playerIsReadyToPlay ( player2 );
         //Act
         try {
             game.playerAttacks(player1, 9, 0);
             game.playerAttacks(player1, 9, 1);
             game.playerAttacks(player1, 9, 2);
             game.playerAttacks(player1, 9, 3);
-            game.playerMovesPieceOnBoard(player2, 11, 0, 12, 0);
+            //game.playerMovesPieceOnBoard(player2, 9, 0, 9, 1);
             fail();
             //Assert
         } catch (GameHasEndedException e) {

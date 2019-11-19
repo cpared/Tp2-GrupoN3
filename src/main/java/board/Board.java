@@ -69,7 +69,7 @@ public class Board {
 
     public void distanceAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
-        ArrayList<Piece> piece = new ArrayList<>(Arrays.asList(originPiece));
+        ArrayList<Piece> piece = new ArrayList<Piece>(Arrays.asList(originPiece));
         RiderCriteria criteria = new RiderCriteria();
         if (criteria.criteria(piece).size() == 1) {
             riderAttack(firstRow,firstColumn,secondRow,secondColumn);
