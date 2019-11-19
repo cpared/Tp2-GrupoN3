@@ -9,15 +9,15 @@ import player.Player;
 public interface GameState {
     Player winner = null;
 
-    public Player newPlayer ( String name ) ;
+    public Player newPlayer ( String name );
 
-    Piece chooseSoldier (Player player);
+    Piece chooseSoldier ( Player player );
 
-    Piece chooseHealer (Player player );
+    Piece chooseHealer ( Player player );
 
-    Piece chooseRider (Player player );
+    Piece chooseRider ( Player player );
 
-    Piece chooseCatapult ( Player player);
+    Piece chooseCatapult ( Player player );
 
     void playerAttacks ( Player player, Move move );
 
@@ -25,9 +25,9 @@ public interface GameState {
 
     void playerPlacesPieceOnBoard ( Player player, Piece piece, Move move );
 
-    public Piece removePieceFromBoard ( Player player, Move move ) ;
+    public Piece removePieceFromBoard ( Player player, Move move );
 
-    void playerIsReadyToPlay(Player player);
+    void playerIsReadyToPlay ( Player player );
 
     // This getter is only for testing, it doesnt belong in the model.
     public Board getBoard ();

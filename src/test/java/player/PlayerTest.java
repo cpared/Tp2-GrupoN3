@@ -12,8 +12,8 @@ import team.*;
 
 class PlayerTest {
     //Assemble
-    private Team team = new Team (1);
-    private Board board = new Board (team, new Team ( 2 ));
+    private Team team = new Team ( 1 );
+    private Board board = new Board ( team, new Team ( 2 ) );
 
     //Initiation tests.
 
@@ -30,7 +30,7 @@ class PlayerTest {
         //Act
         Player player = new Player ( "Pepe", team );
         //Assert
-        assertEquals ( "Pepe", player.name() );
+        assertEquals ( "Pepe", player.name () );
     }
 
     //Point tests.
@@ -87,7 +87,7 @@ class PlayerTest {
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.chooseSoldier ( );
+        Piece piece = player.chooseSoldier ();
 
         //Assert
         assertEquals ( Soldier.class, piece.getClass () );
@@ -99,7 +99,7 @@ class PlayerTest {
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.chooseCatapult ( );
+        Piece piece = player.chooseCatapult ();
 
         //Assert
         assertEquals ( Catapult.class, piece.getClass () );
@@ -111,7 +111,7 @@ class PlayerTest {
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.chooseRider ( );
+        Piece piece = player.chooseRider ();
 
         //Assert
         assertEquals ( Rider.class, piece.getClass () );
@@ -123,12 +123,11 @@ class PlayerTest {
         Player player = new Player ( "Player0003", team );
 
         //Act
-        Piece piece = player.chooseHealer ( );
+        Piece piece = player.chooseHealer ();
 
         //Assert
         assertEquals ( Healer.class, piece.getClass () );
     }
-
 
 
     //Board tests.
@@ -136,7 +135,7 @@ class PlayerTest {
     void test10PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Piece piece = player.chooseHealer ( );
+        Piece piece = player.chooseHealer ();
         Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
 
         //Act
@@ -150,9 +149,9 @@ class PlayerTest {
     void test11PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Piece piece = player.chooseHealer ( );
+        Piece piece = player.chooseHealer ();
         Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
-        player.placePieceOnBoard ( piece, board, move);
+        player.placePieceOnBoard ( piece, board, move );
         //Act
         Move move2 = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).ToRow ( 2 ).ToColumn ( 1 ).build ();
         player.movePiece ( board, move2 );
@@ -168,7 +167,7 @@ class PlayerTest {
     void test12PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Piece piece = player.chooseHealer ( );
+        Piece piece = player.chooseHealer ();
         Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
         player.placePieceOnBoard ( piece, board, move );
         //Act

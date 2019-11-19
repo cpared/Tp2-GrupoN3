@@ -1,4 +1,5 @@
 package Face;
+
 import board.Board;
 import move.Move;
 import piece.Piece;
@@ -10,7 +11,7 @@ public interface Face {
     Player player2 = null;
     Board board = null;
 
-    Player newPlayer (String name, Team team);
+    Player newPlayer ( String name, Team team );
 
     void playerMovesPieceOnBoard ( Move move );
 
@@ -20,12 +21,12 @@ public interface Face {
 
     void playerAttacks ( Move move );
 
-    Piece playerChoosesSoldier ( );
+    Piece playerChoosesSoldier ();
 
-    Piece playerChoosesHealer ( );
+    Piece playerChoosesHealer ();
 
-    Piece playerChoosesRider ( );
+    Piece playerChoosesRider ();
 
-    Piece playerChoosesCatapult ( );
+    Piece playerChoosesCatapult ();
 
 }

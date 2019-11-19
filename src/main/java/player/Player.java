@@ -34,28 +34,28 @@ public class Player {
     }
 
     public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
-        Piece soldier = this.factory.createSoldier ( );
+        Piece soldier = this.factory.createSoldier ();
         team.addPieceToTeam ();
 
         return soldier;
     }
 
     public Piece chooseRider () throws PlayerHas20PointsOnlyException {
-        Piece rider = this.factory.createRider ( );
+        Piece rider = this.factory.createRider ();
         team.addPieceToTeam ();
 
         return rider;
     }
 
     public Piece chooseHealer () throws PlayerHas20PointsOnlyException {
-        Piece healer = this.factory.createHealer ( );
+        Piece healer = this.factory.createHealer ();
         team.addPieceToTeam ();
 
         return healer;
     }
 
     public Piece chooseCatapult () throws PlayerHas20PointsOnlyException {
-        Piece catapult = this.factory.createCatapult ( );
+        Piece catapult = this.factory.createCatapult ();
         team.addPieceToTeam ();
 
         return catapult;
@@ -65,12 +65,12 @@ public class Player {
         return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
     }
 
-    public int numberOfPiecesOnTeam ( ) {
-        return this.team.numberOfMembersStillOnTeam ( );
+    public int numberOfPiecesOnTeam () {
+        return this.team.numberOfMembersStillOnTeam ();
     }
 
     public boolean equals ( Player player ) {
-       return this.name.equals ( player.name ) && this.team.equals ( player.team );
+        return this.name.equals ( player.name ) && this.team.equals ( player.team );
     }
 
 

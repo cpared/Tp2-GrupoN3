@@ -23,10 +23,10 @@ public class Game {
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
 
         if (this.player1 == null) {
-            this.player1 = this.state.newPlayer (name);
+            this.player1 = this.state.newPlayer ( name );
         } else if (this.player2 == null) {
-            this.player2 = this.state.newPlayer (name);
-        } else throw new ThereAreOnlyTwoPlayersPerGameException ( );
+            this.player2 = this.state.newPlayer ( name );
+        } else throw new ThereAreOnlyTwoPlayersPerGameException ();
 
     }
 
@@ -37,7 +37,7 @@ public class Game {
 
     public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
         Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
-        this.state.playerPlacesPieceOnBoard ( player, piece, move  );
+        this.state.playerPlacesPieceOnBoard ( player, piece, move );
     }
 
     public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
@@ -55,10 +55,10 @@ public class Game {
     }
 
     public Piece playerChoosesHealer ( Player player ) {
-        return this.state.chooseRider ( player );
+        return this.state.chooseHealer ( player );
     }
 
-    public Piece playerChoosesRider ( Player player )  {
+    public Piece playerChoosesRider ( Player player ) {
         return this.state.chooseRider ( player );
     }
 
@@ -70,12 +70,12 @@ public class Game {
         return player.isNumberOfPiecesOnTeam ( numberOfMembers );
     }
 
-    public void changeState (GameState newState){
+    public void changeState ( GameState newState ) {
         this.state = newState;
     }
 
-    public void playerIsReadyToPlay (Player player) {
-        this.state.playerIsReadyToPlay (player);
+    public void playerIsReadyToPlay ( Player player ) {
+        this.state.playerIsReadyToPlay ( player );
     }
 
     // Private methods.

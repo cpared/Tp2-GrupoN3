@@ -14,22 +14,22 @@ public class Ended implements GameState {
     }
 
     @Override
-    public Piece chooseSoldier ( Player player){
+    public Piece chooseSoldier ( Player player ) {
         return new NullPiece ();
     }
 
     @Override
-    public Piece chooseHealer (Player player){
+    public Piece chooseHealer ( Player player ) {
         return new NullPiece ();
     }
 
     @Override
-    public Piece chooseRider (Player player ){
+    public Piece chooseRider ( Player player ) {
         return new NullPiece ();
     }
 
     @Override
-    public Piece chooseCatapult (Player player ){
+    public Piece chooseCatapult ( Player player ) {
         return new NullPiece ();
     }
 
@@ -38,7 +38,7 @@ public class Ended implements GameState {
     }
 
     @Override
-    public void playerMovesPieceOnBoard ( Player player, Move move )  {
+    public void playerMovesPieceOnBoard ( Player player, Move move ) {
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Ended implements GameState {
     }
 
     @Override
-    public void playerIsReadyToPlay(Player player) {
+    public void playerIsReadyToPlay ( Player player ) {
     }
 
     // This getter is only for testing, it doesnt belong in the model.
