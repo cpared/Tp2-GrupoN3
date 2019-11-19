@@ -1,6 +1,7 @@
 package Face;
 
 import board.Board;
+import move.Move;
 import piece.NullPiece;
 import piece.Piece;
 import player.Player;
@@ -18,25 +19,25 @@ public class GameFace implements Face {
     }
 
     @Override
-    public Piece removePieceFromBoard ( int row, int column ) {
+    public Piece removePieceFromBoard ( Move move ) {
         player.removePieceFromTeam ();
-        return board.removePiece ( row, column );
+        return board.removePiece ( move );
     }
 
     @Override
-    public void playerAttacks ( int row, int column ) {
-        this.board.removePiece (  row, column );
+    public void playerAttacks ( Move move ) {
+        this.board.removePiece ( move );
     }
 
     @Override
-    public void playerMovesPieceOnBoard ( int firstRow, int firstColumn, int secondRow, int secondColumn ) {
-        player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
+    public void playerMovesPieceOnBoard ( Move move ) {
+        player.movePiece ( this.board, move );
     }
 
     //Methods that this class does not implement
 
     @Override
-    public void playerPlacesPieceOnBoard ( Piece piece, int row, int column ) {
+    public void playerPlacesPieceOnBoard ( Piece piece, Move move ) {
 
     }
 

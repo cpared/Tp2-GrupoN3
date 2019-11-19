@@ -1,6 +1,8 @@
 package player;
 
 import board.Board;
+import move.Builder;
+import move.Move;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -135,12 +137,13 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
+        Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
 
         //Act
-        player.placePieceOnBoard ( piece, board, 2,0 );
+        player.placePieceOnBoard ( piece, board, move );
 
         //Assert
-        assertEquals ( piece, board.removePiece ( 2, 0 ) );
+        assertEquals ( piece, board.removePiece ( move ) );
     }
 
     @Test
@@ -148,12 +151,15 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
-        player.placePieceOnBoard ( piece, board, 2,0 );
+        Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
+        player.placePieceOnBoard ( piece, board, move);
         //Act
-        player.movePiece ( board, 2, 0, 2, 1 );
+        Move move2 = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).ToRow ( 2 ).ToColumn ( 1 ).build ();
+        player.movePiece ( board, move2 );
 
         //Assert
-        assertEquals ( piece, board.removePiece ( 2, 1 ) );
+        Move move3 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
+        assertEquals ( piece, board.removePiece ( move3 ) );
     }
 
     // Tests related to teams.
@@ -163,8 +169,8 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
-
-        player.placePieceOnBoard ( piece, board, 2,0 );
+        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
+        player.placePieceOnBoard ( piece, board, move );
         //Act
         player.removePieceFromTeam ();
         //Assert

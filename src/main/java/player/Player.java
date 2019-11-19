@@ -1,6 +1,7 @@
 package player;
 
 import board.Board;
+import move.Move;
 import piece.Piece;
 import piece.PieceFactory;
 
@@ -20,12 +21,12 @@ public class Player {
         this.factory = new PieceFactory ( this.team );
     }
 
-    public void placePieceOnBoard ( Piece piece, Board board, int row, int column ) {
-        board.placePiece ( piece, row, column );
+    public void placePieceOnBoard ( Piece piece, Board board, Move move ) {
+        board.placePiece ( piece, move );
     }
 
-    public void movePiece ( Board board, int firstRow, int firstColumn, int secondRow, int secondColumn ) {
-        board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
+    public void movePiece ( Board board, Move move ) {
+        board.movePiece ( move );
     }
 
     public void removePieceFromTeam () throws NoMembersLeftException {

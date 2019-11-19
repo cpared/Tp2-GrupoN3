@@ -3,6 +3,8 @@ package IntegrationTests;
 import board.*;
 import board.CanNotMakeThatMoveException;
 import game.*;
+import move.Builder;
+import move.Move;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 import player.*;
@@ -20,32 +22,41 @@ class IntegrationTest {
 
     @Test
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays() throws PlayerHas20PointsOnlyException {
+        //Assemble
+        Move place = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
 
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
-
-        board.placePiece(piece, 3, 3);
+        //Act
+        board.placePiece(piece, place);
         for (int i = 2; i < 5; i++) {
             for (int j = 2; j < 5; j++) {
                 if (i == 3 && j == 3) {
                     continue;
                 }
-                board.movePiece(3, 3, i, j);
-                board.movePiece(i, j, 3, 3);
+                Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).ToRow ( i ).ToColumn ( j ).build ();
+                Move move2 = new Builder ().fromRow ( i ).fromColumn ( j ).ToRow ( 3 ).ToColumn ( 3 ).build ();
+                board.movePiece( move );
+                board.movePiece( move2 );
             }
         }
     }
 
     @Test
     void test01APieceCanNotMoveToAnOccupiedCell() throws PlayerHas20PointsOnlyException {
+
+        //Assemble
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
+        Move move2 = new Builder ().ToRow ( 3 ).ToColumn ( 4 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
 
-        board.placePiece(piece, 3, 3);
-        board.placePiece(piece, 3, 4);
+        board.placePiece(piece, move);
+        board.placePiece(piece, move2);
 
         try {
-            board.movePiece(3, 3, 3, 4);
+            Move both = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).ToRow ( 3 ).ToColumn ( 4 ).build ();
+            board.movePiece( both );
             fail();
         } catch (CanNotMakeThatMoveException e) {
             assert true;
@@ -54,23 +65,27 @@ class IntegrationTest {
 
     @Test
     void test06CanPlaceAnAllyPieceInAnEmptyAllyCell() throws PlayerHas20PointsOnlyException {
+        //Assemble
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
 
-        board.placePiece(piece, 3, 3);
+        board.placePiece(piece, move);
 
     }
 
     @Test
     void Test02AnAlliedInfantrySoldierAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
-        //Assign
+        //Assemble
+        Move move = new Builder ().ToRow ( 9 ).ToColumn ( 0 ).build ();
+        Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 0 ).build ();
         Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece healer = efactory.createHealer();
 
         //Act
-        board.placePiece(soldier, 9, 0);
-        board.placePiece(healer, 10, 0);
+        board.placePiece(soldier, move);
+        board.placePiece(healer, move2);
 
         //Assert
         assertEquals(100, soldier.getLife());
@@ -82,14 +97,16 @@ class IntegrationTest {
 
     @Test
     void Test03AnAlliedRiderAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
-        //Assign
+        //Assemble
         Board board = new Board(team, team2);
         Piece soldier = efactory.createSoldier();
         Piece rider = factory.createRider();
+        Move move = new Builder ().ToRow ( 9 ).ToColumn ( 0 ).build ();
+        Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 0 ).build ();
 
         //Act
-        board.placePiece(rider, 9, 0);
-        board.placePiece(soldier, 10, 0);
+        board.placePiece(rider, move);
+        board.placePiece(soldier, move2);
 
         //Assert
         assertEquals(100, rider.getLife());
@@ -106,14 +123,16 @@ class IntegrationTest {
 
     @Test
     void Test04AnAlliedCatapultAttacksAnEnemyPieceAndItIsVerifiedThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
-        //Assign
+        //Assemble
+        Move move = new Builder ().ToRow ( 0 ).ToColumn ( 0 ).build ();
+        Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 2 ).build ();
         Board board = new Board(team, team2);
         Piece soldier = efactory.createSoldier();
         Piece catapult = factory.createCatapult();
 
         //Act
-        board.placePiece(catapult, 0, 0);
-        board.placePiece(soldier, 10, 2);
+        board.placePiece(catapult, move );
+        board.placePiece(soldier, move2 );
 
         //Assert
         assertEquals(50, catapult.getLife());
@@ -124,16 +143,19 @@ class IntegrationTest {
 
     @Test
     void Test05AnAlliedHealerHealsAnAlliedPieceAndVerifiesThatTheCorrespondingLifeIsAdded() throws PlayerHas20PointsOnlyException {
-        //Assign
+        //Assemble
+        Move move = new Builder ().ToRow ( 9 ).ToColumn ( 0 ).build ();
+        Move move2 = new Builder ().ToRow ( 9 ).ToColumn ( 1 ).build ();
+        Move move3 = new Builder ().ToRow ( 10 ).ToColumn ( 1 ).build ();
         Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece healer = factory.createHealer();
         Piece rider = efactory.createRider();
 
         //Act
-        board.placePiece(healer, 9, 0);
-        board.placePiece(soldier, 9, 1);
-        board.placePiece(rider, 10, 1);
+        board.placePiece(healer, move );
+        board.placePiece(soldier, move2 );
+        board.placePiece(rider, move3 );
 
 
         //Assert
@@ -155,25 +177,27 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
-        board.placePiece(piece, 3, 3);
+        board.placePiece(piece, move);
         //Assert
-        assertEquals(piece, board.removePiece(3, 3));
+        assertEquals(piece, board.removePiece( move ));
     }
 
     @Test
     void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         Piece pieceThatOccupiesCell = factory.createRider();
         //Act
-        board.placePiece(pieceThatOccupiesCell, 3, 3);
+        board.placePiece(pieceThatOccupiesCell, move);
 
         try {
-            board.placePiece(piece, 3, 3);
+            board.placePiece(piece, move );
             //Assemble
         } catch (OccupiedCellException e) {
             assert true;
@@ -183,11 +207,12 @@ class IntegrationTest {
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
         try {
-            board.placePiece(piece, 3, 3);
+            board.placePiece(piece, move);
             //Assert
         } catch (EnemyCellException e) {
             assert true;
@@ -278,35 +303,52 @@ class IntegrationTest {
     //ENTREGA 2
     @Test
     void test13CanMoveAGroupOfSoldiersAsABattalion() {
+        //Assemble
         Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
-        board.placePiece(soldier, 1, 2);
-        board.placePiece(anotherSoldier, 1, 3);
-        board.placePiece(yetAnotherOne, 1, 4);
+        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
+        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
+
+        board.placePiece(soldier, move);
+        board.placePiece(anotherSoldier, move2);
+        board.placePiece(yetAnotherOne, move3);
+
+        //Act
         board.createBattalion(1, 4);
-        board.movePiece(1, 4, 2, 4);
+        Move move4 = new Builder ().fromRow ( 1 ).fromColumn ( 4 ).ToRow ( 2 ).ToColumn ( 4 ).build ();
+        board.movePiece( move4 );
     }
 
     @Test
     void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() {
+        //Assemble
         Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
         Piece sol = factory.createCatapult();
-        board.placePiece(soldier, 1, 2);
-        board.placePiece(anotherSoldier, 1, 3);
-        board.placePiece(yetAnotherOne, 1, 4);
+
+        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
+        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
+        Move move4 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
+        Move move6 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
+        Move move7 = new Builder ().ToRow ( 2 ).fromColumn ( 4 ).build ();
+        board.placePiece(soldier, move);
+        board.placePiece(anotherSoldier, move2);
+        board.placePiece(yetAnotherOne, move3);
         board.createBattalion(1, 3);
-        board.placePiece(sol, 2, 3);
+        board.placePiece(sol, move4 );
 
-        board.movePiece(1, 3, 2, 3);
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.movePiece( move5 );
 
-        assertNotNull(board.removePiece(2, 2));
-        assertNotNull(board.removePiece(1, 3));
-        assertNotNull(board.removePiece(2, 4));
+        assertNotNull(board.removePiece(move6));
+        assertNotNull(board.removePiece(move2));
+        assertNotNull(board.removePiece(move7));
     }
 
     @Test
@@ -316,13 +358,19 @@ class IntegrationTest {
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
         Piece sol = factory.createCatapult();
-        board.placePiece(soldier, 1, 2);
-        board.placePiece(anotherSoldier, 1, 3);
-        board.placePiece(yetAnotherOne, 1, 4);
-        board.placePiece(sol, 2, 3);
+
+        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
+        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
+        Move move4 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.placePiece(soldier, move);
+        board.placePiece(anotherSoldier, move2);
+        board.placePiece(yetAnotherOne, move3);
+        board.placePiece(sol, move4);
         board.createBattalion(1, 3);
 
-        board.movePiece(1, 3, 2, 3);
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.movePiece(move5);
 
         try {
             board.dissolveBattalion(2, 3);
@@ -339,17 +387,24 @@ class IntegrationTest {
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
         Piece sol = factory.createSoldier();
-        board.placePiece(soldier, 1, 2);
-        board.placePiece(anotherSoldier, 1, 3);
-        board.placePiece(yetAnotherOne, 1, 4);
-        board.placePiece(sol, 1, 1);
+
+        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
+        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
+        Move move4 = new Builder ().ToRow ( 1 ).ToColumn ( 1 ).build ();
+        board.placePiece(soldier, move);
+        board.placePiece(anotherSoldier, move2);
+        board.placePiece(yetAnotherOne, move3);
+        board.placePiece(sol, move4);
         board.createBattalion(1, 3);
 
-        board.movePiece(1, 3, 2, 3);
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.movePiece(move5);
+
         try {
-            assertNotNull(board.removePiece(1, 1));
+            assertNotNull(board.removePiece(move4));
         } catch (Exception e) {
-            assertNotNull(board.removePiece(1, 4));
+            assertNotNull(board.removePiece(move3));
         }
     }
 
@@ -357,12 +412,14 @@ class IntegrationTest {
     void test17IfAHorsemanAttacksAnEnemyInShortDistanceItIsABodyAttack() {
         Board board = new Board(team, team2);
         Piece horseman = factory.createRider();
-        Piece euge = efactory.createSoldier();
-        board.placePiece(horseman, 9, 10);
-        board.placePiece(euge, 10, 10);
+        Piece soldier = efactory.createSoldier();
+        Move move = new Builder ().ToRow ( 9 ).ToColumn ( 10 ).build ();
+        Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 10 ).build ();
+        board.placePiece(horseman, move);
+        board.placePiece(soldier, move2);
 
         board.bodyAttack(9, 10, 10, 10);
-        assertEquals(95, euge.getLife());
+        assertEquals(95, soldier.getLife());
     }
 
     @Test
@@ -371,9 +428,12 @@ class IntegrationTest {
         Piece cris = factory.createRider();
         Piece euge = efactory.createSoldier();
         Piece sol = efactory.createSoldier();
-        board.placePiece(cris, 9, 10);
-        board.placePiece(euge, 10, 10);
-        board.placePiece(sol, 15, 10);
+        Move move = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).build ();
+        Move move2 = new Builder ().fromRow ( 10 ).fromColumn ( 10 ).build ();
+        Move move3 = new Builder ().fromRow ( 15 ).fromColumn ( 10 ).build ();
+        board.placePiece(cris, move);
+        board.placePiece(euge, move2);
+        board.placePiece(sol, move3 );
 
         try {
             board.distanceAttack(9, 10, 15, 10);

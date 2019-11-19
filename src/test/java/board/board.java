@@ -1,5 +1,7 @@
 package board;
 
+import move.Builder;
+import move.Move;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -47,7 +49,8 @@ class BoardTest {
     void test02movingApieceFromACellThatIsEmptyRaiseAnException () {
         //Act
         try {
-            board.movePiece ( 5, 7, 5, 8 );
+            Move move = new Builder ().fromRow ( 5 ).fromColumn ( 7 ).ToRow ( 5 ).ToColumn ( 8 ).build ();
+            board.movePiece ( move );
             fail ();
         }
         //Assert
@@ -60,8 +63,10 @@ class BoardTest {
     void test03CanNotMoveToACellThatHasADistanceGreaterThan1 () {
         //Act
         try {
-            board.placePiece ( piece, 0, 0 );
-            board.movePiece ( 0, 0, 19, 19 );
+            Move move = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).build ();
+            board.placePiece ( piece, move);
+            Move move2 = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).ToRow ( 19 ).ToColumn ( 19 ).build ();
+            board.movePiece ( move2 );
             fail ();
         }
         //Assert
@@ -72,15 +77,20 @@ class BoardTest {
 
     @Test
     void test04CanPlaceAPieceInAnEmptyCell () {
+        //Assemble
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
         //Act & Assert
-        board.placePiece ( piece, 3, 3 );
+        board.placePiece ( piece, move );
     }
 
     @Test
     void test05CanRemoveAPieceOfANonEmptyCell () {
+        //Assemble
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+
         //Act
-        board.placePiece ( piece, 3, 3 );
-        Piece poppedPiece = board.removePiece ( 3, 3 );
+        board.placePiece ( piece, move );
+        Piece poppedPiece = board.removePiece ( move );
 
         //Assert
         assertEquals ( poppedPiece, piece );
@@ -88,19 +98,25 @@ class BoardTest {
 
     @Test
     void test06WhenYouPopSomethingOfACellIsAPiece () {
+        //Assemble
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+
         //Act
-        board.placePiece ( piece, 3, 3 );
+        board.placePiece ( piece, move );
 
         //Assert
-        assertThat ( board.removePiece ( 3, 3 ), instanceOf ( Piece.class ) );
+        assertThat ( board.removePiece ( move ), instanceOf ( Piece.class ) );
     }
 
     @Test
     void test07CanPutAPieceIfTheCellIsAlreadyOccupied () {
+        //Assemble
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+
         //Act
-        board.placePiece ( piece, 3, 3 );
+        board.placePiece ( piece, move );
         try {
-            board.placePiece ( piece, 3, 3 );
+            board.placePiece ( piece, move );
             fail ();
         }
         //Assert

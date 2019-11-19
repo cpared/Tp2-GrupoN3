@@ -2,6 +2,7 @@ package game;
 
 import Face.GameFace;
 import board.Board;
+import move.Move;
 import piece.Piece;
 import player.Player;
 import player.ThereAreOnlyTwoPlayersPerGameException;
@@ -9,7 +10,7 @@ import team.Team;
 import Face.*;
 
 
-public class InProgress implements GameState, ICanChoose {
+public class InProgress implements GameState {
     private Player player1;
     private Player player2;
     private Face player1Face;
@@ -70,30 +71,30 @@ public class InProgress implements GameState, ICanChoose {
     }
 
     @Override
-    public void playerAttacks ( Player player, int row, int column )  {
-        if (player == player1) player1Face.playerAttacks ( row, column );
-        else player2Face.playerAttacks ( row, column );
+    public void playerAttacks ( Player player, Move move )  {
+        if (player == player1) player1Face.playerAttacks ( move );
+        else player2Face.playerAttacks ( move );
         player.removePieceFromTeam ();
     }
 
     @Override
-    public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn )  {
-        if (player == player1) player1Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
-        else  player2Face.playerMovesPieceOnBoard ( firstRow, firstColumn, secondRow, secondColumn );
+    public void playerMovesPieceOnBoard ( Player player, Move move )  {
+        if (player == player1) player1Face.playerMovesPieceOnBoard ( move );
+        else  player2Face.playerMovesPieceOnBoard ( move );
 
     }
 
     @Override
-    public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
-        if (player == player1) player1Face.playerPlacesPieceOnBoard ( piece, row, column );
-        else  player2Face.playerPlacesPieceOnBoard( piece, row, column );
+    public void playerPlacesPieceOnBoard ( Player player, Piece piece, Move move ) {
+        if (player == player1) player1Face.playerPlacesPieceOnBoard ( piece, move );
+        else  player2Face.playerPlacesPieceOnBoard( piece, move );
     }
 
     @Override
-    public Piece removePieceFromBoard ( Player player, int row, int column ) {
+    public Piece removePieceFromBoard ( Player player, Move move ) {
         player.removePieceFromTeam ();
-        if (player == player1) return player1Face.removePieceFromBoard ( row, column );
-        return player2Face.removePieceFromBoard ( row, column );
+        if (player == player1) return player1Face.removePieceFromBoard ( move );
+        return player2Face.removePieceFromBoard ( move );
     }
 
     // This getter is only for testing, it doesnt belong in the model.

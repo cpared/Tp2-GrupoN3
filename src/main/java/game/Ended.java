@@ -1,6 +1,7 @@
 package game;
 
 import board.Board;
+import move.Move;
 import piece.NullPiece;
 import piece.Piece;
 import player.Player;
@@ -33,19 +34,19 @@ public class Ended implements GameState {
     }
 
     @Override
-    public void playerAttacks ( Player player, int row, int column ) {
+    public void playerAttacks ( Player player, Move move ) {
     }
 
     @Override
-    public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn )  {
+    public void playerMovesPieceOnBoard ( Player player, Move move )  {
     }
 
     @Override
-    public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
+    public void playerPlacesPieceOnBoard ( Player player, Piece piece, Move move ) {
     }
 
     @Override
-    public Piece removePieceFromBoard ( Player player, int row, int column ) {
+    public Piece removePieceFromBoard ( Player player, Move move ) {
         return null;
     }
 

@@ -1,6 +1,7 @@
 package board;
 
 import criteria.RiderCriteria;
+import move.Move;
 import piece.Piece;
 import team.Team;
 
@@ -27,23 +28,23 @@ public class Board {
         }
     }
 
-    public void placePiece(Piece piece, int row, int column) {
-        Cell cell = this.getCell(row, column);
+    public void placePiece(Piece piece, Move move) {
+        Cell cell = this.getCell(move.toRow, move.toColumn);
         cell.putPieceInCell(piece, piece.getTeam());
     }
 
-    public void movePiece(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        Piece piece = this.getCell(firstRow, firstColumn).deletePieceFromCell();
-        if (distance(firstRow, firstColumn, secondRow, secondColumn) > piece.move()) {
-            this.getCell(firstRow, firstColumn).putPieceInCell(piece);
+    public void movePiece( Move move ) {
+        Piece piece = this.getCell(move.fromRow, move.fromColumn).deletePieceFromCell();
+        if (distance(move.fromRow, move.fromColumn, move.toRow, move.toColumn) > piece.move()) {
+            this.getCell(move.fromRow, move.fromColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
-        Cell destinationCell = this.getCell(secondRow, secondColumn);
+        Cell destinationCell = this.getCell(move.toRow, move.toColumn);
 
         try {
             destinationCell.putPieceInCell(piece);
         } catch (Exception OccupiedCellException) {
-            this.getCell(firstRow, firstColumn).putPieceInCell(piece);
+            this.getCell(move.fromRow, move.fromColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
     }
@@ -56,8 +57,8 @@ public class Board {
         return Math.max(Math.abs(firstRow - secondRow), Math.abs(secondColumn - firstColumn));
     }
 
-    public Piece removePiece(int row, int column) {
-        return this.getCell(row, column).deletePieceFromCell();
+    public Piece removePiece( Move move ) {
+        return this.getCell(move.toRow, move.toColumn).deletePieceFromCell();
     }
 
     public void bodyAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {

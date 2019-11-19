@@ -2,6 +2,8 @@ package game;
 
 import Face.*;
 
+import move.Builder;
+import move.Move;
 import player.Player;
 import board.*;
 import piece.*;
@@ -29,19 +31,23 @@ public class Game {
     }
 
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
-        this.state.playerMovesPieceOnBoard ( player, firstRow, firstColumn, secondRow, secondColumn );
+        Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
+        this.state.playerMovesPieceOnBoard ( player, move );
     }
 
     public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
-       this.state.playerPlacesPieceOnBoard ( player, piece, row, column  );
+        Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
+        this.state.playerPlacesPieceOnBoard ( player, piece, move  );
     }
 
     public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        return this.state.removePieceFromBoard ( player, row, column );
+        Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
+        return this.state.removePieceFromBoard ( player, move );
     }
 
     public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        this.state.playerAttacks ( player, row, column );
+        Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
+        this.state.playerAttacks ( player, move );
     }
 
     public Piece playerChoosesSoldier ( Player player ) {

@@ -1,5 +1,6 @@
 package Face;
 import board.Board;
+import move.Move;
 import piece.Piece;
 import player.Player;
 import team.Team;
@@ -11,13 +12,13 @@ public interface Face {
 
     Player newPlayer (String name, Team team);
 
-    void playerMovesPieceOnBoard ( int firstRow, int firstColumn, int secondRow, int secondColumn );
+    void playerMovesPieceOnBoard ( Move move );
 
-    void playerPlacesPieceOnBoard ( Piece piece, int row, int column );
+    void playerPlacesPieceOnBoard ( Piece piece, Move move );
 
-    Piece removePieceFromBoard ( int row, int column );
+    Piece removePieceFromBoard ( Move move );
 
-    void playerAttacks ( int row, int column );
+    void playerAttacks ( Move move );
 
     Piece playerChoosesSoldier ( );
 

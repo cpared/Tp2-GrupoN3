@@ -1,5 +1,7 @@
 package game;
 
+import move.Builder;
+import move.Move;
 import player.Player;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import org.junit.jupiter.api.Assertions;
@@ -101,7 +103,7 @@ class GameTest {
     }
 
     @Test
-    void test06PlayerInGameCanPlaceAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException {
+    void test06PlayerInGameCanPlaceAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
@@ -109,7 +111,8 @@ class GameTest {
         //Act
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
         //Assert
-        Assertions.assertEquals ( piece, game.getBoard ().removePiece ( 2,0 ) );
+        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
+        Assertions.assertEquals ( piece, game.removePieceFromBoard ( game.getPlayer1 (),2,0 ) );
     }
 
     @Test
