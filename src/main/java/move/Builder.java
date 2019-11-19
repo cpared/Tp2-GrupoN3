@@ -7,6 +7,7 @@ public class Builder {
     private int toRow = 0;
     private int fromColumn = 0;
     private int toColumn = 0;
+    private int parameters = 0;
 
     public Builder () {
 
@@ -14,31 +15,35 @@ public class Builder {
 
     public Builder fromRow( int row ) {
         this.fromRow = row;
+        this.parameters ++;
         return this;
     }
 
     public Builder fromColumn( int column ) {
         this.fromColumn = column;
+        this.parameters ++;
         return this;
     }
 
     public Builder ToRow ( int row ) {
         this.toRow = row;
+        this.parameters ++;
         return this;
     }
 
     public Builder ToColumn ( int column ) {
         this.toColumn = column;
+        this.parameters ++;
         return this;
     }
 
     public Move build() {
-        //Here we create the actual bank account object, which is always in a fully initialised state when it's returned.
-        Move move = new Move();  //Since the builder is in the BankAccount class, we can invoke its private constructor.
+        Move move = new Move();
         move.fromRow = this.fromRow;
         move.fromColumn = this.fromColumn;
         move.toRow = this.toRow;
-        move.toColumn = this.toColumn;
+        move.toColumn = this.toColumn ;
+
         return move;
     }
 }

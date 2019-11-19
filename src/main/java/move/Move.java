@@ -1,15 +1,11 @@
 package move;
 
 public class Move {
-    public int fromRow;
-    public int toRow;
-    public int fromColumn;
-    public int toColumn;
-    public Builder builder;
+    public int fromRow = 0;
+    public int toRow = 0;
+    public int fromColumn = 0;
+    public int toColumn = 0;
 
-    public Move () {
-
-    }
 
     public boolean isValidMove () {
         return this.isForward () || this.isBackwards () || this.isLeft () || this.isRight () || this.isLeftDiagonal () || this.isRightDiagonal ();
@@ -38,4 +34,5 @@ public class Move {
     private boolean isLeftDiagonal () {
         return ( this.isLeft () && ( this.isForward () || this.isBackwards () ) );
     }
+
 }

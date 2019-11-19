@@ -6,7 +6,6 @@ import piece.Piece;
 import team.Team;
 
 import java.util.ArrayList;
-import java.lang.Math;
 import java.util.Arrays;
 
 public class Board {
@@ -35,7 +34,8 @@ public class Board {
 
     public void movePiece( Move move ) {
         Piece piece = this.getCell(move.fromRow, move.fromColumn).deletePieceFromCell();
-        if (distance(move.fromRow, move.fromColumn, move.toRow, move.toColumn) > piece.move()) {
+        //if (distance(move.fromRow, move.fromColumn, move.toRow, move.toColumn) > piece.move()) {
+        if (!move.isValidMove ()) {
             this.getCell(move.fromRow, move.fromColumn).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
@@ -52,11 +52,11 @@ public class Board {
     private Cell getCell(int row, int column) {
         return this.cellArray.get(row).get(column);
     }
-
+    /*
     private int distance(int firstRow, int firstColumn, int secondRow, int secondColumn) {
         return Math.max(Math.abs(firstRow - secondRow), Math.abs(secondColumn - firstColumn));
     }
-
+    */
     public Piece removePiece( Move move ) {
         return this.getCell(move.toRow, move.toColumn).deletePieceFromCell();
     }
