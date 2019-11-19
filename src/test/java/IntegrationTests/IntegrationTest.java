@@ -13,15 +13,15 @@ import piece.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationTest {
-    Team team = new Team();
-    Team team2boludo = new Team();
+    Team team = new Team(1);
+    Team team2 = new Team(2);
     private PieceFactory factory = new PieceFactory(team);
-    private PieceFactory efactory = new PieceFactory(team2boludo);
+    private PieceFactory efactory = new PieceFactory(team2);
 
     @Test
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays() throws PlayerHas20PointsOnlyException {
 
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
 
         board.placePiece(piece, 3, 3);
@@ -38,7 +38,7 @@ class IntegrationTest {
 
     @Test
     void test01APieceCanNotMoveToAnOccupiedCell() throws PlayerHas20PointsOnlyException {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
 
         board.placePiece(piece, 3, 3);
@@ -54,7 +54,7 @@ class IntegrationTest {
 
     @Test
     void test06CanPlaceAnAllyPieceInAnEmptyAllyCell() throws PlayerHas20PointsOnlyException {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
 
         board.placePiece(piece, 3, 3);
@@ -64,7 +64,7 @@ class IntegrationTest {
     @Test
     void Test02AnAlliedInfantrySoldierAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece healer = efactory.createHealer();
 
@@ -83,7 +83,7 @@ class IntegrationTest {
     @Test
     void Test03AnAlliedRiderAttacksAnEnemyPieceAndVerifiesThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = efactory.createSoldier();
         Piece rider = factory.createRider();
 
@@ -107,7 +107,7 @@ class IntegrationTest {
     @Test
     void Test04AnAlliedCatapultAttacksAnEnemyPieceAndItIsVerifiedThatTheCorrespondingLifeIsSubtracted() throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = efactory.createSoldier();
         Piece catapult = factory.createCatapult();
 
@@ -125,7 +125,7 @@ class IntegrationTest {
     @Test
     void Test05AnAlliedHealerHealsAnAlliedPieceAndVerifiesThatTheCorrespondingLifeIsAdded() throws PlayerHas20PointsOnlyException {
         //Assign
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece healer = factory.createHealer();
         Piece rider = efactory.createRider();
@@ -155,7 +155,7 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
         board.placePiece(piece, 3, 3);
@@ -166,7 +166,7 @@ class IntegrationTest {
     @Test
     void test07CannotPlaceAnAllyPieceInAnOccupiedAllyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         Piece pieceThatOccupiesCell = factory.createRider();
         //Act
@@ -183,7 +183,7 @@ class IntegrationTest {
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
         try {
@@ -197,7 +197,7 @@ class IntegrationTest {
     @Test
     void test09BoardIsProperlyCreated() {
         //Assemble & Act
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         //Assert
         assertNotNull(board);
     }
@@ -252,10 +252,11 @@ class IntegrationTest {
         Piece catapult7 = game.playerChoosesCatapult(player2);
         Piece catapult8 = game.playerChoosesCatapult(player2);
 
-        game.playerPlacesPieceOnBoard(player2, catapult5, 11, 0);
-        game.playerPlacesPieceOnBoard(player2, catapult6, 11, 1);
-        game.playerPlacesPieceOnBoard(player2, catapult7, 11, 2);
-        game.playerPlacesPieceOnBoard(player2, catapult8, 11, 3);
+        game.playerPlacesPieceOnBoard ( player2, catapult5, 11, 0 );
+        game.playerPlacesPieceOnBoard ( player2, catapult6, 11, 1 );
+        game.playerPlacesPieceOnBoard ( player2, catapult7, 11, 2 );
+        game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
+        game.changeFace ();
         //Act
         try {
             game.playerAttacks(player1, 9, 0);
@@ -275,7 +276,7 @@ class IntegrationTest {
     //ENTREGA 2
     @Test
     void test13CanMoveAGroupOfSoldiersAsABattalion() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
@@ -288,7 +289,7 @@ class IntegrationTest {
 
     @Test
     void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
@@ -308,7 +309,7 @@ class IntegrationTest {
 
     @Test
     void test15WhenTheBattalionMovesAndIsAnObstacleInFrontTheBattalionGetsDissolved() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
@@ -331,7 +332,7 @@ class IntegrationTest {
 
     @Test
     void test16WhenThereAre4SoldiersTogetherOnly3AreInTheBattalionAndOnlyTheyMove() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece soldier = factory.createSoldier();
         Piece anotherSoldier = factory.createSoldier();
         Piece yetAnotherOne = factory.createSoldier();
@@ -352,7 +353,7 @@ class IntegrationTest {
 
     @Test
     void test17IfAHorsemanAttacksAnEnemyInShortDistanceItIsABodyAttack() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece horseman = factory.createRider();
         Piece euge = efactory.createSoldier();
         board.placePiece(horseman, 9, 10);
@@ -364,7 +365,7 @@ class IntegrationTest {
 
     @Test
     void test18IfAHorsemanAttacksAnEnemyInMediumDistanceAndHasAnEnemyNearbyThrowError() {
-        Board board = new Board(team, team2boludo);
+        Board board = new Board(team, team2);
         Piece cris = factory.createRider();
         Piece euge = efactory.createSoldier();
         Piece sol = efactory.createSoldier();

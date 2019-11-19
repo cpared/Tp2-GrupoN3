@@ -4,29 +4,29 @@ import board.CanNotMakeThatMoveException;
 import team.*;
 
 public interface Piece {
-    public Team team = new Team ();
-    public int life = 0;
-    public int cost = 0;
+    Team team = null;
+    int life = 0;
+    int cost = 0;
 
-    public Team getTeam ();
+    Team getTeam ();
 
-    public int move ();
+    int move ();
 
-    public void attack ( Piece piece );
+    void attack ( Piece piece );
 
-    public int getLife ();
+    int getLife ();
 
-    public void getHealed ( int heal );
+    void getHealed ( int heal );
 
-    public void distanceAttack ( Piece receivingPiece );
+    void distanceAttack ( Piece receivingPiece );
 
-    public void heal ( Piece receivingPiece );
+    void heal ( Piece receivingPiece );
 
-    public void getAttacked ( int damage );
+    void getAttacked ( int damage );
 
-    public int getCost ();
+    int getCost ();
 
-    public boolean isCost (int expectedCost);
+    boolean isCost (int expectedCost);
 
 }
 

@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 public class Team {
     private int pieces;
+    private int identifier;
     private ArrayList<Piece> piece;
 
-    public Team () {
+    public Team (int identifier) {
         this.pieces = 0;
+        this.identifier = identifier;
         this.piece = new ArrayList<Piece> ( );
     }
 
@@ -28,5 +30,9 @@ public class Team {
 
     public int numberOfMembersStillOnTeam ( ) {
         return this.pieces;
+    }
+
+    public boolean equals (Team team) {
+        return this.pieces == team.pieces && this.identifier == team.identifier;
     }
 }

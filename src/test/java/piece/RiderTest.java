@@ -4,13 +4,14 @@ package piece;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import team.Team;
 
 class RiderTest {
 
     @Test
     void test00CreateRiderWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (34);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -23,7 +24,7 @@ class RiderTest {
     @Test
     void test01CreateRiderAndGetLifeIs100 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (6);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -35,7 +36,7 @@ class RiderTest {
     @Test
     void test02RiderGetCostIs3 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (23);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -47,8 +48,8 @@ class RiderTest {
     @Test
     void test03RiderReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (23);
+        Team blue = new Team (25);
         Rider rider = new Rider ( gold );
         Rider blueRider = new Rider ( blue );
 
@@ -62,7 +63,7 @@ class RiderTest {
     @Test
     void test04RiderReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (9);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -75,7 +76,7 @@ class RiderTest {
     @Test
     void test05RiderReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (67);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -88,7 +89,7 @@ class RiderTest {
     @Test
     void test06RiderReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (45);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -101,7 +102,7 @@ class RiderTest {
     @Test
     void test07RiderUseBodyAttackAndHisDamageIs5 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (6);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -113,7 +114,7 @@ class RiderTest {
     @Test
     void test08RiderUseDistanceAttackAndHisDamageIs15 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (76);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -125,7 +126,7 @@ class RiderTest {
     @Test
     void test09RiderGetMoveIs3 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (57);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -137,7 +138,7 @@ class RiderTest {
     @Test
     void test10RiderReceiveHealAndHisLifeUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (4);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
@@ -152,7 +153,7 @@ class RiderTest {
     @Test
     void test11RiderReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (8);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
@@ -166,8 +167,8 @@ class RiderTest {
     @Test
     void test12RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (9);
+        Team blue = new Team (7);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( blue );
 

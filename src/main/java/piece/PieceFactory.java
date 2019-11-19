@@ -4,7 +4,7 @@ import player.PlayerHas20PointsOnlyException;
 import team.Team;
 
 public class PieceFactory {
-    private Team team = new Team ();
+    private Team team;
     private int playerPoints = 20;
 
     public PieceFactory ( Team team ) {

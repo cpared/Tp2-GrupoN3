@@ -5,7 +5,7 @@ import piece.Piece;
 import java.util.ArrayList;
 
 public class BattalionCriteria implements Criteria{
-    private SoldierCriteria soldierCriteria = new SoldierCriteria ();
+    private SoldierCriteria soldierCriteria = new SoldierCriteria ( );
     private ArrayList< Piece > noBattalion = new ArrayList<Piece> ( );
 
     @Override

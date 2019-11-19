@@ -1,7 +1,6 @@
 package criteria;
 
 import org.junit.jupiter.api.Test;
-import piece.Healer;
 import piece.Piece;
 import piece.PieceFactory;
 import piece.Soldier;
@@ -14,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BattalionCriteriaTest {
     // Assemble
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
-    private PieceFactory factory = new PieceFactory ( new Team () );
+    private PieceFactory factory = new PieceFactory ( new Team (1) );
     private Piece soldier1 = factory.createSoldier ();
     private Piece soldier2 = factory.createSoldier ();
     private Piece soldier3 = factory.createSoldier ();
@@ -203,6 +202,16 @@ class BattalionCriteriaTest {
 
         //Assert
         assertEquals ( 3, battalion.size() );
+    }
+
+    @Test
+    void test11TryingToMakeABattalionWith3NoPiecesWillNotCreateBattalion (){
+        //Act
+        BattalionCriteria battalionPieces = new BattalionCriteria ();
+        ArrayList<Piece> battalion = battalionPieces.criteria ( pieces );
+
+        //Assert
+        assertEquals ( 0, battalion.size() );
     }
 
 }

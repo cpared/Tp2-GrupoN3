@@ -10,7 +10,8 @@ import team.*;
 
 class PlayerTest {
     //Assemble
-    private Team team = new Blue ();
+    private Team team = new Team (1);
+    private Board board = new Board (team, new Team ( 2 ));
 
     //Initiation tests.
 
@@ -133,28 +134,26 @@ class PlayerTest {
     void test10PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Board board = new Board ();
         Piece piece = player.chooseHealer ( );
 
         //Act
-        player.placePieceOnBoard ( piece, board, 11,0 );
+        player.placePieceOnBoard ( piece, board, 2,0 );
 
         //Assert
-        assertEquals ( piece, board.removePiece ( 11, 0 ) );
+        assertEquals ( piece, board.removePiece ( 2, 0 ) );
     }
 
     @Test
     void test11PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
-        Board board = new Board ();
         Piece piece = player.chooseHealer ( );
-        player.placePieceOnBoard ( piece, board, 11,0 );
+        player.placePieceOnBoard ( piece, board, 2,0 );
         //Act
-        player.movePiece ( board, 11, 0, 11, 1 );
+        player.movePiece ( board, 2, 0, 2, 1 );
 
         //Assert
-        assertEquals ( piece, board.removePiece ( 11, 1 ) );
+        assertEquals ( piece, board.removePiece ( 2, 1 ) );
     }
 
     // Tests related to teams.
@@ -164,8 +163,8 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
-        Board board = new Board ();
-        player.placePieceOnBoard ( piece, board, 11,0 );
+
+        player.placePieceOnBoard ( piece, board, 2,0 );
         //Act
         player.removePieceFromTeam ();
         //Assert

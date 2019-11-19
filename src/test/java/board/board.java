@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     //Assemble
-    Team team = new Team();
-    private Board board = new Board (team,new Team());
+    Team team = new Team (1);
+    private Board board = new Board (team,new Team (2));
     private PieceFactory factory = new PieceFactory ( team );
     private Piece piece = factory.createSoldier ( );
 

@@ -6,13 +6,14 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import team.Team;
 
 class CatapultTest {
 
     @Test
     void test00CreateCatapultWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -25,7 +26,7 @@ class CatapultTest {
     @Test
     void test01CreateCatapultAndGetLifeIs50 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -37,7 +38,7 @@ class CatapultTest {
     @Test
     void test02CatapultGetCostIs1 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -49,8 +50,8 @@ class CatapultTest {
     @Test
     void test03CatapultReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Catapult catapult = new Catapult ( gold );
         Soldier blueSoldier = new Soldier ( blue );
 
@@ -64,7 +65,7 @@ class CatapultTest {
     @Test
     void test04CatapultReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -77,7 +78,7 @@ class CatapultTest {
     @Test
     void test05CatapultReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -90,7 +91,7 @@ class CatapultTest {
     @Test
     void test06CatapultReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -103,7 +104,7 @@ class CatapultTest {
     @Test
     void test07CatapultUseBodyAttackAndRaiseAndError () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act - Assert
@@ -117,7 +118,7 @@ class CatapultTest {
     @Test
     void test08CatapultUseDistanceAttackAndHisDamageIs20 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -129,7 +130,7 @@ class CatapultTest {
     @Test
     void test09CatapultGetMoveIs0 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
 
         //Act
@@ -141,7 +142,7 @@ class CatapultTest {
     @Test
     void test10CatapultReceiveHealAndRaiseAndError () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (1);
         Catapult catapult = new Catapult ( gold );
         Healer healer = new Healer ( gold );
 
@@ -157,8 +158,8 @@ class CatapultTest {
     @Test
     void test12CatapultMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (1);
+        Team blue = new Team (2);
         Catapult catapult = new Catapult ( gold );
         Healer healer = new Healer ( blue );
 
