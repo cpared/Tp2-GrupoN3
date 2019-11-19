@@ -125,14 +125,7 @@ class RiderTest {
 
     @Test
     void test09RiderGetMoveIs3 () {
-        //Assign
-        Team gold = new Team (57);
-        Rider rider = new Rider ( gold );
 
-        //Act
-
-        //Assert
-        assertEquals ( 3, rider.move () );
     }
 
     @Test

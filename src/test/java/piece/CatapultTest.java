@@ -129,14 +129,7 @@ class CatapultTest {
 
     @Test
     void test09CatapultGetMoveIs0 () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
 
-        //Act
-
-        //Assert
-        assertEquals ( 0, catapult.move () );
     }
 
     @Test

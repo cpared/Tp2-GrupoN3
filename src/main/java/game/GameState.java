@@ -29,6 +29,8 @@ public interface GameState {
 
     void playerIsReadyToPlay ( Player player );
 
+    void playerChoosesBattalion (Player player, Move move);
+
     // This getter is only for testing, it doesnt belong in the model.
     public Board getBoard ();
 }

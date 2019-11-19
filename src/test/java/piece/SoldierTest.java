@@ -126,14 +126,7 @@ class SoldierTest {
 
     @Test
     void test09soldierGetMoveIs3 () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
 
-        //Act
-
-        //Assert
-        assertEquals ( 3, soldier.move () );
     }
 
     @Test

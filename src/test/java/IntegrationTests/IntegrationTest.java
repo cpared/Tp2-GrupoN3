@@ -323,9 +323,10 @@ class IntegrationTest {
         board.placePiece(yetAnotherOne, move3);
 
         //Act
-        board.createBattalion(1, 4);
-        Move move4 = new Builder ().fromRow ( 1 ).fromColumn ( 4 ).ToRow ( 2 ).ToColumn ( 4 ).build ();
-        board.movePiece( move4 );
+        Move move4 = new Builder().ToRow ( 1 ).ToColumn ( 4 ).build ();
+        board.createBattalion(move4);
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 4 ).ToRow ( 2 ).ToColumn ( 4 ).build ();
+        board.movePiece( move5 );
     }
 
     @Test
@@ -346,7 +347,8 @@ class IntegrationTest {
         board.placePiece(soldier, move);
         board.placePiece(anotherSoldier, move2);
         board.placePiece(yetAnotherOne, move3);
-        board.createBattalion(1, 3);
+        Move move10 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        board.createBattalion(move10);
         board.placePiece(sol, move4 );
 
         Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
@@ -373,14 +375,15 @@ class IntegrationTest {
         board.placePiece(anotherSoldier, move2);
         board.placePiece(yetAnotherOne, move3);
         board.placePiece(sol, move4);
-        board.createBattalion(1, 3);
+        Move move5 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        board.createBattalion(move5);
 
-        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.movePiece(move5);
+        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.movePiece(move6);
 
         try {
-            Move move6 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
-            board.dissolveBattalion(move6);
+            Move move7 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
+            board.dissolveBattalion(move7);
             fail();
         } catch (Exception e) {
             assertEquals("CRIS SE LA COME", "CRIS SE LA COME");
@@ -403,10 +406,11 @@ class IntegrationTest {
         board.placePiece(anotherSoldier, move2);
         board.placePiece(yetAnotherOne, move3);
         board.placePiece(sol, move4);
-        board.createBattalion(1, 3);
+        Move move5 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
+        board.createBattalion(move5);
 
-        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.movePiece(move5);
+        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
+        board.movePiece(move6);
 
         try {
             assertNotNull(board.removePiece(move4));

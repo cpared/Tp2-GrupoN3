@@ -1,6 +1,8 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import move.Move;
 import team.*;
 
 public class Healer implements Piece {
@@ -58,8 +60,8 @@ public class Healer implements Piece {
     }
 
     @Override
-    public int move () {
-        return 3;
+    public void move ( Board board ,Move move ) {
+        board.movePiece ( move );
     }
 
     @Override

@@ -1,6 +1,8 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import move.Move;
 import team.*;
 
 public class Soldier implements Piece {
@@ -56,8 +58,8 @@ public class Soldier implements Piece {
     }
 
     @Override
-    public int move () {
-        return 3;
+    public void move ( Board board , Move move) {
+        board.movePiece ( move );
     }
 
     @Override
@@ -74,5 +76,7 @@ public class Soldier implements Piece {
     public boolean isCost (int expectedCost) {
         return this.cost == expectedCost;
     }
+
+
 
 }

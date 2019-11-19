@@ -1,6 +1,8 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import move.Move;
 import team.*;
 
 public interface Piece {
@@ -10,7 +12,7 @@ public interface Piece {
 
     Team getTeam ();
 
-    int move ();
+    void move ( Board board ,Move move );
 
     void attack ( Piece piece );
 

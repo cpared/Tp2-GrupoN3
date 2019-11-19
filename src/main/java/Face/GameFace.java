@@ -14,7 +14,7 @@ public class GameFace implements Face {
     private Board board;
     boolean state = false;
 
-    public GameFace ( Board board) {
+    public GameFace ( Board board ) {
         this.board = board;
     }
 
@@ -34,6 +34,11 @@ public class GameFace implements Face {
         player.movePiece ( this.board, move );
     }
 
+    @Override
+    public void playerChoosesBattalion ( Move move ) {
+        player.chooseBattalion ( this.board, move );
+    }
+
     //Methods that this class does not implement
 
     @Override
@@ -42,27 +47,27 @@ public class GameFace implements Face {
     }
 
     @Override
-    public Piece playerChoosesSoldier ( ){
+    public Piece playerChoosesSoldier () {
         return new NullPiece ();
     }
 
     @Override
-    public Piece playerChoosesHealer ( ){
+    public Piece playerChoosesHealer () {
         return new NullPiece ();
     }
 
     @Override
-    public Piece playerChoosesRider ( ){
+    public Piece playerChoosesRider () {
         return new NullPiece ();
     }
 
     @Override
-    public Piece playerChoosesCatapult ( ){
+    public Piece playerChoosesCatapult () {
         return new NullPiece ();
     }
 
     @Override
-    public Player newPlayer (String name, Team team){
+    public Player newPlayer ( String name, Team team ) {
         throw new ThereAreOnlyTwoPlayersPerGameException ();
     }
 

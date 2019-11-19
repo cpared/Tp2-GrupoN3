@@ -1,6 +1,8 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import move.Move;
 import team.*;
 
 public class Catapult implements Piece {
@@ -33,8 +35,8 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public int move () {
-        return 0;
+    public void move ( Board board , Move move) {
+        board.movePiece ( move );
     }
 
     @Override

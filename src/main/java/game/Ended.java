@@ -54,6 +54,11 @@ public class Ended implements GameState {
     public void playerIsReadyToPlay ( Player player ) {
     }
 
+    @Override
+    public void playerChoosesBattalion(Player player, Move move){
+
+    }
+
     // This getter is only for testing, it doesnt belong in the model.
     @Override
     public Board getBoard () {

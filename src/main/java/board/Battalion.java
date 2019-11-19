@@ -10,23 +10,6 @@ public class Battalion {
     private Board thisBoard = null;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Battalion(int row, int column,Board  board) {
         boolean skip = false;
         for (int i = row -2; i < row + 3; i++) {

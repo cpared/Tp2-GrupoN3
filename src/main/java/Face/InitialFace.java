@@ -65,4 +65,8 @@ public class InitialFace implements Face{
         player.movePiece (this.board, move );
     }
 
+    @Override
+    public void playerChoosesBattalion(Move move){
+    }
+
 }

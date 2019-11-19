@@ -97,6 +97,12 @@ public class InProgress implements GameState {
         return player2Face.removePieceFromBoard ( move );
     }
 
+    @Override
+    public void playerChoosesBattalion ( Player player, Move move ) {
+        if (player == player1) player1Face.playerChoosesBattalion ( move );
+        else player2Face.playerChoosesBattalion ( move );
+    }
+
     // This getter is only for testing, it doesnt belong in the model.
     @Override
     public Board getBoard () {

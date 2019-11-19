@@ -30,6 +30,11 @@ public class Game {
 
     }
 
+    public void playerChoosesBattalion (Player player, int row, int column) {
+        Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
+        this.state.playerChoosesBattalion(player, move);
+    }
+
     public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
         Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
         this.state.playerMovesPieceOnBoard ( player, move );

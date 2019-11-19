@@ -34,55 +34,42 @@ class PlayerTest {
     }
 
     //Point tests.
-    /*
-    @Test
-    void test03Subtracting8PointsFromPlayerLeavesPlayerWith12Points () {
-        //Act
-        Player player = new Player ( "Lola", team );
-        try {
-            player.subtractPoints ( 8 );
-        } catch (PlayerHas20PointsOnlyException e) {
-            e.getMessage ();
-        }
-        //Assert
-        assertEquals ( 12, player.obtainPoints () );
-    }
 
     @Test
-    void test04Subtracting20PointsFromPlayerLeavesPlayerWith0Points () {
+    void test03Subtracting20PointsFromPlayerLeavesPlayerWithPoints () {
         //Assemble
         Player player = new Player ( "Archie", team );
         //Act
-        try {
-            player.subtractPoints ( 2 );
-            player.subtractPoints ( 18 );
-        } catch (PlayerHas20PointsOnlyException e) {
-            e.getMessage ();
-        }
+        player.chooseCatapult ();
+        player.chooseCatapult ();
+        player.chooseCatapult ();
+        player.chooseCatapult ();
         //Assert
-        assertEquals ( 0, player.obtainPoints () );
+        assertTrue ( player.isNumberOfPiecesOnTeam ( 4 ) );
     }
 
     @Test
-    void test05Subtracting30PointsFromPlayerRaisesError () {
+    void test04Subtracting30PointsFromPlayerRaisesError () {
         //Assemble
         Player player = new Player ( "Player0003", team );
+        player.chooseCatapult ();
+        player.chooseCatapult ();
+        player.chooseCatapult ();
+        player.chooseCatapult ();
         //Act
         try {
-            player.subtractPoints ( 30 );
-            fail ();
+            player.chooseCatapult ();
+            player.chooseCatapult ();
         }
         //Assert
         catch ( PlayerHas20PointsOnlyException e ) {
-            assertEquals ( 20, player.obtainPoints () );
+            assertTrue ( player.isNumberOfPiecesOnTeam ( 4 ) );
         }
     }
-    */
-
 
     //Pieces tests.
     @Test
-    void test06PlayerCanChooseASoldier () throws PlayerHas20PointsOnlyException {
+    void test05PlayerCanChooseASoldier () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
@@ -94,7 +81,7 @@ class PlayerTest {
     }
 
     @Test
-    void test07PlayerCanChooseACatapult () throws PlayerHas20PointsOnlyException {
+    void test06PlayerCanChooseACatapult () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
@@ -106,7 +93,7 @@ class PlayerTest {
     }
 
     @Test
-    void test8PlayerCanChooseARider () throws PlayerHas20PointsOnlyException {
+    void test7layerCanChooseARider () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
@@ -118,7 +105,7 @@ class PlayerTest {
     }
 
     @Test
-    void test9PlayerCanChooseAHealer () throws PlayerHas20PointsOnlyException {
+    void test8PlayerCanChooseAHealer () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
 
@@ -132,7 +119,7 @@ class PlayerTest {
 
     //Board tests.
     @Test
-    void test10PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
+    void test9PlayerCanPlaceAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ();
@@ -146,7 +133,7 @@ class PlayerTest {
     }
 
     @Test
-    void test11PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
+    void test10PlayerCanMoveAPieceOnTheBoard () throws PlayerHas20PointsOnlyException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ();
@@ -164,7 +151,7 @@ class PlayerTest {
     // Tests related to teams.
 
     @Test
-    void test12PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
+    void test11PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ();

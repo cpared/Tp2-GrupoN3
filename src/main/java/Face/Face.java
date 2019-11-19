@@ -29,4 +29,6 @@ public interface Face {
 
     Piece playerChoosesCatapult ();
 
+    void playerChoosesBattalion(Move move);
+
 }

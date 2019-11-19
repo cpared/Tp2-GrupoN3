@@ -1,6 +1,8 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import move.Builder;
+import move.Move;
 import org.junit.jupiter.api.Test;
 import team.Team;
 
@@ -131,14 +133,7 @@ class HealerTest {
 
     @Test
     void test09HealerGetMoveIs3 () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
 
-        //Act
-
-        //Assert
-        assertEquals ( 3, healer.move () );
     }
 
     @Test

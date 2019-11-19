@@ -47,15 +47,6 @@ public class Board {
         }
     }
 
-    private Cell destinationCell ( Move move ) {
-        return this.cellArray.get ( move.toRow ).get ( move.toColumn );
-    }
-
-    private Cell originCell ( Move move ) {
-        return this.cellArray.get ( move.fromRow ).get ( move.fromColumn );
-
-    }
-
     public Piece removePiece ( Move move ) {
         return this.destinationCell ( move ).deletePieceFromCell ();
     }
@@ -90,12 +81,38 @@ public class Board {
         originPiece.heal ( receivingPiece );
     }
 
-    public void createBattalion ( int firstRow, int firstColumn ) {
-        new Battalion ( firstRow, firstColumn, this );
+
+    //Methods related to battalion.
+    public void createBattalion ( Move move ) {
+        Cell original = this.originCell ( move );
+
+        //new Battalion ( firstRow, firstColumn, this );
+        new Battalion ( move.toRow, move.toColumn, this );
     }
 
     public void dissolveBattalion ( Move move ) {
-        //this.getCell(firstRow,firstColumn).getBattalion().destroyBattalion();
         this.originCell ( move ).getBattalion ().destroyBattalion ();
+    }
+
+    //Private methods.
+    private Cell destinationCell ( Move move ) {
+        return this.cellArray.get ( move.toRow ).get ( move.toColumn );
+    }
+
+    private Cell originCell ( Move move ) {
+        return this.cellArray.get ( move.fromRow ).get ( move.fromColumn );
+
+    }
+
+    private ArrayList<Cell> adjacentCells ( Move move ) {
+        ArrayList<Cell> adjacent = new ArrayList<Cell> (  );
+        for (int j = move.toColumn; j < (move.toColumn + 3); j++) {
+            adjacent.add(this.cellArray.get ( move.toRow ).get ( j ));
+        }
+
+        for (int j = move.toColumn -3; j < move.toColumn ; j++) {
+            adjacent.add(this.cellArray.get ( move.toRow ).get ( j ));
+        }
+        return adjacent;
     }
 }

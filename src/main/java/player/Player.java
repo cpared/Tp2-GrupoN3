@@ -73,6 +73,9 @@ public class Player {
         return this.name.equals ( player.name ) && this.team.equals ( player.team );
     }
 
+    public void chooseBattalion (Board board, Move move) {
+        board.createBattalion ( move );
+    }
 
     // This getter is only for testing, they dont belong in the model.
     public String name () {

@@ -1,5 +1,7 @@
 package piece;
 
+import board.Board;
+import move.Move;
 import team.Team;
 
 public class NullPiece implements Piece {
@@ -14,8 +16,7 @@ public class NullPiece implements Piece {
     }
 
     @Override
-    public int move () {
-        return 0;
+    public void move ( Board board , Move move) {
     }
 
     @Override
