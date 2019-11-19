@@ -28,64 +28,65 @@ public class Board {
     }
 
     public void placePiece(Piece piece, Move move) {
-        Cell cell = this.getCell(move.toRow, move.toColumn);
+        Cell cell = this.destinationCell ( move );
         cell.putPieceInCell(piece, piece.getTeam());
     }
 
     public void movePiece( Move move ) {
-        Piece piece = this.getCell(move.fromRow, move.fromColumn).deletePieceFromCell();
-        //if (distance(move.fromRow, move.fromColumn, move.toRow, move.toColumn) > piece.move()) {
+        Piece piece = this.originCell ( move ).deletePieceFromCell ();
         if (!move.isValidMove ()) {
-            this.getCell(move.fromRow, move.fromColumn).putPieceInCell(piece);
+            this.originCell ( move ).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
-        Cell destinationCell = this.getCell(move.toRow, move.toColumn);
-
+        Cell destinationCell = this.destinationCell ( move );
         try {
             destinationCell.putPieceInCell(piece);
         } catch (Exception OccupiedCellException) {
-            this.getCell(move.fromRow, move.fromColumn).putPieceInCell(piece);
+            this.originCell ( move ).putPieceInCell(piece);
             throw new CanNotMakeThatMoveException();
         }
     }
 
-    private Cell getCell(int row, int column) {
-        return this.cellArray.get(row).get(column);
+    private Cell destinationCell (Move move) {
+        return this.cellArray.get(move.toRow).get ( move.toColumn );
     }
-    /*
-    private int distance(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        return Math.max(Math.abs(firstRow - secondRow), Math.abs(secondColumn - firstColumn));
+
+    private Cell originCell (Move move) {
+        return this.cellArray.get(move.fromRow).get(move.fromColumn);
+
     }
-    */
+
     public Piece removePiece( Move move ) {
-        return this.getCell(move.toRow, move.toColumn).deletePieceFromCell();
+        return this.destinationCell ( move ).deletePieceFromCell ();
     }
 
-    public void bodyAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-
-        Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
-        Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
+    public void bodyAttack( Move move ) {
+        Piece originPiece = this.originCell ( move ).getPiece ();
+        Piece receivingPiece = this.destinationCell ( move ).getPiece ();
         originPiece.attack(receivingPiece);
     }
 
-    public void distanceAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
+    public void distanceAttack( Move move ) {
+
+        Piece originPiece = this.originCell ( move ).getPiece ();
         ArrayList<Piece> piece = new ArrayList<Piece>(Arrays.asList(originPiece));
         RiderCriteria criteria = new RiderCriteria();
         if (criteria.criteria(piece).size() == 1) {
-            riderAttack(firstRow,firstColumn,secondRow,secondColumn);
+            riderAttack( move );
         } else {
-            Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
+
+            Piece receivingPiece = this.destinationCell ( move ).getPiece ();
             originPiece.distanceAttack(receivingPiece);
         }
     }
 
-    private void riderAttack(int firstRow, int firstColumn, int secondRow, int secondColumn) {
+    private void riderAttack( Move move ) {
     }
 
-    public void heal(int firstRow, int firstColumn, int secondRow, int secondColumn) {
-        Piece originPiece = this.getCell(firstRow, firstColumn).getPiece();
-        Piece receivingPiece = this.getCell(secondRow, secondColumn).getPiece();
+    public void heal(Move move) {
+        Piece originPiece = this.originCell ( move ).getPiece ();
+        Piece receivingPiece = this.destinationCell ( move ).getPiece ();
+
         originPiece.heal(receivingPiece);
     }
 
@@ -93,7 +94,8 @@ public class Board {
         new Battalion(firstRow,firstColumn,this);
     }
 
-    public void dissolveBattalion(int firstRow, int firstColumn) {
-        this.getCell(firstRow,firstColumn).getBattalion().destroyBattalion();
+    public void dissolveBattalion( Move move ) {
+        //this.getCell(firstRow,firstColumn).getBattalion().destroyBattalion();
+        this.originCell ( move ).getBattalion ().destroyBattalion ();
     }
 }

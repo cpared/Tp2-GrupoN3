@@ -169,7 +169,7 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = player.chooseHealer ( );
-        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
+        Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
         player.placePieceOnBoard ( piece, board, move );
         //Act
         player.removePieceFromTeam ();

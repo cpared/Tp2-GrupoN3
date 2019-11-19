@@ -63,7 +63,7 @@ class BoardTest {
     void test03CanNotMoveToACellThatHasADistanceGreaterThan1 () {
         //Act
         try {
-            Move move = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).build ();
+            Move move = new Builder ().ToRow ( 0 ).ToColumn ( 0 ).build ();
             board.placePiece ( piece, move);
             Move move2 = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).ToRow ( 19 ).ToColumn ( 19 ).build ();
             board.movePiece ( move2 );
@@ -78,7 +78,7 @@ class BoardTest {
     @Test
     void test04CanPlaceAPieceInAnEmptyCell () {
         //Assemble
-        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         //Act & Assert
         board.placePiece ( piece, move );
     }
@@ -86,7 +86,7 @@ class BoardTest {
     @Test
     void test05CanRemoveAPieceOfANonEmptyCell () {
         //Assemble
-        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
 
         //Act
         board.placePiece ( piece, move );
@@ -99,7 +99,7 @@ class BoardTest {
     @Test
     void test06WhenYouPopSomethingOfACellIsAPiece () {
         //Assemble
-        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
 
         //Act
         board.placePiece ( piece, move );
@@ -111,7 +111,7 @@ class BoardTest {
     @Test
     void test07CanPutAPieceIfTheCellIsAlreadyOccupied () {
         //Assemble
-        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
 
         //Act
         board.placePiece ( piece, move );

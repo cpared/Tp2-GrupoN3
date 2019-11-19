@@ -88,9 +88,10 @@ class IntegrationTest {
         board.placePiece(healer, move2);
 
         //Assert
+        Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
         assertEquals(100, soldier.getLife());
         assertEquals(75, healer.getLife());
-        board.bodyAttack(9, 0, 10, 0);
+        board.bodyAttack( move3 );
         assertEquals(65, healer.getLife());
 
     }
@@ -111,12 +112,14 @@ class IntegrationTest {
         //Assert
         assertEquals(100, rider.getLife());
         assertEquals(100, soldier.getLife());
-        board.bodyAttack(9, 0, 10, 0);
+        Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
+        board.bodyAttack( move3 );
         assertEquals(95, soldier.getLife());
 
         assertEquals(100, rider.getLife());
         assertEquals(95, soldier.getLife());
-        board.bodyAttack(9, 0, 10, 0);
+        Move move4 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
+        board.bodyAttack( move4 );
         assertEquals(90, soldier.getLife());
 
     }
@@ -137,7 +140,8 @@ class IntegrationTest {
         //Assert
         assertEquals(50, catapult.getLife());
         assertEquals(100, soldier.getLife());
-        board.distanceAttack(0, 0, 10, 2);
+        Move move3 = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 2 ).build ();
+        board.distanceAttack(move3 );
         assertEquals(80, soldier.getLife());
     }
 
@@ -163,12 +167,14 @@ class IntegrationTest {
         assertEquals(100, soldier.getLife());
         assertEquals(100, rider.getLife());
 
-        board.bodyAttack(10, 1, 9, 1);
+        Move move4 = new Builder ().fromRow ( 10 ).fromColumn ( 1 ).ToRow ( 9 ).ToColumn ( 1 ).build ();
+        board.bodyAttack( move4 );
         assertEquals(75, healer.getLife());
         assertEquals(95, soldier.getLife());
         assertEquals(100, rider.getLife());
 
-        board.heal(9, 0, 9, 1);
+        Move move5 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 9 ).ToColumn ( 1 ).build ();
+        board.heal( move5 );
         assertEquals(75, healer.getLife());
         assertEquals(100, soldier.getLife());
         assertEquals(100, rider.getLife());
@@ -207,7 +213,7 @@ class IntegrationTest {
     @Test
     void test08cannotPlaceAnAllyPieceInAnEnemyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
-        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
@@ -373,7 +379,8 @@ class IntegrationTest {
         board.movePiece(move5);
 
         try {
-            board.dissolveBattalion(2, 3);
+            Move move6 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
+            board.dissolveBattalion(move6);
             fail();
         } catch (Exception e) {
             assertEquals("CRIS SE LA COME", "CRIS SE LA COME");
@@ -418,7 +425,8 @@ class IntegrationTest {
         board.placePiece(horseman, move);
         board.placePiece(soldier, move2);
 
-        board.bodyAttack(9, 10, 10, 10);
+        Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).ToRow ( 10 ).ToColumn ( 10 ).build ();
+        board.bodyAttack( move3 );
         assertEquals(95, soldier.getLife());
     }
 
@@ -436,7 +444,8 @@ class IntegrationTest {
         board.placePiece(sol, move3 );
 
         try {
-            board.distanceAttack(9, 10, 15, 10);
+            Move move4 = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).ToRow ( 15 ).ToColumn ( 10 ).build ();
+            board.distanceAttack( move4 );
         } catch (Exception e) {
             assertEquals(sol.getLife(), 100);
         }

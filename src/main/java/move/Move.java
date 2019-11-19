@@ -1,10 +1,10 @@
 package move;
 
 public class Move {
-    public int fromRow = 0;
-    public int toRow = 0;
-    public int fromColumn = 0;
-    public int toColumn = 0;
+    public int fromRow = -1;
+    public int toRow = -1;
+    public int fromColumn = -1;
+    public int toColumn = -1;
 
 
     public boolean isValidMove () {

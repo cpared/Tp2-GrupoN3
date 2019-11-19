@@ -3,11 +3,10 @@ package move;
 public class Builder {
     Move move;
 
-    private int fromRow = 0;
-    private int toRow = 0;
-    private int fromColumn = 0;
-    private int toColumn = 0;
-    private int parameters = 0;
+    private int fromRow = -1 ;
+    private int toRow = -1;
+    private int fromColumn = -1;
+    private int toColumn = -1;
 
     public Builder () {
 
@@ -15,25 +14,21 @@ public class Builder {
 
     public Builder fromRow( int row ) {
         this.fromRow = row;
-        this.parameters ++;
         return this;
     }
 
     public Builder fromColumn( int column ) {
         this.fromColumn = column;
-        this.parameters ++;
         return this;
     }
 
     public Builder ToRow ( int row ) {
         this.toRow = row;
-        this.parameters ++;
         return this;
     }
 
     public Builder ToColumn ( int column ) {
         this.toColumn = column;
-        this.parameters ++;
         return this;
     }
 
