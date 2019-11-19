@@ -115,4 +115,16 @@ public class Board {
         }
         return adjacent;
     }
+    public ArrayList<Cell> getCells(Move move){
+        int row = move.fromRow;
+        int column = move.fromColumn;
+        ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
+        for (int i = row-2;i<row+3;i++){
+            if (i < 0){
+                continue;
+            }
+            cellArrayList.add(cellArray.get(i).get(column));
+        }
+        return cellArrayList;
+    }
 }
