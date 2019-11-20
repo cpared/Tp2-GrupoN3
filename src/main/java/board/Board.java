@@ -119,9 +119,10 @@ public class Board {
         int row = move.fromRow;
         int column = move.fromColumn;
         ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
-        for (int i = row-2;i<row+3;i++){
-            if (i < 0){
-                continue;
+        for (int i = row-1;i<row+2;i++){
+            if (i < 0 || i >19){
+                cellArrayList.clear();
+                return cellArrayList;
             }
             cellArrayList.add(cellArray.get(i).get(column));
         }
