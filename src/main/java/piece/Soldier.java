@@ -60,18 +60,8 @@ public class Soldier implements Piece {
 
     @Override
     public void move ( Board board , Move move) {
-        System.out.println ( "piece is told to move" );
-
-        if (this.decoration == null) {
-            System.out.println ( " no tiene decoracion" );
-            System.out.println ( "from column "+ move.fromColumn + " from row " + move.fromRow + " to move to column " + move.toColumn + " and row " + move.toRow);
-            board.movePiece ( move );
-        }
-        else{
-            System.out.println ( "tiene decoracion" );
-            System.out.println ( this.decoration );
-            decoration.move ( board, move );
-        }
+        if (this.decoration == null) board.movePiece ( move );
+        else decoration.move ( board, move );
     }
 
     @Override

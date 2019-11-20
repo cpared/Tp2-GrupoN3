@@ -26,10 +26,7 @@ public class RealBattalion implements Battalion {
 
     @Override
     public int getLife () {
-        for (Piece soldier : soldiers) {
-            this.life += soldier.getLife ();
-        }
-        return this.life;
+        return 0;
     }
 
     @Override
@@ -39,8 +36,6 @@ public class RealBattalion implements Battalion {
 
     @Override
     public void move ( Board board, Move move ) {
-        System.out.println ( "battalion is told to move");
-        System.out.println ( "battalion size  " + this.soldiers.size ());
         int fromRow = move.fromRow;
         int fromColumn = move.fromColumn -1;
         int toRow = move.toRow ;
@@ -48,7 +43,6 @@ public class RealBattalion implements Battalion {
         ArrayList<Piece> couldntMove = new ArrayList<Piece> (  );
         for (Piece soldier : soldiers) {
             Move fixedMove = new Builder ().fromRow ( fromRow ).fromColumn ( fromColumn ).ToRow ( toRow ).ToColumn ( toColumn ).build ();
-            System.out.println ( "SOLDIER  " + soldier);
             soldier.undecorate ( this.decorator );
             try {
                 soldier.move ( board, fixedMove );
@@ -65,8 +59,6 @@ public class RealBattalion implements Battalion {
         }
         soldiers.removeAll ( couldntMove );
         if (couldntMove.size ()>0) throw new CanNotMakeBattalion ();
-        System.out.println ( "finished moving");
-        System.out.println ( "battalion FINAL size  " + this.soldiers.size () + "      9000000");
     }
 
     @Override
@@ -80,26 +72,14 @@ public class RealBattalion implements Battalion {
 
     @Override
     public void getAttacked ( int damage ) {
-
-        for (Piece soldier : soldiers) {
-            soldier.getAttacked ( damage );
-        }
-
     }
 
     @Override
     public void attack ( Piece piece ) {
-        for (Piece soldier : soldiers) {
-            soldier.attack ( piece );
-        }
     }
 
     @Override
     public void getHealed ( int heal ) {
-        for (Piece soldier : soldiers) {
-            soldier.getHealed ( heal );
-        }
-
     }
 
     @Override
@@ -114,7 +94,6 @@ public class RealBattalion implements Battalion {
     @Override
     public void decorate ( PieceDecorator decorator ) {
         this.decorator = decorator;
-        System.out.println ( this + "decorando batallon" );
 
         for (Piece soldier : soldiers) {
             soldier.decorate ( decorator );
@@ -129,7 +108,6 @@ public class RealBattalion implements Battalion {
         }
         return decorator;
     }
-
 
     @Override
     public RealBattalion createBattalion (){

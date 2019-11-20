@@ -46,7 +46,6 @@ public class Board {
             this.originCell ( move ).putPieceInCell ( piece );
             throw new CanNotMakeThatMoveException ();
         }
-        System.out.println ( "piece has moved " + piece);
     }
 
     public void move ( Move move ) {

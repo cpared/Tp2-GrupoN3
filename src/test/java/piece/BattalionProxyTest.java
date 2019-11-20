@@ -23,6 +23,7 @@ class BattalionProxyTest {
     private Piece soldier1 = factory.createSoldier ();
     private Piece soldier2 = factory.createSoldier ();
     private Piece soldier3 = factory.createSoldier ();
+    private Piece rider = factory.createRider ();
     private ArrayList<Piece> soldiers = new ArrayList<Piece> ();
 
     @Test
@@ -44,7 +45,7 @@ class BattalionProxyTest {
         soldiers.add ( soldier2 );
         soldiers.add ( soldier3 );
         // Act
-        BattalionProxy proxy = new BattalionProxy ( board, soldiers , move );
+        BattalionProxy proxy = new BattalionProxy ( board, soldiers, move );
         // Assert
         assertNotNull ( proxy.createBattalion () );
     }
@@ -57,18 +58,18 @@ class BattalionProxyTest {
         soldiers.add ( soldier2 );
         soldiers.add ( factory.createRider () );
         // Act
-        BattalionProxy proxy = new BattalionProxy ( board, soldiers , move );
+        BattalionProxy proxy = new BattalionProxy ( board, soldiers, move );
         try {
             proxy.createBattalion ();
             // Assert
         } catch (CanNotMakeBattalion e) {
-            assertTrue( true );
+            assertTrue ( true );
         }
     }
+
     @Test
     void test03WhenAPieceMoverAllThePiecesInTheBattalionMove () {
         // Assemble
-        Board board = new Board ( team1, new Team ( 2 ) );
         Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
         Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
         Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
@@ -78,98 +79,130 @@ class BattalionProxyTest {
         this.board.placePiece ( soldier1, move1 );
         this.board.placePiece ( soldier2, move2 );
         this.board.placePiece ( soldier3, move3 );
+        BattalionProxy proxy = new BattalionProxy ( board, soldiers, move2 );
+        proxy.createBattalion ();
+
         // Act
+        Move move4 = new Builder ().fromColumn ( 2 ).fromRow ( 1 ).ToColumn ( 2 ).ToRow ( 2 ).build ();
+        proxy.move ( board, move4 );
 
-        //BattalionProxy proxy = new BattalionProxy ( board, soldiers , move2 );
-        Battalion proxy = new BattalionProxy ( board, soldiers, move2 );
-
-        RealBattalion battalion = proxy.createBattalion ();
         // Assert
-
-        Move move4 = new Builder ().fromColumn (2).fromRow ( 1 ).ToColumn ( 2 ).ToRow ( 2 ).build ();
-        this.board.movePiece ( move4 );
-
         Move move5 = new Builder ().ToColumn ( 1 ).ToRow ( 2 ).build ();
         Move move6 = new Builder ().ToColumn ( 2 ).ToRow ( 2 ).build ();
         Move move7 = new Builder ().ToColumn ( 3 ).ToRow ( 2 ).build ();
 
-        //assertEquals (soldier1.getCost (), this.board.removePiece ( move5 ).getCost ());
-        assertEquals (soldier2.getCost (), this.board.removePiece ( move6 ).getCost ());
-        //assertEquals (soldier3.getCost (), this.board.removePiece ( move7 ).getCost ());
-
-        assertEquals (soldier1.getCost (), this.board.removePiece ( move1 ).getCost ());
-        assertEquals (soldier3.getCost (), this.board.removePiece ( move2 ).getCost ());
+        assertEquals ( soldier1, this.board.removePiece ( move5 ) );
+        assertEquals ( soldier2, this.board.removePiece ( move6 ) );
+        assertEquals ( soldier3, this.board.removePiece ( move7 ) );
     }
+
     @Test
-    void test04WhenAPieceMoverAllThePiecesInTheBattalionMove () {
+    void test04WhenBattalionIsToldToGetHealedThePiecesDontGetHealed () {
         // Assemble
-        Board board = new Board ( team1, new Team ( 2 ) );
+
         Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
         Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
         Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
         this.board.placePiece ( soldier1, move1 );
         this.board.placePiece ( soldier2, move2 );
         this.board.placePiece ( soldier3, move3 );
-        // Act
+
         ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
-
-
-        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces , move2 );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
         RealBattalion battalion = proxy.createBattalion ();
+
+        int life1 = soldier1.getLife ();
+        int life2 = soldier2.getLife ();
+        int life3 = soldier3.getLife ();
+        // Act
+
+        proxy.getHealed ( 5 );
+
         // Assert
-        Move move4 = new Builder ().fromColumn (2).fromRow ( 1 ).ToColumn ( 2 ).ToRow ( 2 ).build ();
-        this.board.movePiece ( move4 );
 
-        Move move5 = new Builder ().ToColumn ( 1 ).ToRow ( 2 ).build ();
-        Move move6 = new Builder ().ToColumn ( 2 ).ToRow ( 2 ).build ();
-        Move move7 = new Builder ().ToColumn ( 3 ).ToRow ( 2 ).build ();
+        assertEquals ( life1, this.board.removePiece ( move1 ).getLife () );
+        assertEquals ( life2, this.board.removePiece ( move2 ).getLife () );
+        assertEquals ( life3, this.board.removePiece ( move3 ).getLife () );
 
-        //assertEquals (soldier1.getCost (), this.board.removePiece ( move5 ).getCost ());
-        assertEquals (soldier2.getCost (), this.board.removePiece ( move6 ).getCost ());
-        //assertEquals (soldier3.getCost (), this.board.removePiece ( move7 ).getCost ());
-
-        assertEquals (soldier1.getCost (), this.board.removePiece ( move1 ).getCost ());
-        assertEquals (soldier3.getCost (), this.board.removePiece ( move2 ).getCost ());
     }
-
 
     @Test
-    void test05WhenAPieceMoverAllThePiecesInTheBattalionMove () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+    void test05WhenBattalionIsToldToGetAttackedThePiecesDontGetAttacked () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
         // Assemble
-        Game game = new Game ();
-        game.newPlayer ( "Pepe" );
-        Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,4 );
-        game.newPlayer ( "Juan" );
-        game.playerIsReadyToPlay ( game.getPlayer1 () );
-        Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12,1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12,2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12,3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 12,4 );
-        game.playerIsReadyToPlay ( game.getPlayer2 () );
-        // Act
-        game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
 
+        Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
+        Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
+        Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
+        this.board.placePiece ( soldier1, move1 );
+        this.board.placePiece ( soldier2, move2 );
+        this.board.placePiece ( soldier3, move3 );
+
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        RealBattalion battalion = proxy.createBattalion ();
+
+        int life1 = soldier1.getLife ();
+        int life2 = soldier2.getLife ();
+        int life3 = soldier3.getLife ();
         // Act
-        System.out.println ( "soldier1" + sol1);
-        System.out.println ( "soldier2" + sol2);
-        System.out.println ( "soldier3" + sol3);
-        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
+
+        proxy.getAttacked ( 20 );
+
         // Assert
 
-        assertEquals (soldier1.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,1 ).getCost ());
-        assertEquals (soldier2.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,2 ).getCost ());
-        assertEquals (soldier3.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,3 ).getCost ());
+        assertEquals ( life1, this.board.removePiece ( move1 ).getLife () );
+        assertEquals ( life2, this.board.removePiece ( move2 ).getLife () );
+        assertEquals ( life3, this.board.removePiece ( move3 ).getLife () );
     }
 
+    @Test
+    void test06WhenBattalionIsToldToHealThePiecesDontHeal () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+        // Assemble
+
+        Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
+        Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
+        Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
+        Move move4 = new Builder ().ToColumn ( 4 ).ToRow ( 1 ).build ();
+        this.board.placePiece ( soldier1, move1 );
+        this.board.placePiece ( soldier2, move2 );
+        this.board.placePiece ( soldier3, move3 );
+        this.board.placePiece ( rider, move4 );
+
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        RealBattalion battalion = proxy.createBattalion ();
+
+        int life = rider.getLife ();
+        // Act
+        proxy.heal ( rider );
+
+        // Assert
+        assertEquals ( life, this.board.removePiece ( move4 ).getLife () );
+    }
+
+    @Test
+    void test07WhenBattalionIsToldToAttackThePiecesDontAttack () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+        // Assemble
+
+        Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
+        Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
+        Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
+        Move move4 = new Builder ().ToColumn ( 4 ).ToRow ( 1 ).build ();
+        this.board.placePiece ( soldier1, move1 );
+        this.board.placePiece ( soldier2, move2 );
+        this.board.placePiece ( soldier3, move3 );
+        this.board.placePiece ( rider, move4 );
+
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        RealBattalion battalion = proxy.createBattalion ();
+
+        int life = rider.getLife ();
+        // Act
+
+        proxy.attack ( rider );
+
+        // Assert
+        assertEquals ( life, this.board.removePiece ( move4 ).getLife () );
+    }
 }

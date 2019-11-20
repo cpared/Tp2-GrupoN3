@@ -24,7 +24,6 @@ public class BattalionProxy implements Battalion {
 
     public RealBattalion createBattalion () {
         if (isBattalion ()){
-            System.out.println ( "ES BATALLON");
             this.battalion = new RealBattalion ( this.pieces );
             this.battalion.decorate ( this.decorator );
         }
@@ -33,9 +32,7 @@ public class BattalionProxy implements Battalion {
     }
 
     public void dissolveBattalion (){
-        System.out.println ( "dissolved battalion 99999999999999999999999999999999999999999999999999999999" );
         this.battalion.undecorate ( this.decorator );
-
     }
 
     private void areBattalion () {
@@ -50,8 +47,6 @@ public class BattalionProxy implements Battalion {
 
     @Override
     public void move ( Board board, Move move ) {
-        System.out.println ( "proxy is told to move" );
-        System.out.println ( this.pieces.size ());
         try {
             this.battalion.move ( board, move );
         } catch (CanNotMakeBattalion e) {
@@ -64,6 +59,7 @@ public class BattalionProxy implements Battalion {
     if (this.isBattalion ()) this.battalion.decorate ( decorator );
 
     }
+
     @Override
     public PieceDecorator undecorate ( PieceDecorator decorator ) {
         if (this.isBattalion ()) return this.battalion.undecorate ( decorator );
@@ -71,12 +67,12 @@ public class BattalionProxy implements Battalion {
     }
 
 
-
     // Cant actually access this methods.
     @Override
     public int getLife () {
         return this.battalion.getLife ();
     }
+    @Override
     public Team getTeam () {
         return this.battalion.getTeam ();
     }

@@ -15,12 +15,6 @@ public class SoldierDecorator extends PieceDecorator {
         super (battalion);
         this.battalion = battalion;
     }
-    /*
-    public SoldierDecorator ( RealBattalion battalion) {
-        super (battalion);
-        this.battalion = battalion;
-    }
-    */
 
     @Override
     public int getLife () {
@@ -34,7 +28,6 @@ public class SoldierDecorator extends PieceDecorator {
 
     @Override
     public void move ( Board board , Move move ) {
-        System.out.println ( "decorator is told to move" );
         this.battalion.move ( board , move );
     }
 
