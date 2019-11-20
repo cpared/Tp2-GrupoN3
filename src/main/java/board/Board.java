@@ -8,6 +8,8 @@ import team.Team;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
     protected ArrayList<ArrayList<Cell>> cellArray;
@@ -79,6 +81,35 @@ public class Board {
     }
 
     private void riderAttack ( Move move ) {
+    }
+    public void attack(Move move){
+        int firstRow =move.fromRow;
+        int secondRow = move.toRow;
+        int firstColumn = move.fromColumn;
+        int secondColumn = move.toColumn;
+        ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow,firstColumn)));
+        Map<Piece,Integer> pieceToAttack = new HashMap <Piece,Integer>();
+        pieceToAttack.put(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
+        try {
+            this.originCell(move).getPiece().attack(pieceArray, pieceToAttack);
+        }
+        catch (Exception e){
+            removePiece(move);
+            throw e;
+        }
+    }
+
+    private ArrayList<Cell> adjacentCells(int firstRow, int firstColumn) {
+        ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
+        for (int row = firstRow -1;row <firstRow + 2;row++){
+            for (int column = firstColumn -1; column < firstColumn+2;column++){
+                if ((row == firstRow && column == firstColumn)|| column < 0 || row < 0 || column > 19 || row >19){
+                    continue;
+                }
+                cellArrayList.add(cellArray.get(row).get(column));
+            }
+        }
+        return cellArrayList;
     }
 
     public void heal ( Move move ) {
