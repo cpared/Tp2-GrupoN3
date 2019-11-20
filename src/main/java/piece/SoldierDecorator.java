@@ -8,13 +8,19 @@ import team.Team;
 import java.util.ArrayList;
 
 public class SoldierDecorator extends PieceDecorator {
-    private BattalionE battalion;
+    private Piece battalion;
 
 
-    public SoldierDecorator ( Piece decoratedPiece , BattalionE battalion) {
-        super ( decoratedPiece );
+    public SoldierDecorator ( Piece battalion) {
+        super (battalion);
         this.battalion = battalion;
     }
+    /*
+    public SoldierDecorator ( RealBattalion battalion) {
+        super (battalion);
+        this.battalion = battalion;
+    }
+    */
 
     @Override
     public int getLife () {
@@ -28,6 +34,7 @@ public class SoldierDecorator extends PieceDecorator {
 
     @Override
     public void move ( Board board , Move move ) {
+        System.out.println ( "decorator is told to move" );
         this.battalion.move ( board , move );
     }
 
@@ -64,5 +71,14 @@ public class SoldierDecorator extends PieceDecorator {
     @Override
     public boolean isCost ( int expectedCost ) {
         return this.battalion.isCost ( expectedCost );
+    }
+
+    @Override
+    public void decorate ( PieceDecorator decorator ) {
+    }
+
+    @Override
+    public PieceDecorator undecorate ( PieceDecorator decorator ) {
+        return null;
     }
 }

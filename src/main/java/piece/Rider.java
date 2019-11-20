@@ -11,6 +11,7 @@ public class Rider implements Piece {
     private int life = 100;
     private int bodyAttack = 5;
     private int distanceAttack = 15;
+    private PieceDecorator decoration = null;
 
     public Rider ( Team team ) {
         this.team = team;
@@ -74,5 +75,16 @@ public class Rider implements Piece {
     @Override
     public boolean isCost (int expectedCost) {
         return this.cost == expectedCost;
+    }
+
+    @Override
+    public void decorate (PieceDecorator decorator){
+        this. decoration = decorator;
+    }
+
+    @Override
+    public PieceDecorator undecorate (PieceDecorator decorator) {
+        this.decoration = null;
+        return decorator;
     }
 }

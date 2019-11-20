@@ -11,6 +11,7 @@ public class Catapult implements Piece {
     private int life = 50;
     private int bodyAttack = 0;
     private int distanceAttack = 20;
+    private PieceDecorator decoration = null;
 
     public Catapult ( Team team ) {
         this.team = team;
@@ -75,4 +76,14 @@ public class Catapult implements Piece {
         return this.cost == expectedCost;
     }
 
+    @Override
+    public void decorate (PieceDecorator decorator){
+        this. decoration = decorator;
+    }
+
+    @Override
+    public PieceDecorator undecorate (PieceDecorator decorator) {
+        this.decoration = null;
+        return decorator;
+    }
 }

@@ -11,6 +11,7 @@ public class Soldier implements Piece {
     private int life = 100;
     private int bodyAttack = 10;
     private int distanceAttack = 0;
+    private PieceDecorator decoration = null;
 
     public Soldier ( Team team ) {
         this.team = team;
@@ -59,7 +60,18 @@ public class Soldier implements Piece {
 
     @Override
     public void move ( Board board , Move move) {
-        board.movePiece ( move );
+        System.out.println ( "piece is told to move" );
+
+        if (this.decoration == null) {
+            System.out.println ( " no tiene decoracion" );
+            System.out.println ( "from column "+ move.fromColumn + " from row " + move.fromRow + " to move to column " + move.toColumn + " and row " + move.toRow);
+            board.movePiece ( move );
+        }
+        else{
+            System.out.println ( "tiene decoracion" );
+            System.out.println ( this.decoration );
+            decoration.move ( board, move );
+        }
     }
 
     @Override
@@ -78,5 +90,14 @@ public class Soldier implements Piece {
     }
 
 
+    @Override
+    public void decorate (PieceDecorator decorator){
+        this. decoration = decorator;
+    }
 
+    @Override
+    public PieceDecorator undecorate (PieceDecorator decorator) {
+        this.decoration = null;
+        return decorator;
+    }
 }

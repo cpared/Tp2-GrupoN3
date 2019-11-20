@@ -9,6 +9,7 @@ public interface Piece {
     Team team = null;
     int life = 0;
     int cost = 0;
+    PieceDecorator decoration = null;
 
     Team getTeam ();
 
@@ -30,5 +31,8 @@ public interface Piece {
 
     boolean isCost (int expectedCost);
 
+    void decorate (PieceDecorator decorator);
+
+    PieceDecorator undecorate (PieceDecorator decorator);
 }
 

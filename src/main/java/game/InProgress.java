@@ -5,6 +5,7 @@ import board.Board;
 import move.Move;
 import piece.Piece;
 import player.Player;
+import player.PlayerMustChooseAtLeastOnePieceToStartGameException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.Team;
 import Face.*;
@@ -25,8 +26,11 @@ public class InProgress implements GameState {
     }
 
     private void changeFace ( Player player ) {
-        if (this.player1.equals ( player )) this.player1Face = new GameFace ( this.board );
-        else this.player2Face = new GameFace ( this.board );
+        if (player.isNumberOfPiecesOnTeam ( 0 )) throw new PlayerMustChooseAtLeastOnePieceToStartGameException ();
+
+        if (this.player1.equals ( player )) this.player1Face = new GameFace ( this.board, player1 );
+        else this.player2Face = new GameFace ( this.board, player2 );
+
     }
 
     @Override
@@ -92,7 +96,6 @@ public class InProgress implements GameState {
 
     @Override
     public Piece removePieceFromBoard ( Player player, Move move ) {
-        player.removePieceFromTeam ();
         if (player == player1) return player1Face.removePieceFromBoard ( move );
         return player2Face.removePieceFromBoard ( move );
     }

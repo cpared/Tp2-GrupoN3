@@ -46,4 +46,14 @@ public class NullPiece implements Piece {
     public boolean isCost (int expectedCost) {
         return true;
     }
+
+    @Override
+    public void decorate ( PieceDecorator decorator ) {
+
+    }
+
+    @Override
+    public PieceDecorator undecorate ( PieceDecorator decorator ) {
+        return null;
+    }
 }

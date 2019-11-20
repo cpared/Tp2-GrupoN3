@@ -308,115 +308,150 @@ class IntegrationTest {
 
     //ENTREGA 2
     @Test
-    void test13CanMoveAGroupOfSoldiersAsABattalion() {
+    void test13CanMoveAGroupOfSoldiersAsABattalion() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
         //Assemble
-        Board board = new Board(team, team2);
-        Piece soldier = factory.createSoldier();
-        Piece anotherSoldier = factory.createSoldier();
-        Piece yetAnotherOne = factory.createSoldier();
-        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
-        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
+        Game game = new Game ();
+        game.newPlayer ( "Pepe" );
+        Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9,4 );
+        game.newPlayer ( "Juan" );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
+        Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 14,4 );
+        game.playerIsReadyToPlay ( game.getPlayer2 () );
 
-        board.placePiece(soldier, move);
-        board.placePiece(anotherSoldier, move2);
-        board.placePiece(yetAnotherOne, move3);
+        game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
+        // Act
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
+        // Assert
 
-        //Act
-        Move move4 = new Builder().ToRow ( 1 ).ToColumn ( 4 ).build ();
-        board.createBattalion(move4);
-        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 4 ).ToRow ( 2 ).ToColumn ( 4 ).build ();
-        board.movePiece( move5 );
+        assertEquals (sol1.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,1 ).getCost ());
+        assertEquals (sol2.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,2 ).getCost ());
+        assertEquals (sol3.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,3 ).getCost ());
     }
 
     @Test
-    void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() {
+    void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
         //Assemble
-        Board board = new Board(team, team2);
-        Piece soldier = factory.createSoldier();
-        Piece anotherSoldier = factory.createSoldier();
-        Piece yetAnotherOne = factory.createSoldier();
-        Piece sol = factory.createCatapult();
+        Game game = new Game ();
+        game.newPlayer ( "Pepe" );
+        Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9,4 );
+        game.newPlayer ( "Juan" );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
+        Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 13,1 );
+        game.playerIsReadyToPlay ( game.getPlayer2 () );
 
-        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
-        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
-        Move move4 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
-        Move move6 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
-        Move move7 = new Builder ().ToRow ( 2 ).fromColumn ( 4 ).build ();
-        board.placePiece(soldier, move);
-        board.placePiece(anotherSoldier, move2);
-        board.placePiece(yetAnotherOne, move3);
-        Move move10 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        board.createBattalion(move10);
-        board.placePiece(sol, move4 );
+        game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
+        // Act
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
 
-        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.movePiece( move5 );
-
-        assertNotNull(board.removePiece(move6));
-        assertNotNull(board.removePiece(move2));
-        assertNotNull(board.removePiece(move7));
+        // Assert
+        assertEquals (sol1 , game.removePieceFromBoard ( game.getPlayer2 (), 12,1 ));
+        assertEquals (sol2, game.removePieceFromBoard ( game.getPlayer2 (), 13,2 ));
+        assertEquals (sol3, game.removePieceFromBoard ( game.getPlayer2 (), 13,3 ));
+        assertEquals (sol4, game.removePieceFromBoard ( game.getPlayer2 (), 13,1 ));
     }
 
     @Test
-    void test15WhenTheBattalionMovesAndIsAnObstacleInFrontTheBattalionGetsDissolved() {
-        Board board = new Board(team, team2);
-        Piece soldier = factory.createSoldier();
-        Piece anotherSoldier = factory.createSoldier();
-        Piece yetAnotherOne = factory.createSoldier();
-        Piece sol = factory.createCatapult();
+    void test15WhenTheBattalionMovesAndIsAnObstacleInFrontTheBattalionGetsDissolved() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException {
+        //Assemble
+        Game game = new Game ();
+        game.newPlayer ( "Pepe" );
+        Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9,4 );
+        game.newPlayer ( "Juan" );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
+        Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 13,1 );
+        game.playerIsReadyToPlay ( game.getPlayer2 () );
 
-        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
-        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
-        Move move4 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.placePiece(soldier, move);
-        board.placePiece(anotherSoldier, move2);
-        board.placePiece(yetAnotherOne, move3);
-        board.placePiece(sol, move4);
-        Move move5 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        board.createBattalion(move5);
+        game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
+        // Act
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
 
-        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.movePiece(move6);
+        // Assert
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12,1,11,1);
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 13,2,14,2);
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 13,3,12,3);
 
-        try {
-            Move move7 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
-            board.dissolveBattalion(move7);
-            fail();
-        } catch (Exception e) {
-            assertEquals("CRIS SE LA COME", "CRIS SE LA COME");
-        }
+        assertEquals (sol1 , game.removePieceFromBoard ( game.getPlayer2 (), 11,1 ));
+        assertEquals (sol2, game.removePieceFromBoard ( game.getPlayer2 (), 14,2 ));
+        assertEquals (sol3, game.removePieceFromBoard ( game.getPlayer2 (), 12,3 ));
+
     }
 
     @Test
-    void test16WhenThereAre4SoldiersTogetherOnly3AreInTheBattalionAndOnlyTheyMove() {
-        Board board = new Board(team, team2);
-        Piece soldier = factory.createSoldier();
-        Piece anotherSoldier = factory.createSoldier();
-        Piece yetAnotherOne = factory.createSoldier();
-        Piece sol = factory.createSoldier();
+    void test16WhenThereAre4SoldiersTogetherOnly3AreInTheBattalionAndOnlyTheyMove() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException {
+        //Assemble
+        Game game = new Game ();
+        game.newPlayer ( "Pepe" );
+        Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9,4 );
+        game.newPlayer ( "Juan" );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
+        Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12,1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12,2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12,3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 12,4 );
+        game.playerIsReadyToPlay ( game.getPlayer2 () );
 
-        Move move = new Builder ().ToRow ( 1 ).ToColumn ( 2 ).build ();
-        Move move2 = new Builder ().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        Move move3 = new Builder ().ToRow ( 1 ).ToColumn ( 4 ).build ();
-        Move move4 = new Builder ().ToRow ( 1 ).ToColumn ( 1 ).build ();
-        board.placePiece(soldier, move);
-        board.placePiece(anotherSoldier, move2);
-        board.placePiece(yetAnotherOne, move3);
-        board.placePiece(sol, move4);
-        Move move5 = new Builder().ToRow ( 1 ).ToColumn ( 3 ).build ();
-        board.createBattalion(move5);
+        game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
+        // Act
+        game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
+        // Assert
 
-        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).ToRow ( 2 ).ToColumn ( 3 ).build ();
-        board.movePiece(move6);
-
-        try {
-            assertNotNull(board.removePiece(move4));
-        } catch (Exception e) {
-            assertNotNull(board.removePiece(move3));
-        }
+        assertEquals (sol1.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,1 ).getCost ());
+        assertEquals (sol2.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,2 ).getCost ());
+        assertEquals (sol3.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 13,3 ).getCost ());
+        assertEquals (sol3.getCost (), game.removePieceFromBoard ( game.getPlayer2 (), 12,4 ).getCost ());
     }
 
     @Test

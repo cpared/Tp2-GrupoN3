@@ -11,19 +11,19 @@ public class Move {
         return this.isForward () || this.isBackwards () || this.isLeft () || this.isRight () || this.isLeftDiagonal () || this.isRightDiagonal ();
     }
 
-    private boolean isForward () {
+    public boolean isForward () {
         return this.toRow - this.fromRow == 1;
     }
 
-    private boolean isBackwards () {
+    public boolean isBackwards () {
         return this.toRow - this.fromRow == -1;
     }
 
-    private boolean isLeft () {
+    public boolean isLeft () {
         return this.toColumn - fromColumn == 1;
     }
 
-    private boolean isRight () {
+    public boolean isRight () {
         return this.toColumn - fromColumn == -1;
     }
 

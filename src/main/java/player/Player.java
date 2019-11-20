@@ -26,7 +26,9 @@ public class Player {
     }
 
     public void movePiece ( Board board, Move move ) {
-        board.movePiece ( move );
+        System.out.println ( "player tells piece from column "+ move.fromColumn + " from row " + move.fromRow + " to move to column " + move.toColumn + " and row " + move.toRow);
+        board.move ( move );
+        //board.movePiece ( move );
     }
 
     public void removePieceFromTeam () throws NoMembersLeftException {

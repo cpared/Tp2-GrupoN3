@@ -6,7 +6,7 @@ import team.*;
 class Cell {
     private Piece piece = null;
     private Object team;
-    private Battalion battalion = null;
+
     public Cell (Object chosenTeam) {
         this.team = chosenTeam;
     }
@@ -32,26 +32,10 @@ class Cell {
         }
         putPieceInCell ( pieceNew );
     }
-    public void placeBattalion(Battalion battalion){
-        if (this.battalion != null) {
-            throw new OccupiedCellException ();
-        }
-        this.battalion = battalion;
-    }
+
     public Piece deletePieceFromCell() {
         Piece poppedPiece = this.getPiece ();
         this.piece = null;
         return poppedPiece;
-    }
-
-    public Battalion getBattalion() {
-        if (this.battalion == null) {
-            throw new EmptyCellException ();
-        }
-        return this.battalion;
-    }
-
-    public void popBattalion() {
-        this.battalion = null;
     }
 }

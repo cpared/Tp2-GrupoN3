@@ -13,16 +13,6 @@ public abstract class PieceDecorator implements Piece {
         this.decoratedPiece = decoratedPiece;
     }
 
-    public void removePieceDecoration (PieceDecorator toRemove) {
-        if (decoratedPiece == null || toRemove == null)  return;
-        //decoratedPiece.removeDecorator(toRemove);
-    }
-
-    @Override
-    public int getLife () {
-        return decoratedPiece.getLife ();
-    }
-
     @Override
     public void getAttacked ( int damage ) {
         this.decoratedPiece.getAttacked ( damage );

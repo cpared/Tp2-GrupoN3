@@ -1,48 +1,44 @@
 package piece;
 
+import board.Battalion;
 import board.Board;
 import board.CanNotMakeBattalion;
 import criteria.BattalionCriteria;
-import criteria.SoldierCriteria;
 import move.Move;
 import team.Team;
 
 import java.util.ArrayList;
 
-public class BattalionProxy {
+public class BattalionProxy implements Battalion {
     private ArrayList<Piece> pieces;
     private Board board;
-    private BattalionE batallion = new BattalionE ( new ArrayList<Piece> (  ) );
+    public RealBattalion battalion = new RealBattalion ( new ArrayList<Piece> (  ) );
+    private Move move;
+    private PieceDecorator decorator = new SoldierDecorator ( this );
 
-    public BattalionProxy (Board board, ArrayList<Piece> pieces) {
+    public BattalionProxy (Board board, ArrayList<Piece> pieces, Move move) {
         this.board = board;
         this.pieces = pieces;
-        form();
+        this.move = move;
     }
 
-    public void form () {
-        if (isBattalion ()) this.batallion = new BattalionE ( this.pieces );
-        else throw new CanNotMakeBattalion ();
-    }
-
-    private void areSoldiers () {
-        SoldierCriteria soldiers = new SoldierCriteria ();
-        this.pieces = soldiers.criteria ( this.pieces );
-    }
-
-    private void areAdjacent () {
-        ArrayList<Piece> adjacents = new ArrayList<Piece> (  );
-        for (Piece piece: pieces) {
-
+    public RealBattalion createBattalion () {
+        if (isBattalion ()){
+            System.out.println ( "ES BATALLON");
+            this.battalion = new RealBattalion ( this.pieces );
+            this.battalion.decorate ( this.decorator );
         }
+        else throw new CanNotMakeBattalion ();
+        return this.battalion;
+    }
 
-        if (adjacents.size () < 3) this.pieces = new ArrayList<Piece> (  );
-        else this.pieces =  adjacents;
+    public void dissolveBattalion (){
+        System.out.println ( "dissolved battalion 99999999999999999999999999999999999999999999999999999999" );
+        this.battalion.undecorate ( this.decorator );
+
     }
 
     private void areBattalion () {
-        this.areSoldiers ();
-        this.areAdjacent ();
         BattalionCriteria battalion = new BattalionCriteria ();
         this.pieces = battalion.criteria ( this.pieces );
     }
@@ -52,31 +48,64 @@ public class BattalionProxy {
         return this.pieces.size () == 3;
     }
 
-    public int getLife () {
-        return this.batallion.getLife ();
-    }
-
+    @Override
     public void move ( Board board, Move move ) {
-        this.batallion.move ( board, move );
+        System.out.println ( "proxy is told to move" );
+        System.out.println ( this.pieces.size ());
+        try {
+            this.battalion.move ( board, move );
+        } catch (CanNotMakeBattalion e) {
+            this.dissolveBattalion ();
+        }
     }
 
+    @Override
+    public void decorate ( PieceDecorator decorator ) {
+    if (this.isBattalion ()) this.battalion.decorate ( decorator );
+
+    }
+    @Override
+    public PieceDecorator undecorate ( PieceDecorator decorator ) {
+        if (this.isBattalion ()) return this.battalion.undecorate ( decorator );
+        else return decorator;
+    }
+
+
+
+    // Cant actually access this methods.
+    @Override
+    public int getLife () {
+        return this.battalion.getLife ();
+    }
     public Team getTeam () {
-        return this.batallion.getTeam ();
+        return this.battalion.getTeam ();
     }
-
+    @Override
     public void getAttacked ( int damage ) {
-        this.batallion.getAttacked ( damage );
+        this.battalion.getAttacked ( damage );
     }
-
+    @Override
+    public int getCost () {
+        return 0;
+    }
+    @Override
+    public boolean isCost ( int expectedCost ) {
+        return false;
+    }
+    @Override
     public void attack ( Piece piece ) {
-        this.batallion.attack ( piece );
+        this.battalion.attack ( piece );
     }
-
+    @Override
     public void getHealed ( int heal ) {
-       this.batallion.getHealed ( heal );
+       this.battalion.getHealed ( heal );
     }
+    @Override
+    public void distanceAttack ( Piece receivingPiece ) {
 
+    }
+    @Override
     public void heal ( Piece receivingPiece ) {
-        this.batallion.heal ( receivingPiece );
+        this.battalion.heal ( receivingPiece );
     }
 }

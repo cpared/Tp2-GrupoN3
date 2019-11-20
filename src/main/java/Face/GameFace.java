@@ -14,8 +14,9 @@ public class GameFace implements Face {
     private Board board;
     boolean state = false;
 
-    public GameFace ( Board board ) {
+    public GameFace ( Board board , Player player) {
         this.board = board;
+        this.player = player;
     }
 
     @Override
@@ -36,6 +37,7 @@ public class GameFace implements Face {
 
     @Override
     public void playerChoosesBattalion ( Move move ) {
+        System.out.println ( this.player.name ());
         player.chooseBattalion ( this.board, move );
     }
 

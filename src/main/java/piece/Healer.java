@@ -10,6 +10,7 @@ public class Healer implements Piece {
     private int cost = 2;
     private int life = 75;
     private int heal = 15;
+    private PieceDecorator decoration = null;
 
     public Healer ( Team team ) {
         this.team = team;
@@ -76,5 +77,16 @@ public class Healer implements Piece {
     @Override
     public boolean isCost (int expectedCost) {
         return this.cost == expectedCost;
+    }
+
+    @Override
+    public void decorate (PieceDecorator decorator){
+        this. decoration = decorator;
+    }
+
+    @Override
+    public PieceDecorator undecorate (PieceDecorator decorator) {
+        this.decoration = null;
+        return decorator;
     }
 }

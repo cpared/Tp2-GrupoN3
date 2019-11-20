@@ -1,15 +1,20 @@
 package board;
 
+import move.Move;
 import piece.Piece;
+import piece.RealBattalion;
 import team.Team;
 
 import java.util.*;
 
-public class Battalion {
-    private List <ArrayList<Integer>> cellPositionsArray = new ArrayList <ArrayList <Integer>> ();
-    private Board thisBoard = null;
+public interface Battalion extends Piece {
+    /*
+    List <ArrayList<Integer>> cellPositionsArray = new ArrayList <ArrayList <Integer>> ();
+    Board thisBoard = null;
 
+     */
 
+    /*
     public Battalion(int row, int column,Board  board) {
         boolean skip = false;
         for (int i = row -2; i < row + 3; i++) {
@@ -59,8 +64,7 @@ public class Battalion {
             thisBoard.cellArray.get(integers.get(0)).get(integers.get(1)).placeBattalion(this);
         }
     }
-
-    private boolean mayBeSoldier(Piece piece){
+    ate boolean mayBeSoldier(Piece piece){
         return piece.isCost(1);
     }
 
@@ -72,4 +76,9 @@ public class Battalion {
             cell.popBattalion();
         }
     }
+    */
+    RealBattalion createBattalion ();
+
+    @Override
+    void move( Board board , Move move);
 }

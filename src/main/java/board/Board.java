@@ -2,6 +2,7 @@ package board;
 
 import criteria.RiderCriteria;
 import move.Move;
+import piece.BattalionProxy;
 import piece.Piece;
 import team.Team;
 
@@ -45,6 +46,13 @@ public class Board {
             this.originCell ( move ).putPieceInCell ( piece );
             throw new CanNotMakeThatMoveException ();
         }
+        System.out.println ( "piece has moved " + piece);
+    }
+
+    public void move ( Move move ) {
+        Piece piece = this.originCell ( move ).deletePieceFromCell ();
+        this.originCell ( move ).putPieceInCell ( piece );
+        piece.move ( this, move );
     }
 
     public Piece removePiece ( Move move ) {
@@ -82,16 +90,12 @@ public class Board {
     }
 
 
-    //Methods related to battalion.
+    //Method related to battalion.
     public void createBattalion ( Move move ) {
-        Cell original = this.originCell ( move );
 
-        //new Battalion ( firstRow, firstColumn, this );
-        new Battalion ( move.toRow, move.toColumn, this );
-    }
-
-    public void dissolveBattalion ( Move move ) {
-        this.originCell ( move ).getBattalion ().destroyBattalion ();
+        ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
+        BattalionProxy proxy = new BattalionProxy ( this, possiblePieces, move );
+        proxy.createBattalion ();
     }
 
     //Private methods.
@@ -104,20 +108,9 @@ public class Board {
 
     }
 
-    private ArrayList<Cell> adjacentCells ( Move move ) {
-        ArrayList<Cell> adjacent = new ArrayList<Cell> (  );
-        for (int j = move.toColumn; j < (move.toColumn + 3); j++) {
-            adjacent.add(this.cellArray.get ( move.toRow ).get ( j ));
-        }
-
-        for (int j = move.toColumn -3; j < move.toColumn ; j++) {
-            adjacent.add(this.cellArray.get ( move.toRow ).get ( j ));
-        }
-        return adjacent;
-    }
-    public ArrayList<Cell> getCells(Move move){
-        int row = move.fromRow;
-        int column = move.fromColumn;
+    public ArrayList<Cell> adjacentRowCells(Move move){
+        int row = move.toRow;
+        int column = move.toColumn;
         ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
         for (int i = column-1;i<column+2;i++){
             if (i < 0 || i >19){
@@ -127,5 +120,14 @@ public class Board {
             cellArrayList.add(cellArray.get(row).get(i));
         }
         return cellArrayList;
+    }
+
+    public ArrayList<Piece> adjacentPieces(ArrayList<Cell> cells){
+
+        ArrayList<Piece> pieces = new ArrayList<Piece>();
+        for (Cell cell: cells){
+            pieces.add(cell.getPiece ());
+        }
+        return pieces;
     }
 }
