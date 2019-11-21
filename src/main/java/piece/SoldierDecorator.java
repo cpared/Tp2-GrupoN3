@@ -1,6 +1,5 @@
 package piece;
 
-import board.Battalion;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;

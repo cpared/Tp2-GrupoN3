@@ -1,5 +1,6 @@
-package board;
+package piece;
 
+import board.Board;
 import move.Move;
 import piece.Piece;
 import piece.RealBattalion;

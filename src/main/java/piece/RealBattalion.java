@@ -1,6 +1,5 @@
 package piece;
 
-import board.Battalion;
 import board.Board;
 import board.CanNotMakeBattalion;
 import board.CanNotMakeThatMoveException;
@@ -9,7 +8,6 @@ import move.Builder;
 import move.Move;
 import team.Team;
 
-import java.security.KeyStore;
 import java.util.ArrayList;
 
 public class RealBattalion implements Battalion {
