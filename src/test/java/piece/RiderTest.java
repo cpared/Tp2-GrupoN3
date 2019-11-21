@@ -1,10 +1,13 @@
 package piece;
 
 
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import team.Team;
+
+import java.util.ArrayList;
 
 class RiderTest {
 
@@ -54,7 +57,7 @@ class RiderTest {
         Rider blueRider = new Rider ( blue );
 
         //Act
-        blueRider.attack ( rider );
+        blueRider.attack ( new ArrayList<>(), new Pair<>(rider,1 ));
 
         //Assert
         assertEquals ( 95, rider.getLife () );
@@ -67,7 +70,7 @@ class RiderTest {
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 20 );
+        rider.receiveAttacked ( 20 );
 
         //Assert
         assertEquals ( 80, rider.getLife () );
@@ -80,7 +83,7 @@ class RiderTest {
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 100 );
+        rider.receiveAttacked ( 100 );
 
         //Assert
         assertEquals ( 0, rider.getLife () );
@@ -93,7 +96,7 @@ class RiderTest {
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 120 );
+        rider.receiveAttacked ( 120 );
 
         //Assert
         assertEquals ( 0, rider.getLife () );

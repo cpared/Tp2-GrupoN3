@@ -1,6 +1,5 @@
 package board;
 
-import criteria.RiderCriteria;
 import javafx.util.Pair;
 import move.Move;
 import piece.BattalionProxy;
@@ -9,9 +8,6 @@ import piece.Piece;
 import team.Team;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Board {
     protected ArrayList<ArrayList<Cell>> cellArray;
@@ -62,8 +58,6 @@ public class Board {
         return this.destinationCell ( move ).deletePieceFromCell ();
     }
 
-    private void riderAttack ( Move move ) {
-    }
     public void attack(Move move){
         int firstRow =move.fromRow;
         int secondRow = move.toRow;
@@ -71,13 +65,12 @@ public class Board {
         int secondColumn = move.toColumn;
         ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow,firstColumn)));
         Pair<Piece,Integer> pieceToAttack = new Pair<Piece,Integer>(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
-        //pieceToAttack.put(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
-        try {
+         try {
             this.originCell(move).getPiece().attack(pieceArray, pieceToAttack);
         }
-        catch (Exception e){
+        catch (IAmDeadException e){
             removePiece(move);
-            throw new IAmDeadException();
+            throw e;
         }
     }
 
