@@ -82,10 +82,13 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.receiveAttacked ( 75 );
-
+        try {
+            healer.receiveAttacked(75);
+        }
+        catch (IAmDeadException e){
+            assertEquals ( 0, healer.getLife () );
+        }
         //Assert
-        assertEquals ( 0, healer.getLife () );
     }
 
     @Test
@@ -95,10 +98,12 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.receiveAttacked ( 120 );
-
-        //Assert
-        assertEquals ( 0, healer.getLife () );
+        try {
+            healer.receiveAttacked ( 120 );
+        }
+        catch (IAmDeadException e){
+            assert true;
+        }
     }
 
 
@@ -110,7 +115,7 @@ class HealerTest {
 
         //Act
         healer.receiveAttacked ( 20 );
-        healer.attack ( new ArrayList<>(), new Pair<>(healer,0 ) );
+        healer.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 70, healer.getLife () );
@@ -123,7 +128,7 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.attack ( new ArrayList<>(), new Pair<>(healer,0 ) );
+        healer.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 75, healer.getLife () );

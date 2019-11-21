@@ -475,9 +475,9 @@ class IntegrationTest {
         Piece cris = factory.createRider();
         Piece euge = efactory.createSoldier();
         Piece sol = efactory.createSoldier();
-        Move move = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).build ();
-        Move move2 = new Builder ().fromRow ( 10 ).fromColumn ( 10 ).build ();
-        Move move3 = new Builder ().fromRow ( 15 ).fromColumn ( 10 ).build ();
+        Move move = new Builder ().ToRow ( 9 ).ToColumn ( 10 ).build ();
+        Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 10 ).build ();
+        Move move3 = new Builder ().ToRow ( 15 ).ToColumn ( 10 ).build ();
         board.placePiece(cris, move);
         board.placePiece(euge, move2);
         board.placePiece(sol, move3 );

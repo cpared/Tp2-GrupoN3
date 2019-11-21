@@ -1,10 +1,9 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
-import team.*;
+import team.Team;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class Catapult implements Piece {
     private Team team;
     private int cost = 5;
     private int life = 50;
-    private int attackRange = 3;
+    private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
     private PieceDecorator decoration = null;
 

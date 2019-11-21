@@ -123,7 +123,12 @@ public class Board {
 
         ArrayList<Piece> pieces = new ArrayList<Piece>();
         for (Cell cell: cells){
-            pieces.add(cell.getPiece ());
+            try{
+                pieces.add(cell.getPiece ());
+            }
+            catch(EmptyCellException e){
+                continue;
+            }
         }
         return pieces;
     }
