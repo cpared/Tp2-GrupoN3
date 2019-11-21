@@ -8,6 +8,7 @@ import javafx.util.Pair;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
+import player.PlayerHas20PointsOnlyException;
 import team.Team;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ class BattalionProxyTest {
     private Piece soldier3 = factory.createSoldier ();
     private Piece rider = factory.createRider ();
     private ArrayList<Piece> soldiers = new ArrayList<Piece> ();
+
+    BattalionProxyTest () throws PlayerHas20PointsOnlyException {
+    }
 
     @Test
     void test00CanCreateAValidProxy () {
@@ -50,7 +54,7 @@ class BattalionProxyTest {
     }
 
     @Test
-    void test02DoesntBattalionProxyCreatesBattalionWhenItDoesntMeetTheCriteria () {
+    void test02DoesntBattalionProxyCreatesBattalionWhenItDoesntMeetTheCriteria () throws PlayerHas20PointsOnlyException {
         // Assemble
         Move move = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
         soldiers.add ( soldier1 );
@@ -86,9 +90,9 @@ class BattalionProxyTest {
         proxy.move ( board, move4 );
 
         // Assert
-        Move move5 = new Builder ().ToColumn ( 1 ).ToRow ( 2 ).build ();
-        Move move6 = new Builder ().ToColumn ( 2 ).ToRow ( 2 ).build ();
-        Move move7 = new Builder ().ToColumn ( 3 ).ToRow ( 2 ).build ();
+        Move move5 = new Builder ().fromColumn ( 1 ).fromRow ( 2 ).build ();
+        Move move6 = new Builder ().fromColumn ( 2 ).fromRow ( 2 ).build ();
+        Move move7 = new Builder ().fromColumn ( 3 ).fromRow ( 2 ).build ();
 
         assertEquals ( soldier1, this.board.removePiece ( move5 ) );
         assertEquals ( soldier2, this.board.removePiece ( move6 ) );
@@ -106,8 +110,9 @@ class BattalionProxyTest {
         this.board.placePiece ( soldier2, move2 );
         this.board.placePiece ( soldier3, move3 );
 
-        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
-        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        Move movement = new Builder ().fromColumn ( 2 ).fromRow ( 1 ).build ();
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( movement ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, movement );
         RealBattalion battalion = proxy.createBattalion ();
 
         int life1 = soldier1.getLife ();
@@ -118,10 +123,12 @@ class BattalionProxyTest {
         proxy.receiveHealed ( 5 );
 
         // Assert
-
-        assertEquals ( life1, this.board.removePiece ( move1 ).getLife () );
-        assertEquals ( life2, this.board.removePiece ( move2 ).getLife () );
-        assertEquals ( life3, this.board.removePiece ( move3 ).getLife () );
+        Move move4 = new Builder ().fromRow ( 1 ).fromColumn ( 1 ).build ();
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 2 ).build ();
+        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).build ();
+        assertEquals ( life1, this.board.removePiece ( move4 ).getLife () );
+        assertEquals ( life2, this.board.removePiece ( move5 ).getLife () );
+        assertEquals ( life3, this.board.removePiece ( move6 ).getLife () );
 
     }
 
@@ -136,8 +143,9 @@ class BattalionProxyTest {
         this.board.placePiece ( soldier2, move2 );
         this.board.placePiece ( soldier3, move3 );
 
-        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
-        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        Move movement = new Builder ().fromColumn ( 2 ).fromRow ( 1 ).build ();
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( movement ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, movement );
         RealBattalion battalion = proxy.createBattalion ();
 
         int life1 = soldier1.getLife ();
@@ -148,10 +156,12 @@ class BattalionProxyTest {
         proxy.receiveAttacked ( 20 );
 
         // Assert
-
-        assertEquals ( life1, this.board.removePiece ( move1 ).getLife () );
-        assertEquals ( life2, this.board.removePiece ( move2 ).getLife () );
-        assertEquals ( life3, this.board.removePiece ( move3 ).getLife () );
+        Move move4 = new Builder ().fromRow ( 1 ).fromColumn ( 1 ).build ();
+        Move move5 = new Builder ().fromRow ( 1 ).fromColumn ( 2 ).build ();
+        Move move6 = new Builder ().fromRow ( 1 ).fromColumn ( 3 ).build ();
+        assertEquals ( life1, this.board.removePiece ( move4 ).getLife () );
+        assertEquals ( life2, this.board.removePiece ( move5 ).getLife () );
+        assertEquals ( life3, this.board.removePiece ( move6 ).getLife () );
     }
 
 
@@ -168,8 +178,9 @@ class BattalionProxyTest {
         this.board.placePiece ( soldier3, move3 );
         this.board.placePiece ( rider, move4 );
 
-        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
-        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
+        Move movement = new Builder ().fromColumn ( 2 ).fromRow ( 1 ).build ();
+        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( movement ) );
+        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, movement );
         RealBattalion battalion = proxy.createBattalion ();
 
         int life = rider.getLife ();
@@ -178,6 +189,7 @@ class BattalionProxyTest {
         proxy.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         // Assert
-        assertEquals ( life, this.board.removePiece ( move4 ).getLife () );
+        Move move5 = new Builder ().fromColumn ( 4 ).fromRow ( 1 ).build ();
+        assertEquals ( life, this.board.removePiece ( move5 ).getLife () );
     }
 }

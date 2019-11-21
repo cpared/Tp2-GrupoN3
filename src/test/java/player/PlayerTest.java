@@ -36,7 +36,7 @@ class PlayerTest {
     //Point tests.
 
     @Test
-    void test03Subtracting20PointsFromPlayerLeavesPlayerWithPoints () {
+    void test03Subtracting20PointsFromPlayerLeavesPlayerWithPoints () throws PlayerHas20PointsOnlyException{
         //Assemble
         Player player = new Player ( "Archie", team );
         //Act
@@ -49,7 +49,7 @@ class PlayerTest {
     }
 
     @Test
-    void test04Subtracting30PointsFromPlayerRaisesError () {
+    void test04Subtracting30PointsFromPlayerRaisesError () throws PlayerHas20PointsOnlyException{
         //Assemble
         Player player = new Player ( "Player0003", team );
         player.chooseCatapult ();
@@ -129,7 +129,8 @@ class PlayerTest {
         player.placePieceOnBoard ( piece, board, move );
 
         //Assert
-        assertEquals ( piece, board.removePiece ( move ) );
+        Move move2 = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
+        assertEquals ( piece, board.removePiece ( move2 ) );
     }
 
     @Test
@@ -144,7 +145,7 @@ class PlayerTest {
         player.movePiece ( board, move2 );
 
         //Assert
-        Move move3 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
+        Move move3 = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         assertEquals ( piece, board.removePiece ( move3 ) );
     }
 

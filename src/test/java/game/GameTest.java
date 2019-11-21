@@ -162,20 +162,25 @@ class GameTest {
         game.newPlayer ( "Doyle" );
         Player player1 = game.getPlayer1 ();
         Player player2 = game.getPlayer2 ();
-        Piece piece= game.playerChoosesSoldier ( player1 );
+        Piece piece= game.playerChoosesCatapult ( player1 );
         game.playerPlacesPieceOnBoard ( player1, piece, 2,0 );
+        game.playerIsReadyToPlay ( player1 );
         Piece piece3= game.playerChoosesSoldier ( player2 );
         game.playerPlacesPieceOnBoard ( player2, piece3, 11,0 );
+        game.playerIsReadyToPlay ( player2 );
 
         //Act
-        try{
-            game.playerAttacks ( player1,2,0 );
+
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        //game.playerAttacks ( player1,2,0,11,0 );
+        try {
+            game.playerMovesPieceOnBoard ( player1,2,0,3,0 );
         } catch (GameHasEndedException e) {
-            e.getMessage ();
-        } catch (NoMembersLeftException e) {
-            e.printStackTrace ();
+            //Assert
+            Assertions.assertTrue (game.isNumberOfMembersOnTeam ( player2 , 0 ) );
         }
-        //Assert
-        Assertions.assertTrue (game.isNumberOfMembersOnTeam ( player1 , 0 ) );
     }
 }

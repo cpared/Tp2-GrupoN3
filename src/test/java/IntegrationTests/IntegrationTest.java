@@ -183,12 +183,13 @@ class IntegrationTest {
     @Test
     void test06CanPlaceAnAllyPieceToAnEmptyAllyCell() throws PlayerHas20PointsOnlyException {
         //Assemble
-        Move move = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
+        Move move1 = new Builder ().ToRow ( 3 ).ToColumn ( 3 ).build ();
         Board board = new Board(team, team2);
         Piece piece = factory.createSoldier();
         //Act
-        board.placePiece(piece, move);
+        board.placePiece(piece, move1);
         //Assert
+        Move move = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
         assertEquals(piece, board.removePiece( move ));
     }
 
@@ -280,35 +281,25 @@ class IntegrationTest {
         Player player2 = game.getPlayer2();
 
         Piece catapult5 = game.playerChoosesCatapult(player2);
-        Piece catapult6 = game.playerChoosesCatapult(player2);
-        Piece catapult7 = game.playerChoosesCatapult(player2);
-        Piece catapult8 = game.playerChoosesCatapult(player2);
-
         game.playerPlacesPieceOnBoard ( player2, catapult5, 11, 0 );
-        game.playerPlacesPieceOnBoard ( player2, catapult6, 11, 1 );
-        game.playerPlacesPieceOnBoard ( player2, catapult7, 11, 2 );
-        game.playerPlacesPieceOnBoard ( player2, catapult8, 11, 3 );
-
         game.playerIsReadyToPlay ( player2 );
         //Act
+        game.playerAttacks(player1, 9, 0,11,0);
+        game.playerAttacks(player1, 9, 1,11,0);
+        game.playerAttacks(player1, 9, 2,11,0);
+        game.playerAttacks(player1, 9, 3,11,0);
+
+        //Assert
         try {
-            game.playerAttacks(player1, 9, 0);
-            game.playerAttacks(player1, 9, 1);
-            game.playerAttacks(player1, 9, 2);
-            game.playerAttacks(player1, 9, 3);
-            //game.playerMovesPieceOnBoard(player2, 9, 0, 9, 1);
-            fail();
-            //Assert
+            game.playerMovesPieceOnBoard ( game.getPlayer1(),9,1,10 ,1 );
         } catch (GameHasEndedException e) {
-            assertEquals(0, game.getPlayer1().numberOfPiecesOnTeam());
-        } catch (NoMembersLeftException e) {
-            e.printStackTrace();
+            assertEquals ( 0, game.removePieceFromBoard ( game.getPlayer1 (), 9, 1 ) );
         }
     }
 
     //ENTREGA 2
     @Test
-    void test13CanMoveAGroupOfSoldiersAsABattalion() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+    void test13CanMoveAGroupOfSoldiersAsABattalion() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException, PlayerHas20PointsOnlyException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
@@ -343,7 +334,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+    void test14IfThereIsAnObstacleInFrontOfTheBattalionItMovesAndTheSoldierBlockedStaysBehind() throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException, PlayerHas20PointsOnlyException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
@@ -379,7 +370,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test15WhenTheBattalionMovesAndIsAnObstacleInFrontTheBattalionGetsDissolved() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException {
+    void test15WhenTheBattalionMovesAndIsAnObstacleInFrontTheBattalionGetsDissolved() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
@@ -419,7 +410,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test16WhenThereAre4SoldiersTogetherOnly3AreInTheBattalionAndOnlyTheyMove() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException {
+    void test16WhenThereAre4SoldiersTogetherOnly3AreInTheBattalionAndOnlyTheyMove() throws GameHasEndedException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
@@ -455,7 +446,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test17IfAHorsemanAttacksAnEnemyInShortDistanceItIsABodyAttack() {
+    void test17IfAHorsemanAttacksAnEnemyInShortDistanceItIsABodyAttack() throws PlayerHas20PointsOnlyException{
         Board board = new Board(team, team2);
         Piece horseman = factory.createRider();
         Piece soldier = efactory.createSoldier();
@@ -470,7 +461,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test18IfAHorsemanAttacksAnEnemyInMediumDistanceAndHasAnEnemyNearbyThrowError() {
+    void test18IfAHorsemanAttacksAnEnemyInMediumDistanceAndHasAnEnemyNearbyThrowError() throws PlayerHas20PointsOnlyException{
         Board board = new Board(team, team2);
         Piece cris = factory.createRider();
         Piece euge = efactory.createSoldier();

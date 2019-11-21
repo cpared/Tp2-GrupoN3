@@ -1,7 +1,6 @@
 package move;
 
 public class Builder {
-    Move move;
 
     private int fromRow = -1 ;
     private int toRow = -1;

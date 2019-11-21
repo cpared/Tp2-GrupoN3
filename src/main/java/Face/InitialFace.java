@@ -3,20 +3,22 @@ package Face;
 import board.Board;
 import move.Move;
 import piece.Piece;
+import player.APlayerAlreadyExistsException;
 import player.Player;
+import player.PlayerHas20PointsOnlyException;
 import team.Team;
 
-public class InitialFace implements Face{
+public class InitialFace implements Face {
     private Player player;
     private Board board;
-    boolean state = false;
 
-    public InitialFace ( Board board) {
+    public InitialFace ( Board board ) {
         this.board = board;
     }
 
     @Override
-    public Player newPlayer (String name, Team team){
+    public Player newPlayer ( String name, Team team ) {
+        if (this.player != null) throw new APlayerAlreadyExistsException ();
         this.player = new Player ( name, team );
         return this.player;
     }
@@ -28,28 +30,34 @@ public class InitialFace implements Face{
 
     @Override
     public Piece removePieceFromBoard ( Move move ) {
-       Piece removed = board.removePiece ( move );
-       return removed; // Should return the points to the player.
+        Piece removed = board.removePiece ( move );
+        return removed; // Should return the points to the player.
     }
 
     @Override
-    public Piece playerChoosesSoldier ( ){
-        return this.player.chooseSoldier ( );
+    public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {
+        return this.player.chooseSoldier ();
     }
 
     @Override
-    public Piece playerChoosesHealer ( ){
-        return this.player.chooseHealer ( );
+    public Piece playerChoosesHealer () throws PlayerHas20PointsOnlyException {
+        return this.player.chooseHealer ();
     }
 
     @Override
-    public Piece playerChoosesRider ( ){
-        return this.player.chooseRider ( );
+    public Piece playerChoosesRider () throws PlayerHas20PointsOnlyException {
+        return this.player.chooseRider ();
     }
 
     @Override
-    public Piece playerChoosesCatapult ( ){
-        return this.player.chooseCatapult ( );
+    public Piece playerChoosesCatapult () throws PlayerHas20PointsOnlyException {
+        return this.player.chooseCatapult ();
+    }
+
+    @Override
+    public void playerMovesPieceOnBoard ( Move move ) {
+        Piece piece = this.board.removePiece ( move );
+        player.placePieceOnBoard ( piece, this.board, move );
     }
 
     //Methods that this class does not implement
@@ -60,13 +68,12 @@ public class InitialFace implements Face{
     }
 
     @Override
-    public void playerMovesPieceOnBoard ( Move move ) {
-        //player.placePieceOnBoard ( this.board, firstRow, firstColumn, secondRow, secondColumn );
-        player.movePiece (this.board, move );
+    public void playerChoosesBattalion ( Move move ) {
     }
 
+    // This getter is only for testing, they dont belong in the model.
     @Override
-    public void playerChoosesBattalion(Move move){
+    public Player getPlayer () {
+        return this.player;
     }
-
 }

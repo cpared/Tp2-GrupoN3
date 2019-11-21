@@ -1,9 +1,7 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import move.Move;
-import team.Team;
 
 public abstract class PieceDecorator implements Piece {
     protected Piece decoratedPiece;
@@ -28,9 +26,5 @@ public abstract class PieceDecorator implements Piece {
         this.decoratedPiece.move ( board, move );
     }
 
-/*    @Override
-    public void heal ( Piece receivingPiece ) {
-        this.decoratedPiece.heal ( receivingPiece );
-    }*/
 }
 

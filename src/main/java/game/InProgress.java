@@ -5,6 +5,7 @@ import board.Board;
 import move.Move;
 import piece.Piece;
 import player.Player;
+import player.PlayerHas20PointsOnlyException;
 import player.PlayerMustChooseAtLeastOnePieceToStartGameException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.Team;
@@ -51,25 +52,25 @@ public class InProgress implements GameState {
     }
 
     @Override
-    public Piece chooseSoldier ( Player player ) {
+    public Piece chooseSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
         if (this.player1 == player) return player1Face.playerChoosesSoldier ();
         return player2Face.playerChoosesSoldier ();
     }
 
     @Override
-    public Piece chooseHealer ( Player player ) {
+    public Piece chooseHealer ( Player player ) throws PlayerHas20PointsOnlyException {
         if (this.player1 == player) return player1Face.playerChoosesHealer ();
         return player2Face.playerChoosesHealer ();
     }
 
     @Override
-    public Piece chooseRider ( Player player ) {
+    public Piece chooseRider ( Player player ) throws PlayerHas20PointsOnlyException {
         if (this.player1 == player) return player1Face.playerChoosesRider ();
         return player2Face.playerChoosesRider ();
     }
 
     @Override
-    public Piece chooseCatapult ( Player player ) {
+    public Piece chooseCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
         if (this.player1 == player) return player1Face.playerChoosesCatapult ();
         return player2Face.playerChoosesCatapult ();
     }
@@ -78,7 +79,6 @@ public class InProgress implements GameState {
     public void playerAttacks ( Player player, Move move ) {
         if (player == player1) player1Face.playerAttacks ( move );
         else player2Face.playerAttacks ( move );
-        player.removePieceFromTeam ();
     }
 
     @Override

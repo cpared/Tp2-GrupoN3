@@ -1,11 +1,14 @@
 package Face;
 
 import board.Board;
+import board.CanNotMakeThatMoveException;
 import move.Move;
 import piece.NullPiece;
 import piece.Piece;
+import player.APlayerAlreadyExistsException;
 import player.Player;
 import player.ThereAreOnlyTwoPlayersPerGameException;
+import team.NoMembersLeftException;
 import team.Team;
 
 public class GameFace implements Face {
@@ -27,7 +30,11 @@ public class GameFace implements Face {
 
     @Override
     public void playerAttacks ( Move move ) {
-        this.board.removePiece ( move );
+        try {
+            this.player.attack ( this.board, move );
+        } catch (NoMembersLeftException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -37,7 +44,6 @@ public class GameFace implements Face {
 
     @Override
     public void playerChoosesBattalion ( Move move ) {
-        System.out.println ( this.player.name ());
         player.chooseBattalion ( this.board, move );
     }
 
@@ -45,32 +51,39 @@ public class GameFace implements Face {
 
     @Override
     public void playerPlacesPieceOnBoard ( Piece piece, Move move ) {
-
+        throw new CanNotMakeThatMoveException ();
     }
 
     @Override
     public Piece playerChoosesSoldier () {
-        return new NullPiece ();
+        throw new CanNotMakeThatMoveException ();
+//        return new NullPiece ();
     }
 
     @Override
     public Piece playerChoosesHealer () {
-        return new NullPiece ();
+        throw new CanNotMakeThatMoveException ();
     }
 
     @Override
     public Piece playerChoosesRider () {
-        return new NullPiece ();
+        throw new CanNotMakeThatMoveException ();
     }
 
     @Override
     public Piece playerChoosesCatapult () {
-        return new NullPiece ();
+        throw new CanNotMakeThatMoveException ();
     }
 
     @Override
     public Player newPlayer ( String name, Team team ) {
-        throw new ThereAreOnlyTwoPlayersPerGameException ();
+        throw new APlayerAlreadyExistsException ();
+    }
+
+    // This getter is only for testing, they dont belong in the model.
+    @Override
+    public Player getPlayer () {
+        return this.player;
     }
 
 }

@@ -55,33 +55,32 @@ public class Board {
     }
 
     public Piece removePiece ( Move move ) {
-        return this.destinationCell ( move ).deletePieceFromCell ();
+        return this.originCell ( move ).deletePieceFromCell ();
     }
 
-    public void attack(Move move){
-        int firstRow =move.fromRow;
+    public void attack ( Move move ) {
+        int firstRow = move.fromRow;
         int secondRow = move.toRow;
         int firstColumn = move.fromColumn;
         int secondColumn = move.toColumn;
-        ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow,firstColumn)));
-        Pair<Piece,Integer> pieceToAttack = new Pair<Piece,Integer>(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
-         try {
-            this.originCell(move).getPiece().attack(pieceArray, pieceToAttack);
-        }
-        catch (IAmDeadException e){
-            removePiece(move);
+        ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
+        Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
+        try {
+            this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
+        } catch (IAmDeadException e) {
+            removePiece ( move );
             throw e;
         }
     }
 
-    private ArrayList<Cell> adjacentCells(int firstRow, int firstColumn) {
-        ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
-        for (int row = firstRow -1;row <firstRow + 2;row++){
-            for (int column = firstColumn -1; column < firstColumn+2;column++){
-                if ((row == firstRow && column == firstColumn)|| column < 0 || row < 0 || column > 19 || row >19){
+    private ArrayList<Cell> adjacentCells ( int firstRow, int firstColumn ) {
+        ArrayList<Cell> cellArrayList = new ArrayList<Cell> ();
+        for (int row = firstRow - 1; row < firstRow + 2; row++) {
+            for (int column = firstColumn - 1; column < firstColumn + 2; column++) {
+                if ((row == firstRow && column == firstColumn) || column < 0 || row < 0 || column > 19 || row > 19) {
                     continue;
                 }
-                cellArrayList.add(cellArray.get(row).get(column));
+                cellArrayList.add ( cellArray.get ( row ).get ( column ) );
             }
         }
         return cellArrayList;
@@ -105,28 +104,27 @@ public class Board {
 
     }
 
-    public ArrayList<Cell> adjacentRowCells(Move move){
-        int row = move.toRow;
-        int column = move.toColumn;
-        ArrayList<Cell> cellArrayList = new ArrayList<Cell>();
-        for (int i = column-1;i<column+2;i++){
-            if (i < 0 || i >19){
-                cellArrayList.clear();
+    public ArrayList<Cell> adjacentRowCells ( Move move ) {
+        int row = move.fromRow;
+        int column = move.fromColumn;
+        ArrayList<Cell> cellArrayList = new ArrayList<Cell> ();
+        for (int i = column - 1; i < column + 2; i++) {
+            if (i < 0 || i > 19) {
+                cellArrayList.clear ();
                 return cellArrayList;
             }
-            cellArrayList.add(cellArray.get(row).get(i));
+            cellArrayList.add ( cellArray.get ( row ).get ( i ) );
         }
         return cellArrayList;
     }
 
-    public ArrayList<Piece> adjacentPieces(ArrayList<Cell> cells){
+    public ArrayList<Piece> adjacentPieces ( ArrayList<Cell> cells ) {
 
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        for (Cell cell: cells){
-            try{
-                pieces.add(cell.getPiece ());
-            }
-            catch(EmptyCellException e){
+        ArrayList<Piece> pieces = new ArrayList<Piece> ();
+        for (Cell cell : cells) {
+            try {
+                pieces.add ( cell.getPiece () );
+            } catch (EmptyCellException e) {
                 continue;
             }
         }

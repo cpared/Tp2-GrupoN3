@@ -2,6 +2,7 @@ package player;
 
 import board.Board;
 import move.Move;
+import piece.IAmDeadException;
 import piece.Piece;
 import piece.PieceFactory;
 
@@ -30,7 +31,11 @@ public class Player {
     }
 
     public void removePieceFromTeam () throws NoMembersLeftException {
-        this.team.subtractPieceFromTeam ();
+        try {
+            this.team.subtractPieceFromTeam ();
+        } catch (NoMembersLeftException e) {
+            throw e;
+        }
     }
 
     public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
@@ -75,6 +80,14 @@ public class Player {
 
     public void chooseBattalion (Board board, Move move) {
         board.createBattalion ( move );
+    }
+
+    public void attack (Board board, Move move) {
+        try {
+            board.attack ( move );
+        } catch (IAmDeadException e) {
+            this.removePieceFromTeam ();
+        }
     }
 
     // This getter is only for testing, they dont belong in the model.

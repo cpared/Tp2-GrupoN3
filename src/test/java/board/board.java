@@ -76,7 +76,8 @@ class BoardTest {
 
         //Act
         board.placePiece ( piece, move );
-        Piece poppedPiece = board.removePiece ( move );
+        Move move2 = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
+        Piece poppedPiece = board.removePiece ( move2 );
 
         //Assert
         assertEquals ( poppedPiece, piece );
@@ -89,9 +90,10 @@ class BoardTest {
 
         //Act
         board.placePiece ( piece, move );
+        Move move2 = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
 
         //Assert
-        assertThat ( board.removePiece ( move ), instanceOf ( Piece.class ) );
+        assertThat ( board.removePiece ( move2 ), instanceOf ( Piece.class ) );
     }
 
     @Test

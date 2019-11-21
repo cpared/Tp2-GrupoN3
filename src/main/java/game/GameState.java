@@ -5,19 +5,19 @@ import board.Board;
 import move.Move;
 import piece.Piece;
 import player.Player;
+import player.PlayerHas20PointsOnlyException;
 
 public interface GameState {
-    Player winner = null;
 
     public Player newPlayer ( String name );
 
-    Piece chooseSoldier ( Player player );
+    Piece chooseSoldier ( Player player ) throws PlayerHas20PointsOnlyException;
 
-    Piece chooseHealer ( Player player );
+    Piece chooseHealer ( Player player ) throws PlayerHas20PointsOnlyException;
 
-    Piece chooseRider ( Player player );
+    Piece chooseRider ( Player player ) throws PlayerHas20PointsOnlyException;
 
-    Piece chooseCatapult ( Player player );
+    Piece chooseCatapult ( Player player ) throws PlayerHas20PointsOnlyException;
 
     void playerAttacks ( Player player, Move move );
 
