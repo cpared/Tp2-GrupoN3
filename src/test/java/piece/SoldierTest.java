@@ -1,12 +1,16 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import team.Team;
+
+import java.util.ArrayList;
+
 class SoldierTest {
 
     @Test
@@ -55,7 +59,7 @@ class SoldierTest {
         Soldier blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack ( soldier );
+        blueSoldier.attack ( new ArrayList<>(), new Pair<>(soldier,1 ));
 
         //Assert
         assertEquals ( 90, soldier.getLife () );
@@ -68,7 +72,7 @@ class SoldierTest {
         Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked ( 20 );
+        soldier.receiveAttacked ( 20 );
 
         //Assert
         assertEquals ( 80, soldier.getLife () );
@@ -81,48 +85,32 @@ class SoldierTest {
         Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked ( 100 );
+        try{
+            soldier.receiveAttacked ( 100 );
+        }
+        catch(IAmDeadException e){
+            assertEquals ( 0, soldier.getLife () );
+        }
 
         //Assert
-        assertEquals ( 0, soldier.getLife () );
     }
 
     @Test
-    void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
+    void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanZero () {
         //Assign
         Team gold = new Team (1);
         Soldier soldier = new Soldier ( gold );
 
         //Act
-        soldier.getAttacked ( 120 );
-
+        try {
+            soldier.receiveAttacked(120);
+        }
         //Assert
-        assertEquals ( 0, soldier.getLife () );
+        catch (IAmDeadException e) {
+            assert true;
+        }
     }
 
-    @Test
-    void test07soldierUseBodyAttackAndHisDamageIs10 () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 10, soldier.getBodyAttack () );
-    }
-
-    @Test
-    void test08soldierUseDistanceAttackAndHisDamageIs0 () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 0, soldier.getDistanceAttack () );
-    }
 
     @Test
     void test09soldierGetMoveIs3 () {
@@ -137,8 +125,8 @@ class SoldierTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        soldier.getAttacked ( 20 );
-        healer.heal ( soldier );
+        soldier.receiveAttacked ( 20 );
+        healer.attack( new ArrayList<>(), new Pair<>(soldier,1 ));
 
         //Assert
         assertEquals ( 95, soldier.getLife () );
@@ -152,7 +140,7 @@ class SoldierTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.heal ( soldier );
+        healer.attack( new ArrayList<>(), new Pair<>(soldier,1 ));
 
         //Assert
         assertEquals ( 100, soldier.getLife () );
@@ -168,7 +156,7 @@ class SoldierTest {
 
         //Act - Assert
         try {
-            soldier.distanceAttack ( healer );
+            soldier.attack( new ArrayList<>(), new Pair<>(healer,1 ));
         } catch (CanNotMakeThatMoveException e) {
             assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
         }
