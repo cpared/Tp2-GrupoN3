@@ -2,8 +2,12 @@ package piece;
 
 import board.Board;
 import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
 import move.Move;
 import team.*;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public interface Piece {
     Team team = null;
@@ -15,17 +19,13 @@ public interface Piece {
 
     void move ( Board board ,Move move );
 
-    void attack ( Piece piece );
-
     int getLife ();
 
-    void getHealed ( int heal );
+    void receiveHealed ( int heal );
 
-    void distanceAttack ( Piece receivingPiece );
+    void attack(ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece);
 
-    void heal ( Piece receivingPiece );
-
-    void getAttacked ( int damage );
+    void receiveAttacked(int damage);
 
     int getCost ();
 

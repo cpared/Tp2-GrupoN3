@@ -4,6 +4,7 @@ import board.Battalion;
 import board.Board;
 import board.CanNotMakeBattalion;
 import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
 import move.Builder;
 import move.Move;
 import team.Team;
@@ -67,23 +68,15 @@ public class RealBattalion implements Battalion {
     }
 
     @Override
-    public void distanceAttack ( Piece receivingPiece ) {
+    public void receiveAttacked ( int damage ) {
     }
 
     @Override
-    public void getAttacked ( int damage ) {
+    public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece ) {
     }
 
     @Override
-    public void attack ( Piece piece ) {
-    }
-
-    @Override
-    public void getHealed ( int heal ) {
-    }
-
-    @Override
-    public void heal ( Piece receivingPiece ) {
+    public void receiveHealed ( int heal ) {
     }
 
     @Override

@@ -1,8 +1,10 @@
 package board;
 
 import criteria.RiderCriteria;
+import javafx.util.Pair;
 import move.Move;
 import piece.BattalionProxy;
+import piece.IAmDeadException;
 import piece.Piece;
 import team.Team;
 
@@ -60,26 +62,6 @@ public class Board {
         return this.destinationCell ( move ).deletePieceFromCell ();
     }
 
-    public void bodyAttack ( Move move ) {
-        Piece originPiece = this.originCell ( move ).getPiece ();
-        Piece receivingPiece = this.destinationCell ( move ).getPiece ();
-        originPiece.attack ( receivingPiece );
-    }
-
-    public void distanceAttack ( Move move ) {
-
-        Piece originPiece = this.originCell ( move ).getPiece ();
-        ArrayList<Piece> piece = new ArrayList<Piece> ( Arrays.asList ( originPiece ) );
-        RiderCriteria criteria = new RiderCriteria ();
-        if (criteria.criteria ( piece ).size () == 1) {
-            riderAttack ( move );
-        } else {
-
-            Piece receivingPiece = this.destinationCell ( move ).getPiece ();
-            originPiece.distanceAttack ( receivingPiece );
-        }
-    }
-
     private void riderAttack ( Move move ) {
     }
     public void attack(Move move){
@@ -88,14 +70,14 @@ public class Board {
         int firstColumn = move.fromColumn;
         int secondColumn = move.toColumn;
         ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow,firstColumn)));
-        Map<Piece,Integer> pieceToAttack = new HashMap <Piece,Integer>();
-        pieceToAttack.put(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
+        Pair<Piece,Integer> pieceToAttack = new Pair<Piece,Integer>(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
+        //pieceToAttack.put(this.destinationCell ( move ).getPiece (),Math.max(Math.abs(firstRow-secondRow),Math.abs(firstColumn - secondColumn)));
         try {
             this.originCell(move).getPiece().attack(pieceArray, pieceToAttack);
         }
         catch (Exception e){
             removePiece(move);
-            throw e;
+            throw new IAmDeadException();
         }
     }
 
@@ -111,14 +93,6 @@ public class Board {
         }
         return cellArrayList;
     }
-
-    public void heal ( Move move ) {
-        Piece originPiece = this.originCell ( move ).getPiece ();
-        Piece receivingPiece = this.destinationCell ( move ).getPiece ();
-
-        originPiece.heal ( receivingPiece );
-    }
-
 
     //Method related to battalion.
     public void createBattalion ( Move move ) {

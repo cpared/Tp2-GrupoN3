@@ -2,6 +2,7 @@ package piece;
 
 import board.Battalion;
 import board.Board;
+import javafx.util.Pair;
 import move.Move;
 import team.Team;
 
@@ -37,28 +38,20 @@ public class SoldierDecorator extends PieceDecorator {
         return this.battalion.getTeam ();
     }
 
+
     @Override
-    public void distanceAttack ( Piece receivingPiece ) {
+    public void receiveAttacked ( int damage ) {
+        this.battalion.receiveAttacked ( damage );
     }
 
     @Override
-    public void getAttacked ( int damage ) {
-        this.battalion.getAttacked ( damage );
+    public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece ) {
+        this.battalion.attack ( adjacentPieces, attackedPiece );
     }
 
     @Override
-    public void attack ( Piece piece ) {
-        this.battalion.attack ( piece );
-    }
-
-    @Override
-    public void getHealed ( int heal ) {
-        this.battalion.getHealed ( heal );
-    }
-
-    @Override
-    public void heal ( Piece receivingPiece ) {
-        this.battalion.heal ( receivingPiece );
+    public void receiveHealed ( int heal ) {
+        this.battalion.receiveHealed ( heal );
     }
 
     @Override

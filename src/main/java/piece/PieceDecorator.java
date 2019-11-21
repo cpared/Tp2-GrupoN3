@@ -14,13 +14,13 @@ public abstract class PieceDecorator implements Piece {
     }
 
     @Override
-    public void getAttacked ( int damage ) {
-        this.decoratedPiece.getAttacked ( damage );
+    public void receiveAttacked ( int damage ) {
+        this.decoratedPiece.receiveAttacked ( damage );
     }
 
     @Override
-    public void getHealed ( int heal ) {
-        this.decoratedPiece.getHealed ( heal );
+    public void receiveHealed ( int heal ) {
+        this.decoratedPiece.receiveHealed ( heal );
     }
 
     @Override
@@ -28,9 +28,9 @@ public abstract class PieceDecorator implements Piece {
         this.decoratedPiece.move ( board, move );
     }
 
-    @Override
+/*    @Override
     public void heal ( Piece receivingPiece ) {
         this.decoratedPiece.heal ( receivingPiece );
-    }
+    }*/
 }
 

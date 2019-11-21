@@ -1,8 +1,11 @@
 package piece;
 
 import board.Board;
+import javafx.util.Pair;
 import move.Move;
 import team.Team;
+
+import java.util.ArrayList;
 
 public class NullPiece implements Piece {
     @Override
@@ -25,22 +28,18 @@ public class NullPiece implements Piece {
     }
 
     @Override
-    public void distanceAttack ( Piece receivingPiece ) {
+    public void receiveAttacked ( int damage ) {
     }
 
     @Override
-    public void getAttacked ( int damage ) {
-    }
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {}
 
     @Override
-    public void attack ( Piece piece ) {}
+    public void receiveHealed ( int heal ) {}
 
-    @Override
-    public void getHealed ( int heal ) {}
-
-    @Override
+/*    @Override
     public void heal ( Piece receivingPiece ) {
-    }
+    }*/
 
     @Override
     public boolean isCost (int expectedCost) {
