@@ -1,11 +1,10 @@
 package piece;
 
-import board.Battalion;
 import board.Board;
 import board.CanNotMakeBattalion;
-import game.Game;
 import game.GameHasEndedException;
 import game.ThereCantBeTwoPlayersOnTheSameTeamException;
+import javafx.util.Pair;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
@@ -116,7 +115,7 @@ class BattalionProxyTest {
         int life3 = soldier3.getLife ();
         // Act
 
-        proxy.getHealed ( 5 );
+        proxy.receiveHealed ( 5 );
 
         // Assert
 
@@ -146,7 +145,7 @@ class BattalionProxyTest {
         int life3 = soldier3.getLife ();
         // Act
 
-        proxy.getAttacked ( 20 );
+        proxy.receiveAttacked ( 20 );
 
         // Assert
 
@@ -155,33 +154,9 @@ class BattalionProxyTest {
         assertEquals ( life3, this.board.removePiece ( move3 ).getLife () );
     }
 
-    @Test
-    void test06WhenBattalionIsToldToHealThePiecesDontHeal () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
-        // Assemble
-
-        Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
-        Move move2 = new Builder ().ToColumn ( 2 ).ToRow ( 1 ).build ();
-        Move move3 = new Builder ().ToColumn ( 3 ).ToRow ( 1 ).build ();
-        Move move4 = new Builder ().ToColumn ( 4 ).ToRow ( 1 ).build ();
-        this.board.placePiece ( soldier1, move1 );
-        this.board.placePiece ( soldier2, move2 );
-        this.board.placePiece ( soldier3, move3 );
-        this.board.placePiece ( rider, move4 );
-
-        ArrayList<Piece> possiblePieces = this.board.adjacentPieces ( this.board.adjacentRowCells ( move2 ) );
-        BattalionProxy proxy = new BattalionProxy ( board, possiblePieces, move2 );
-        RealBattalion battalion = proxy.createBattalion ();
-
-        int life = rider.getLife ();
-        // Act
-        proxy.heal ( rider );
-
-        // Assert
-        assertEquals ( life, this.board.removePiece ( move4 ).getLife () );
-    }
 
     @Test
-    void test07WhenBattalionIsToldToAttackThePiecesDontAttack () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+    void test06WhenBattalionIsToldToAttackThePiecesDontAttack () throws ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
         // Assemble
 
         Move move1 = new Builder ().ToColumn ( 1 ).ToRow ( 1 ).build ();
@@ -200,7 +175,7 @@ class BattalionProxyTest {
         int life = rider.getLife ();
         // Act
 
-        proxy.attack ( rider );
+        proxy.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         // Assert
         assertEquals ( life, this.board.removePiece ( move4 ).getLife () );

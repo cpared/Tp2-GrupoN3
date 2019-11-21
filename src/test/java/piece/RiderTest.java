@@ -3,11 +3,11 @@ package piece;
 
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 import team.Team;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RiderTest {
 
@@ -102,66 +102,38 @@ class RiderTest {
         assertEquals ( 0, rider.getLife () );
     }
 
-    @Test
-    void test07RiderUseBodyAttackAndHisDamageIs5 () {
-        //Assign
-        Team gold = new Team (6);
-        Rider rider = new Rider ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 5, rider.getBodyAttack () );
-    }
 
     @Test
-    void test08RiderUseDistanceAttackAndHisDamageIs15 () {
-        //Assign
-        Team gold = new Team (76);
-        Rider rider = new Rider ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 15, rider.getDistanceAttack () );
-    }
-
-    @Test
-    void test09RiderGetMoveIs3 () {
-
-    }
-
-    @Test
-    void test10RiderReceiveHealAndHisLifeUp () {
+    void test07RiderReceiveHealAndHisLifeUp () {
         //Assign
         Team gold = new Team (4);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
         //Act
-        rider.getAttacked ( 20 );
-        healer.heal ( rider );
+        rider.receiveAttacked ( 20 );
+        healer.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         //Assert
         assertEquals ( 95, rider.getLife () );
     }
 
     @Test
-    void test11RiderReceiveHealWithOutDamageAndHisLifeCantUp () {
+    void test08RiderReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
         Team gold = new Team (8);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.heal ( rider );
+        healer.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         //Assert
         assertEquals ( 100, rider.getLife () );
     }
 
     @Test
-    void test12RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
+    void test09RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assign
         Team gold = new Team (9);
         Team blue = new Team (7);
@@ -169,11 +141,10 @@ class RiderTest {
         Healer healer = new Healer ( blue );
 
         //Act
-        rider.distanceAttack ( healer );
+        rider.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         //Assert
         assertEquals ( 60, healer.getLife () );
     }
-
 
 }
