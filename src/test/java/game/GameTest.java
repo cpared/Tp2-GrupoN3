@@ -175,7 +175,6 @@ class GameTest {
         game.playerAttacks ( player1,2,0,11,0 );
         game.playerAttacks ( player1,2,0,11,0 );
         game.playerAttacks ( player1,2,0,11,0 );
-        //game.playerAttacks ( player1,2,0,11,0 );
         try {
             game.playerMovesPieceOnBoard ( player1,2,0,3,0 );
         } catch (GameHasEndedException e) {

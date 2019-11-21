@@ -1,6 +1,5 @@
 package piece;
 
-import board.Battalion;
 import board.Board;
 import board.CanNotMakeBattalion;
 import criteria.BattalionCriteria;

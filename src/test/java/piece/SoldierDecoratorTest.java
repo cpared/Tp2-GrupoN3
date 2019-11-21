@@ -1,6 +1,7 @@
 package piece;
 
 import org.junit.jupiter.api.Test;
+import player.PlayerHas20PointsOnlyException;
 import team.Team;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ class SoldierDecoratorTest {
     private Piece soldier2 = factory.createSoldier ();
     private Piece soldier3 = factory.createSoldier ();
     private ArrayList<Piece> soldiers = new ArrayList<Piece> (  );
+
+    SoldierDecoratorTest () throws PlayerHas20PointsOnlyException {
+    }
 
 
     @Test
