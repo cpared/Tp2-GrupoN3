@@ -23,17 +23,17 @@ class SoldierDecoratorTest {
 
         PieceDecorator soldierD = new SoldierDecorator ( battalion);
 
-        soldier1.getAttacked ( 15 );
+        soldier1.receiveAttacked ( 15 );
         System.out.println ( soldier1.getLife () );
         System.out.println ( soldier2.getLife () );
         System.out.println ( soldier3.getLife () );
 
-        battalion.getAttacked ( 15 );
+        battalion.receiveAttacked ( 15 );
         System.out.println ( soldier1.getLife () );
         System.out.println ( soldier2.getLife () );
         System.out.println ( soldier3.getLife () );
 
-        soldierD.getAttacked (15);
+        soldierD.receiveAttacked (15);
         System.out.println ( soldier1.getLife () );
         System.out.println ( soldier2.getLife () );
         System.out.println ( soldier3.getLife () );

@@ -91,7 +91,7 @@ class IntegrationTest {
         Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
         assertEquals(100, soldier.getLife());
         assertEquals(75, healer.getLife());
-        board.bodyAttack( move3 );
+        board.attack( move3 );
         assertEquals(65, healer.getLife());
 
     }
@@ -113,13 +113,13 @@ class IntegrationTest {
         assertEquals(100, rider.getLife());
         assertEquals(100, soldier.getLife());
         Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
-        board.bodyAttack( move3 );
+        board.attack( move3 );
         assertEquals(95, soldier.getLife());
 
         assertEquals(100, rider.getLife());
         assertEquals(95, soldier.getLife());
         Move move4 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 0 ).build ();
-        board.bodyAttack( move4 );
+        board.attack( move4 );
         assertEquals(90, soldier.getLife());
 
     }
@@ -141,7 +141,7 @@ class IntegrationTest {
         assertEquals(50, catapult.getLife());
         assertEquals(100, soldier.getLife());
         Move move3 = new Builder ().fromRow ( 0 ).fromColumn ( 0 ).ToRow ( 10 ).ToColumn ( 2 ).build ();
-        board.distanceAttack(move3 );
+        board.attack(move3 );
         assertEquals(80, soldier.getLife());
     }
 
@@ -168,13 +168,13 @@ class IntegrationTest {
         assertEquals(100, rider.getLife());
 
         Move move4 = new Builder ().fromRow ( 10 ).fromColumn ( 1 ).ToRow ( 9 ).ToColumn ( 1 ).build ();
-        board.bodyAttack( move4 );
+        board.attack( move4 );
         assertEquals(75, healer.getLife());
         assertEquals(95, soldier.getLife());
         assertEquals(100, rider.getLife());
 
         Move move5 = new Builder ().fromRow ( 9 ).fromColumn ( 0 ).ToRow ( 9 ).ToColumn ( 1 ).build ();
-        board.heal( move5 );
+        board.attack( move5 );
         assertEquals(75, healer.getLife());
         assertEquals(100, soldier.getLife());
         assertEquals(100, rider.getLife());
@@ -465,7 +465,7 @@ class IntegrationTest {
         board.placePiece(soldier, move2);
 
         Move move3 = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).ToRow ( 10 ).ToColumn ( 10 ).build ();
-        board.bodyAttack( move3 );
+        board.attack( move3 );
         assertEquals(95, soldier.getLife());
     }
 
@@ -484,7 +484,7 @@ class IntegrationTest {
 
         try {
             Move move4 = new Builder ().fromRow ( 9 ).fromColumn ( 10 ).ToRow ( 15 ).ToColumn ( 10 ).build ();
-            board.distanceAttack( move4 );
+            board.attack( move4 );
         } catch (Exception e) {
             assertEquals(sol.getLife(), 100);
         }

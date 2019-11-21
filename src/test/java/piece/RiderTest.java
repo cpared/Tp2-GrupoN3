@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -57,7 +58,7 @@ class RiderTest {
         Rider blueRider = new Rider ( blue );
 
         //Act
-        blueRider.attack ( new ArrayList<>(), new Pair<>(rider,1 ));
+        blueRider.attack ( new ArrayList<>(Arrays.asList(rider)), new Pair<>(rider,1 ));
 
         //Assert
         assertEquals ( 95, rider.getLife () );
@@ -83,23 +84,30 @@ class RiderTest {
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.receiveAttacked ( 100 );
+        try{
+            rider.receiveAttacked ( 100 );
+        }
+        catch(IAmDeadException e){
+            assertEquals ( 0, rider.getLife () );
+        }
 
         //Assert
-        assertEquals ( 0, rider.getLife () );
     }
 
     @Test
-    void test06RiderReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
+    void test06RiderReceiveDamageAndReduceHisLifeAndThrowsException () {
         //Assign
         Team gold = new Team (45);
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.receiveAttacked ( 120 );
-
+        try {
+            rider.receiveAttacked(120);
+        }
         //Assert
-        assertEquals ( 0, rider.getLife () );
+        catch (IAmDeadException e) {
+            assert true;
+        }
     }
 
 
@@ -141,7 +149,7 @@ class RiderTest {
         Healer healer = new Healer ( blue );
 
         //Act
-        rider.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
+        rider.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 60, healer.getLife () );

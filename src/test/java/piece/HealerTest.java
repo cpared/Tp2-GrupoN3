@@ -1,14 +1,12 @@
 package piece;
 
-import board.CanNotMakeThatMoveException;
-import move.Builder;
-import move.Move;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
 
-import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HealerTest {
 
@@ -58,7 +56,7 @@ class HealerTest {
         Soldier blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack ( healer );
+        blueSoldier.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 65, healer.getLife () );
@@ -71,7 +69,7 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.getAttacked ( 20 );
+        healer.receiveAttacked ( 20 );
 
         //Assert
         assertEquals ( 55, healer.getLife () );
@@ -84,7 +82,7 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.getAttacked ( 75 );
+        healer.receiveAttacked ( 75 );
 
         //Assert
         assertEquals ( 0, healer.getLife () );
@@ -97,44 +95,12 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.getAttacked ( 120 );
+        healer.receiveAttacked ( 120 );
 
         //Assert
         assertEquals ( 0, healer.getLife () );
     }
 
-    @Test
-    void test07HealerUseBodyAttackAndRaiseAnError () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
-
-        //Act - Assert
-        try {
-            healer.getBodyAttack ();
-        } catch (CanNotMakeThatMoveException e) {
-            assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
-        }
-    }
-
-    @Test
-    void test08HealerUseDistanceAttackAndRaiseAnError () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
-
-        //Act - Assert
-        try {
-            healer.getBodyAttack ();
-        } catch (CanNotMakeThatMoveException e) {
-            assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
-        }
-    }
-
-    @Test
-    void test09HealerGetMoveIs3 () {
-
-    }
 
     @Test
     void test10HealerReceiveHealAndHisLifeUp () {
@@ -143,8 +109,8 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.getAttacked ( 20 );
-        healer.heal ( healer );
+        healer.receiveAttacked ( 20 );
+        healer.attack ( new ArrayList<>(), new Pair<>(healer,0 ) );
 
         //Assert
         assertEquals ( 70, healer.getLife () );
@@ -157,25 +123,10 @@ class HealerTest {
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.heal ( healer );
+        healer.attack ( new ArrayList<>(), new Pair<>(healer,0 ) );
 
         //Assert
         assertEquals ( 75, healer.getLife () );
     }
 
-    @Test
-    void test12HealerMakeDistanceAttackAndRaiseAnError () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Soldier soldier = new Soldier ( gold );
-        Healer healer = new Healer ( blue );
-
-        //Act - Assert
-        try {
-            healer.distanceAttack ( soldier );
-        } catch (CanNotMakeThatMoveException e) {
-            assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
-        }
-    }
 }
