@@ -260,7 +260,7 @@ class IntegrationTest {
     }
 
     @Test
-    void test12PlayerThatHasNoPiecesLostTheGame() throws PlayerHas20PointsOnlyException, ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, GameHasEndedException {
+    void test12PlayerThatHasNoPiecesLostTheGame() {
         //Assemble
         Game game = new Game();
         game.newPlayer("Player0005667");
