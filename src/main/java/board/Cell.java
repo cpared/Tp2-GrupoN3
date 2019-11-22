@@ -5,16 +5,14 @@ import team.*;
 
 class Cell {
     private Piece piece = null;
-    private Team team;
+    private Object team;
 
-    public Cell ( Team chosenTeam ) {
+    public Cell (Object chosenTeam) {
         this.team = chosenTeam;
     }
 
-    // public void putPieceInCell(Piece pieceNew) {
-    public void putPieceInCell ( Piece pieceNew ) {
+    public void putPieceInCell (Piece pieceNew) {
         if (this.piece != null) {
-            //throw Exception OccupiedCellException;
             throw new OccupiedCellException ();
         }
         this.piece = pieceNew;
@@ -28,14 +26,14 @@ class Cell {
     }
 
     public void putPieceInCell ( Piece pieceNew, Team team ) {
-        if (team.getClass () != this.team.getClass ()) {
+        if (pieceNew.getTeam() != this.team) {
+            //Put getIdentifier() in the class of Team so we can check that
             throw new EnemyCellException ();
         }
         putPieceInCell ( pieceNew );
     }
 
-    //public Piece deletePieceFromCell() {
-    public Piece deletePieceFromCell () {
+    public Piece deletePieceFromCell() {
         Piece poppedPiece = this.getPiece ();
         this.piece = null;
         return poppedPiece;

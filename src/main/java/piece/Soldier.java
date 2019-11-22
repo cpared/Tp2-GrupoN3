@@ -1,41 +1,37 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
+import move.Move;
 import team.*;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 
 public class Soldier implements Piece {
     private Team team;
     private int cost = 1;
     private int life = 100;
-    private int bodyAttack = 10;
-    private int distanceAttack = 0;
+    private int attackRange = 1;
+    private BodyAttack myAttack = new BodyAttack(10);
+    private PieceDecorator decoration = null;
 
     public Soldier ( Team team ) {
         this.team = team;
     }
 
-
-    public int getBodyAttack () {
-        return this.bodyAttack;
-    }
-
-    @Override
-    public int getLife () {
-        return this.life;
-    }
-
-    public int getDistanceAttack () {
-        return this.distanceAttack;
-    }
-
+    //Método creado solamente para las pruebas
     @Override
     public int getCost () {
         return this.cost;
     }
 
     @Override
-    public void attack ( Piece piece ) {
-        piece.getAttacked ( this.bodyAttack );
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
+        if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
+        this.myAttack.attack(attackedPiece, this.attackRange);
     }
 
     @Override
@@ -44,31 +40,41 @@ public class Soldier implements Piece {
     }
 
     @Override
-    public void getAttacked ( int damage ) {
+    public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life < 0) this.life = 0;
+        if (this.life <= 0) throw new IAmDeadException();
     }
 
-    @Override
-    public void getHealed ( int heal ) {
+    public void receiveHealed ( int heal ) {
         this.life += heal;
         if (this.life > 100) this.life = 100;
     }
 
     @Override
-    public int move () {
-        return 3;
+    public void move ( Board board , Move move) {
+        if (this.decoration == null) board.movePiece ( move );
+        else decoration.move ( board, move );
     }
 
     @Override
-    public void distanceAttack ( Piece receivingPiece ) {
-        throw new CanNotMakeThatMoveException (); //Raise another error is correct, but this for now
+    public boolean isCost (int expectedCost) {
+        return this.cost == expectedCost;
+    }
+
+
+    @Override
+    public void decorate (PieceDecorator decorator){
+        this. decoration = decorator;
     }
 
     @Override
-    public void heal ( Piece receivingPiece ) {
-        throw new CanNotMakeThatMoveException ();
+    public PieceDecorator undecorate (PieceDecorator decorator) {
+        this.decoration = null;
+        return decorator;
     }
 
-
+    @Override
+    public int getLife () {
+        return this.life;
+    }
 }

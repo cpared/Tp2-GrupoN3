@@ -9,31 +9,24 @@ class TeamTest {
     @Test
     void test00CanCreateATeam () {
         //Assemble & Act
-        Team team = new Team ();
+        Team team = new Team (2444);
         //Assert
         assertNotNull ( team );
     }
 
     @Test
-    void test01CanCreateABlueTeam () {
+    void test01CanCreatTwoDifferentTeams () {
         //Assemble & Act
-        Team team = new Blue ();
+        Team team1 = new Team (4545);
+        Team team2 = new Team (2333);
         //Assert
-        assertNotNull ( team );
+        assertFalse ( team1.equals ( team2 ) );
     }
 
     @Test
-    void test02CanCreateAGoldTeam () {
-        //Assemble & Act
-        Team team = new Gold ();
-        //Assert
-        assertNotNull ( team );
-    }
-
-    @Test
-    void test03PiecesCanBeAddedToTeamAndTheNumberOfMembersWillIncrease () {
+    void test02PiecesCanBeAddedToTeamAndTheNumberOfMembersWillIncrease () {
         //Assemble
-        Team team = new Gold();
+        Team team = new Team(8);
         //Act
         team.addPieceToTeam ();
         team.addPieceToTeam ();
@@ -42,9 +35,9 @@ class TeamTest {
     }
 
     @Test
-    void test04PiecesCanBeRemovedFromTeam () throws NoMembersLeftException {
+    void test03PiecesCanBeRemovedFromTeam () throws NoMembersLeftException {
         //Assemble
-        Team team = new Gold();
+        Team team = new Team (2);
 
         team.addPieceToTeam ();
         team.addPieceToTeam ();
@@ -61,7 +54,7 @@ class TeamTest {
     @Test
     void test05RemoveMorePiecesThanWhatYouCanRemoveRaisesError () {
         //Assemble
-        Team team = new Gold();
+        Team team = new Team(2);
 
         team.addPieceToTeam ();
 

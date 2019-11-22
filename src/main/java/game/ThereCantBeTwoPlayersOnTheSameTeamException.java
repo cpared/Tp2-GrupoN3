@@ -1,6 +1,6 @@
 package game;
 
-public class ThereCantBeTwoPlayersOnTheSameTeamException extends Exception {
+public class ThereCantBeTwoPlayersOnTheSameTeamException extends RuntimeException {
     private static final String ERROR_MSG = "Players cant be on the same team.";
 
     public ThereCantBeTwoPlayersOnTheSameTeamException () {

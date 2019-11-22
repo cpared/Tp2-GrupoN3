@@ -1,6 +1,6 @@
 package game;
 
-public class GameHasEndedException extends Exception {
+public class GameHasEndedException extends RuntimeException {
 
     private static final String ERROR_MSG = "Game has ended.";
 

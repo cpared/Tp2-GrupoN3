@@ -1,5 +1,8 @@
 package game;
 
+import move.Builder;
+import move.Move;
+import player.Player;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +22,7 @@ class GameTest {
         //Act
         game.newPlayer ( "Mike" );
         //Assert
-        Assertions.assertEquals ( "Mike", game.getPlayer1 ().getName () );
+        Assertions.assertNotNull ( game.getPlayer1( ) );
     }
 
     @Test
@@ -30,26 +33,32 @@ class GameTest {
         game.newPlayer ( "Mike" );
         game.newPlayer ( "Rick" );
         //Assert
-        Assertions.assertEquals ( "Mike", game.getPlayer1 ().getName () );
-        Assertions.assertEquals ( "Rick", game.getPlayer2 ().getName () );
+        //TODO check it equals override.
+        Assertions.assertFalse (  game.getPlayer1 ().equals ( game.getPlayer2 () ) );
+
     }
 
     @Test
-    void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException {
+    void test03GameCanOnlyHaveTwoPlayers () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
         //Assemble
         Game game = new Game ();
         //Act
+
+        game.newPlayer ( "Rose" );
+        game.newPlayer ( "Patty" );
+        Player player1 = game.getPlayer1 ( );
+        Player player2 = game.getPlayer2 ( );
+
         try {
-            game.newPlayer ( "Rose" );
-            game.newPlayer ( "Patty" );
             game.newPlayer ( "Alfred" );
             fail ();
+
             //Assert
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
-            Assertions.assertEquals ( "Rose", game.getPlayer1 ().getName () );
-            Assertions.assertEquals ( "Patty", game.getPlayer2 ().getName () );
+            Assertions.assertTrue ( player1.equals (  game.getPlayer1 () ) );
+            Assertions.assertTrue ( player2.equals (  game.getPlayer2 () ) );
         }
 
     }
@@ -63,15 +72,21 @@ class GameTest {
         try {
             game.newPlayer ( "Rose" );
             game.newPlayer ( "Patty" );
+            game.playerChoosesCatapult ( game.getPlayer1 () );
+            game.playerChoosesCatapult ( game.getPlayer2 () );
+            game.playerChoosesHealer ( game.getPlayer2 () );
+
 
         } catch (ThereAreOnlyTwoPlayersPerGameException e) {
             e.printStackTrace ();
         } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
             e.printStackTrace ();
+        } catch (PlayerHas20PointsOnlyException e) {
+            e.printStackTrace ();
         }
         //Assert
-        Assertions.assertEquals ( Gold.class, game.getPlayer1 ().getTeam ().getClass () );
-        Assertions.assertEquals ( Blue.class, game.getPlayer2 ().getTeam ().getClass () );
+        Assertions.assertNotEquals (  game.getPlayer2 ().numberOfPiecesOnTeam () , game.getPlayer1 ().numberOfPiecesOnTeam () );
+
     }
 
     // Tests related to moves.
@@ -82,21 +97,22 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         //Act
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         //Assert
-        Assertions.assertEquals ( 19, game.getPlayer1 ().obtainPoints () );
+        Assertions.assertNotNull ( piece );
     }
 
     @Test
-    void test06PlayerInGameCanPlaceAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException {
+    void test06PlayerInGameCanPlaceAPieceOnTheBoard () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         //Act
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
         //Assert
-        Assertions.assertEquals ( piece, game.getBoard ().removePiece ( 2,0 ) );
+        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
+        Assertions.assertEquals ( piece, game.removePieceFromBoard ( game.getPlayer1 (),2,0 ) );
     }
 
     @Test
@@ -105,11 +121,11 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece2= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece2= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
+        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
 
         //Act
@@ -124,11 +140,11 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece2= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
+        Piece piece2= game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
+        Piece piece3= game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
 
         //Act
@@ -144,20 +160,26 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece= game.playerChoosesPiece ( game.getPlayer1 (), "SOLDIER" );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2,0 );
-        Piece piece3= game.playerChoosesPiece ( game.getPlayer2 (), "SOLDIER" );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11,0 );
+        Player player1 = game.getPlayer1 ();
+        Player player2 = game.getPlayer2 ();
+        Piece piece= game.playerChoosesCatapult ( player1 );
+        game.playerPlacesPieceOnBoard ( player1, piece, 2,0 );
+        game.playerIsReadyToPlay ( player1 );
+        Piece piece3= game.playerChoosesSoldier ( player2 );
+        game.playerPlacesPieceOnBoard ( player2, piece3, 11,0 );
+        game.playerIsReadyToPlay ( player2 );
 
         //Act
-        try{
-            game.playerAttacks ( game.getPlayer1 (),2,0 );
+
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        game.playerAttacks ( player1,2,0,11,0 );
+        try {
+            game.playerMovesPieceOnBoard ( player1,2,0,3,0 );
         } catch (GameHasEndedException e) {
-            e.getMessage ();
-        } catch (NoMembersLeftException e) {
-            e.printStackTrace ();
+            //Assert
+            Assertions.assertTrue (game.isNumberOfMembersOnTeam ( player2 , 0 ) );
         }
-        //Assert
-        Assertions.assertEquals ( 0, game.getPlayer1 ().getTeam ().numberOfMembersStillOnTeam () );
     }
 }

@@ -1,6 +1,8 @@
 package player;
 
 import board.Board;
+import move.Move;
+import piece.IAmDeadException;
 import piece.Piece;
 import piece.PieceFactory;
 
@@ -11,57 +13,85 @@ import java.util.Scanner;
 
 public class Player {
     private String name;
-    private int points;
     private Team team;
-    private PieceFactory factory = new PieceFactory ();
+    private PieceFactory factory;
 
     public Player ( String name, Team team ) {
-        this.points = 20;
         this.name = name;
         this.team = team;
+        this.factory = new PieceFactory ( this.team );
     }
 
-    public String getName () {
-        return this.name;
+    public void placePieceOnBoard ( Piece piece, Board board, Move move ) {
+        board.placePiece ( piece, move );
     }
 
-    public int obtainPoints () {
-        return this.points;
-    }
-
-    public void subtractPoints ( int pointsToSubtract ) throws PlayerHas20PointsOnlyException {
-        if (this.points < pointsToSubtract) throw new PlayerHas20PointsOnlyException ();
-
-        this.points = this.points - pointsToSubtract;
-
-    }
-
-    public String obtainName () {
-        return this.name;
-    }
-
-    public Piece choosePiece ( String pieceName ) throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.getPiece ( pieceName, this.team );
-        this.subtractPoints ( piece.getCost () );
-        team.addPieceToTeam ();
-
-        return piece;
-    }
-
-    public void placePieceOnBoard ( Piece piece, Board board, int row, int column ) {
-        board.placePiece ( piece, row, column );
-    }
-
-    public void movePiece ( Board board, int firstRow, int firstColumn, int secondRow, int secondColumn ) {
-        board.movePiece ( firstRow, firstColumn, secondRow, secondColumn );
-    }
-
-    public Team getTeam () {
-        return this.team;
+    public void movePiece ( Board board, Move move ) {
+        board.move ( move );
     }
 
     public void removePieceFromTeam () throws NoMembersLeftException {
-        this.team.subtractPieceFromTeam ();
+        try {
+            this.team.subtractPieceFromTeam ();
+        } catch (NoMembersLeftException e) {
+            throw e;
+        }
     }
 
+    public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
+        Piece soldier = this.factory.createSoldier ();
+        team.addPieceToTeam ();
+
+        return soldier;
+    }
+
+    public Piece chooseRider () throws PlayerHas20PointsOnlyException {
+        Piece rider = this.factory.createRider ();
+        team.addPieceToTeam ();
+
+        return rider;
+    }
+
+    public Piece chooseHealer () throws PlayerHas20PointsOnlyException {
+        Piece healer = this.factory.createHealer ();
+        team.addPieceToTeam ();
+
+        return healer;
+    }
+
+    public Piece chooseCatapult () throws PlayerHas20PointsOnlyException {
+        Piece catapult = this.factory.createCatapult ();
+        team.addPieceToTeam ();
+
+        return catapult;
+    }
+
+    public boolean isNumberOfPiecesOnTeam ( int numberOfMembers ) {
+        return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
+    }
+
+    public int numberOfPiecesOnTeam () {
+        return this.team.numberOfMembersStillOnTeam ();
+    }
+
+    public boolean equals ( Player player ) {
+        return this.name.equals ( player.name ) && this.team.equals ( player.team );
+    }
+
+    public void chooseBattalion (Board board, Move move) {
+        board.createBattalion ( move );
+    }
+
+    public void attack (Board board, Move move) {
+        try {
+            board.attack ( move );
+        } catch (IAmDeadException e) {
+            this.removePieceFromTeam ();
+        }
+    }
+
+    // This getter is only for testing, they dont belong in the model.
+    public String name () {
+        return this.name;
+    }
 }

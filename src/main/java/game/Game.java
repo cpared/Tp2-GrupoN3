@@ -1,5 +1,9 @@
 package game;
 
+import Face.*;
+
+import move.Builder;
+import move.Move;
 import player.Player;
 import board.*;
 import piece.*;
@@ -8,25 +12,85 @@ import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.*;
 
 public class Game {
-    public Board board = new Board ();
+
     private Player player1;
     private Player player2;
+    private GameState state;
 
     public Game () {
+        this.state = new InProgress ();
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
-        Team team = this.assignTeam ();
 
-        Player player = new Player ( name, team );
         if (this.player1 == null) {
-            this.player1 = player;
+            this.player1 = this.state.newPlayer ( name );
         } else if (this.player2 == null) {
-            this.player2 = player;
+            this.player2 = this.state.newPlayer ( name );
         } else throw new ThereAreOnlyTwoPlayersPerGameException ();
 
     }
 
+    public void playerChoosesBattalion ( Player player, int row, int column ) {
+        Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
+        this.state.playerChoosesBattalion ( player, move );
+
+    }
+
+    public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
+        Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
+        this.state.playerMovesPieceOnBoard ( player, move );
+    }
+
+    public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
+        Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
+        this.state.playerPlacesPieceOnBoard ( player, piece, move );
+    }
+
+    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
+        Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
+        return this.state.removePieceFromBoard ( player, move );
+    }
+
+    public void playerAttacks ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, NoMembersLeftException {
+        Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
+        try {
+            this.state.playerAttacks ( player, move );
+        } catch (NoMembersLeftException e) {
+            changeState ( new Ended () );
+        }
+    }
+
+    public Piece playerChoosesSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
+        return this.state.chooseSoldier ( player );
+    }
+
+    public Piece playerChoosesHealer ( Player player ) throws PlayerHas20PointsOnlyException {
+        return this.state.chooseHealer ( player );
+    }
+
+    public Piece playerChoosesRider ( Player player ) throws PlayerHas20PointsOnlyException {
+        return this.state.chooseRider ( player );
+    }
+
+    public Piece playerChoosesCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
+        return this.state.chooseCatapult ( player );
+    }
+
+    public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
+        return player.isNumberOfPiecesOnTeam ( numberOfMembers );
+    }
+
+    private void changeState ( GameState newState ) {
+        this.state = newState;
+    }
+
+    public void playerIsReadyToPlay ( Player player ) {
+        this.state.playerIsReadyToPlay ( player );
+    }
+
+
+    // This getters are only for testing, they dont belong in the model.
     public Player getPlayer1 () {
         return this.player1;
     }
@@ -36,49 +100,6 @@ public class Game {
     }
 
     public Board getBoard () {
-        return this.board;
-    }
-
-    private Team assignTeam () throws ThereCantBeTwoPlayersOnTheSameTeamException {
-        if (this.player1 == null) {
-            return new Gold ();
-        } else if (this.player2 == null) {
-            return new Blue ();
-        } else throw new ThereCantBeTwoPlayersOnTheSameTeamException ();
-    }
-
-    public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException {
-        this.endGame ();
-        player.movePiece ( this.board, firstRow, firstColumn, secondRow, secondColumn );
-    }
-
-    public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) {
-        player.placePieceOnBoard ( piece, this.board, row, column );
-    }
-
-    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        this.endGame ();
-        player.removePieceFromTeam ();
-        return board.removePiece ( row, column );
-    }
-
-    public Piece playerChoosesPiece ( Player player, String pieceName ) throws PlayerHas20PointsOnlyException {
-        return player.choosePiece ( pieceName );
-    }
-
-    private boolean gameHasEnded () {
-        return this.player1.getTeam ().numberOfMembersStillOnTeam () == 0 || this.player2.getTeam ().numberOfMembersStillOnTeam () == 0;
-    }
-
-    public void playerAttacks ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
-        this.endGame ();
-        this.removePieceFromBoard ( player, row, column );
-    }
-
-    private void endGame () throws GameHasEndedException {
-        boolean state = gameHasEnded ();
-        if (state) {
-            throw new GameHasEndedException ();
-        }
+        return this.state.getBoard ();
     }
 }

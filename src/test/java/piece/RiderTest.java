@@ -1,20 +1,21 @@
 package piece;
 
 
-import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
-import team.Blue;
-import team.Gold;
+import team.Team;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RiderTest {
 
     @Test
     void test00CreateRiderWithATeamAndGetTheCorrectTeam () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (34);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -27,7 +28,7 @@ class RiderTest {
     @Test
     void test01CreateRiderAndGetLifeIs100 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (6);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -39,7 +40,7 @@ class RiderTest {
     @Test
     void test02RiderGetCostIs3 () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (23);
         Rider rider = new Rider ( gold );
 
         //Act
@@ -51,13 +52,13 @@ class RiderTest {
     @Test
     void test03RiderReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (23);
+        Team blue = new Team (25);
         Rider rider = new Rider ( gold );
         Rider blueRider = new Rider ( blue );
 
         //Act
-        blueRider.attack ( rider );
+        blueRider.attack ( new ArrayList<>(Arrays.asList(rider)), new Pair<>(rider,1 ));
 
         //Assert
         assertEquals ( 95, rider.getLife () );
@@ -66,11 +67,11 @@ class RiderTest {
     @Test
     void test04RiderReceiveDamageAndReduceHisLife () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (9);
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 20 );
+        rider.receiveAttacked ( 20 );
 
         //Assert
         assertEquals ( 80, rider.getLife () );
@@ -79,108 +80,79 @@ class RiderTest {
     @Test
     void test05RiderReceiveDamageAndReduceHisLifeToCero () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (67);
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 100 );
+        try{
+            rider.receiveAttacked ( 100 );
+        }
+        catch(IAmDeadException e){
+            assertEquals ( 0, rider.getLife () );
+        }
 
         //Assert
-        assertEquals ( 0, rider.getLife () );
     }
 
     @Test
-    void test06RiderReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
+    void test06RiderReceiveDamageAndReduceHisLifeAndThrowsException () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (45);
         Rider rider = new Rider ( gold );
 
         //Act
-        rider.getAttacked ( 120 );
-
+        try {
+            rider.receiveAttacked(120);
+        }
         //Assert
-        assertEquals ( 0, rider.getLife () );
+        catch (IAmDeadException e) {
+            assert true;
+        }
     }
 
-    @Test
-    void test07RiderUseBodyAttackAndHisDamageIs5 () {
-        //Assign
-        Gold gold = new Gold ();
-        Rider rider = new Rider ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 5, rider.getBodyAttack () );
-    }
 
     @Test
-    void test08RiderUseDistanceAttackAndHisDamageIs15 () {
+    void test07RiderReceiveHealAndHisLifeUp () {
         //Assign
-        Gold gold = new Gold ();
-        Rider rider = new Rider ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 15, rider.getDistanceAttack () );
-    }
-
-    @Test
-    void test09RiderGetMoveIs3 () {
-        //Assign
-        Gold gold = new Gold ();
-        Rider rider = new Rider ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 3, rider.move () );
-    }
-
-    @Test
-    void test10RiderReceiveHealAndHisLifeUp () {
-        //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (4);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
         //Act
-        rider.getAttacked ( 20 );
-        healer.heal ( rider );
+        rider.receiveAttacked ( 20 );
+        healer.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         //Assert
         assertEquals ( 95, rider.getLife () );
     }
 
     @Test
-    void test11RiderReceiveHealWithOutDamageAndHisLifeCantUp () {
+    void test08RiderReceiveHealWithOutDamageAndHisLifeCantUp () {
         //Assign
-        Gold gold = new Gold ();
+        Team gold = new Team (8);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( gold );
 
         //Act
-        healer.heal ( rider );
+        healer.attack ( new ArrayList<>(), new Pair<>(rider,1 ) );
 
         //Assert
         assertEquals ( 100, rider.getLife () );
     }
 
     @Test
-    void test12RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
+    void test09RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assign
-        Gold gold = new Gold ();
-        Blue blue = new Blue ();
+        Team gold = new Team (9);
+        Team blue = new Team (7);
         Rider rider = new Rider ( gold );
         Healer healer = new Healer ( blue );
 
         //Act
-        rider.distanceAttack ( healer );
+        rider.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 60, healer.getLife () );
     }
-
 
 }

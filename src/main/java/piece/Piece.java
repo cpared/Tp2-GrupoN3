@@ -1,71 +1,38 @@
 package piece;
 
+import board.Board;
 import board.CanNotMakeThatMoveException;
+import javafx.util.Pair;
+import move.Move;
 import team.*;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public interface Piece {
-    public Team team = new Team ();
-    public int life = 0;
-    public int cost = 0;
+    Team team = null;
+    int life = 0;
+    int cost = 0;
+    PieceDecorator decoration = null;
 
-    public Team getTeam ();
+    Team getTeam ();
 
-    public int move ();
+    void move ( Board board ,Move move );
 
-    public void attack ( Piece piece );
+    int getLife ();
 
-    public int getLife ();
+    void receiveHealed ( int heal );
 
-    public void getHealed ( int heal );
+    void attack(ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece);
 
-    public void distanceAttack ( Piece receivingPiece );
+    void receiveAttacked(int damage);
 
-    public void heal ( Piece receivingPiece );
+    int getCost ();
 
-    public void getAttacked ( int damage );
+    boolean isCost (int expectedCost);
 
-    public int getCost ();
+    void decorate (PieceDecorator decorator);
 
+    PieceDecorator undecorate (PieceDecorator decorator);
 }
 
-
-/*
-package piece;
-import board.CanNotMakeThatMoveException;
-import team.*;
-public interface Piece implements PieceCreator {
-    private Team team;
-    private int life;
-    public Piece(Team team){
-        this.team = team;
-    }
-
-    public Piece() {
-    }
-
-    public Team getTeam() {
-        return this.team;
-    }
-    public int move();
-
-    public void attack(Piece piece){
-        throw new CanNotMakeThatMoveException(); //Raise another error is correct, but this for now
-    }
-    public int getLife(){
-        return life;
-    }
-    public void getHeal(int heal){
-        throw new CanNotMakeThatMoveException();
-    }
-    public void distanceAttack(Piece receivingPiece) {
-        throw new CanNotMakeThatMoveException(); //Raise another error is correct, but this for now
-    }
-
-    public void heal(Piece receivingPiece) {
-        throw new CanNotMakeThatMoveException();
-    }
-    public void getAttacked(int damage){
-
-    }
-}
- */
