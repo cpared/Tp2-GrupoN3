@@ -8,18 +8,16 @@ import team.Team;
 import java.util.ArrayList;
 
 public class NullPiece implements Piece {
-    @Override
-    public int getLife () {
-        return this.life;
-    }
+    public Team team = new Team(500);
+
 
     @Override
     public void move ( Board board , Move move) {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
 
     @Override
@@ -49,5 +47,15 @@ public class NullPiece implements Piece {
     @Override
     public PieceDecorator undecorate ( PieceDecorator decorator ) {
         return null;
+    }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.life;
     }
 }

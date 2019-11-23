@@ -10,8 +10,8 @@ import team.*;
 import java.util.ArrayList;
 
 public class Rider implements Piece {
-    private Team team;
-    private int cost = 3;
+    public Team team;
+    private int cost ;
     private int life = 100;
     private int attackRange;
     private AttackStrategy riderAttack;
@@ -19,19 +19,14 @@ public class Rider implements Piece {
 
     public Rider ( Team team ) {
         this.team = team;
+        this.cost = 3;
     }
 
     @Override
-    public int getLife () {
-        return this.life;
-    }
-
-
-    @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
         this.setMyAttack(adjacentPieces);
-        if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.riderAttack.attack(attackedPiece, this.attackRange);
+        if(this.isSameTeamAs (attackedPieces.getKey())) throw new SameTeamException();
+        this.riderAttack.attack(attackedPieces, this.attackRange);
     }
 
     private void setMyAttack(ArrayList<Piece> adjacentPieces){
@@ -39,7 +34,7 @@ public class Rider implements Piece {
         ArrayList<Piece> allyPieces = new ArrayList<Piece>();
         ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
         adjacentPieces.forEach(piece ->{
-            if(piece.getTeam() == this.team) allyPieces.add(piece);
+            if(this.isSameTeamAs ( piece )) allyPieces.add(piece);
             else{
                 enemyPieces.add(piece);
             }
@@ -69,8 +64,8 @@ public class Rider implements Piece {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
 
     @Override
@@ -94,4 +89,15 @@ public class Rider implements Piece {
         this.decoration = null;
         return decorator;
     }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.life;
+    }
+
 }

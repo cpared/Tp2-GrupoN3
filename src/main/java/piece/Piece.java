@@ -10,27 +10,30 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public interface Piece {
-    Team team = null;
+    Team team = new Team ( 5000 );
     int life = 0;
     int cost = 0;
     PieceDecorator decoration = null;
 
-    Team getTeam ();
+    boolean isSameTeamAs ( Piece otherPiece );
 
-    void move ( Board board ,Move move );
-
-    int getLife ();
+    void move ( Board board, Move move );
 
     void receiveHealed ( int heal );
 
-    void attack(ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece);
+    void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece );
 
-    void receiveAttacked(int damage);
+    void receiveAttacked ( int damage );
 
-    boolean isCost (int expectedCost);
+    boolean isCost ( int expectedCost );
 
-    void decorate (PieceDecorator decorator);
+    void decorate ( PieceDecorator decorator );
 
-    PieceDecorator undecorate (PieceDecorator decorator);
+    PieceDecorator undecorate ( PieceDecorator decorator );
+
+    // These getters are for testing only.
+    int getLife ();
+
+    Team getTeam();
 }
 

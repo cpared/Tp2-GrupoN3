@@ -9,7 +9,7 @@ import team.Team;
 import java.util.*;
 
 public interface Battalion extends Piece {
-
+    Team team = new Team ( 500 );
     RealBattalion createBattalion ();
 
     @Override

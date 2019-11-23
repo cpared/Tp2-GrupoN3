@@ -14,18 +14,12 @@ public class RealBattalion implements Battalion {
     private ArrayList<Piece> soldiers;
     private PieceDecorator decorator;
 
-    private Team team;
+    public Team team;
     private int life;
 
     public RealBattalion ( ArrayList<Piece> soldiers ) {
 
         this.soldiers = soldiers;
-    }
-
-
-    @Override
-    public int getLife () {
-        return 0;
     }
 
     @Override
@@ -56,8 +50,8 @@ public class RealBattalion implements Battalion {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
 
     @Override
@@ -98,5 +92,15 @@ public class RealBattalion implements Battalion {
     @Override
     public RealBattalion createBattalion (){
         return null;
+    }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.life;
     }
 }

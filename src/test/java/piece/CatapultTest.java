@@ -19,77 +19,77 @@ class CatapultTest {
     @Test
     void test00CreateCatapultWithATeamAndGetTheCorrectTeam () {
         //Assemble
-        Catapult catapult = new Catapult ( this.team );
+        Catapult piece = new Catapult ( this.team );
         //Act & Assert
-        assertEquals ( this.team, catapult.getTeam () );
+        assertTrue ( this.team.equals ( piece.team ) );
 
     }
 
     @Test
     void test01CreateCatapultAndGetLifeIs50 () {
         //Assemble
-        Catapult catapult = new Catapult ( this.team );
+        Catapult piece = new Catapult ( this.team );
         //Act & Assert
-        assertEquals ( 50, catapult.getLife () );
+        assertEquals ( 50, piece.getLife () );
     }
 
     @Test
     void test02CatapultGetCostIs1 () {
         //Assemble
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
 
         //Act & Assert
-        assertTrue ( catapult.isCost ( 5 ) );
+        assertTrue ( piece.isCost ( 5 ) );
     }
 
     @Test
     void test03CatapultReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assemble
         Team blue = new Team (2);
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
         Piece blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack ( new ArrayList<>(), new Pair<>(catapult,1 ) );
+        blueSoldier.attack ( new ArrayList<>(), new Pair<>(piece,1 ) );
 
         //Assert
-        assertEquals ( 40, catapult.getLife () );
+        assertEquals ( 40, piece.getLife () );
     }
 
     @Test
     void test04CatapultReceiveDamageAndReduceHisLife () {
         //Assemble
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
 
         //Act
-        catapult.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
 
         //Assert
-        assertEquals ( 30, catapult.getLife () );
+        assertEquals ( 30, piece.getLife () );
     }
 
     @Test
     void test05CatapultReceiveDamageAndReduceHisLifeToCero () {
         //Assemble
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
 
         //Act
         try{
-            catapult.receiveAttacked ( 50 );
+            piece.receiveAttacked ( 50 );
         }
         catch(IAmDeadException e){
-            assertEquals ( 0, catapult.getLife () );
+            assertEquals ( 0, piece.getLife () );
         }
     }
 
     @Test
     void test06CatapultReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
         //Assemble
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
 
         //Act
         try{
-            catapult.receiveAttacked ( 120 );
+            piece.receiveAttacked ( 120 );
             fail();
         }
         catch(IAmDeadException e){
@@ -102,13 +102,13 @@ class CatapultTest {
     @Test
     void test07CatapultReceiveHealAndRaiseAndError () {
         //Assemble
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
         Piece healer = new Healer ( this.team );
 
         //Act
-        catapult.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
         try {
-            healer.attack ( new ArrayList<>(), new Pair<>(catapult,1 ) );
+            healer.attack ( new ArrayList<>(), new Pair<>(piece,1 ) );
         } catch (CanNotMakeThatMoveException e) {
             assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
         }
@@ -118,11 +118,11 @@ class CatapultTest {
     void test08CatapultMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assemble
         Team blue = new Team (2);
-        Piece catapult = new Catapult ( this.team );
+        Piece piece = new Catapult ( this.team );
         Piece healer = new Healer ( blue );
 
         //Act
-        catapult.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
+        piece.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 55, healer.getLife () );

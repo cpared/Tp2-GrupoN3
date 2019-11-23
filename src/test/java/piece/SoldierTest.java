@@ -21,7 +21,7 @@ class SoldierTest {
         Piece piece = new Soldier ( this.team );
 
         //Act & Assert
-        assertEquals ( this.team, piece.getTeam () );
+        assertTrue ( this.team.equals ( piece.getTeam () ) );
 
     }
 

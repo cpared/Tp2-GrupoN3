@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Team {
     private int pieces;
-    private int identifier;
+    public int identifier;
     private ArrayList<Piece> piece;
 
     public Team (int identifier) {
@@ -33,6 +33,6 @@ public class Team {
     }
 
     public boolean equals (Team team) {
-        return this.pieces == team.pieces && this.identifier == team.identifier;
+        return this.identifier == team.identifier;
     }
 }

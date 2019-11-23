@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class Soldier implements Piece {
-    private Team team;
+    public Team team;
     private int cost = 1;
     private int life = 100;
     private int attackRange = 1;
@@ -23,14 +23,14 @@ public class Soldier implements Piece {
     }
 
     @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
-        if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.myAttack.attack(attackedPiece, this.attackRange);
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
+        if(this.isSameTeamAs (attackedPieces.getKey())) throw new SameTeamException();
+        this.myAttack.attack(attackedPieces, this.attackRange);
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
 
     @Override
@@ -67,6 +67,11 @@ public class Soldier implements Piece {
         return decorator;
     }
 
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
     @Override
     public int getLife () {
         return this.life;

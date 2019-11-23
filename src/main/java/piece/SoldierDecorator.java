@@ -9,17 +9,15 @@ import java.util.ArrayList;
 
 public class SoldierDecorator extends PieceDecorator {
     private Piece battalion;
+    private Team team;
 
 
     public SoldierDecorator ( Piece battalion) {
         super (battalion);
         this.battalion = battalion;
+        this.team = battalion.team;
     }
 
-    @Override
-    public int getLife () {
-        return this.battalion.getLife ();
-    }
 
     @Override
     public void move ( Board board , Move move ) {
@@ -28,10 +26,9 @@ public class SoldierDecorator extends PieceDecorator {
 
 
     @Override
-    public Team getTeam () {
-        return this.battalion.getTeam ();
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
-
 
     @Override
     public void receiveAttacked ( int damage ) {
@@ -60,5 +57,15 @@ public class SoldierDecorator extends PieceDecorator {
     @Override
     public PieceDecorator undecorate ( PieceDecorator decorator ) {
         return null;
+    }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.life;
     }
 }

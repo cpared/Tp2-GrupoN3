@@ -30,7 +30,7 @@ public class Board {
 
     public void placePiece ( Piece piece, Move move ) {
         Cell cell = this.destinationCell ( move );
-        cell.putPieceInCell ( piece, piece.getTeam () );
+        cell.putPieceInCell ( piece );
     }
 
     public void movePiece ( Move move ) {

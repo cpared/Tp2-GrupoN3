@@ -15,6 +15,7 @@ public class BattalionProxy implements Battalion {
     public RealBattalion battalion = new RealBattalion ( new ArrayList<Piece> (  ) );
     private Move move;
     private PieceDecorator decorator = new SoldierDecorator ( this );
+    public Team team;
 
     public BattalionProxy (Board board, ArrayList<Piece> pieces, Move move) {
         this.board = board;
@@ -66,15 +67,9 @@ public class BattalionProxy implements Battalion {
         else return decorator;
     }
 
-
-    // Cant actually access this methods.
     @Override
-    public int getLife () {
-        return this.battalion.getLife ();
-    }
-    @Override
-    public Team getTeam () {
-        return this.battalion.getTeam ();
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
     @Override
     public void receiveAttacked ( int damage ) {
@@ -91,5 +86,16 @@ public class BattalionProxy implements Battalion {
     @Override
     public void receiveHealed ( int heal ) {
        this.battalion.receiveHealed ( heal );
+    }
+
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.battalion.getLife ();
     }
 }

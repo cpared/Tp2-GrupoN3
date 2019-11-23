@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HealerTest {
-    private Team team = new Team ( 1 );
+    Team team = new Team ( 1 );
 
     @Test
     void test00CreateHealerWithATeamAndGetTheCorrectTeam () {
@@ -18,7 +18,7 @@ class HealerTest {
         Piece piece = new Healer ( this.team );
 
         //Act & Assert
-        assertEquals ( this.team, piece.getTeam () );
+        assertTrue ( this.team.equals ( piece.getTeam () ) );
     }
 
     @Test

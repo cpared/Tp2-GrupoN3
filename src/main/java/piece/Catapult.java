@@ -8,8 +8,8 @@ import team.Team;
 import java.util.ArrayList;
 
 public class Catapult implements Piece {
-    private Team team;
-    private int cost = 5;
+    public Team team;
+    private int cost;
     private int life = 50;
     private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
@@ -17,12 +17,9 @@ public class Catapult implements Piece {
 
     public Catapult ( Team team ) {
         this.team = team;
+        this.cost = 5;
     }
 
-    @Override
-    public int getLife () {
-        return this.life;
-    }
 
     @Override
     public void move ( Board board , Move move) {
@@ -30,10 +27,9 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
-
 
     @Override
     public void receiveAttacked ( int damage ) {
@@ -42,9 +38,9 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
-        if (attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.distanceAttack.attack(attackedPiece, this.attackRange);
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
+        if (this.isSameTeamAs ( attackedPieces.getKey() )) throw new SameTeamException();
+        this.distanceAttack.attack(attackedPieces, this.attackRange);
     }
 
     @Override
@@ -64,5 +60,15 @@ public class Catapult implements Piece {
     public PieceDecorator undecorate (PieceDecorator decorator) {
         this.decoration = null;
         return decorator;
+    }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+    @Override
+    public int getLife () {
+        return this.life;
     }
 }
