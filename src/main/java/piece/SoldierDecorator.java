@@ -22,11 +22,6 @@ public class SoldierDecorator extends PieceDecorator {
     }
 
     @Override
-    public int getCost () {
-        return this.battalion.getLife ();
-    }
-
-    @Override
     public void move ( Board board , Move move ) {
         this.battalion.move ( board , move );
     }

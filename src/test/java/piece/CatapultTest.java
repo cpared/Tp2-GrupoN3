@@ -11,53 +11,43 @@ import static junit.framework.TestCase.fail;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CatapultTest {
+    private Team team = new Team (1);
 
     @Test
     void test00CreateCatapultWithATeamAndGetTheCorrectTeam () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( gold, catapult.getTeam () );
+        //Assemble
+        Catapult catapult = new Catapult ( this.team );
+        //Act & Assert
+        assertEquals ( this.team, catapult.getTeam () );
 
     }
 
     @Test
     void test01CreateCatapultAndGetLifeIs50 () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-
-        //Act
-
-        //Assert
+        //Assemble
+        Catapult catapult = new Catapult ( this.team );
+        //Act & Assert
         assertEquals ( 50, catapult.getLife () );
     }
 
     @Test
     void test02CatapultGetCostIs1 () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece catapult = new Catapult ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( 5, catapult.getCost () );
+        //Act & Assert
+        assertTrue ( catapult.isCost ( 5 ) );
     }
 
     @Test
     void test03CatapultReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
+        //Assemble
         Team blue = new Team (2);
-        Catapult catapult = new Catapult ( gold );
-        Soldier blueSoldier = new Soldier ( blue );
+        Piece catapult = new Catapult ( this.team );
+        Piece blueSoldier = new Soldier ( blue );
 
         //Act
         blueSoldier.attack ( new ArrayList<>(), new Pair<>(catapult,1 ) );
@@ -68,9 +58,8 @@ class CatapultTest {
 
     @Test
     void test04CatapultReceiveDamageAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece catapult = new Catapult ( this.team );
 
         //Act
         catapult.receiveAttacked ( 20 );
@@ -81,9 +70,8 @@ class CatapultTest {
 
     @Test
     void test05CatapultReceiveDamageAndReduceHisLifeToCero () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece catapult = new Catapult ( this.team );
 
         //Act
         try{
@@ -96,9 +84,8 @@ class CatapultTest {
 
     @Test
     void test06CatapultReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece catapult = new Catapult ( this.team );
 
         //Act
         try{
@@ -114,10 +101,9 @@ class CatapultTest {
 
     @Test
     void test07CatapultReceiveHealAndRaiseAndError () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece catapult = new Catapult ( this.team );
+        Piece healer = new Healer ( this.team );
 
         //Act
         catapult.receiveAttacked ( 20 );
@@ -130,11 +116,10 @@ class CatapultTest {
 
     @Test
     void test08CatapultMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
-        //Assign
-        Team gold = new Team (1);
+        //Assemble
         Team blue = new Team (2);
-        Catapult catapult = new Catapult ( gold );
-        Healer healer = new Healer ( blue );
+        Piece catapult = new Catapult ( this.team );
+        Piece healer = new Healer ( blue );
 
         //Act
         catapult.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );

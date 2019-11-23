@@ -26,10 +26,6 @@ public class Healer implements Piece {
         return this.life;
     }
 
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
 
     @Override
     public void receiveHealed ( int heal ) {

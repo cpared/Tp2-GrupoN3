@@ -26,10 +26,6 @@ public class Rider implements Piece {
         return this.life;
     }
 
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
 
     @Override
     public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {

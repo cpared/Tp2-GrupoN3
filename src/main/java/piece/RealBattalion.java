@@ -29,11 +29,6 @@ public class RealBattalion implements Battalion {
     }
 
     @Override
-    public int getCost () {
-        return 0;
-    }
-
-    @Override
     public void move ( Board board, Move move ) {
         int fromRow = move.fromRow;
         int fromColumn = move.fromColumn -1;

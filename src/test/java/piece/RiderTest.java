@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RiderTest {
 
@@ -31,8 +32,6 @@ class RiderTest {
         Team gold = new Team (6);
         Rider rider = new Rider ( gold );
 
-        //Act
-
         //Assert
         assertEquals ( 100, rider.getLife () );
     }
@@ -43,10 +42,8 @@ class RiderTest {
         Team gold = new Team (23);
         Rider rider = new Rider ( gold );
 
-        //Act
-
-        //Assert
-        assertEquals ( 3, rider.getCost () );
+        //Act & Assert
+        assertTrue (  rider.isCost (3) );
     }
 
     @Test

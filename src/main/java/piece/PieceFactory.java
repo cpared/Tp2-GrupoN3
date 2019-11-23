@@ -13,35 +13,37 @@ public class PieceFactory {
     }
 
     public Piece createSoldier () throws PlayerHas20PointsOnlyException {
+
+        int cost = 1;
+        if (cost > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
         Piece soldier = new Soldier ( this.team );
-        if (soldier.getCost() > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
-        else {
-            this.playerPoints -= soldier.getCost();
-            return soldier;
-        }
+        this.playerPoints -= cost;
+        return soldier;
     }
 
     public Piece createHealer () throws PlayerHas20PointsOnlyException {
+
+        int cost = 2;
+        if (cost > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
         Piece healer = new Healer ( this.team );
-        if (healer.getCost() > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
-        else this.playerPoints -= healer.getCost();
+        this.playerPoints -= cost;
         return healer;
     }
 
     public Piece createRider () throws PlayerHas20PointsOnlyException {
+        int cost = 3;
+        if (cost > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
         Piece rider = new Rider ( this.team );
-        if (rider.getCost() > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
-        else this.playerPoints -= rider.getCost();
+        this.playerPoints -= cost;
         return rider;
     }
 
     public Piece createCatapult () throws PlayerHas20PointsOnlyException {
-        Piece catapult = new Catapult ( this.team );
-        if (catapult.getCost() > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
-        else {
-            this.playerPoints -= catapult.getCost();
-            return catapult;
-        }
+        int cost = 5;
+        if (cost > this.playerPoints) throw new PlayerHas20PointsOnlyException ();
+        Piece rider = new Catapult ( this.team );
+        this.playerPoints -= cost;
+        return rider;
     }
 }
 

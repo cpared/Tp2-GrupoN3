@@ -1,11 +1,5 @@
 package game;
-
-import move.Builder;
-import move.Move;
 import org.junit.jupiter.api.Test;
-import piece.Piece;
-import player.Player;
-import player.PlayerHas20PointsOnlyException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +12,6 @@ class EndedTest {
         //Assert
         assertNotNull ( state );
     }
-    
+
 
 }

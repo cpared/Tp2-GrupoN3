@@ -81,10 +81,6 @@ public class BattalionProxy implements Battalion {
         this.battalion.receiveAttacked ( damage );
     }
     @Override
-    public int getCost () {
-        return 0;
-    }
-    @Override
     public boolean isCost ( int expectedCost ) {
         return false;
     }

@@ -25,11 +25,6 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public int getCost () {
-        return this.cost;
-    }
-
-    @Override
     public void move ( Board board , Move move) {
         board.movePiece ( move );
     }

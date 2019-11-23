@@ -27,8 +27,6 @@ public interface Piece {
 
     void receiveAttacked(int damage);
 
-    int getCost ();
-
     boolean isCost (int expectedCost);
 
     void decorate (PieceDecorator decorator);

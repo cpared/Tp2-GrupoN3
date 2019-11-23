@@ -22,12 +22,6 @@ public class Soldier implements Piece {
         this.team = team;
     }
 
-    //Método creado solamente para las pruebas
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
-
     @Override
     public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
         if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
