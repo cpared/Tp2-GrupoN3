@@ -5,31 +5,29 @@ import piece.Piece;
 import java.util.ArrayList;
 
 public class Team {
-    private int pieces;
     public int identifier;
-    private ArrayList<Piece> piece;
+    private ArrayList<Piece> pieces;
 
     public Team (int identifier) {
-        this.pieces = 0;
         this.identifier = identifier;
-        this.piece = new ArrayList<Piece> ( );
+        this.pieces = new ArrayList<Piece> ( );
     }
 
-    public void addPieceToTeam () {
-        this.pieces = this.pieces + 1;
+    public void addPieceToTeam (Piece newPiece) {
+        this.pieces.add ( newPiece );
     }
 
-    public void subtractPieceFromTeam () throws NoMembersLeftException{
-        if (this.pieces == 0){ throw new NoMembersLeftException (); }
-        else this.pieces = this.pieces - 1;
+    public Piece subtractPieceFromTeam (Piece removablePiece) throws  PieceDoesNotBelongToTeamException {
+        if (this.pieces.size () == 0) throw  new NoMembersLeftException ();
+        if (!this.pieces.contains ( removablePiece )) throw  new PieceDoesNotBelongToTeamException ();
+
+        //this.pieces.remove ( removablePiece );
+        int index = this.pieces.indexOf ( removablePiece );
+        return this.pieces.remove ( index );
     }
 
     public boolean isNumberOfMembersStillOnTeam ( int numberOfMembers ) {
-        return this.pieces == numberOfMembers;
-    }
-
-    public int numberOfMembersStillOnTeam ( ) {
-        return this.pieces;
+        return this.pieces.size () == numberOfMembers;
     }
 
     public boolean equals (Team team) {

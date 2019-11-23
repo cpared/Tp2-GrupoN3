@@ -3,6 +3,7 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import team.SameTeamException;
 import team.Team;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class Catapult implements Piece {
 
     @Override
     public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
-        if (this.isSameTeamAs ( attackedPieces.getKey() )) throw new SameTeamException();
+        if (this.isSameTeamAs ( attackedPieces.getKey() )) throw new SameTeamException ();
         this.distanceAttack.attack(attackedPieces, this.attackRange);
     }
 

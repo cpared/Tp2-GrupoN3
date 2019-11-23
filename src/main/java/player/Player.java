@@ -7,9 +7,8 @@ import piece.Piece;
 import piece.PieceFactory;
 
 import team.NoMembersLeftException;
+import team.PieceDoesNotBelongToTeamException;
 import team.Team;
-
-import java.util.Scanner;
 
 public class Player {
     private String name;
@@ -30,48 +29,24 @@ public class Player {
         board.move ( move );
     }
 
-    public void removePieceFromTeam () throws NoMembersLeftException {
+    public Piece removePieceFromTeam (Piece removablePiece) throws NoMembersLeftException, PieceDoesNotBelongToTeamException {
+        /*
         try {
-            this.team.subtractPieceFromTeam ();
-        } catch (NoMembersLeftException e) {
-            throw e;
+            this.team.subtractPieceFromTeam (removablePiece);
+        } catch ( PieceDoesNotBelongToTeamException e) {
+            if (this.team.isNumberOfMembersStillOnTeam ( 0 )) throw new NoMembersLeftException ();
         }
+        */
+        return this.team.subtractPieceFromTeam (removablePiece);
+
     }
 
-    public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
-        Piece soldier = this.factory.createSoldier ();
-        team.addPieceToTeam ();
-
-        return soldier;
-    }
-
-    public Piece chooseRider () throws PlayerHas20PointsOnlyException {
-        Piece rider = this.factory.createRider ();
-        team.addPieceToTeam ();
-
-        return rider;
-    }
-
-    public Piece chooseHealer () throws PlayerHas20PointsOnlyException {
-        Piece healer = this.factory.createHealer ();
-        team.addPieceToTeam ();
-
-        return healer;
-    }
-
-    public Piece chooseCatapult () throws PlayerHas20PointsOnlyException {
-        Piece catapult = this.factory.createCatapult ();
-        team.addPieceToTeam ();
-
-        return catapult;
+    public void chosePiece (Piece chosenPiece) throws PlayerHas20PointsOnlyException {
+        team.addPieceToTeam (chosenPiece);
     }
 
     public boolean isNumberOfPiecesOnTeam ( int numberOfMembers ) {
         return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
-    }
-
-    public int numberOfPiecesOnTeam () {
-        return this.team.numberOfMembersStillOnTeam ();
     }
 
     public boolean equals ( Player player ) {
@@ -82,11 +57,12 @@ public class Player {
         board.createBattalion ( move );
     }
 
-    public void attack (Board board, Move move) {
+    public void attack (Board board, Move move) throws PieceDoesNotBelongToTeamException {
         try {
             board.attack ( move );
         } catch (IAmDeadException e) {
-            this.removePieceFromTeam ();
+            Piece removed = board.removePiece ( move );
+            this.removePieceFromTeam (removed);
         }
     }
 

@@ -3,13 +3,10 @@ package Face;
 import board.Board;
 import board.CanNotMakeThatMoveException;
 import move.Move;
-import piece.NullPiece;
 import piece.Piece;
 import player.APlayerAlreadyExistsException;
 import player.Player;
-import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.NoMembersLeftException;
-import team.Team;
 
 public class GameFace implements Face {
 
@@ -24,8 +21,9 @@ public class GameFace implements Face {
 
     @Override
     public Piece removePieceFromBoard ( Move move ) {
-        player.removePieceFromTeam ();
-        return board.removePiece ( move );
+        Piece removed = board.removePiece ( move );
+        player.removePieceFromTeam (removed);
+        return removed;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class GameFace implements Face {
     }
 
     @Override
-    public Player newPlayer ( String name, Team team ) {
+    public Player newPlayer ( String name ) {
         throw new APlayerAlreadyExistsException ();
     }
 

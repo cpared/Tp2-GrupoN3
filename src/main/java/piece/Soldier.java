@@ -1,13 +1,11 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
 import team.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class Soldier implements Piece {

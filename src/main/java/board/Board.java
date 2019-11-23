@@ -2,6 +2,7 @@ package board;
 
 import javafx.util.Pair;
 import move.Move;
+import piece.Battalion;
 import piece.BattalionProxy;
 import piece.IAmDeadException;
 import piece.Piece;
@@ -68,7 +69,6 @@ public class Board {
         try {
             this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
         } catch (IAmDeadException e) {
-            removePiece ( move );
             throw e;
         }
     }
@@ -90,7 +90,7 @@ public class Board {
     public void createBattalion ( Move move ) {
 
         ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
-        BattalionProxy proxy = new BattalionProxy ( this, possiblePieces, move );
+        Battalion proxy = new BattalionProxy ( this, possiblePieces, move );
         proxy.createBattalion ();
     }
 

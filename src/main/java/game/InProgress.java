@@ -22,8 +22,8 @@ public class InProgress implements GameState {
     public Board board = new Board ( team1, team2 );
 
     public InProgress () {
-        this.player1Face = new InitialFace ( board );
-        this.player2Face = new InitialFace ( board );
+        this.player1Face = new InitialFace ( board, this.team1 );
+        this.player2Face = new InitialFace ( board, this.team2 );
     }
 
     private void changeFace ( Player player ) {
@@ -43,10 +43,10 @@ public class InProgress implements GameState {
     public Player newPlayer ( String name ) {
 
         if (this.player1 == null) {
-            this.player1 = this.player1Face.newPlayer ( name, team1 );
+            this.player1 = this.player1Face.newPlayer ( name );
             return this.player1;
         } else if (this.player2 == null) {
-            this.player2 = this.player2Face.newPlayer ( name, team2 );
+            this.player2 = this.player2Face.newPlayer ( name );
             return this.player2;
         } else throw new ThereAreOnlyTwoPlayersPerGameException ();
     }

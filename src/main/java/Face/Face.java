@@ -5,19 +5,20 @@ import move.Move;
 import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
+import team.PieceDoesNotBelongToTeamException;
 import team.Team;
 
 public interface Face {
     Player player = null;
     Board board = null;
 
-    Player newPlayer ( String name, Team team );
+    Player newPlayer ( String name );
 
     void playerMovesPieceOnBoard ( Move move );
 
     void playerPlacesPieceOnBoard ( Piece piece, Move move );
 
-    Piece removePieceFromBoard ( Move move );
+    Piece removePieceFromBoard ( Move move ) throws PieceDoesNotBelongToTeamException;
 
     void playerAttacks ( Move move );
 

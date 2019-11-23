@@ -51,6 +51,18 @@ public class PieceFactory {
         this.playerPoints -= this.catapultCost;
         return rider;
     }
+
+    public void eliminatePiece ( Piece eliminatedPiece) {
+        if (eliminatedPiece.isCost ( 1 )) {
+            this.playerPoints += this.soldierCost;
+        } else if (eliminatedPiece.isCost ( 2 )){
+            this.playerPoints += this.healerCost;
+        } else if (eliminatedPiece.isCost ( 3 )){
+            this.playerPoints += this.riderCost;
+        } else if (eliminatedPiece.isCost ( 5 )){
+            this.playerPoints += this.catapultCost;
+        }
+    }
 }
 
 

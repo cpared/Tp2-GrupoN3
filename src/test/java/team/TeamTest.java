@@ -1,6 +1,8 @@
 package team;
 
 import org.junit.jupiter.api.Test;
+import piece.Piece;
+import piece.Soldier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,45 +29,71 @@ class TeamTest {
     void test02PiecesCanBeAddedToTeamAndTheNumberOfMembersWillIncrease () {
         //Assemble
         Team team = new Team(8);
+        Piece piece = new Soldier (team);
+        Piece piece2 = new Soldier (team);
         //Act
-        team.addPieceToTeam ();
-        team.addPieceToTeam ();
+        team.addPieceToTeam (piece);
+        team.addPieceToTeam (piece2);
         //Assert
-        assertEquals ( 2, team.numberOfMembersStillOnTeam () );
+        assertTrue ( team.isNumberOfMembersStillOnTeam (2) );
     }
 
     @Test
     void test03PiecesCanBeRemovedFromTeam () throws NoMembersLeftException {
         //Assemble
         Team team = new Team (2);
-
-        team.addPieceToTeam ();
-        team.addPieceToTeam ();
-        team.addPieceToTeam ();
-        team.addPieceToTeam ();
+        Piece piece = new Soldier (team);
+        Piece piece2 = new Soldier (team);
+        Piece piece3 = new Soldier (team);
+        Piece piece4 = new Soldier (team);
+        team.addPieceToTeam (piece);
+        team.addPieceToTeam (piece2);
+        team.addPieceToTeam (piece3);
+        team.addPieceToTeam (piece4);
 
         //Act
-        team.subtractPieceFromTeam ();
-        team.subtractPieceFromTeam ();
+        team.subtractPieceFromTeam (piece);
+        team.subtractPieceFromTeam (piece2);
         //Assert
-        assertEquals ( 2, team.numberOfMembersStillOnTeam () );
+        assertTrue (  team.isNumberOfMembersStillOnTeam (2) );
+    }
+
+    @Test
+    void test04PiecesCanBeRemovedFromTeamAndRemovingThemReturnsTheExpectedPieces () throws NoMembersLeftException {
+        //Assemble
+        Team team = new Team (2);
+        Piece piece = new Soldier (team);
+        Piece piece2 = new Soldier (team);
+        Piece piece3 = new Soldier (team);
+        Piece piece4 = new Soldier (team);
+        team.addPieceToTeam (piece);
+        team.addPieceToTeam (piece2);
+        team.addPieceToTeam (piece3);
+        team.addPieceToTeam (piece4);
+
+        //Act
+        Piece removed = team.subtractPieceFromTeam (piece);
+        Piece removed2 = team.subtractPieceFromTeam (piece2);
+        //Assert
+        assertEquals ( piece, removed );
+        assertEquals ( piece2, removed2 );
     }
 
     @Test
     void test05RemoveMorePiecesThanWhatYouCanRemoveRaisesError () {
         //Assemble
         Team team = new Team(2);
-
-        team.addPieceToTeam ();
+        Piece piece = new Soldier (team);
+        team.addPieceToTeam (piece);
 
         //Act
         try{
-            team.subtractPieceFromTeam ();
-            team.subtractPieceFromTeam ();
+            team.subtractPieceFromTeam (piece);
+            team.subtractPieceFromTeam (piece);
             fail();
             //Assert
         } catch (NoMembersLeftException e) {
-            assertEquals ( 0, team.numberOfMembersStillOnTeam () );
+            assertTrue (  team.isNumberOfMembersStillOnTeam (0) );
         }
     }
 }

@@ -1,7 +1,6 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import criteria.SoldierCriteria;
 import javafx.util.Pair;
 import move.Move;
