@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 
 public class BoardFx extends Application  {
-
+    private static final String BACKGROUND_COLOR = " #E6D690";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,6 +30,7 @@ public class BoardFx extends Application  {
         label.setAlignment(Pos.TOP_CENTER);
         format.getChildren().addAll(label,gridPane);
         root.getChildren().addAll(format,bottomRow);
+        root.setStyle(("-fx-background-color:" + BACKGROUND_COLOR + ";"));
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
