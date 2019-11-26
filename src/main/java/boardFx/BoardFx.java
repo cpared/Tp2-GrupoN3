@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
+
 public class BoardFx extends Application  {
 
 
@@ -26,6 +27,7 @@ public class BoardFx extends Application  {
         AnchorPane bottomRow = getPlayersNames("Cris se la re come", "Es verdad");
         Label label = new Label();
         label.setText("AlgoChess");
+        label.setPadding(new Insets(0,200,0,870));
         label.setFont(new Font(20));
         label.setAlignment(Pos.TOP_CENTER);
         format.getChildren().addAll(label,gridPane);
@@ -41,6 +43,8 @@ public class BoardFx extends Application  {
         Label secondPlayer = new Label(playerTwo);
         AnchorPane.setLeftAnchor(firstPlayer, 0.0);
         AnchorPane.setRightAnchor(secondPlayer, 0.0);
+        firstPlayer.setPadding(new Insets(20,20,20,200));
+        secondPlayer.setPadding(new Insets(20,200,20,20));
         bottomRow.getChildren().addAll(firstPlayer, secondPlayer);
         return bottomRow;
     }
