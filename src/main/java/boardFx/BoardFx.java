@@ -1,11 +1,10 @@
 package boardFx;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -47,18 +46,21 @@ public class BoardFx extends Application  {
     }
 
     private GridPane makeGridPane() {
-        Image blue = new Image(getClass().getResourceAsStream("blue.jpg"));
-        Image red = new Image(getClass().getResourceAsStream("red.jpg"));
-        Image actual = blue;
+        String blue = "-fx-background-color: #0000ff;";
+        String red = "-fx-background-color: #ff0000;";
+        String actual = blue;
         GridPane gridPane = new GridPane();
         for (int i = 0 ; i< 20;i++) {
             if (i == 10){
                 actual = red;
             }
             for (int j = 0; j < 20; j++) {
-                gridPane.add(new ButtonCell(null,new ImageView(actual),i,j),i,j);
+                gridPane.add(new ButtonCell(null,actual,i,j),i,j);
             }
         }
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
         return gridPane;
     }
 
