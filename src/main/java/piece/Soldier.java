@@ -3,6 +3,9 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.BodyAttack;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
@@ -13,10 +16,9 @@ public class Soldier implements Piece {
     private int cost = 1;
     private int life = 100;
     private int attackRange = 1;
-    private BodyAttack myAttack = new BodyAttack(10);
-    private PieceDecorator decoration = null;
+    private AttackState myAttack = new BodyAttack(10);
+    public BattalionComposite battalion = null;
     private boolean alive = true;
-
     public Soldier ( Team team ) {
         this.team = team;
     }
@@ -38,6 +40,7 @@ public class Soldier implements Piece {
         if (this.life <= 0) throw new IAmDeadException();
     }
 
+    @Override
     public void receiveHealed ( int heal ) {
         this.life += heal;
         if (this.life > 100) this.life = 100;
@@ -45,8 +48,8 @@ public class Soldier implements Piece {
 
     @Override
     public void move ( Board board , Move move) {
-        if (this.decoration == null) board.movePiece ( move );
-        else decoration.move ( board, move );
+        if (this.battalion == null) board.movePiece ( move );
+        else battalion.move ( board, move );
     }
 
     @Override
@@ -54,16 +57,13 @@ public class Soldier implements Piece {
         return this.cost == expectedCost;
     }
 
-
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+        this.battalion = battalion;
     }
-
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+        this.battalion = null;
     }
 
     // These getters are for testing only.

@@ -4,6 +4,8 @@ import board.Board;
 import javafx.util.Pair;
 import move.Move;
 import team.Team;
+import piece.battalion.BattalionComposite;
+import team.*;
 
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ public interface Piece {
     Team team = new Team ( 5000 );
     int life = 0;
     int cost = 0;
-    PieceDecorator decoration = null;
+    BattalionComposite battalion = null;
 
     boolean isSameTeamAs ( Piece otherPiece );
 
@@ -25,9 +27,9 @@ public interface Piece {
 
     boolean isCost ( int expectedCost );
 
-    void decorate ( PieceDecorator decorator );
+    void formPartOfBattalion ( BattalionComposite battalion);
 
-    PieceDecorator undecorate ( PieceDecorator decorator );
+    void notFormPartOfBattalion ( BattalionComposite battalion);
 
     // These getters are for testing only.
     int getLife ();

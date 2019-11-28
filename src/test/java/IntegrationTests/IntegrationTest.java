@@ -275,22 +275,29 @@ class IntegrationTest {
         game.playerPlacesPieceOnBoard ( player1, catapult2, 9, 1 );
         game.playerPlacesPieceOnBoard ( player1, catapult3, 9, 2 );
         game.playerPlacesPieceOnBoard ( player1, catapult4, 9, 3 );
-        game.playerIsReadyToPlay ( player1 );
+
 
         game.newPlayer ( "Alan12" );
         Player player2 = game.getPlayer2 ();
+        game.playerIsReadyToPlay ( player1 );
+        System.out.println ( "player 2" + player2 );
 
         Piece catapult5 = game.playerChoosesCatapult ( player2 );
         game.playerPlacesPieceOnBoard ( player2, catapult5, 11, 0 );
         game.playerIsReadyToPlay ( player2 );
+
         //Act
         game.playerAttacks ( player1, 9, 0, 11, 0 );
-        game.playerAttacks ( player1, 9, 1, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 11,0 ,11,1 );
+        game.playerAttacks ( player1, 9, 1, 11, 1 );
+        game.playerMovesPieceOnBoard ( player2, 11,1 ,11,0 );
         game.playerAttacks ( player1, 9, 2, 11, 0 );
-        game.playerAttacks ( player1, 9, 3, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 11,0 ,11,1 );
+        game.playerAttacks ( player1, 9, 3, 11, 1 );
 
         //Assert
         try {
+            game.playerMovesPieceOnBoard ( player2, 11,1,11,2 );
             game.playerMovesPieceOnBoard ( game.getPlayer1 (), 9, 1, 10, 1 );
         } catch (GameHasEndedException e) {
             assertEquals ( 0, game.removePieceFromBoard ( game.getPlayer1 (), 9, 1 ) );
@@ -303,29 +310,34 @@ class IntegrationTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
+        game.newPlayer ( "Juan" );
         Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9, 1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
-        game.newPlayer ( "Juan" );
-        game.playerIsReadyToPlay ( game.getPlayer1 () );
+
         Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+
+        //by turns
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1,  9, 1 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12, 2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 14, 4 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 14, 2 );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
         game.playerIsReadyToPlay ( game.getPlayer2 () );
 
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,4, 9,5 );
         game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
         // Act
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,5, 9,4 );
         // Assert
 
         assertEquals ( sol1, game.removePieceFromBoard ( game.getPlayer2 (), 13, 1 ) );
@@ -338,27 +350,32 @@ class IntegrationTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
+        game.newPlayer ( "Juan" );
         Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9, 1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
-        game.newPlayer ( "Juan" );
-        game.playerIsReadyToPlay ( game.getPlayer1 () );
+
         Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+
+        //by turns
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1,  9, 1 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12, 2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12, 3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 13, 1 );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
         game.playerIsReadyToPlay ( game.getPlayer2 () );
 
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,4, 9,5 );
         game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
+
         // Act
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
 
@@ -374,33 +391,40 @@ class IntegrationTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
+        game.newPlayer ( "Juan" );
         Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9, 1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
-        game.newPlayer ( "Juan" );
-        game.playerIsReadyToPlay ( game.getPlayer1 () );
+
         Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+
+        //by turns
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1,  9, 1 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12, 2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12, 3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 13, 1 );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
         game.playerIsReadyToPlay ( game.getPlayer2 () );
 
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,4, 9,5 );
         game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
         // Act
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
 
         // Assert
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,5, 9,4 );
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 1, 11, 1 );
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,4, 9,5 );
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 13, 2, 14, 2 );
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,5, 9,4 );
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 13, 3, 12, 3 );
 
         assertEquals ( sol1, game.removePieceFromBoard ( game.getPlayer2 (), 11, 1 ) );
@@ -414,35 +438,39 @@ class IntegrationTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Pepe" );
+        game.newPlayer ( "Juan" );
         Piece cat1 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat2 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat3 = game.playerChoosesCatapult ( game.getPlayer1 () );
         Piece cat4 = game.playerChoosesCatapult ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9, 1 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
-        game.newPlayer ( "Juan" );
-        game.playerIsReadyToPlay ( game.getPlayer1 () );
+
         Piece sol1 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol2 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         Piece sol4 = game.playerChoosesSoldier ( game.getPlayer2 () );
+
+        //by turns
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat1, 9, 1 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol1, 12, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat2, 9, 2 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol2, 12, 2 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat3, 9, 3 );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol3, 12, 3 );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 12, 4 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cat4, 9, 4 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol4, 13, 1 );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
         game.playerIsReadyToPlay ( game.getPlayer2 () );
 
+        game.playerMovesPieceOnBoard (  game.getPlayer1 (), 9,4, 9,5 );
         game.playerChoosesBattalion ( game.getPlayer2 (), 12, 2 );
         // Act
         game.playerMovesPieceOnBoard ( game.getPlayer2 (), 12, 2, 13, 2 );
         // Assert
 
-        assertEquals ( sol1, game.removePieceFromBoard ( game.getPlayer2 (), 13, 1 ) );
+        assertEquals ( sol4, game.removePieceFromBoard ( game.getPlayer2 (), 13, 1 ) );
         assertEquals ( sol2, game.removePieceFromBoard ( game.getPlayer2 (), 13, 2 ) );
         assertEquals ( sol3, game.removePieceFromBoard ( game.getPlayer2 (), 13, 3 ) );
-        assertEquals ( sol4, game.removePieceFromBoard ( game.getPlayer2 (), 12, 4 ) );
+        assertEquals ( sol1, game.removePieceFromBoard ( game.getPlayer2 (), 12, 1 ) );
     }
 
     @Test

@@ -1,9 +1,14 @@
 package piece;
 
 import board.Board;
+import criteria.Criteria;
 import criteria.SoldierCriteria;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.BodyAttack;
+import piece.AttackState.DistanceAttack;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
@@ -14,8 +19,10 @@ public class Rider implements Piece {
     private int life = 100;
     private int attackRange;
     private AttackState riderAttack;
-    private PieceDecorator decoration = null;
     private boolean alive = true;
+    private Criteria attackCriteria= new SoldierCriteria();
+
+
     public Rider ( Team team ) {
         this.team = team;
         this.cost = 3;
@@ -29,7 +36,6 @@ public class Rider implements Piece {
     }
 
     private void setMyAttack(ArrayList<Piece> adjacentPieces){
-        SoldierCriteria soldierCriteria = new SoldierCriteria();
         ArrayList<Piece> allyPieces = new ArrayList<Piece>();
         ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
         adjacentPieces.forEach(piece ->{
@@ -39,13 +45,13 @@ public class Rider implements Piece {
             }
         });
 
-        if (soldierCriteria.criteria(allyPieces).size() != 0 || enemyPieces.size() == 0){
-            this.riderAttack = new DistanceAttack(15);
+        if (this.attackCriteria.criteria(allyPieces).size() != 0 || enemyPieces.size() == 0){
+            this.riderAttack = new DistanceAttack (15);
             this.attackRange = 2;
 
         }
         else{
-            this.riderAttack = new BodyAttack(5);
+            this.riderAttack = new BodyAttack (5);
             this.attackRange = 1;
         }
     }
@@ -79,14 +85,12 @@ public class Rider implements Piece {
     }
 
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
-    }
+    public void formPartOfBattalion ( BattalionComposite battalion){
 
+    }
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.

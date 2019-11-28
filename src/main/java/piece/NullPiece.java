@@ -3,13 +3,13 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import piece.battalion.BattalionComposite;
 import team.Team;
 
 import java.util.ArrayList;
 
 public class NullPiece implements Piece {
     public Team team = new Team(500);
-
 
     @Override
     public void move ( Board board , Move move) {
@@ -40,13 +40,12 @@ public class NullPiece implements Piece {
     }
 
     @Override
-    public void decorate ( PieceDecorator decorator ) {
+    public void formPartOfBattalion ( BattalionComposite battalion){
 
     }
-
     @Override
-    public PieceDecorator undecorate ( PieceDecorator decorator ) {
-        return null;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.

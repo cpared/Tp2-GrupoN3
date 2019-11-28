@@ -4,6 +4,10 @@ import board.Board;
 import javafx.util.Pair;
 import move.Move;
 import team.Team;
+import piece.AttackState.AttackState;
+import piece.AttackState.Heal;
+import piece.battalion.BattalionComposite;
+import team.*;
 
 import java.util.ArrayList;
 
@@ -15,6 +19,8 @@ public class Healer implements Piece {
     private Heal heal = new Heal ( 15 );
     private PieceDecorator decoration = null;
     private boolean alive = true;
+    private AttackState heal = new Heal ( 15 );
+
     public Healer ( Team team ) {
         this.team = team;
         this.cost = 2;
@@ -46,7 +52,7 @@ public class Healer implements Piece {
     @Override
     public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces ) {
         if (this.isSameTeamAs ( attackedPieces.getKey () )) throw new ThisPieceCantAttackException ();
-        this.heal.heal ( attackedPieces, this.healRange );
+        this.heal.attack ( attackedPieces, this.healRange );
     }
 
     @Override
@@ -54,15 +60,14 @@ public class Healer implements Piece {
         return this.cost == expectedCost;
     }
 
-    @Override
-    public void decorate ( PieceDecorator decorator ) {
-        this.decoration = decorator;
-    }
 
     @Override
-    public PieceDecorator undecorate ( PieceDecorator decorator ) {
-        this.decoration = null;
-        return decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.
