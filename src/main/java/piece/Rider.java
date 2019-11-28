@@ -13,7 +13,7 @@ public class Rider implements Piece {
     private int cost ;
     private int life = 100;
     private int attackRange;
-    private AttackStrategy riderAttack;
+    private AttackState riderAttack;
     private PieceDecorator decoration = null;
 
     public Rider ( Team team ) {

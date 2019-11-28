@@ -34,7 +34,30 @@ public class AlgoChess extends Application {
     public void start ( Stage stage ) throws Exception {
         stage.setTitle ( " AlgoChess " );
         //this.scene00InitialStage ( stage );
-        this.sceneFinal ( stage );
+        //this.sceneFinal ( stage );
+        sceneMainGame( stage );
+    }
+
+    public void sceneMainGame( Stage stage ){
+        BorderPane borderPane = new BorderPane();
+
+        Image board = new Image("Image/boardLast.png");
+        ImageView boardView = new ImageView(board);
+
+        Image sideBar = new Image("Image/sideBar.png");
+        ImageView sideBarView = new ImageView(sideBar);
+
+        Image soldier = new Image("Image/pieces/archer3.png");
+        ImageView soldierView = new ImageView(soldier);
+
+        StackPane stack = new StackPane ();
+        stack.getChildren ().addAll ( boardView );
+        stack.getChildren ().addAll ( soldierView );
+
+        Scene scene = new Scene ( stack );
+        stage.setScene ( scene );
+        stage.show ();
+
     }
 
     public void scene00InitialStage ( Stage stage ) {
