@@ -26,16 +26,16 @@ public class PiecesFlowPane extends TilePane {
         Button pages[] = new Button[4];
 
         //Creating the images
-        ImageView soldier = new ImageView ( new Image ( "Image/soldier.gif" ) );
+        ImageView soldier = new ImageView ( new Image ( "Image/pieces/soldier.png" ) );
         soldier.setFitHeight ( 150 );
         soldier.setFitWidth ( 150 );
-        ImageView healer = new ImageView ( new Image ( "Image/healer.gif" ) );
+        ImageView healer = new ImageView ( new Image ( "Image/pieces/healer.png" ) );
         healer.setFitHeight ( 150 );
         healer.setFitWidth ( 150 );
-        ImageView rider = new ImageView ( new Image ( "Image/rider.gif" ) );
+        ImageView rider = new ImageView ( new Image ( "Image/pieces/rider.png" ) );
         rider.setFitHeight ( 150 );
         rider.setFitWidth ( 150 );
-        ImageView catapult = new ImageView ( new Image ( "Image/cata not 2d.png" ) );
+        ImageView catapult = new ImageView ( new Image ( "Image/pieces/catapult2.png" ) );
         catapult.setFitHeight ( 150 );
         catapult.setFitWidth ( 150 );
 

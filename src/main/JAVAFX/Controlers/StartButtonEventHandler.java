@@ -19,7 +19,6 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
     public void handle ( ActionEvent event ) {
         Double width = stage.getWidth ();
         Double height = stage.getHeight ();
-        System.out.println ( "width" + height );
         this.stage.setScene(this.scene);
         this.stage.setForceIntegerRenderScale ( true );
         //this.stage.setFullScreen ( true );
