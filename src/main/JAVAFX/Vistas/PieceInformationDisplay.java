@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,7 +21,7 @@ import javafx.scene.text.TextFlow;
 
 public class PieceInformationDisplay  extends VBox {
 
-    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour, Image image){
+    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour, Image image, GridPane grid){
         Text text = new Text();
         text.setFill ( Color.BLACK  );
         TextFlow label = new TextFlow (text);
@@ -51,8 +52,8 @@ public class PieceInformationDisplay  extends VBox {
 
         //new button
         Button choosePieceButton = new Button ( "Choose Piece" );
-        choosePieceButton.setOnMouseClicked ( new ChoosePieceButtonEventHandler (image, borderpane) );
-        choosePieceButton.setOnKeyPressed ( new ChoosePieceButtonEventHandler (image, borderpane) );
+        choosePieceButton.setOnMouseClicked ( new ChoosePieceButtonEventHandler (image, borderpane, grid) );
+        choosePieceButton.setOnKeyPressed ( new ChoosePieceButtonEventHandler (image, borderpane, grid) );
 
         this.setSpacing ( 10 );
         this.setAlignment ( Pos.CENTER );

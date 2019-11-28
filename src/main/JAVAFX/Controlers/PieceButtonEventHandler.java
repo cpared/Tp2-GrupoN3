@@ -8,6 +8,7 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 
 public class PieceButtonEventHandler implements EventHandler<InputEvent> {
@@ -18,9 +19,9 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
     private String behaviour;
     private String background;
     private Image image;
+    private GridPane grid;
 
-
-    public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour,  Image image ) {
+    public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour,  Image image, GridPane grid ) {
         this.choosingPiecesBorderPane = borderPane;
         this.cost = cost;
         this.life = life;
@@ -28,6 +29,8 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
         this.behaviour = behaviour;
         this.background = background;
         this.image = image;
+        this.grid = grid;
+
     }
 
     @Override
@@ -39,14 +42,14 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
 
     public void handleKey ( KeyEvent event ) {
         if (event.getCode () == KeyCode.ENTER) {
-            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background, this.cost, this.life, this.damage, this.behaviour, this.image );
+            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background, this.cost, this.life, this.damage, this.behaviour, this.image, this.grid );
             this.choosingPiecesBorderPane.setLeft ( pieceInformationDisplay );
         }
     }
 
     public void handleMouse ( MouseEvent event ) {
         if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED )) {
-            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background,this.cost, this.life, this.damage, this.behaviour, this.image );
+            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background,this.cost, this.life, this.damage, this.behaviour, this.image, this.grid );
             this.choosingPiecesBorderPane.setLeft ( pieceInformationDisplay );
         }
     }

@@ -25,15 +25,6 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         pointBox.prefWidthProperty ().bind ( this.prefHeightProperty ().divide ( 2 ) );
         this.setTop ( pointBox );
 
-        // Right Pane
-        PiecesFlowPane right = new PiecesFlowPane ( this.background,this );
-        right.prefWidthProperty ().bind ( this.widthProperty ().divide ( 5 ) );
-        this.setRight ( right );
-
-        // Left Pane
-        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","",  null);
-        this.setLeft ( left );
-
         // Bottom pane
         Button ready = new Button ( "Ready to play" );
         ready.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, scene ) );
@@ -55,6 +46,15 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         centralContainer.setPadding(new Insets(0,0,0,100));
         this.setCenter(centralContainer);
 
+        // Left Pane
+        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","",  null, board);
+        this.setLeft ( left );
+
+        // Right Pane
+        PiecesFlowPane right = new PiecesFlowPane ( this.background,this, board );
+        right.prefWidthProperty ().bind ( this.widthProperty ().divide ( 5 ) );
+        this.setRight ( right );
+
     }
 
     private GridPane makeGridPane() {
@@ -69,8 +69,8 @@ public class ChoosingPiecesBorderPane extends BorderPane {
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell(null,actual,i,j);
                 button.setPrefSize(30, 30);
-                button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
-                button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 gridPane.add(button,i,j);
             }
         }

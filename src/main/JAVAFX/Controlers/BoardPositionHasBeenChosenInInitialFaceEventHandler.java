@@ -32,14 +32,20 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
 
     public void handleKey ( KeyEvent event ) {
         if (event.getCode () == KeyCode.ENTER) {
-            this.button.setGraphic ( new ImageView ( this.image ) );
+            ImageView view = new ImageView ( this.image );
+            view.setFitWidth ( 10 );
+            view.setFitHeight ( 10 );
+            this.button.setGraphic ( view );
             this.pane.setCursor ( Cursor.DEFAULT );
         }
     }
 
     public void handleMouse ( MouseEvent event ) {
         if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED )) {
-            this.button.setGraphic ( new ImageView ( this.image ) );
+            ImageView view = new ImageView ( this.image );
+            view.setFitWidth ( 10 );
+            view.setFitHeight ( 10 );
+            this.button.setGraphic ( view );
             this.pane.setCursor ( Cursor.DEFAULT );
         }
     }
