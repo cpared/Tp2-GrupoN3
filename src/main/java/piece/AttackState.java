@@ -2,14 +2,11 @@ package piece;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-public interface AttackStage {
+public interface AttackState {
     public void attack(Pair<Piece, Integer> attackedPiece, int distance);
 }
 
-class DistanceAttack implements AttackStage{
+class DistanceAttack implements AttackState {
     private int myDistanceAttack;
 
     public DistanceAttack(int distanceAttack){
@@ -22,7 +19,7 @@ class DistanceAttack implements AttackStage{
     }
 }
 
-class BodyAttack implements  AttackStage{
+class BodyAttack implements AttackState {
     private int myBodyAttackPoints;
 
     public BodyAttack(int attackPoints){
@@ -35,7 +32,7 @@ class BodyAttack implements  AttackStage{
     }
 }
 
-class Heal implements AttackStage{
+class Heal implements AttackState {
     private int myHealPoints;
 
     public Heal(int healPoints){
