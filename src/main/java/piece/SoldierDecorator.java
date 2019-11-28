@@ -64,6 +64,12 @@ public class SoldierDecorator extends PieceDecorator {
     public Team getTeam(){
         return this.team;
     }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
     @Override
     public int getLife () {
         return this.life;

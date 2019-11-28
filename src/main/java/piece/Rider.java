@@ -15,7 +15,7 @@ public class Rider implements Piece {
     private int attackRange;
     private AttackState riderAttack;
     private PieceDecorator decoration = null;
-
+    private boolean alive = true;
     public Rider ( Team team ) {
         this.team = team;
         this.cost = 3;
@@ -94,6 +94,12 @@ public class Rider implements Piece {
     public Team getTeam(){
         return this.team;
     }
+
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
     @Override
     public int getLife () {
         return this.life;

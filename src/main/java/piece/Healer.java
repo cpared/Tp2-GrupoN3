@@ -1,13 +1,11 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
-import team.*;
+import team.Team;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Healer implements Piece {
     public Team team;
@@ -16,7 +14,7 @@ public class Healer implements Piece {
     private int healRange = 1;
     private Heal heal = new Heal ( 15 );
     private PieceDecorator decoration = null;
-
+    private boolean alive = true;
     public Healer ( Team team ) {
         this.team = team;
         this.cost = 2;
@@ -72,6 +70,12 @@ public class Healer implements Piece {
     public Team getTeam(){
         return this.team;
     }
+
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
     @Override
     public int getLife () {
         return this.life;

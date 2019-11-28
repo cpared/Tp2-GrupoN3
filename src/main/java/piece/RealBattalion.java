@@ -103,4 +103,8 @@ public class RealBattalion implements Battalion {
     public int getLife () {
         return this.life;
     }
+    @Override
+    public boolean isAlive() {
+        return true;
+    }
 }

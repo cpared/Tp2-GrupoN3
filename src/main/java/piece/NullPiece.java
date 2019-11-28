@@ -54,6 +54,12 @@ public class NullPiece implements Piece {
     public Team getTeam(){
         return this.team;
     }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
     @Override
     public int getLife () {
         return this.life;

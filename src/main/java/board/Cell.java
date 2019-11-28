@@ -1,7 +1,6 @@
 package board;
 
 import piece.Piece;
-import team.*;
 
 class Cell {
     private Piece piece = null;
@@ -31,5 +30,14 @@ class Cell {
         Piece poppedPiece = this.getPiece ();
         this.piece = null;
         return poppedPiece;
+    }
+
+    public Piece removeDeadPiece() {
+        if (!piece.isAlive()) {
+            Piece deadPiece = piece;
+            this.piece = null;
+            return deadPiece;
+        }
+        return null;
     }
 }

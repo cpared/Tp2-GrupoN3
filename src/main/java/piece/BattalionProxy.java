@@ -16,6 +16,7 @@ public class BattalionProxy implements Battalion {
     private Move move;
     private PieceDecorator decorator = new SoldierDecorator ( this );
     public Team team;
+    private boolean alive = true;
 
     public BattalionProxy (Board board, ArrayList<Piece> pieces, Move move) {
         this.board = board;
@@ -97,5 +98,9 @@ public class BattalionProxy implements Battalion {
     @Override
     public int getLife () {
         return this.battalion.getLife ();
+    }
+    @Override
+    public boolean isAlive() {
+        return alive;
     }
 }

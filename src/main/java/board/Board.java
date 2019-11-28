@@ -4,7 +4,6 @@ import javafx.util.Pair;
 import move.Move;
 import piece.Battalion;
 import piece.BattalionProxy;
-import piece.IAmDeadException;
 import piece.Piece;
 import team.Team;
 
@@ -66,11 +65,7 @@ public class Board {
         int secondColumn = move.toColumn;
         ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
         Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
-        try {
-            this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
-        } catch (IAmDeadException e) {
-            throw e;
-        }
+        this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
     }
 
     private ArrayList<Cell> adjacentCells ( int firstRow, int firstColumn ) {
@@ -129,5 +124,9 @@ public class Board {
             }
         }
         return pieces;
+    }
+
+    public Piece removeDeadPiece(Move move) {
+        return destinationCell(move).removeDeadPiece();
     }
 }

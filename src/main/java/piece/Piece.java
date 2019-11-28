@@ -1,13 +1,11 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
-import team.*;
+import team.Team;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface Piece {
     Team team = new Team ( 5000 );
@@ -35,5 +33,7 @@ public interface Piece {
     int getLife ();
 
     Team getTeam();
+
+    boolean isAlive();
 }
 

@@ -15,6 +15,7 @@ public class Soldier implements Piece {
     private int attackRange = 1;
     private BodyAttack myAttack = new BodyAttack(10);
     private PieceDecorator decoration = null;
+    private boolean alive = true;
 
     public Soldier ( Team team ) {
         this.team = team;
@@ -73,5 +74,9 @@ public class Soldier implements Piece {
     @Override
     public int getLife () {
         return this.life;
+    }
+    @Override
+    public boolean isAlive() {
+        return alive;
     }
 }

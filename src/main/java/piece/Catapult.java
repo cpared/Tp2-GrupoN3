@@ -15,6 +15,7 @@ public class Catapult implements Piece {
     private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
     private PieceDecorator decoration = null;
+    private boolean alive = true;
 
     public Catapult ( Team team ) {
         this.team = team;
@@ -68,6 +69,12 @@ public class Catapult implements Piece {
     public Team getTeam(){
         return this.team;
     }
+
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
     @Override
     public int getLife () {
         return this.life;

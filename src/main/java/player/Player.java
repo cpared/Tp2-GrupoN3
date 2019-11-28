@@ -2,10 +2,8 @@ package player;
 
 import board.Board;
 import move.Move;
-import piece.IAmDeadException;
 import piece.Piece;
 import piece.PieceFactory;
-
 import team.NoMembersLeftException;
 import team.PieceDoesNotBelongToTeamException;
 import team.Team;
@@ -37,6 +35,7 @@ public class Player {
             if (this.team.isNumberOfMembersStillOnTeam ( 0 )) throw new NoMembersLeftException ();
         }
         */
+        if (removablePiece == null) return null;
         return this.team.subtractPieceFromTeam (removablePiece);
 
     }
@@ -58,12 +57,10 @@ public class Player {
     }
 
     public void attack (Board board, Move move) throws PieceDoesNotBelongToTeamException {
-        try {
-            board.attack ( move );
-        } catch (IAmDeadException e) {
-            Piece removed = board.removePiece ( move );
-            this.removePieceFromTeam (removed);
-        }
+        board.attack ( move );
+        Piece removed = board.removeDeadPiece ( move );
+        this.removePieceFromTeam (removed);
+
     }
 
     // This getter is only for testing, they dont belong in the model.
