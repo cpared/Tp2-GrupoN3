@@ -3,11 +3,9 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
-import team.Team;
-import piece.AttackState.AttackState;
 import piece.AttackState.Heal;
 import piece.battalion.BattalionComposite;
-import team.*;
+import team.Team;
 
 import java.util.ArrayList;
 
@@ -17,10 +15,7 @@ public class Healer implements Piece {
     private int life = 75;
     private int healRange = 1;
     private Heal heal = new Heal ( 15 );
-    private PieceDecorator decoration = null;
     private boolean alive = true;
-    private AttackState heal = new Heal ( 15 );
-
     public Healer ( Team team ) {
         this.team = team;
         this.cost = 2;

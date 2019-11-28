@@ -3,10 +3,7 @@ package board;
 import criteria.BattalionCriteria;
 import javafx.util.Pair;
 import move.Move;
-import piece.Battalion;
-import piece.BattalionProxy;
 import piece.Piece;
-import piece.*;
 import piece.battalion.BattalionComposite;
 import team.Team;
 

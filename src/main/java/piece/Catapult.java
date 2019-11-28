@@ -3,7 +3,6 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
-import piece.AttackState.AttackState;
 import piece.AttackState.DistanceAttack;
 import piece.battalion.BattalionComposite;
 import team.SameTeamException;
@@ -17,9 +16,7 @@ public class Catapult implements Piece {
     private int life = 50;
     private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
-    private PieceDecorator decoration = null;
     private boolean alive = true;
-    private AttackState distanceAttack = new DistanceAttack(20);
 
     public Catapult ( Team team ) {
         this.team = team;
@@ -60,8 +57,10 @@ public class Catapult implements Piece {
     @Override
     public void formPartOfBattalion ( BattalionComposite battalion){
 
+    }
+
     @Override
-    public void notFormPartOfBattalion ( BattalionComposite battalion){
+    public void notFormPartOfBattalion(BattalionComposite battalion) {
 
     }
 
