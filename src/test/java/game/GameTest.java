@@ -119,10 +119,16 @@ class GameTest {
         game.newPlayer ( "Doyle" );
         Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
-        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+
         Piece piece3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11, 0 );
+        game.playerIsReadyToPlay ( game.getPlayer2 ( ));
+
+        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+
+        game.playerIsReadyToPlay ( game.getPlayer1 ( ));
+
 
         //Act
         Piece removed = game.removePieceFromBoard ( game.getPlayer1 (), 2, 0 );
@@ -138,12 +144,17 @@ class GameTest {
         game.newPlayer ( "Doyle" );
         Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
-        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+
         Piece piece3 = game.playerChoosesSoldier ( game.getPlayer2 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11, 0 );
+        game.playerIsReadyToPlay ( game.getPlayer2 ( ));
+
+        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+        game.playerIsReadyToPlay ( game.getPlayer1 ( ));
 
         //Act
+        game.playerMovesPieceOnBoard (  game.getPlayer2 (), 11, 0, 11, 1 );
         game.playerMovesPieceOnBoard ( game.getPlayer1 (), 2, 0, 2, 1 );
         Piece removed = game.removePieceFromBoard ( game.getPlayer1 (), 2, 1 );
         //Assert
@@ -160,19 +171,29 @@ class GameTest {
         Player player2 = game.getPlayer2 ();
         Piece piece = game.playerChoosesCatapult ( player1 );
         game.playerPlacesPieceOnBoard ( player1, piece, 2, 0 );
-        game.playerIsReadyToPlay ( player1 );
+
         Piece piece3 = game.playerChoosesSoldier ( player2 );
         game.playerPlacesPieceOnBoard ( player2, piece3, 11, 0 );
+
+        Piece piece4 = game.playerChoosesCatapult ( player1 );
+        game.playerPlacesPieceOnBoard ( player1, piece4, 3, 0 );
+        game.playerIsReadyToPlay ( player1 );
+        Piece piece5 = game.playerChoosesSoldier ( player2 );
+        game.playerPlacesPieceOnBoard ( player2, piece5, 12, 0 );
         game.playerIsReadyToPlay ( player2 );
 
         //Act
 
         game.playerAttacks ( player1, 2, 0, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 3,0,3,1 );
         game.playerAttacks ( player1, 2, 0, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 3,1,3,0 );
         game.playerAttacks ( player1, 2, 0, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 3,0,3,1 );
         game.playerAttacks ( player1, 2, 0, 11, 0 );
+        game.playerMovesPieceOnBoard ( player2, 3,1,3,0 );
         try {
-            game.playerMovesPieceOnBoard ( player1, 2, 0, 3, 0 );
+            game.playerMovesPieceOnBoard ( player1, 2, 0, 3, 2 );
         } catch (GameHasEndedException e) {
             //Assert
             Assertions.assertTrue ( game.isNumberOfMembersOnTeam ( player2, 0 ) );

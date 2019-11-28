@@ -1,5 +1,6 @@
 package board;
 
+import criteria.BattalionCriteria;
 import javafx.util.Pair;
 import move.Move;
 import piece.Battalion;
@@ -92,6 +93,12 @@ public class Board {
         ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
         Battalion proxy = new BattalionProxy ( this, possiblePieces, move );
         proxy.createBattalion ();
+    }
+
+    private boolean isBattalion (ArrayList<Piece> possiblePieces) {
+        BattalionCriteria battalion = new BattalionCriteria ();
+        ArrayList<Piece> pieces = battalion.criteria ( possiblePieces );
+        return pieces.size () == 3;
     }
 
     //Private methods.
