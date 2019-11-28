@@ -1,5 +1,6 @@
 package Vistas;
 
+import Controlers.BoardPositionHasBeenChosenInInitialFaceEventHandler;
 import Controlers.ButtonsThatChangeScenesEventHandler;
 import boardFx.ButtonCell;
 import game.Game;
@@ -7,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import player.Player;
@@ -18,6 +18,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
 
     public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene, String background ) {
         this.background = background;
+
 
         // Top pane
         PlayerInfoHorizontalBox pointBox = new PlayerInfoHorizontalBox ( game, player, this.background );
@@ -50,8 +51,10 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         Background backgroundGrid = new AlgoChessBackground ( "Image/backggg (2).jpg" ).createBackground ();
         centralContainer.setBackground ( backgroundGrid);
         centralContainer.setAlignment ( Pos.CENTER );
-        centralContainer.setPadding(new Insets(0,0,0,220));
+        centralContainer.prefWidthProperty ().bind ( this.prefWidthProperty ().divide ( 3 ) );
+        centralContainer.setPadding(new Insets(0,0,0,100));
         this.setCenter(centralContainer);
+
     }
 
     private GridPane makeGridPane() {
@@ -64,12 +67,16 @@ public class ChoosingPiecesBorderPane extends BorderPane {
                 actual = red;
             }
             for (int j = 0; j < 20; j++) {
-                gridPane.add(new ButtonCell(null,actual,i,j),i,j);
+                ButtonCell button = new ButtonCell(null,actual,i,j);
+                button.setPrefSize(30, 30);
+                button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                gridPane.add(button,i,j);
             }
         }
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
         return gridPane;
     }
 
