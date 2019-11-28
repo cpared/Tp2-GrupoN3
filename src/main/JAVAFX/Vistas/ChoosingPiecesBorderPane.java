@@ -1,64 +1,53 @@
 package Vistas;
 
-import Controlers.StartButtonEventHandler;
+import Controlers.ButtonsThatChangeScenesEventHandler;
 import boardFx.ButtonCell;
 import game.Game;
-import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import org.w3c.dom.css.Rect;
 import player.Player;
 
 
 public class ChoosingPiecesBorderPane extends BorderPane {
-    //private String background = "-fx-background-color: B22222;";
-    private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
+    private String background;
 
-    public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene ) {
+    public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene, String background ) {
+        this.background = background;
 
-        this.setBackground(background);
         // Top pane
-        //PlayerInfoHorizontalBox pointBox = new PlayerInfoHorizontalBox ( game, player, this.background );
-        PlayerInfoHorizontalBox pointBox = new PlayerInfoHorizontalBox ( game, player);
+        PlayerInfoHorizontalBox pointBox = new PlayerInfoHorizontalBox ( game, player, this.background );
         pointBox.prefWidthProperty ().bind ( this.prefHeightProperty ().divide ( 2 ) );
         this.setTop ( pointBox );
 
         // Right Pane
-        //PiecesFlowPane right = new PiecesFlowPane ( this.background,this );
-        PiecesFlowPane right = new PiecesFlowPane (this );
+        PiecesFlowPane right = new PiecesFlowPane ( this.background,this );
         right.prefWidthProperty ().bind ( this.widthProperty ().divide ( 5 ) );
         this.setRight ( right );
 
         // Left Pane
-        //PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","" );
-        PieceInformationDisplay left = new PieceInformationDisplay ( this,"","","","" );
+        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","" );
         this.setLeft ( left );
 
         // Bottom pane
         Button ready = new Button ( "Ready to play" );
-        ready.setOnAction ( new StartButtonEventHandler ( stage, scene ) );
+        ready.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, scene ) );
 
         HBox bottom = new HBox ( ready );
         bottom.setAlignment ( Pos.CENTER );
-        //bottom.setStyle ( this.background );
-        bottom.setBackground(background);
+        bottom.setStyle ( this.background );
         bottom.prefWidthProperty ().bind ( this.prefWidthProperty ().divide ( 4 ) );
         this.setBottom ( bottom );
 
         //Center Pane
         GridPane board = this.makeGridPane();
         VBox centralContainer = new VBox (board);
-        //centralContainer.setBackground ( this.background );
+
+        Background backgroundGrid = new AlgoChessBackground ( "Image/backggg (2).jpg" ).createBackground ();
+        centralContainer.setBackground ( backgroundGrid);
         centralContainer.setAlignment ( Pos.CENTER );
         centralContainer.setPadding(new Insets(0,0,0,220));
         this.setCenter(centralContainer);

@@ -14,14 +14,10 @@ import java.util.ArrayList;
 public class BattalionComposite {
     private ArrayList<Piece> soldiers;
 
-    public Team team;
-    private int life;
-
     public BattalionComposite ( ArrayList<Piece> soldiers ) {
         this.soldiers = soldiers;
         this.formPartOfBattalion ( this );
     }
-
 
     public void move ( Board board, Move move ) {
         int fromRow = move.fromRow;

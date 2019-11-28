@@ -1,10 +1,11 @@
-package Vistas;
-
 import Controlers.AcceptButtonEventHandler;
+import Controlers.ButtonsThatChangeScenesEventHandler;
 import Controlers.ExitButtonEventHandler;
 import Controlers.NameEventHandler;
-import Controlers.StartButtonEventHandler;
-import boardFx.ButtonCell;
+import Vistas.AlgoChessBackground;
+import Vistas.ButtonView;
+import Vistas.ChoosingPiecesBorderPane;
+import Vistas.Instructions;
 import game.Game;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,11 +19,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import boardFx.BoardFx;
-
 
 
 public class AlgoChess extends Application {
@@ -95,8 +93,8 @@ public class AlgoChess extends Application {
         Button buttonStart = this.view.createButton ( "Start" );
         Scene playerChoosesName = this.scene01PlayerChoosesName ( stage );
         this.scene1 = playerChoosesName;
-        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler ( stage, playerChoosesName );
-        buttonStart.setOnAction ( startButtonEventHandler );
+        ButtonsThatChangeScenesEventHandler buttonsThatChangeScenesEventHandler = new ButtonsThatChangeScenesEventHandler ( stage, playerChoosesName );
+        buttonStart.setOnAction ( buttonsThatChangeScenesEventHandler );
 
         // Creating the vertical box containing welcoming, instruction and instructions.
         VBox verticalB = new VBox ( welcome, instruction, instructions, buttonStart );
@@ -153,7 +151,9 @@ public class AlgoChess extends Application {
     }
 
     public Scene scene02PlayerPlacesPieces (Stage stage){
-        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ) );
+
+        String background = "-fx-background-color: B22222;";
+        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background );
 
         Scene scene = new Scene ( pieces );
         return scene;
@@ -161,7 +161,7 @@ public class AlgoChess extends Application {
 
     public Scene scene03Game (Stage stage){
         Button nope = new Button("nope");
-        //nope.setOnAction ( new StartButtonEventHandler ( stage, this.scene03Game ( stage ) ) );
+        //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
         VBox a = new VBox ( nope );
 
         Scene scene = new Scene ( a );
@@ -184,7 +184,7 @@ public class AlgoChess extends Application {
 
         // Play again button.
         Button playAgain = this.view.createButton ( "New Game" );
-        playAgain.setOnAction ( new StartButtonEventHandler ( stage, this.scene1)  );
+        playAgain.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene1)  );
 
         // Horizontal box containing exit & playAgain
         HBox horizontal = new HBox ( exit, playAgain );

@@ -15,18 +15,16 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
     private String life;
     private String damage;
     private String behaviour;
-    //private String background;
-    private Background background;
+    private String background;
 
-    //public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour ) {
-    //public PieceButtonEventHandler (ChoosingPiecesBorderPane borderPane, Background background, String cost, String life, String damage, String behaviour ) {
-    public PieceButtonEventHandler (ChoosingPiecesBorderPane borderPane, String cost, String life, String damage, String behaviour ) {
+
+    public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour ) {
         this.choosingPiecesBorderPane = borderPane;
         this.cost = cost;
         this.life = life;
         this.damage = damage;
         this.behaviour = behaviour;
-        //this.background = background;
+        this.background = background;
     }
 
     @Override
@@ -38,16 +36,14 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
 
     public void handleKey ( KeyEvent event ) {
         if (event.getCode () == KeyCode.ENTER) {
-            //PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane, this.background, this.cost, this.life, this.damage, this.behaviour );
-            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane, this.cost, this.life, this.damage, this.behaviour );
+            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background, this.cost, this.life, this.damage, this.behaviour );
             this.choosingPiecesBorderPane.setLeft ( pieceInformationDisplay );
         }
     }
 
     public void handleMouse ( MouseEvent event ) {
         if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED )) {
-            //PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane, this.background, this.cost, this.life, this.damage, this.behaviour );
-            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane, this.cost, this.life, this.damage, this.behaviour );
+            PieceInformationDisplay pieceInformationDisplay = new PieceInformationDisplay ( this.choosingPiecesBorderPane,  this.background,this.cost, this.life, this.damage, this.behaviour );
             this.choosingPiecesBorderPane.setLeft ( pieceInformationDisplay );
         }
     }

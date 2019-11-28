@@ -6,11 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
-public class StartButtonEventHandler implements EventHandler<ActionEvent> {
+public class ButtonsThatChangeScenesEventHandler implements EventHandler<ActionEvent> {
     private Stage stage;
     private Scene scene;
 
-    public StartButtonEventHandler ( Stage initialStage, Scene nextScene ) {
+    public ButtonsThatChangeScenesEventHandler ( Stage initialStage, Scene nextScene ) {
         this.stage = initialStage;
         this.scene = nextScene;
     }

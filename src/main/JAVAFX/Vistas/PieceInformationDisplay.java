@@ -17,9 +17,7 @@ import javafx.scene.text.TextFlow;
 
 public class PieceInformationDisplay  extends VBox {
 
-    //public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour){
-    //public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, Background background, String cost, String life, String damage, String behaviour){
-    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String cost, String life, String damage, String behaviour){
+    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour){
         Text text = new Text();
         text.setFill ( Color.BLACK  );
         TextFlow label = new TextFlow (text);
@@ -60,7 +58,6 @@ public class PieceInformationDisplay  extends VBox {
         this.setSpacing ( 50 );
         this.setMaxWidth ( 300 );
         this.prefHeightProperty ().bind ( borderpane.prefWidthProperty ().divide ( 2 ) );
-        //this.setStyle ( background );
-        //this.setBackground(background);
+        this.setStyle ( background );
     }
 }

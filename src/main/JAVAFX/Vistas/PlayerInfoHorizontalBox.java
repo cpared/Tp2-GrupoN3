@@ -12,9 +12,7 @@ import player.Player;
 
 public class PlayerInfoHorizontalBox extends HBox {
 
-    //public PlayerInfoHorizontalBox ( Game game, Player player, String background ) {
-    //public PlayerInfoHorizontalBox ( Game game, Player player, Background background ) {
-    public PlayerInfoHorizontalBox ( Game game, Player player) {
+    public PlayerInfoHorizontalBox ( Game game, Player player, String background ) {
         Label points = new Label ( "Your points: " );
         points.setTextAlignment ( TextAlignment.CENTER );
         points.setTextFill ( Color.WHITE );
@@ -31,7 +29,6 @@ public class PlayerInfoHorizontalBox extends HBox {
         this.getChildren ().addAll ( points, number );
 
         this.setAlignment ( Pos.CENTER_RIGHT );
-        //this.setStyle ( background );
-        //this.setBackground(background);
+        this.setStyle ( background );
     }
 }
