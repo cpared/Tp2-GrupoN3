@@ -1,6 +1,8 @@
-package piece;
+package piece.AttackState;
 
 import javafx.util.Pair;
+import piece.ItsTooFarToAttackException;
+import piece.Piece;
 
 public class DistanceAttack implements AttackState{
 
@@ -11,7 +13,7 @@ public class DistanceAttack implements AttackState{
     }
 
     public void attack( Pair<Piece, Integer> attackedPiece, int distance){
-        if(distance < attackedPiece.getValue()) throw new ItsTooFarToAttackException();
+        if(distance < attackedPiece.getValue()) throw new ItsTooFarToAttackException ();
         attackedPiece.getKey().receiveAttacked(this.myDistanceAttack);
     }
 }
