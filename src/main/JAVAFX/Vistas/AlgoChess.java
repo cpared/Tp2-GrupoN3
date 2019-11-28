@@ -154,14 +154,16 @@ public class AlgoChess extends Application {
     }
 
     public Scene scene03Game (Stage stage){
-        VBox a = new VBox ( new Button("nope") );
+        Button nope = new Button("nope");
+        //nope.setOnAction ( new StartButtonEventHandler ( stage, this.scene03Game ( stage ) ) );
+        VBox a = new VBox ( nope );
 
         Scene scene = new Scene ( a );
 
         return scene;
     }
 
-    public void sceneFinal ( Stage stage ) {
+    public Scene sceneFinal ( Stage stage ) {
 
         // AlgoChess image.
         Image gameover = new Image ( "Image/gameover.png" );
@@ -198,7 +200,8 @@ public class AlgoChess extends Application {
 
         // Final layout.
         Scene scene = new Scene ( vertical );
-        stage.setScene ( scene );
-        stage.show ();
+        return scene;
+        //stage.setScene ( scene );
+        //stage.show ();
     }
 }
