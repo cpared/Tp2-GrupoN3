@@ -90,7 +90,7 @@ public class Game {
     }
 
 
-    // This getters are only for testing, they dont belong in the model.
+    // These getters are only for testing, they dont belong in the model.
     public Player getPlayer1 () {
         return this.player1;
     }
@@ -101,5 +101,10 @@ public class Game {
 
     public Board getBoard () {
         return this.state.getBoard ();
+    }
+
+    //These getters are for the views.
+    public int getPoints(Player player){
+        return this.state.getPoints(player);
     }
 }

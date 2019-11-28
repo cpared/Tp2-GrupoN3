@@ -1,7 +1,10 @@
 package Vistas;
 
+import Controlers.AcceptButtonEventHandler;
 import Controlers.ExitButtonEventHandler;
+import Controlers.NameEventHandler;
 import Controlers.StartButtonEventHandler;
+import game.Game;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,11 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.awt.event.MouseEvent;
+import java.awt.*;
+
 
 public class AlgoChess extends Application {
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private ButtonView view = new ButtonView ();
+    private Game game = new Game ();
 
     public AlgoChess () {
     }
@@ -33,9 +38,9 @@ public class AlgoChess extends Application {
     @Override
     public void start ( Stage stage ) throws Exception {
         stage.setTitle ( " AlgoChess " );
-        //this.scene00InitialStage ( stage );
+        this.scene00InitialStage ( stage );
+        //sceneMainGame( stage );
         //this.sceneFinal ( stage );
-        sceneMainGame( stage );
     }
 
     public void sceneMainGame( Stage stage ){
@@ -100,20 +105,13 @@ public class AlgoChess extends Application {
         borderPane.setTop ( name );
         BorderPane.setAlignment ( name, Pos.BOTTOM_CENTER );
         borderPane.setCenter ( verticalB );
-        //borderPane.prefWidthProperty ().bind ( borderPane.widthProperty().divide(5 ));
         BorderPane.setAlignment ( name, Pos.TOP_CENTER );
 
-
-        //All the components are ready to be placed.
-
-        // Locate the background image behind the border pane.
-        StackPane stack = new StackPane ();
-        StackPane.setAlignment ( borderPane, Pos.CENTER );
-        stack.setBackground ( this.background );
-        stack.getChildren ().addAll ( borderPane );
+        //Adding background.
+        borderPane.setBackground ( this.background );
 
         // Final layout.
-        Scene scene = new Scene ( stack );
+        Scene scene = new Scene ( borderPane );
         stage.setScene ( scene );
         stage.setFullScreen ( true );
         stage.show ();
@@ -132,7 +130,8 @@ public class AlgoChess extends Application {
         label.setText ( text.getText () );
 
         Button acceptButton = this.view.createButton ( "Accept"  );
-
+        text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
+        acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02PlayerPlacesPieces ( stage )) );
 
         HBox horizontalContainer = new HBox ( acceptButton );
         horizontalContainer.setSpacing ( 10.0D );
@@ -143,11 +142,24 @@ public class AlgoChess extends Application {
         mainContainer.setAlignment ( Pos.CENTER );
 
 
-        Scene scene2 = new Scene ( mainContainer, 300.0D, 250.0D );
-        //stage.setScene ( scene2 );
-        return scene2;
+        Scene scene = new Scene ( mainContainer, 300.0D, 250.0D );
+        return scene;
     }
 
+    public Scene scene02PlayerPlacesPieces (Stage stage){
+        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ) );
+
+        Scene scene = new Scene ( pieces );
+        return scene;
+    }
+
+    public Scene scene03Game (Stage stage){
+        VBox a = new VBox ( new Button("nope") );
+
+        Scene scene = new Scene ( a );
+
+        return scene;
+    }
 
     public void sceneFinal ( Stage stage ) {
 

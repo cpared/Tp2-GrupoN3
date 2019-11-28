@@ -70,4 +70,10 @@ public class Ended implements GameState {
         throw new GameHasEndedException ();
     }
 
+
+    // This getter is only for views,
+    @Override
+    public int getPoints (Player player){
+        return 0;
+    }
 }

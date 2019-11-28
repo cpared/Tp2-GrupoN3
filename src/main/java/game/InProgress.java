@@ -112,4 +112,13 @@ public class InProgress implements GameState {
         return this.board;
     }
 
+    // This getter is only for views,
+    @Override
+    public int getPoints (Player player){
+        if (player == player1) return player1Face.getPoints ();
+        return player2Face.getPoints ();
+    }
+
+    // This getter is only for vi
+
 }

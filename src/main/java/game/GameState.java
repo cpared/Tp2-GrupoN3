@@ -33,5 +33,8 @@ public interface GameState {
 
     // This getter is only for testing, it doesnt belong in the model.
     public Board getBoard ();
+
+    // This getter is only for views,
+    public int getPoints (Player player);
 }
 

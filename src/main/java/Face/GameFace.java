@@ -84,4 +84,9 @@ public class GameFace implements Face {
         return this.player;
     }
 
+
+    @Override
+    public int getPoints () {
+        return 0;
+    }
 }

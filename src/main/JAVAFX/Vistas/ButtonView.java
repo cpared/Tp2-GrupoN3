@@ -1,14 +1,10 @@
 package Vistas;
 
 
-import Controlers.GeneralButtonEvents.MouseIsOffTheButtonEventHandler;
 import Controlers.GeneralButtonEvents.MouseIsOnTheButtonEventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class ButtonView extends Button {
     private String borderColor;
@@ -34,12 +30,15 @@ public class ButtonView extends Button {
 
     public Button createButton ( String buttonText ) {
         Button button = new Button ( buttonText );
-        button.setFont ( Font.font ( "Modern No.20",15 ) );
+        button.setFont ( Font.font ( "Modern No.20", 15 ) );
         //si quisiera ser redondo.
         //button.setShape ( new Circle (100) );
-        button.addEventHandler ( MouseEvent.MOUSE_ENTERED, new MouseIsOnTheButtonEventHandler ( button ) );
-        button.addEventHandler ( MouseEvent.MOUSE_EXITED, new MouseIsOffTheButtonEventHandler ( button ) );
+        MouseIsOnTheButtonEventHandler handler = new MouseIsOnTheButtonEventHandler ( button );
         this.decorate ( button );
+        button.setOnMouseEntered ( handler );
+        button.setOnMouseExited ( handler );
+        button.setOnMouseClicked ( handler );
+
         return button;
     }
 

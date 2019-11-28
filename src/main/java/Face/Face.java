@@ -35,4 +35,6 @@ public interface Face {
     // This getter is only for testing, they dont belong in the model.
     public Player getPlayer ();
 
+    // This getter is only for views
+    public int getPoints ();
 }

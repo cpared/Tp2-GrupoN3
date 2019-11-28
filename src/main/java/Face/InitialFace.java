@@ -92,4 +92,9 @@ public class InitialFace implements Face {
     public Player getPlayer () {
         return this.player;
     }
+
+    @Override
+    public int getPoints () {
+        return this.factory.getPoints();
+    }
 }
