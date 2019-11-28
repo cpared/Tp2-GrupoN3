@@ -20,13 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.awt.*;
 
 
 public class AlgoChess extends Application {
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private ButtonView view = new ButtonView ();
     private Game game = new Game ();
+    private Scene scene1;
 
     public AlgoChess () {
     }
@@ -91,6 +91,7 @@ public class AlgoChess extends Application {
         // Start button.
         Button buttonStart = this.view.createButton ( "Start" );
         Scene playerChoosesName = this.scene01PlayerChoosesName ( stage );
+        this.scene1 = playerChoosesName;
         StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler ( stage, playerChoosesName );
         buttonStart.setOnAction ( startButtonEventHandler );
 
@@ -113,7 +114,9 @@ public class AlgoChess extends Application {
         // Final layout.
         Scene scene = new Scene ( borderPane );
         stage.setScene ( scene );
-        stage.setFullScreen ( true );
+        //stage.setFullScreen ( true );
+        stage.setWidth ( 1550 );
+        stage.setHeight ( 830 );
         stage.show ();
     }
 
@@ -178,7 +181,7 @@ public class AlgoChess extends Application {
 
         // Play again button.
         Button playAgain = this.view.createButton ( "New Game" );
-        playAgain.setOnAction ( new StartButtonEventHandler ( stage, this.scene01PlayerChoosesName ( stage ) ) );
+        playAgain.setOnAction ( new StartButtonEventHandler ( stage, this.scene1)  );
 
         // Horizontal box containing exit & playAgain
         HBox horizontal = new HBox ( exit, playAgain );
