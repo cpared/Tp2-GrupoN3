@@ -11,18 +11,18 @@ import team.Team;
 
 import java.util.ArrayList;
 
-public class RealBattalion implements Battalion {
+public class BattalionComposite {
     private ArrayList<Piece> soldiers;
-    private PieceDecorator decorator;
 
     public Team team;
     private int life;
 
-    public RealBattalion ( ArrayList<Piece> soldiers ) {
+    public BattalionComposite ( ArrayList<Piece> soldiers ) {
         this.soldiers = soldiers;
+        this.formPartOfBattalion ( this );
     }
 
-    @Override
+
     public void move ( Board board, Move move ) {
         int fromRow = move.fromRow;
         int fromColumn = move.fromColumn -1;
@@ -31,7 +31,7 @@ public class RealBattalion implements Battalion {
         ArrayList<Piece> couldntMove = new ArrayList<Piece> (  );
         for (Piece soldier : soldiers) {
             Move fixedMove = new Builder ().fromRow ( fromRow ).fromColumn ( fromColumn ).ToRow ( toRow ).ToColumn ( toColumn ).build ();
-            soldier.undecorate ( this.decorator );
+            soldier.notFormPartOfBattalion ( this );
             try {
                 soldier.move ( board, fixedMove );
             } catch (CanNotMakeThatMoveException e){
@@ -42,74 +42,25 @@ public class RealBattalion implements Battalion {
             }
             fromColumn++;
             toColumn++;
-            soldier.decorate ( this.decorator );
+            soldier.formPartOfBattalion ( this );
 
         }
         soldiers.removeAll ( couldntMove );
-        if (couldntMove.size ()>0) throw new CanNotMakeBattalion ();
-    }
-
-    @Override
-    public boolean isSameTeamAs ( Piece otherPiece ){
-        return this.team.equals ( otherPiece.team );
-    }
-
-    @Override
-    public void receiveAttacked ( int damage ) {
-    }
-
-    @Override
-    public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece ) {
-    }
-
-    @Override
-    public void receiveHealed ( int heal ) {
-    }
-
-    @Override
-    public boolean isCost ( int expectedCost ) {
-        return true;
-    }
-
-    @Override
-    public void decorate ( PieceDecorator decorator ) {
-        this.decorator = decorator;
-
-        for (Piece soldier : soldiers) {
-            soldier.decorate ( decorator );
+        if (couldntMove.size ()>0){
+            this.notFormPartOfBattalion ( this );
         }
     }
 
-    @Override
-    public PieceDecorator undecorate ( PieceDecorator decorator ) {
-        this.decorator = null;
+    private void formPartOfBattalion ( BattalionComposite battalion){
         for (Piece soldier : soldiers) {
-            soldier.undecorate ( decorator );
+            soldier.formPartOfBattalion ( battalion );
         }
-        return decorator;
     }
 
-    @Override
-    public RealBattalion createBattalion (){
-        return null;
+    private void notFormPartOfBattalion ( BattalionComposite battalion){
+        for (Piece soldier : soldiers) {
+            soldier.notFormPartOfBattalion ( battalion );
+        }
     }
 
-    @Override
-    public void formPartOfBattalion (RealBattalion battalion){
-
-    }
-    @Override
-    public void notFormPartOfBattalion (RealBattalion battalion){
-
-    }
-
-    // These getters are for testing only.
-    @Override
-    public Team getTeam(){
-        return this.team;
-    }
-    @Override
-    public int getLife () {
-        return this.life;
-    }
 }
