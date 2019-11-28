@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import player.Player;
@@ -29,7 +30,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         this.setRight ( right );
 
         // Left Pane
-        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","" );
+        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","",  null);
         this.setLeft ( left );
 
         // Bottom pane

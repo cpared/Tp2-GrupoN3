@@ -1,9 +1,12 @@
 package Vistas;
 
 import Controlers.ChangeInformationOnLabelEventHandler;
+import Controlers.ChoosePieceButtonEventHandler;
+import Controlers.PieceButtonEventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,7 +20,7 @@ import javafx.scene.text.TextFlow;
 
 public class PieceInformationDisplay  extends VBox {
 
-    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour){
+    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour, Image image){
         Text text = new Text();
         text.setFill ( Color.BLACK  );
         TextFlow label = new TextFlow (text);
@@ -47,13 +50,14 @@ public class PieceInformationDisplay  extends VBox {
 
 
         //new button
-        Button ChoosePieceButton = new Button ( "Choose Piece" );
-        //ChoosePieceButton.setOnAction ( new ChangeInformationOnLabelEventHandler( label, ChoosePieceButton, "" ) );
+        Button choosePieceButton = new Button ( "Choose Piece" );
+        choosePieceButton.setOnMouseClicked ( new ChoosePieceButtonEventHandler (image, borderpane) );
+        choosePieceButton.setOnKeyPressed ( new ChoosePieceButtonEventHandler (image, borderpane) );
 
         this.setSpacing ( 10 );
         this.setAlignment ( Pos.CENTER );
 
-        this.getChildren().addAll ( name, pieceInformationHBox, pane, ChoosePieceButton );
+        this.getChildren().addAll ( name, pieceInformationHBox, pane, choosePieceButton );
         this.setAlignment ( Pos.TOP_CENTER );
         this.setSpacing ( 50 );
         this.setMaxWidth ( 300 );
