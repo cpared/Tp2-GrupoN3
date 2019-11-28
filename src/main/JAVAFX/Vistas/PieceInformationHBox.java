@@ -24,10 +24,13 @@ public class PieceInformationHBox extends HBox {
         Button behaviourButton = new Button ( "Behaviour" );
         behaviourButton.setOnAction ( new ChangeInformationOnLabelEventHandler ( label, behaviourButton, behaviour ) );
 
+
         this.getChildren ().addAll ( costButton,lifeButton,damageButton,behaviourButton );
         this.setSpacing ( 10 );
         this.setAlignment ( Pos.CENTER );
 
     }
+
+
 
 }

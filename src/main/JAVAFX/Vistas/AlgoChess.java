@@ -4,6 +4,7 @@ import Controlers.AcceptButtonEventHandler;
 import Controlers.ExitButtonEventHandler;
 import Controlers.NameEventHandler;
 import Controlers.StartButtonEventHandler;
+import boardFx.ButtonCell;
 import game.Game;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,8 +18,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import boardFx.BoardFx;
 
 
 
@@ -207,4 +210,6 @@ public class AlgoChess extends Application {
         //stage.setScene ( scene );
         //stage.show ();
     }
+
+
 }
