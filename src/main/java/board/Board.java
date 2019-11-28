@@ -3,10 +3,8 @@ package board;
 import criteria.BattalionCriteria;
 import javafx.util.Pair;
 import move.Move;
-import piece.Battalion;
-import piece.BattalionProxy;
-import piece.IAmDeadException;
-import piece.Piece;
+import piece.*;
+import piece.battalion.BattalionComposite;
 import team.Team;
 
 import java.util.ArrayList;
@@ -91,11 +89,12 @@ public class Board {
     public void createBattalion ( Move move ) {
 
         ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
-        Battalion proxy = new BattalionProxy ( this, possiblePieces, move );
-        proxy.createBattalion ();
+        Boolean isBattalion = this.isBattalion ( possiblePieces );
+        if (!isBattalion) throw  new CanNotMakeBattalion ();
+        BattalionComposite battallion = new BattalionComposite ( possiblePieces );
     }
 
-    private boolean isBattalion (ArrayList<Piece> possiblePieces) {
+    private boolean isBattalion ( ArrayList<Piece> possiblePieces ) {
         BattalionCriteria battalion = new BattalionCriteria ();
         ArrayList<Piece> pieces = battalion.criteria ( possiblePieces );
         return pieces.size () == 3;

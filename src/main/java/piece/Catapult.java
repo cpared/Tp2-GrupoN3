@@ -3,6 +3,7 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import piece.battalion.BattalionComposite;
 import team.SameTeamException;
 import team.Team;
 
@@ -14,7 +15,6 @@ public class Catapult implements Piece {
     private int life = 50;
     private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
-    private PieceDecorator decoration = null;
 
     public Catapult ( Team team ) {
         this.team = team;
@@ -53,14 +53,12 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
-    }
+    public void formPartOfBattalion ( BattalionComposite battalion){
 
+    }
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.

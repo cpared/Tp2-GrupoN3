@@ -4,6 +4,7 @@ import board.Board;
 import criteria.SoldierCriteria;
 import javafx.util.Pair;
 import move.Move;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Rider implements Piece {
     private int life = 100;
     private int attackRange;
     private AttackState riderAttack;
-    private PieceDecorator decoration = null;
+
 
     public Rider ( Team team ) {
         this.team = team;
@@ -79,14 +80,12 @@ public class Rider implements Piece {
     }
 
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
-    }
+    public void formPartOfBattalion ( BattalionComposite battalion){
 
+    }
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.

@@ -1,4 +1,4 @@
-package piece;
+package piece.battalion;
 
 import board.Board;
 import board.CanNotMakeBattalion;
@@ -6,6 +6,7 @@ import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Builder;
 import move.Move;
+import piece.Piece;
 import team.Team;
 
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class RealBattalion implements Battalion {
     private int life;
 
     public RealBattalion ( ArrayList<Piece> soldiers ) {
-
         this.soldiers = soldiers;
     }
 
@@ -92,6 +92,15 @@ public class RealBattalion implements Battalion {
     @Override
     public RealBattalion createBattalion (){
         return null;
+    }
+
+    @Override
+    public void formPartOfBattalion (RealBattalion battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion (RealBattalion battalion){
+
     }
 
     // These getters are for testing only.

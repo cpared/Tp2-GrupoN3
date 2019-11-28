@@ -1,13 +1,12 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Healer implements Piece {
     public Team team;
@@ -15,7 +14,6 @@ public class Healer implements Piece {
     private int life = 75;
     private int healRange = 1;
     private Heal heal = new Heal ( 15 );
-    private PieceDecorator decoration = null;
 
     public Healer ( Team team ) {
         this.team = team;
@@ -56,15 +54,14 @@ public class Healer implements Piece {
         return this.cost == expectedCost;
     }
 
-    @Override
-    public void decorate ( PieceDecorator decorator ) {
-        this.decoration = decorator;
-    }
 
     @Override
-    public PieceDecorator undecorate ( PieceDecorator decorator ) {
-        this.decoration = null;
-        return decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     // These getters are for testing only.
