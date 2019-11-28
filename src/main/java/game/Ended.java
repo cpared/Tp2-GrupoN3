@@ -11,7 +11,7 @@ public class Ended implements GameState {
 
     @Override
     public Player newPlayer ( String name ) {
-       throw new ThereAreOnlyTwoPlayersPerGameException ();
+       throw new GameHasEndedException ();
     }
 
     @Override

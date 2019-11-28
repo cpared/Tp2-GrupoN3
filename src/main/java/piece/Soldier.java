@@ -3,6 +3,8 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.BodyAttack;
 import piece.battalion.BattalionComposite;
 import team.*;
 
@@ -14,7 +16,7 @@ public class Soldier implements Piece {
     private int cost = 1;
     private int life = 100;
     private int attackRange = 1;
-    private BodyAttack myAttack = new BodyAttack(10);
+    private AttackState myAttack = new BodyAttack(10);
     public BattalionComposite battalion = null;
 
     public Soldier ( Team team ) {
@@ -38,6 +40,7 @@ public class Soldier implements Piece {
         if (this.life <= 0) throw new IAmDeadException();
     }
 
+    @Override
     public void receiveHealed ( int heal ) {
         this.life += heal;
         if (this.life > 100) this.life = 100;

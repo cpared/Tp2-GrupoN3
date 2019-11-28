@@ -3,6 +3,8 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.Heal;
 import piece.battalion.BattalionComposite;
 import team.*;
 
@@ -13,7 +15,7 @@ public class Healer implements Piece {
     private int cost;
     private int life = 75;
     private int healRange = 1;
-    private Heal heal = new Heal ( 15 );
+    private AttackState heal = new Heal ( 15 );
 
     public Healer ( Team team ) {
         this.team = team;
@@ -46,7 +48,7 @@ public class Healer implements Piece {
     @Override
     public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces ) {
         if (this.isSameTeamAs ( attackedPieces.getKey () )) throw new ThisPieceCantAttackException ();
-        this.heal.heal ( attackedPieces, this.healRange );
+        this.heal.attack ( attackedPieces, this.healRange );
     }
 
     @Override
