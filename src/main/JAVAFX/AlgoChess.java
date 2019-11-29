@@ -22,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 
 public class AlgoChess extends Application {
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
@@ -80,6 +82,7 @@ public class AlgoChess extends Application {
 
         // Texts.
         Label welcome = new Label ( "Welcome to the game!" );
+        welcome.getStyleClass().add("welcome");
         welcome.setTextAlignment ( TextAlignment.CENTER );
         welcome.setTextFill ( Color.WHITE );
 
@@ -90,7 +93,8 @@ public class AlgoChess extends Application {
         Instructions instructions = new Instructions ( borderPane );
 
         // Start button.
-        Button buttonStart = this.view.createButton ( "Start" );
+        //Button buttonStart = this.view.createButton ( "Start" );
+        Button buttonStart = new Button("Start");
         Scene playerChoosesName = this.scene01PlayerChoosesName ( stage );
         this.scene1 = playerChoosesName;
         ButtonsThatChangeScenesEventHandler buttonsThatChangeScenesEventHandler = new ButtonsThatChangeScenesEventHandler ( stage, playerChoosesName );
@@ -100,8 +104,7 @@ public class AlgoChess extends Application {
         VBox verticalB = new VBox ( welcome, instruction, instructions, buttonStart );
         verticalB.setSpacing ( 3 );
         verticalB.setAlignment ( Pos.CENTER );
-        verticalB.setMaxWidth ( 600 );
-
+        verticalB.setMaxSize(600,300);
 
         // Setting panes.
         borderPane.setTop ( name );
@@ -115,6 +118,7 @@ public class AlgoChess extends Application {
         // Final layout.
         Scene scene = new Scene ( borderPane );
         stage.setScene ( scene );
+        scene.getStylesheets().add("AlgoStyle.css");
         //stage.setFullScreen ( true );
         stage.setWidth ( 1550 );
         stage.setHeight ( 830 );
@@ -122,31 +126,47 @@ public class AlgoChess extends Application {
     }
 
 
-    public Scene scene01PlayerChoosesName ( Stage stage ) {
-        /*
-        Each player chooses the name they will have in the game.
-        */
+    public Scene scene01PlayerChoosesName (Stage stage){
 
+        // Text
         TextField text = new TextField ();
-        text.setPromptText ( "Please enter your name" );
 
-        Label label = new Label ();
-        label.setText ( text.getText () );
+        //Buttons
+        Button acceptButton = new Button ("Accept");
 
-        Button acceptButton = this.view.createButton ( "Accept"  );
+        //Label
+        Label label = new Label("Select your name");
+        Label errorText = new Label();
+
+        //Grid position on scene
+        GridPane grid = new GridPane();
+
+        //Set position on scene
+        grid.setAlignment(Pos.CENTER);
+        //grid.setStyle("-fx-background-color: black");
+        grid.setMaxSize(270, 100);
+
+        //Set separation
+        grid.setVgap(10);
+        grid.setHgap(10);
+
+        //Add elements
+        grid.add(label, 0,1);
+        grid.add(text,0,2);
+        grid.add(acceptButton,0,3);
+        grid.add(errorText, 0, 4);
+
+        //BorderPane
+        BorderPane borderpane = new BorderPane();
+        borderpane.setBackground(this.background);
+        borderpane.setCenter(grid);
+
+        //Events
+        acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02PlayerPlacesPieces ( stage ), errorText));
         text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
-        acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02PlayerPlacesPieces ( stage )) );
 
-        HBox horizontalContainer = new HBox ( acceptButton );
-        horizontalContainer.setSpacing ( 10.0D );
-        VBox mainContainer = new VBox ( text, horizontalContainer, label );
-        mainContainer.setSpacing ( 10.0D );
-        mainContainer.setPadding ( new Insets ( 20.0D ) );
-        mainContainer.setBackground ( this.background );
-        mainContainer.setAlignment ( Pos.CENTER );
-
-
-        Scene scene = new Scene ( mainContainer, 300.0D, 250.0D );
+        Scene scene = new Scene ( borderpane, 300.0D, 250.0D );
+        scene.getStylesheets().add("AlgoStyle.css");
         return scene;
     }
 
