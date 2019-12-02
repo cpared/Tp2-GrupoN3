@@ -1,6 +1,5 @@
 package Vistas;
 
-import Controlers.BoardPositionHasBeenChosenInInitialFaceEventHandler;
 import Controlers.ButtonsThatChangeScenesEventHandler;
 import boardFx.ButtonCell;
 import game.Game;
@@ -47,7 +46,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         this.setCenter(centralContainer);
 
         // Left Pane
-        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","",  null, board);
+        PieceInformationDisplay left = new PieceInformationDisplay ( this, this.background,"","","","",  null, board,game);
         this.setLeft ( left );
 
         // Right Pane
@@ -61,7 +60,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         String green = "-fx-background-color: #008f39;";
         String red = "-fx-background-color: #ff0000;";
         String actual = green;
-        GridPane gridPane = new GridPane();
+        AlgoGrid gridPane = new AlgoGrid();
         for (int i = 0 ; i< 20;i++) {
             if (i == 10){
                 actual = red;

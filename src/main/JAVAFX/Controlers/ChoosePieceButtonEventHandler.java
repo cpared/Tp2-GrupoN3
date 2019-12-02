@@ -2,10 +2,10 @@ package Controlers;
 
 import Vistas.ChoosingPiecesBorderPane;
 import boardFx.ButtonCell;
+import game.Game;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
-
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
@@ -18,11 +18,13 @@ public class ChoosePieceButtonEventHandler implements EventHandler<InputEvent> {
     private Image image;
     private  ChoosingPiecesBorderPane pane;
     private GridPane grid;
+    private Game game;
 
-    public ChoosePieceButtonEventHandler ( Image image , ChoosingPiecesBorderPane pane, GridPane grid){
+    public ChoosePieceButtonEventHandler (Image image , ChoosingPiecesBorderPane pane, GridPane grid, Game game){
         this.image = image;
         this.pane = pane;
         this.grid = grid;
+        this.game = game;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class ChoosePieceButtonEventHandler implements EventHandler<InputEvent> {
             this.pane.setCursor ( new ImageCursor ( this.image ) );
             ObservableList<Node> children = this.grid.getChildren();
             for (Node node : children) {
-                node.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane, (ButtonCell) node ) );
-                node.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane, (ButtonCell) node ) );
+                node.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane,this.game, (ButtonCell) node ) );
+                node.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane,this.game, (ButtonCell) node ) );
             }
         }
     }
@@ -49,8 +51,8 @@ public class ChoosePieceButtonEventHandler implements EventHandler<InputEvent> {
             this.pane.setCursor ( new ImageCursor ( this.image ) );
             ObservableList<Node> children = this.grid.getChildren();
             for (Node node : children) {
-                node.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane, (ButtonCell) node ) );
-                node.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane, (ButtonCell) node ) );
+                node.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane,this.game, (ButtonCell) node ) );
+                node.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( this.image, pane, this.game,(ButtonCell) node ) );
             }
         }
     }

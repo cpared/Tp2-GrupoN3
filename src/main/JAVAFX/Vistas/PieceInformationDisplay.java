@@ -1,13 +1,11 @@
 package Vistas;
 
-import Controlers.ChangeInformationOnLabelEventHandler;
 import Controlers.ChoosePieceButtonEventHandler;
-import Controlers.PieceButtonEventHandler;
+import game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,7 +19,7 @@ import javafx.scene.text.TextFlow;
 
 public class PieceInformationDisplay  extends VBox {
 
-    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour, Image image, GridPane grid){
+    public  PieceInformationDisplay(ChoosingPiecesBorderPane borderpane, String background, String cost, String life, String damage, String behaviour, Image image, GridPane grid, Game game){
         Text text = new Text();
         text.setFill ( Color.BLACK  );
         TextFlow label = new TextFlow (text);
@@ -52,8 +50,8 @@ public class PieceInformationDisplay  extends VBox {
 
         //new button
         Button choosePieceButton = new Button ( "Choose Piece" );
-        choosePieceButton.setOnMouseClicked ( new ChoosePieceButtonEventHandler (image, borderpane, grid) );
-        choosePieceButton.setOnKeyPressed ( new ChoosePieceButtonEventHandler (image, borderpane, grid) );
+        choosePieceButton.setOnMouseClicked ( new ChoosePieceButtonEventHandler (image, borderpane, grid,game) );
+        choosePieceButton.setOnKeyPressed ( new ChoosePieceButtonEventHandler (image, borderpane, grid,game ));
 
         this.setSpacing ( 10 );
         this.setAlignment ( Pos.CENTER );

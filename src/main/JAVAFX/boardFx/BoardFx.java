@@ -24,7 +24,7 @@ public class BoardFx extends Application  {
         GridPane gridPane = makeGridPane();
         gridPane.setAlignment(Pos.CENTER);
         Pane format = new VBox(5);
-        AnchorPane bottomRow = getPlayersNames("Cris se la re come", "Es verdad");
+        AnchorPane bottomRow = getPlayersNames(null, null);
         Label label = new Label();
         label.setText("AlgoChess");
         label.setPadding(new Insets(0,200,0,870));

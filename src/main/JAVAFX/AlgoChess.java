@@ -8,7 +8,6 @@ import Vistas.ChoosingPiecesBorderPane;
 import Vistas.Instructions;
 import game.Game;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,8 +20,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 
 
 public class AlgoChess extends Application {
@@ -173,7 +170,7 @@ public class AlgoChess extends Application {
     public Scene scene02PlayerPlacesPieces (Stage stage){
 
         String background = "-fx-background-color: B22222;";
-        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background );
+        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background);
 
         Scene scene = new Scene ( pieces );
         return scene;
