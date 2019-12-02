@@ -57,7 +57,7 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
                 this.pane.setCursor ( Cursor.DEFAULT );
             }
             catch(Exception e){
-                System.out.println(3);
+                System.out.println(e);
             }
         }
     }

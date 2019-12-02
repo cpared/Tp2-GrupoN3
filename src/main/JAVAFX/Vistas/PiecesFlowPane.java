@@ -1,6 +1,7 @@
 package Vistas;
 
 import Controlers.PieceButtonEventHandler;
+import game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -11,13 +12,14 @@ import javafx.scene.layout.TilePane;
 
 public class PiecesFlowPane extends TilePane {
 
-    public PiecesFlowPane ( String background, ChoosingPiecesBorderPane choosingPiecesBorderPane, GridPane grid ) {
+    public PiecesFlowPane (String background, ChoosingPiecesBorderPane choosingPiecesBorderPane, GridPane grid, Game game ) {
         this.setAlignment ( Pos.CENTER );
         this.setPrefColumns ( 1 );
         this.setHgap ( 30 );
         this.setVgap ( 30 );
         this.setPrefRows ( 4 );
         this.setStyle ( background );
+
         // rojo : DC143C
         // rojo ladrillo: B22222
         // crema: FFFAF0
@@ -40,25 +42,25 @@ public class PiecesFlowPane extends TilePane {
 
         Button soldierButton = new Button ();
         soldierButton.setGraphic ( soldier );
-        soldierButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The soldier cost is: 1.","100","Soldier can only attack when in close range with another piece. The damage it causes is: 10","If 3 soldiers are on the same row, they can form a Battalion (the three soldiers move together in the same direction)",new Image ( "Image/pieces/soldier.png" ),grid ) );
-        soldierButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The soldier cost is: 1.","100","Soldier can only attack when in close range with another piece. The damage it causes is: 10","If 3 soldiers are on the same row, they can form a Battalion (the three soldiers move together in the same direction)" ,new Image ( "Image/pieces/soldier.png" ) ,grid) );
+        soldierButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The soldier cost is: 1.","100","Soldier can only attack when in close range with another piece. The damage it causes is: 10","If 3 soldiers are on the same row, they can form a Battalion (the three soldiers move together in the same direction)",new Image ( "Image/pieces/soldier.png" ),grid,game ) );
+        soldierButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The soldier cost is: 1.","100","Soldier can only attack when in close range with another piece. The damage it causes is: 10","If 3 soldiers are on the same row, they can form a Battalion (the three soldiers move together in the same direction)" ,new Image ( "Image/pieces/soldier.png" ) ,grid,game) );
 
         Button healerButton = new Button ();
         healerButton.setGraphic ( healer );
-        healerButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The healer cost is: 2.","75","Healer cant damage other pieces. It can heal allies and give them 15 points of thir life back","It can heal one allie within a close range. Catapult can't be healed.",new Image ( "Image/pieces/healer.png" ),grid ));
-        healerButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The healer cost is: 2.","75","Healer cant damage other pieces. It can heal allies and give them 15 points of thir life back","It can heal one allie within a close range. Catapult can't be healed." ,new Image ( "Image/pieces/healer.png" ) ,grid));
+        healerButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The healer cost is: 2.","75","Healer cant damage other pieces. It can heal allies and give them 15 points of thir life back","It can heal one allie within a close range. Catapult can't be healed.",new Image ( "Image/pieces/healer.png" ),grid,game ));
+        healerButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The healer cost is: 2.","75","Healer cant damage other pieces. It can heal allies and give them 15 points of thir life back","It can heal one allie within a close range. Catapult can't be healed." ,new Image ( "Image/pieces/healer.png" ) ,grid,game));
 
 
         Button riderButton = new Button ();
         riderButton.setGraphic ( rider );
-        riderButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The rider cost is: 3.","100","The rider can attack both in close range and in long range. Close range attacks take 5 life points. Long distance attacks take 15 life points.","If there is a Soldier in close range or there are no enemies in close rage, it attacks with a long range attack. If there are no allies and there are enemies nearby, it can only attack in close range.",new Image ( "Image/pieces/rider.png" ), grid ));
-        riderButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The rider cost is: 3.","100","The rider can attack both in close range and in long range. Close range attacks take 5 life points. Long distance attacks take 15 life points.","If there is a Soldier in close range or there are no enemies in close rage, it attacks with a long range attack. If there are no allies and there are enemies nearby, it can only attack in close range." ,new Image ( "Image/pieces/rider.png" ) ,grid));
+        riderButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The rider cost is: 3.","100","The rider can attack both in close range and in long range. Close range attacks take 5 life points. Long distance attacks take 15 life points.","If there is a Soldier in close range or there are no enemies in close rage, it attacks with a long range attack. If there are no allies and there are enemies nearby, it can only attack in close range.",new Image ( "Image/pieces/rider.png" ), grid,game ));
+        riderButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane, background ,"The rider cost is: 3.","100","The rider can attack both in close range and in long range. Close range attacks take 5 life points. Long distance attacks take 15 life points.","If there is a Soldier in close range or there are no enemies in close rage, it attacks with a long range attack. If there are no allies and there are enemies nearby, it can only attack in close range." ,new Image ( "Image/pieces/rider.png" ) ,grid,game));
 
 
         Button catapultButton = new Button ();
         catapultButton.setGraphic ( catapult );
-        catapultButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The rider cost is: 5.","50","The catapult only has long range attacks. These attacks take 20 points drom the opponents lives.","It can't move at all during the game. The attacks the catapult launches can hurt both allies and enemies. It causes damage on the first piece that it finds and the damage spreads to the adjoining pieces, causing the same damage on each piece." ,new Image ( "Image/pieces/catapult2.png" ) ,grid));
-        catapultButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The rider cost is: 5.","50","The catapult only has long range attacks. These attacks take 20 points drom the opponents lives.","It can't move at all during the game. The attacks the catapult launches can hurt both allies and enemies. It causes damage on the first piece that it finds and the damage spreads to the adjoining pieces, causing the same damage on each piece." ,new Image ( "Image/pieces/catapult2.png" ) ,grid));
+        catapultButton.setOnMouseClicked ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The rider cost is: 5.","50","The catapult only has long range attacks. These attacks take 20 points drom the opponents lives.","It can't move at all during the game. The attacks the catapult launches can hurt both allies and enemies. It causes damage on the first piece that it finds and the damage spreads to the adjoining pieces, causing the same damage on each piece." ,new Image ( "Image/pieces/catapult2.png" ) ,grid,game));
+        catapultButton.setOnKeyPressed ( new PieceButtonEventHandler ( choosingPiecesBorderPane,  background ,"The rider cost is: 5.","50","The catapult only has long range attacks. These attacks take 20 points drom the opponents lives.","It can't move at all during the game. The attacks the catapult launches can hurt both allies and enemies. It causes damage on the first piece that it finds and the damage spreads to the adjoining pieces, causing the same damage on each piece." ,new Image ( "Image/pieces/catapult2.png" ) ,grid,game));
 
 
         // Adding it.

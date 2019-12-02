@@ -50,7 +50,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         this.setLeft ( left );
 
         // Right Pane
-        PiecesFlowPane right = new PiecesFlowPane ( this.background,this, board );
+        PiecesFlowPane right = new PiecesFlowPane ( this.background,this, board,game );
         right.prefWidthProperty ().bind ( this.widthProperty ().divide ( 5 ) );
         this.setRight ( right );
 

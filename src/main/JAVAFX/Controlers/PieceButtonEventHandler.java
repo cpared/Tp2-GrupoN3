@@ -22,7 +22,7 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
     private Image image;
     private GridPane grid;
     private Game game;
-    public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour,  Image image, GridPane grid ) {
+    public PieceButtonEventHandler ( ChoosingPiecesBorderPane borderPane, String background, String cost, String life, String damage, String behaviour,  Image image, GridPane grid,Game game ) {
         this.choosingPiecesBorderPane = borderPane;
         this.cost = cost;
         this.life = life;
@@ -31,6 +31,7 @@ public class PieceButtonEventHandler implements EventHandler<InputEvent> {
         this.background = background;
         this.image = image;
         this.grid = grid;
+        this.game = game;
 
 
     }
