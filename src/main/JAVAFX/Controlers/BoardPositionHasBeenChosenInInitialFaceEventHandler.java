@@ -3,6 +3,7 @@ package Controlers;
 import Vistas.ChoosingPiecesBorderPane;
 import boardFx.ButtonCell;
 import game.Game;
+import game.ItIsNotYourTurnException;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import piece.Piece;
+import player.Player;
 
 public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements EventHandler<InputEvent> {
     private Image image;
@@ -49,16 +51,27 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
             try{
                 Piece piece = game.playerChoosesSoldier(game.getPlayer1());
                 Pair<Integer,Integer> pair = button.getPosition();
-                game.playerPlacesPieceOnBoard(game.getPlayer1(),piece,pair.getKey(),pair.getValue());
-                ImageView view = new ImageView ( this.image );
-                view.setFitWidth ( 30 );
-                view.setFitHeight ( 30 );
-                this.button.setGraphic ( view );
-                this.pane.setCursor ( Cursor.DEFAULT );
+                Player player = game.getPlayer1();
+                innerMethod(piece, pair,player);
             }
-            catch(Exception e){
-                System.out.println(e);
+            catch(ItIsNotYourTurnException e){
+                Piece piece = game.playerChoosesSoldier(game.getPlayer2());
+                Pair<Integer,Integer> pair = button.getPosition();
+                Player player = game.getPlayer2();
+                innerMethod(piece, pair, player);
+            }
+            catch(Exception i){
+                System.out.println(i);
             }
         }
+    }
+
+    private void innerMethod(Piece piece, Pair<Integer, Integer> pair, Player player) {
+        game.playerPlacesPieceOnBoard(player,piece,pair.getKey(),pair.getValue());
+        ImageView view = new ImageView ( this.image );
+        view.setFitWidth ( 20 );
+        view.setFitHeight ( 20 );
+        this.button.setGraphic ( view );
+        this.pane.setCursor ( Cursor.DEFAULT );
     }
 }

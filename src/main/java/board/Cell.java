@@ -1,17 +1,18 @@
 package board;
 
 import piece.Piece;
+import team.Team;
 
 class Cell {
     private Piece piece = null;
-    private Object team;
+    private Team team;
 
-    public Cell ( Object chosenTeam ) {
+    public Cell ( Team chosenTeam ) {
         this.team = chosenTeam;
     }
 
     public void putPieceInCell ( Piece newPiece ) {
-        if (this.team.equals ( newPiece.team )) {
+        if (! this.team.equals ( newPiece.getTeam() )) {
             throw new EnemyCellException ();
         } else if (this.piece != null) {
             throw new OccupiedCellException ();
