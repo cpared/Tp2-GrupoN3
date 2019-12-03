@@ -14,8 +14,8 @@ import player.Player;
 
 public class ChoosingPiecesBorderPane extends BorderPane {
     private String background;
-
-    public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene, String background ) {
+    private GridPane board;
+    public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene, String background,GridPane board ) {
         this.background = background;
 
 
@@ -35,7 +35,7 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         this.setBottom ( bottom );
 
         //Center Pane
-        GridPane board = this.makeGridPane();
+/*        this.board = this.makeGridPane();*/
         VBox centralContainer = new VBox (board);
 
         Background backgroundGrid = new AlgoChessBackground ( "Image/backggg (2).jpg" ).createBackground ();

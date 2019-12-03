@@ -2,18 +2,14 @@ import Controlers.AcceptButtonEventHandler;
 import Controlers.ButtonsThatChangeScenesEventHandler;
 import Controlers.ExitButtonEventHandler;
 import Controlers.NameEventHandler;
-import Vistas.AlgoChessBackground;
-import Vistas.ButtonView;
-import Vistas.ChoosingPiecesBorderPane;
-import Vistas.Instructions;
+import Vistas.*;
+import boardFx.ButtonCell;
 import game.Game;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,8 +23,10 @@ public class AlgoChess extends Application {
     private ButtonView view = new ButtonView ();
     private Game game = new Game ();
     private Scene scene1;
+    private GridPane board;
 
     public AlgoChess () {
+        this.board = makeGridPane();
     }
 
     public static void main ( String[] args ) {
@@ -170,18 +168,24 @@ public class AlgoChess extends Application {
     public Scene scene02PlayerPlacesPieces (Stage stage){
 
         String background = "-fx-background-color: B22222;";
-        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background);
-
+        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background,this.board);
         Scene scene = new Scene ( pieces );
         return scene;
     }
 
     public Scene scene03Game (Stage stage){
-        Button nope = new Button("nope");
+        final ToggleGroup group = new ToggleGroup();
+        RadioButton movePiece = new RadioButton("nope");
+        movePiece.setText("Este boton va a ser para mover");
+        movePiece.setToggleGroup(group);
+        movePiece.setSelected(true);
+        RadioButton attackPiece = new RadioButton("sip");
+        attackPiece.setText("Este boton va a ser para atacar");
+        attackPiece.setToggleGroup(group);
+        SceneToAttack cosito = new SceneToAttack(this.game, this.board,movePiece,attackPiece);
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
-        VBox a = new VBox ( nope );
-
-        Scene scene = new Scene ( a );
+        
+        Scene scene = new Scene ( cosito );
 
         return scene;
     }
@@ -228,5 +232,26 @@ public class AlgoChess extends Application {
         //stage.show ();
     }
 
-
+    private GridPane makeGridPane() {
+        String green = "-fx-background-color: #008f39;";
+        String red = "-fx-background-color: #ff0000;";
+        String actual = green;
+        AlgoGrid gridPane = new AlgoGrid();
+        for (int i = 0 ; i< 20;i++) {
+            if (i == 10){
+                actual = red;
+            }
+            for (int j = 0; j < 20; j++) {
+                ButtonCell button = new ButtonCell(null,actual,i,j);
+                button.setPrefSize(30, 30);
+                //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                gridPane.add(button,i,j);
+            }
+        }
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        return gridPane;
+    }
 }

@@ -69,8 +69,8 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
     private void innerMethod(Piece piece, Pair<Integer, Integer> pair, Player player) {
         game.playerPlacesPieceOnBoard(player,piece,pair.getKey(),pair.getValue());
         ImageView view = new ImageView ( this.image );
-        view.setFitWidth ( 20 );
-        view.setFitHeight ( 20 );
+        view.setFitWidth ( 15 );
+        view.setFitHeight ( 15 );
         this.button.setGraphic ( view );
         this.pane.setCursor ( Cursor.DEFAULT );
     }
