@@ -50,7 +50,5 @@ public class SceneToAttack extends BorderPane {
                     }
             );
         }
-        this.setCenter(board);
-        this.setLeft(a);
     }
 }

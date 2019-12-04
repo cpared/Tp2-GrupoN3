@@ -14,7 +14,6 @@ import player.Player;
 
 public class ChoosingPiecesBorderPane extends BorderPane {
     private String background;
-    private GridPane board;
     public ChoosingPiecesBorderPane ( Game game, Player player, Stage stage, Scene scene, String background,GridPane board ) {
         this.background = background;
 

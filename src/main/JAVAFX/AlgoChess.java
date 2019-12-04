@@ -2,24 +2,26 @@ import Controlers.*;
 import Vistas.*;
 import boardFx.ButtonCell;
 import game.Game;
+import game.ItIsNotYourTurnException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+import player.Player;
 
 import java.io.File;
 
@@ -185,30 +187,21 @@ public class AlgoChess extends Application {
         return scene;
     }
 
-
-    public Scene scene02PlayerPlacesPieces (Stage stage){
-
-        String background = "-fx-background-color: B22222;";
-        ChoosingPiecesBorderPane pieces = new ChoosingPiecesBorderPane (this.game, game.getPlayer1 (), stage, this.scene03Game ( stage ), background,this.board);
-        Scene scene = new Scene ( pieces );
-        return scene;
-    }
-
-    public Scene scene03Game (Stage stage){
+    public Pair<RadioButton, RadioButton> setGameStage(GridPane grid){
         final ToggleGroup group = new ToggleGroup();
         RadioButton movePiece = new RadioButton("nope");
         movePiece.setText("Este boton va a ser para mover");
         movePiece.setToggleGroup(group);
+        movePiece.setStyle("-fx-background-color: #008f39; -fx-opacity: 1.5;");
         movePiece.setSelected(true);
         RadioButton attackPiece = new RadioButton("sip");
         attackPiece.setText("Este boton va a ser para atacar");
         attackPiece.setToggleGroup(group);
-        SceneToAttack cosito = new SceneToAttack(this.game, this.board,movePiece,attackPiece);
+        attackPiece.setStyle("-fx-background-color: #ED8181; -fx-opacity: 1.5;");
+        SceneToAttack(this.game, grid,movePiece,attackPiece);
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
-        
-        Scene scene = new Scene ( cosito );
 
-        return scene;
+        return new Pair <RadioButton,RadioButton> (movePiece,attackPiece);
     }
 
      public Scene scene02SelectPieces( Stage stage ) throws InterruptedException {
@@ -222,6 +215,10 @@ public class AlgoChess extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 borderPane.setLeft(null);
+                borderPane.setTop(null);
+                borderPane.setBottom(null);
+                Pair <RadioButton,RadioButton> pair = setGameStage(board);
+                borderPane.setLeft(new VBox (pair.getKey(),pair.getValue()));
             }
         });
         start.setMinWidth(150);
@@ -440,5 +437,42 @@ public class AlgoChess extends Application {
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;
+    }
+    private Pair<Integer,Integer> pair = null;
+    public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton){
+        VBox a = new VBox ( moveButton, attackButton);
+        for (Node each:  board.getChildren()){
+            each.setOnMouseClicked(new EventHandler<MouseEvent>() {
+               @Override
+               public void handle(MouseEvent mouseEvent) {
+                   ButtonCell button = (ButtonCell) each;
+                   if (pair == null && !(button.emptyImage())) {
+                       pair = button.getPosition();
+                   }
+                   else if(pair != null) {
+                       Pair<Integer,Integer> newPair = button.getPosition();
+                       try {
+                           privateMethod(newPair, game.getPlayer1());
+                       }
+                       catch(ItIsNotYourTurnException e){
+                           privateMethod(newPair, game.getPlayer2());
+                       }
+                       catch(Exception i){
+                           System.out.println(i);
+                       }
+                   }
+               }
+
+               private void privateMethod(Pair<Integer, Integer> newPair, Player player) {
+                   if (moveButton.isSelected()) {
+                       game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                   }
+                   if (attackButton.isSelected()){
+                       game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                   }
+               }
+           }
+            );
+        }
     }
 }
