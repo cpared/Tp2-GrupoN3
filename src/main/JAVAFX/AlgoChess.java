@@ -168,9 +168,17 @@ public class AlgoChess extends Application {
         borderpane.setBackground(this.background);
         borderpane.setCenter(grid);
 
-        //Events
-        acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02SelectPieces ( stage ), errorText));
-        text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
+        try {
+            //Events
+            acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02SelectPieces ( stage ), errorText));
+            text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
+
+        } catch (InterruptedException e) {
+            // always a good pattern
+            Thread.currentThread().interrupt();
+            // handle the interrupt here by logging or returning or ...
+        }
+
 
         Scene scene = new Scene ( borderpane, 300.0D, 250.0D );
         scene.getStylesheets().add("AlgoStyle.css");
@@ -203,7 +211,7 @@ public class AlgoChess extends Application {
         return scene;
     }
 
-    public Scene scene02SelectPieces( Stage stage ){
+     public Scene scene02SelectPieces( Stage stage ) throws InterruptedException {
 
         BorderPane borderPane = new BorderPane();
 
@@ -286,7 +294,6 @@ public class AlgoChess extends Application {
         playerTwoTextCoin.getStyleClass().add("textStyle");
 
         //Set action on buttons
-        //ESTOY DUPLICANDO CÓDIGO EN LOS EVENTHANDLER
         SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
         soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
 
