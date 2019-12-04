@@ -32,6 +32,7 @@ public class AlgoChess extends Application {
     private Game game = new Game ();
     private Scene scene1;
     private GridPane board;
+    private SelectPieceSceneView scene2 = new SelectPieceSceneView();;
 
     public AlgoChess () {
         this.board = makeGridPane();
@@ -45,8 +46,13 @@ public class AlgoChess extends Application {
     public void start ( Stage stage ) throws Exception {
 
         stage.setTitle ( " AlgoChess " );
+
         this.scene00InitialStage ( stage );
+        //this.scene2.scene02SelectPieces(stage, this.game.getPlayer1().name(), this.game.getPlayer2().name());
+
+
         //this.scene02SelectPieces( stage );
+
         //sceneMainGame( stage );
         //this.sceneFinal ( stage );
     }
@@ -56,7 +62,7 @@ public class AlgoChess extends Application {
 
     }
 
-    public void scene00InitialStage ( Stage stage ) {
+    public void scene00InitialStage ( Stage stage ) throws InterruptedException {
 
         //Set game music
         String path = "src/main/JAVAFX/Image/Metallica-Master_Of_Puppets.mp3";
@@ -135,7 +141,7 @@ public class AlgoChess extends Application {
     }
 
 
-    public Scene scene01PlayerChoosesName (Stage stage){
+    public Scene scene01PlayerChoosesName (Stage stage) throws InterruptedException {
 
         // Text
         TextField text = new TextField ();
@@ -170,19 +176,10 @@ public class AlgoChess extends Application {
         borderpane.setBackground(this.background);
         borderpane.setCenter(grid);
 
-        try {
-            //Events
-            acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , this.scene02SelectPieces ( stage ), errorText));
-            text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
+        acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage , errorText, this.scene2));
+        text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
 
-        } catch (InterruptedException e) {
-            // always a good pattern
-            Thread.currentThread().interrupt();
-            // handle the interrupt here by logging or returning or ...
-        }
-
-
-        Scene scene = new Scene ( borderpane, 300.0D, 250.0D );
+        Scene scene = new Scene ( borderpane );
         scene.getStylesheets().add("AlgoStyle.css");
         return scene;
     }
@@ -204,178 +201,6 @@ public class AlgoChess extends Application {
         return new Pair <RadioButton,RadioButton> (movePiece,attackPiece);
     }
 
-     public Scene scene02SelectPieces( Stage stage ) throws InterruptedException {
-
-        BorderPane borderPane = new BorderPane();
-
-        //buttons
-        Button start = new Button("Start");
-        start.getStyleClass().add("buttonStart");
-        start.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                borderPane.setLeft(null);
-                borderPane.setTop(null);
-                borderPane.setBottom(null);
-                Pair <RadioButton,RadioButton> pair = setGameStage(board);
-                borderPane.setLeft(new VBox (pair.getKey(),pair.getValue()));
-            }
-        });
-         start.setMinWidth(150);
-         start.setMinHeight(40);
-
-
-         Button choosePieceButton = new Button("Choose Piece");
-
-         Button soldierButton = new Button();
-         soldierButton.getStyleClass().add("buttonSoldier");
-         soldierButton.setMinWidth(60);
-         soldierButton.setMinHeight(60);
-
-         Button riderButton = new Button();
-         riderButton.getStyleClass().add("buttonRider");
-         riderButton.setMinWidth(60);
-         riderButton.setMinHeight(60);
-
-         Button healerButton = new Button();
-         healerButton.getStyleClass().add("buttonHealer");
-         healerButton.setMinWidth(60);
-         healerButton.setMinHeight(60);
-
-         Button catapultButton = new Button();
-         catapultButton.getStyleClass().add("buttonCatapult");
-         catapultButton.setMinWidth(60);
-         catapultButton.setMinHeight(60);
-
-         //Images
-         Image attackImage = new Image("Image/broadsword.png");
-         ImageView attackView = new ImageView(attackImage);
-         attackView.setFitHeight(20);
-         attackView.setFitWidth(20);
-
-         Image healthImage = new Image("Image/heart-plus.png");
-         ImageView healthView = new ImageView(healthImage);
-         healthView.setFitHeight(20);
-         healthView.setFitWidth(20);
-
-         Image coinImage = new Image("Image/crown-coin.png");
-         ImageView coinView = new ImageView(coinImage);
-         coinView.setFitHeight(20);
-         coinView.setFitWidth(20);
-
-         Image behaviorImage = new Image("Image/guards.png");
-         ImageView behaviorView = new ImageView(behaviorImage);
-         behaviorView.setFitHeight(20);
-         behaviorView.setFitWidth(20);
-
-         //Text
-         Label attackInformation = new Label("-");
-         Label healthInformation = new Label("-");
-         Label priceInformation = new Label("-");
-         Label information = new Label("-");
-
-        /*
-        Label playerOneText = new Label("Player One: ");
-        Label playerTwoText = new Label("Player Two: ");
-        Label playerOneTextCoin = new Label("Coins: ");
-        Label playerTwoTextCoin = new Label("Coins: ");
-        playerOneText.getStyleClass().add("textStyle");
-        playerTwoText.getStyleClass().add("textStyle");
-        playerOneTextCoin.getStyleClass().add("textStyle");
-        playerTwoTextCoin.getStyleClass().add("textStyle");
-*/
-         Label playerOneText = new Label("Player One: ");
-         Label playerTwoText = new Label("Player Two: ");
-         Label playerOneTextCoin = new Label("Coins: ");
-         Label playerTwoTextCoin = new Label("Coins: ");
-         playerOneText.getStyleClass().add("textStyle");
-         playerTwoText.getStyleClass().add("textStyle");
-         playerOneTextCoin.getStyleClass().add("textStyle");
-         playerTwoTextCoin.getStyleClass().add("textStyle");
-
-         //Set action on buttons
-         SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
-         soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
-
-         RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
-         riderButton.setOnMouseClicked( riderSelectStatsHandler );
-
-         HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
-         healerButton.setOnMouseClicked( healerSelectStatsHandler );
-
-         CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
-         catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
-
-         //Vertical box
-         VBox vbox = new VBox(playerOneText, playerOneTextCoin);
-         vbox.setAlignment(Pos.CENTER_RIGHT);
-
-         VBox vbox1 = new VBox(playerTwoText, playerTwoTextCoin);
-         vbox1.setAlignment(Pos.CENTER_RIGHT);
-
-         Region regionLeft = new Region();
-         HBox.setHgrow(regionLeft, Priority.ALWAYS);
-
-         Region regionRigth = new Region();
-         HBox.setHgrow(regionRigth, Priority.ALWAYS);
-
-         //Horizontal box
-         HBox hbox = new HBox(vbox, regionLeft, vbox1, regionRigth);
-         hbox.setMinHeight(150);
-         hbox.getStyleClass().add("hbox");
-
-         //Pieces grid
-         GridPane piecesGrid = new GridPane();
-         piecesGrid.setMinWidth(250);
-         piecesGrid.setMaxWidth(100);
-         piecesGrid.setPadding(new Insets(10, 10, 10, 10));
-         //piecesGrid.setMargin(soldierButton, new Insets(12,12,12,12));77
-         piecesGrid.setVgap(15);
-         piecesGrid.setHgap(15);
-
-         piecesGrid.add(choosePieceButton, 0,0);
-         piecesGrid.add(soldierButton, 0,1);
-         piecesGrid.add(riderButton, 0,2);
-         piecesGrid.add(healerButton,1,1);
-         piecesGrid.add(catapultButton,1,2);
-
-         piecesGrid.add(attackView,0,4);
-         piecesGrid.add(attackInformation,1,4);
-         piecesGrid.add(healthView,0,5);
-         piecesGrid.add(healthInformation,1,5);
-         piecesGrid.add(coinView,0,6);
-         piecesGrid.add(priceInformation,1,6);
-         piecesGrid.add(behaviorView,0,7);
-         piecesGrid.add(information,1,7);
-         piecesGrid.setAlignment(Pos.CENTER);
-         piecesGrid.getStyleClass().add("piecesGrid");
-
-
-         //Board
-         GridPane board = makeGridPane();
-         board.getStyleClass().add("board");
-
-         //Left toolbar
-
-         //borderPane.setMaxSize(600,400);
-         borderPane.setLeft(piecesGrid);
-         BorderPane.setAlignment(piecesGrid,Pos.CENTER_LEFT);
-         borderPane.setTop(start);
-         BorderPane.setAlignment(start, Pos.BOTTOM_CENTER);
-         BorderPane.setMargin(start, new Insets(12,12,12,12));
-         borderPane.setBackground(this.background);
-         borderPane.setBottom(hbox);
-         borderPane.setCenter(board);
-         BorderPane.setAlignment(board, Pos.CENTER);
-
-         Scene scene = new Scene ( borderPane );
-         stage.setScene(scene);
-         scene.getStylesheets().add("SelectStyle.css");
-/*        stage.setWidth ( 1550 );
-        stage.setHeight ( 830 );
-        stage.show();*/
-         return scene;
-    }
 
     public Scene sceneFinal ( Stage stage ) {
 

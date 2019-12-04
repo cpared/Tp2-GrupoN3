@@ -1,62 +1,90 @@
 .buttonSoldier{
-    -fx-background-color: #168ad8;
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/soldier2.png");
     -fx-background-size: 60px 60px;
-    -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-radius: 30;
-    -fx-cursor: hand;
 }
 
 .buttonSoldier:hover{
-    -fx-border-color: black;
-    -fx-border-radius: 30;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
 }
 
 .buttonRider{
-    -fx-background-color: #168ad8;
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/rider2.png");
-    -fx-background-size: 48px 48px;
-    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 60px;
     -fx-background-position: center;
-    -fx-background-radius: 30;
-    -fx-cursor: hand;
 
 }
 
 .buttonRider:hover{
-    -fx-border-color: black;
-    -fx-border-radius: 30;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
 }
 
 .buttonHealer{
-    -fx-background-color: #168ad8;
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/healer2.png");
     -fx-background-size: 60px 60px;
-    -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-radius: 30;
-    -fx-cursor: hand;
 }
 
 .buttonHealer:hover{
-    -fx-border-color: black;
-    -fx-border-radius: 30;
-}
-
-.buttonCatapult{
-    -fx-background-color: #168ad8;
-    -fx-background-image: url("Image/pieces/catapult2.png");
-    -fx-background-size: 48px 48px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-radius: 30;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
 }
 
+.buttonCatapult{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/catapult2.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-position: center;
+}
+
 .buttonCatapult:hover{
-    -fx-border-color: black;
-    -fx-border-radius: 30;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
 }
 
 .piecesGrid{
@@ -96,4 +124,25 @@
 .board{
     -fx-background-image: url("Image/board.jpg");
     -fx-background-size: cover;
+}
+
+.button-choose{
+    /*-fx-border-color: #fd3d3d3;*/
+    -fx-border-width: 5px;
+    /*-fx-background-color: #b0c4de,linear-gradient(#fafdfe, #e8f5fc),linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);*/
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+
+.button-choose:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
 }

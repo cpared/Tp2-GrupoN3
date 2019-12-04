@@ -1,0 +1,215 @@
+package Vistas;
+
+import Controlers.CatapultSelectStatsHandler;
+import Controlers.HealerSelectStatsHandler;
+import Controlers.RiderSelectStatsHandler;
+import Controlers.SoldierSelectStatsHandler;
+import boardFx.ButtonCell;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+
+public class SelectPieceSceneView {
+
+    private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
+
+    public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois) throws InterruptedException {
+
+        BorderPane borderPane = new BorderPane();
+
+        //buttons
+        Button start = new Button("Start");
+        start.getStyleClass().add("buttonStart");
+        start.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                borderPane.setLeft(null);
+                borderPane.setTop(null);
+                borderPane.setBottom(null);
+                //Pair<RadioButton,RadioButton> pair = setGameStage(board);
+                //borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
+            }
+        });
+        start.setMinWidth(150);
+        start.setMinHeight(40);
+
+
+        Button choosePieceButton = new Button("Choose Piece");
+        choosePieceButton.getStyleClass().add("button-choose");
+        choosePieceButton.setAlignment(Pos.CENTER);
+
+        Button soldierButton = new Button();
+        soldierButton.getStyleClass().add("buttonSoldier");
+        soldierButton.setMinWidth(60);
+        soldierButton.setMinHeight(60);
+
+        Button riderButton = new Button();
+        riderButton.getStyleClass().add("buttonRider");
+        riderButton.setMinWidth(60);
+        riderButton.setMinHeight(60);
+
+        Button healerButton = new Button();
+        healerButton.getStyleClass().add("buttonHealer");
+        healerButton.setMinWidth(60);
+        healerButton.setMinHeight(60);
+
+        Button catapultButton = new Button();
+        catapultButton.getStyleClass().add("buttonCatapult");
+        catapultButton.setMinWidth(60);
+        catapultButton.setMinHeight(60);
+
+        //Images
+        Image attackImage = new Image("Image/broadsword.png");
+        ImageView attackView = new ImageView(attackImage);
+        attackView.setFitHeight(20);
+        attackView.setFitWidth(20);
+
+        Image healthImage = new Image("Image/heart-plus.png");
+        ImageView healthView = new ImageView(healthImage);
+        healthView.setFitHeight(20);
+        healthView.setFitWidth(20);
+
+        Image coinImage = new Image("Image/crown-coin.png");
+        ImageView coinView = new ImageView(coinImage);
+        coinView.setFitHeight(20);
+        coinView.setFitWidth(20);
+
+        Image behaviorImage = new Image("Image/guards.png");
+        ImageView behaviorView = new ImageView(behaviorImage);
+        behaviorView.setFitHeight(20);
+        behaviorView.setFitWidth(20);
+
+        //Text
+        Label attackInformation = new Label("-");
+        Label healthInformation = new Label("-");
+        Label priceInformation = new Label("-");
+        Label information = new Label("-");
+
+        Label playerOneText = new Label("Player One: " + namePlayerOne);
+        Label playerTwoText = new Label("Player Two: " + namePlayerTwo);
+        Label playerOneTextCoin = new Label("Coins: " + Integer.toString(playerOneCois));
+        Label playerTwoTextCoin = new Label("Coins: " + Integer.toString(playerTwoCois));
+        playerOneText.getStyleClass().add("textStyle");
+        playerTwoText.getStyleClass().add("textStyle");
+        playerOneTextCoin.getStyleClass().add("textStyle");
+        playerTwoTextCoin.getStyleClass().add("textStyle");
+
+
+        //Set action on buttons
+        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
+
+        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        riderButton.setOnMouseClicked( riderSelectStatsHandler );
+
+        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        healerButton.setOnMouseClicked( healerSelectStatsHandler );
+
+        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
+
+        //Vertical box
+        VBox vbox = new VBox(playerOneText, playerOneTextCoin);
+        vbox.setAlignment(Pos.CENTER_RIGHT);
+
+        VBox vbox1 = new VBox(playerTwoText, playerTwoTextCoin);
+        vbox1.setAlignment(Pos.CENTER_RIGHT);
+
+        Region regionLeft = new Region();
+        HBox.setHgrow(regionLeft, Priority.ALWAYS);
+
+        Region regionRigth = new Region();
+        HBox.setHgrow(regionRigth, Priority.ALWAYS);
+
+        //Horizontal box
+        HBox hbox = new HBox(vbox, regionLeft, vbox1, regionRigth);
+        hbox.setMinHeight(150);
+        hbox.getStyleClass().add("hbox");
+
+        //Pieces grid
+        GridPane piecesGrid = new GridPane();
+        piecesGrid.setMinWidth(250);
+        piecesGrid.setMaxWidth(100);
+        piecesGrid.setPadding(new Insets(10, 10, 10, 10));
+        //piecesGrid.setMargin(soldierButton, new Insets(12,12,12,12));77
+        piecesGrid.setVgap(15);
+        piecesGrid.setHgap(15);
+
+        piecesGrid.add(choosePieceButton, 0,0);
+        piecesGrid.add(soldierButton, 0,1);
+        piecesGrid.add(riderButton, 0,2);
+        piecesGrid.add(healerButton,1,1);
+        piecesGrid.add(catapultButton,1,2);
+
+        piecesGrid.add(attackView,0,4);
+        piecesGrid.add(attackInformation,1,4);
+        piecesGrid.add(healthView,0,5);
+        piecesGrid.add(healthInformation,1,5);
+        piecesGrid.add(coinView,0,6);
+        piecesGrid.add(priceInformation,1,6);
+        piecesGrid.add(behaviorView,0,7);
+        piecesGrid.add(information,1,7);
+        piecesGrid.setAlignment(Pos.CENTER);
+        piecesGrid.getStyleClass().add("piecesGrid");
+
+
+        //Board
+        GridPane board = makeGridPane();
+        board.getStyleClass().add("board");
+
+        //Left toolbar
+
+        //borderPane.setMaxSize(600,400);
+        borderPane.setLeft(piecesGrid);
+        BorderPane.setAlignment(piecesGrid,Pos.CENTER_LEFT);
+        borderPane.setTop(start);
+        BorderPane.setAlignment(start, Pos.BOTTOM_CENTER);
+        BorderPane.setMargin(start, new Insets(12,12,12,12));
+        borderPane.setBackground(this.background);
+        borderPane.setBottom(hbox);
+        borderPane.setCenter(board);
+        BorderPane.setAlignment(board, Pos.CENTER);
+
+        Scene scene = new Scene ( borderPane );
+        stage.setScene(scene);
+        scene.getStylesheets().add("SelectStyle.css");
+/*        stage.setWidth ( 1550 );
+        stage.setHeight ( 830 );
+        stage.show();*/
+        return scene;
+    }
+
+private GridPane makeGridPane() {
+    String green = "-fx-background-color: #0000FF; -fx-opacity: 0.8;";
+    String red = "-fx-background-color: #FFFA00; -fx-opacity: 0.6;";
+    String actual = green;
+    AlgoGrid gridPane = new AlgoGrid();
+    for (int i = 0 ; i< 20;i++) {
+        if (i == 10){
+            actual = red;
+        }
+        for (int j = 0; j < 20; j++) {
+            ButtonCell button = new ButtonCell(null,actual,i,j);
+            button.setPrefSize(30, 30);
+            //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+            //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+            gridPane.add(button,i,j);
+        }
+    }
+    gridPane.setHgap(10);
+    gridPane.setVgap(10);
+    gridPane.setPadding(new Insets(20, 20, 20, 20));
+    gridPane.setAlignment(Pos.CENTER);
+    return gridPane;
+}
+}
