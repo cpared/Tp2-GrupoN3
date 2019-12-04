@@ -1,0 +1,99 @@
+.buttonSoldier{
+    -fx-background-color: #168ad8;
+    -fx-background-image: url("Image/pieces/soldier2.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.buttonSoldier:hover{
+    -fx-border-color: black;
+    -fx-border-radius: 30;
+}
+
+.buttonRider{
+    -fx-background-color: #168ad8;
+    -fx-background-image: url("Image/pieces/rider2.png");
+    -fx-background-size: 48px 48px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+
+}
+
+.buttonRider:hover{
+    -fx-border-color: black;
+    -fx-border-radius: 30;
+}
+
+.buttonHealer{
+    -fx-background-color: #168ad8;
+    -fx-background-image: url("Image/pieces/healer2.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.buttonHealer:hover{
+    -fx-border-color: black;
+    -fx-border-radius: 30;
+}
+
+.buttonCatapult{
+    -fx-background-color: #168ad8;
+    -fx-background-image: url("Image/pieces/catapult2.png");
+    -fx-background-size: 48px 48px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.buttonCatapult:hover{
+    -fx-border-color: black;
+    -fx-border-radius: 30;
+}
+
+.piecesGrid{
+    -fx-background-color: #4a4a4a;
+    -fx-border-color: black;
+}
+
+.buttonStart{
+    -fx-background-color:
+            linear-gradient(#f0ff35, #a9ff00),
+            radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    /*-fx-background-radius: 6, 5;*/
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+    -fx-font-size: 25;
+    -fx-cursor: hand;
+    -fx-border-width: 3;
+}
+
+.buttonStart:hover{
+    -fx-background-color:
+        linear-gradient(rgba(240, 255, 53, 0.61), rgba(169, 255, 0, 0.62)),
+        radial-gradient(center 50% -40%, radius 200%, rgba(184, 238, 54, 0.4) 45%, rgba(128, 200, 0, 0.34) 50%);
+}
+
+.hbox{
+    -fx-background-color: linear-gradient(rgba(42,42,42,1) 33%, rgba(74,74,74,1) 78%);
+    -fx-border-color: black;
+}
+
+.textStyle{
+    -fx-font-size:30;
+    -fx-text-fill: white;
+}
+
+.board{
+    -fx-background-image: url("Image/board.jpg");
+    -fx-background-size: cover;
+}

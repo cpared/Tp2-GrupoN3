@@ -9,7 +9,7 @@ import team.PieceDoesNotBelongToTeamException;
 import team.Team;
 
 public class Player {
-    private String name;
+    private String name = "";
     private Team team;
     private PieceFactory factory;
 

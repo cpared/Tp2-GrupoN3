@@ -13,8 +13,8 @@ import team.*;
 
 public class Game {
 
-    private Player player1;
-    private Player player2;
+    private Player player1 = null;
+    private Player player2 = null;
     private GameState state;
     private Player available;
 

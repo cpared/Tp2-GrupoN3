@@ -28,11 +28,9 @@ public class ChoosePieceButtonEventHandler implements EventHandler<InputEvent> {
     }
 
     @Override
-
     public void handle ( InputEvent event ) {
         if (event.getClass ().equals ( KeyEvent.class ))this.handleKey ( (KeyEvent) event );
         else if (event.getClass ().equals ( MouseEvent.class )) this.handleMouse ( (MouseEvent) event );
-
     }
 
     public void handleKey ( KeyEvent event ) {

@@ -35,7 +35,7 @@ public class AcceptButtonEventHandler implements EventHandler<ActionEvent> {
 
         if (this.textField.getText ().trim ().equals ( "" )) {
             this.textField.setPromptText ( "Debe ingresar un nombre" );
-            this.errorText.setText("Oops, empty message. Please try again");
+            this.errorText.setText("Oops, empty name is not allow. Please try again");
             this.errorText.setStyle("-fx-text-fill: #FF0000");
         } else {
             this.game.newPlayer ( this.textField.getText () );
