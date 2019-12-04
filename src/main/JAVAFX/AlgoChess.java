@@ -32,7 +32,7 @@ public class AlgoChess extends Application {
     private Game game = new Game ();
     private Scene scene1;
     private GridPane board;
-    private SelectPieceSceneView scene2 = new SelectPieceSceneView();;
+    private SelectPieceSceneView scene2 = new SelectPieceSceneView();
 
     public AlgoChess () {
         this.board = makeGridPane();

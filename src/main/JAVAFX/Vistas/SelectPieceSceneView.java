@@ -4,27 +4,33 @@ import Controlers.CatapultSelectStatsHandler;
 import Controlers.HealerSelectStatsHandler;
 import Controlers.RiderSelectStatsHandler;
 import Controlers.SoldierSelectStatsHandler;
-import boardFx.ButtonCell;
+import boardFx.*;
+import game.Game;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import piece.Piece;
+import player.Player;
 
 public class SelectPieceSceneView {
-
+    private ButtonPiece lastClicked = null;
+    private ButtonPiece lastChoosed = null;
+    private Label playerOneTextCoin;
+    private Label playerTwoTextCoin;
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
-
-    public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois) throws InterruptedException {
-
+    private Game game;
+    public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois,Game game) throws InterruptedException {
+        this.game = game;
         BorderPane borderPane = new BorderPane();
 
         //buttons
@@ -45,25 +51,32 @@ public class SelectPieceSceneView {
 
 
         Button choosePieceButton = new Button("Choose Piece");
+        choosePieceButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                lastChoosed = lastClicked;
+
+            }
+        });
         choosePieceButton.getStyleClass().add("button-choose");
         choosePieceButton.setAlignment(Pos.CENTER);
 
-        Button soldierButton = new Button();
+        ButtonPiece soldierButton = new ButtonPieceSoldier();
         soldierButton.getStyleClass().add("buttonSoldier");
         soldierButton.setMinWidth(60);
         soldierButton.setMinHeight(60);
-
-        Button riderButton = new Button();
+        lastClicked = soldierButton;
+        ButtonPiece riderButton = new ButtonPieceRider();
         riderButton.getStyleClass().add("buttonRider");
         riderButton.setMinWidth(60);
         riderButton.setMinHeight(60);
 
-        Button healerButton = new Button();
+        ButtonPiece healerButton = new ButtonPieceRider();
         healerButton.getStyleClass().add("buttonHealer");
         healerButton.setMinWidth(60);
         healerButton.setMinHeight(60);
 
-        Button catapultButton = new Button();
+        ButtonPiece catapultButton = new ButtonPieceCatapult();
         catapultButton.getStyleClass().add("buttonCatapult");
         catapultButton.setMinWidth(60);
         catapultButton.setMinHeight(60);
@@ -97,8 +110,9 @@ public class SelectPieceSceneView {
 
         Label playerOneText = new Label("Player One: " + namePlayerOne);
         Label playerTwoText = new Label("Player Two: " + namePlayerTwo);
-        Label playerOneTextCoin = new Label("Coins: " + Integer.toString(playerOneCois));
-        Label playerTwoTextCoin = new Label("Coins: " + Integer.toString(playerTwoCois));
+        playerOneTextCoin = new Label("Coins: " + Integer.toString(playerOneCois));
+        playerTwoTextCoin = new Label("Coins: " + Integer.toString(playerTwoCois));
+        playerTwoTextCoin.getText();
         playerOneText.getStyleClass().add("textStyle");
         playerTwoText.getStyleClass().add("textStyle");
         playerOneTextCoin.getStyleClass().add("textStyle");
@@ -166,6 +180,7 @@ public class SelectPieceSceneView {
         //Board
         GridPane board = makeGridPane();
         board.getStyleClass().add("board");
+        setBoardCellAction(board);
 
         //Left toolbar
 
@@ -189,27 +204,59 @@ public class SelectPieceSceneView {
         return scene;
     }
 
-private GridPane makeGridPane() {
-    String green = "-fx-background-color: #0000FF; -fx-opacity: 0.8;";
-    String red = "-fx-background-color: #FFFA00; -fx-opacity: 0.6;";
-    String actual = green;
-    AlgoGrid gridPane = new AlgoGrid();
-    for (int i = 0 ; i< 20;i++) {
-        if (i == 10){
-            actual = red;
-        }
-        for (int j = 0; j < 20; j++) {
-            ButtonCell button = new ButtonCell(null,actual,i,j);
-            button.setPrefSize(30, 30);
-            //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
-            //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
-            gridPane.add(button,i,j);
+    private void setBoardCellAction(GridPane board) {
+        for (Node node: board.getChildren()){
+            setButtonCellAction((ButtonCell) node);
         }
     }
-    gridPane.setHgap(10);
-    gridPane.setVgap(10);
-    gridPane.setPadding(new Insets(20, 20, 20, 20));
-    gridPane.setAlignment(Pos.CENTER);
-    return gridPane;
-}
+
+    private void setButtonCellAction(ButtonCell button) {
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!(lastChoosed == null)){
+                    Player player = game.getAvailablePlayer();
+                    try{
+                        Piece piece = lastChoosed.choosePiece(game,player);
+                        Pair <Integer,Integer> pair = button.getPosition();
+                        game.playerPlacesPieceOnBoard(player,piece,pair.getKey(),pair.getValue());
+                        button.getStyleClass().add("buttonHealer");
+                        lastChoosed = null;
+                        playerOneTextCoin.setText(getCoins(game,game.getPlayer1()));
+                        playerTwoTextCoin.setText(getCoins(game,game.getPlayer2()));
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+            }
+        });
+    }
+
+    private GridPane makeGridPane() {
+        String green = "-fx-background-color: #0000FF; -fx-opacity: 0.8;";
+        String red = "-fx-background-color: #FFFA00; -fx-opacity: 0.6;";
+        String actual = green;
+        AlgoGrid gridPane = new AlgoGrid();
+        for (int i = 0 ; i< 20;i++) {
+            if (i == 10){
+                actual = red;
+            }
+            for (int j = 0; j < 20; j++) {
+                ButtonCell button = new ButtonCell(null,actual,i,j);
+                button.setPrefSize(30, 30);
+                //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
+                gridPane.add(button,i,j);
+            }
+        }
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setAlignment(Pos.CENTER);
+        return gridPane;
+    }
+    private String getCoins(Game game, Player player){
+        return "Coins" + Integer.toString(game.getPoints(player));
+    }
 }

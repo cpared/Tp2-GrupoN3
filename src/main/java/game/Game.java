@@ -1,15 +1,13 @@
 package game;
 
-import Face.*;
-
+import board.Board;
 import move.Builder;
 import move.Move;
+import piece.Piece;
 import player.Player;
-import board.*;
-import piece.*;
 import player.PlayerHas20PointsOnlyException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
-import team.*;
+import team.NoMembersLeftException;
 
 public class Game {
 
@@ -105,7 +103,6 @@ public class Game {
     private boolean isAvailablePlayer ( Player player ) {
         return (this.available.equals ( player ));
     }
-
     private void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
         if (this.player1.equals ( this.available )) this.available = this.player2;
@@ -124,7 +121,9 @@ public class Game {
     public Board getBoard () {
         return this.state.getBoard ();
     }
-
+    public Player getAvailablePlayer(){
+        return available;
+    }
     //These getters are for the views.
     public int getPoints ( Player player ) {
         return this.state.getPoints ( player );
