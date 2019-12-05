@@ -1,12 +1,8 @@
 package Controlers;
 
-import boardFx.ButtonCell;
+import Vistas.SelectPieceSceneView;
 import boardFx.ButtonPiece;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.ImageCursor;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
-    private ButtonPiece clicked;
+    private SelectPieceSceneView scene;
     private final ButtonPiece button;
     private String attack = "10";
     private String cost = "1";
@@ -27,13 +23,13 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
     private Label pieceInfo;
     private ImageView attackImageChange;
 
-    public SoldierSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, ButtonPiece clicked, ButtonPiece soldierButton){
+    public SoldierSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, SelectPieceSceneView scene, ButtonPiece soldierButton){
         this.attackInfo =  attackInformation;
         this.healthInfo = healthInformation;
         this.priceInfo = priceInformation;
         this.pieceInfo = information;
         this.attackImageChange = attackImage;
-        this.clicked = clicked;
+        this.scene = scene;
         this.button = soldierButton;
     }
 
@@ -48,11 +44,9 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
             this.priceInfo.setTextFill(Color.WHITE);
             this.pieceInfo.setText(this.info);
             this.pieceInfo.setTextFill(Color.WHITE);
-
+            scene.setLastClicked(button);
             Image url = new Image("Image/broadsword.png");
             this.attackImageChange.setImage(url);
-
-            this.clicked = this.button;
         }
     }
 

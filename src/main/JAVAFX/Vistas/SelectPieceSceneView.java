@@ -64,13 +64,12 @@ public class SelectPieceSceneView {
         soldierButton.getStyleClass().add("buttonSoldier");
         soldierButton.setMinWidth(60);
         soldierButton.setMinHeight(60);
-        lastClicked = soldierButton;
         ButtonPiece riderButton = new ButtonPieceRider();
         riderButton.getStyleClass().add("buttonRider");
         riderButton.setMinWidth(60);
         riderButton.setMinHeight(60);
 
-        ButtonPiece healerButton = new ButtonPieceRider();
+        ButtonPiece healerButton = new ButtonPieceHealer();
         healerButton.getStyleClass().add("buttonHealer");
         healerButton.setMinWidth(60);
         healerButton.setMinHeight(60);
@@ -119,16 +118,16 @@ public class SelectPieceSceneView {
 
 
         //Set action on buttons
-        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, soldierButton);
+        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this, soldierButton);
         soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
 
-        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, riderButton);
+        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this, riderButton);
         riderButton.setOnMouseClicked( riderSelectStatsHandler );
 
-        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, healerButton);
+        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this, healerButton);
         healerButton.setOnMouseClicked( healerSelectStatsHandler );
 
-        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, catapultButton);
+        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this, catapultButton);
         catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
 
         //Vertical box
@@ -218,7 +217,7 @@ public class SelectPieceSceneView {
                         Piece piece = lastChoosed.choosePiece(game,player);
                         Pair <Integer,Integer> pair = button.getPosition();
                         game.playerPlacesPieceOnBoard(player,piece,pair.getKey(),pair.getValue());
-                        button.getStyleClass().add("buttonHealer");
+                        button.getStyleClass().add(lastChoosed.getString(game,game.getAvailablePlayer()));
                         lastChoosed = null;
                         playerOneTextCoin.setText(getCoins(game,game.getPlayer1()));
                         playerTwoTextCoin.setText(getCoins(game,game.getPlayer2()));
@@ -272,21 +271,21 @@ public class SelectPieceSceneView {
         attackPiece.setToggleGroup(group);
         attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
         attackPiece.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                        @Override
-                                        public void handle(MouseEvent mouseEvent) {
-                                            attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
-                                            movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
-                                        }
-                                    }
-        );
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
+                                    movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
+                                }
+                            }
+);
 
         movePiece.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                        @Override
-                                        public void handle(MouseEvent mouseEvent) {
-                                            movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
-                                            attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
-                                        }
-                                    }
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
+                                    attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
+                                }
+                            }
         );
 
 
@@ -411,4 +410,7 @@ public class SelectPieceSceneView {
     }
 
 
+    public void setLastClicked(ButtonPiece button) {
+        lastClicked = button;
+    }
 }

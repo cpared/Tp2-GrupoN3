@@ -129,9 +129,9 @@ class GameTest {
 
         game.playerIsReadyToPlay ( game.getPlayer1 ( ));
 
-
+        Move move1 = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
         //Act
-        Piece removed = game.removePieceFromBoard ( game.getPlayer1 (), 2, 0 );
+        Piece removed = game.getPiece ( move1);
         //Assert
         Assertions.assertEquals ( piece, removed );
     }
@@ -159,44 +159,5 @@ class GameTest {
         Piece removed = game.getPiece ( move );
         //Assert
         Assertions.assertEquals ( piece, removed );
-    }
-
-    @Test
-    void test09GameIsWonWhenAPlayerHasNoPiecesLeft () throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException, PlayerHas20PointsOnlyException, GameHasEndedException {
-        //Assemble
-        Game game = new Game ();
-        game.newPlayer ( "Rose" );
-        game.newPlayer ( "Doyle" );
-        Player player1 = game.getPlayer1 ();
-        Player player2 = game.getPlayer2 ();
-        Piece piece = game.playerChoosesCatapult ( player1 );
-        game.playerPlacesPieceOnBoard ( player1, piece, 2, 0 );
-
-        Piece piece3 = game.playerChoosesSoldier ( player2 );
-        game.playerPlacesPieceOnBoard ( player2, piece3, 11, 0 );
-
-        Piece piece4 = game.playerChoosesCatapult ( player1 );
-        game.playerPlacesPieceOnBoard ( player1, piece4, 3, 0 );
-        game.playerIsReadyToPlay ( player1 );
-        Piece piece5 = game.playerChoosesSoldier ( player2 );
-        game.playerPlacesPieceOnBoard ( player2, piece5, 12, 0 );
-        game.playerIsReadyToPlay ( player2 );
-
-        //Act
-
-        game.playerAttacks ( player1, 2, 0, 11, 0 );
-        game.playerMovesPieceOnBoard ( player2, 3,0,3,1 );
-        game.playerAttacks ( player1, 2, 0, 11, 0 );
-        game.playerMovesPieceOnBoard ( player2, 3,1,3,0 );
-        game.playerAttacks ( player1, 2, 0, 11, 0 );
-        game.playerMovesPieceOnBoard ( player2, 3,0,3,1 );
-        game.playerAttacks ( player1, 2, 0, 11, 0 );
-        game.playerMovesPieceOnBoard ( player2, 3,1,3,0 );
-        try {
-            game.playerMovesPieceOnBoard ( player1, 2, 0, 3, 2 );
-        } catch (GameHasEndedException e) {
-            //Assert
-            Assertions.assertTrue ( game.isNumberOfMembersOnTeam ( player2, 0 ) );
-        }
     }
 }

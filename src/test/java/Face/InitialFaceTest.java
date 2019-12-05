@@ -130,7 +130,7 @@ class InitialFaceTest {
     }
 
     @Test
-    void test010ABattalionCantBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
+    void test09ABattalionCantBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
@@ -160,24 +160,7 @@ class InitialFaceTest {
     }
 
     @Test
-    void test11APieceCanBeMovedOnTheBoardInInitialFace () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Team team = new Team ( 1 );
-        Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
-        Piece piece = initial.playerChoosesCatapult ();
-        Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
-        initial.playerPlacesPieceOnBoard ( piece, move1 );
-        //Act
-        Move move2 = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 2 ).ToColumn ( 2 ).build ();
-        initial.playerMovesPieceOnBoard ( move2 );
-        //Assert
-        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 2 ).build ();
-        assertEquals ( piece, initial.removeDeadPieceFromBoard( move ) );
-    }
-
-    @Test
-    void test012PiecesCantBeAttackInInitialFace () throws PlayerHas20PointsOnlyException {
+    void test010PiecesCantBeAttackInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );

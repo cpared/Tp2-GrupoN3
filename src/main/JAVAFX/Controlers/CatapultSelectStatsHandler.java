@@ -1,5 +1,6 @@
 package Controlers;
 
+import Vistas.SelectPieceSceneView;
 import boardFx.ButtonPiece;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -11,7 +12,7 @@ import javafx.scene.paint.Color;
 
 public class CatapultSelectStatsHandler implements EventHandler<InputEvent> {
 
-    private ButtonPiece clicked;
+    private SelectPieceSceneView scene;
     private  ButtonPiece button;
     private String attack = "20";
     private String cost = "5";
@@ -23,13 +24,13 @@ public class CatapultSelectStatsHandler implements EventHandler<InputEvent> {
     private Label pieceInfo;
     private ImageView attackImageChange;
 
-    public CatapultSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, ButtonPiece clicked, ButtonPiece catapult){
+    public CatapultSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, SelectPieceSceneView scene, ButtonPiece catapult){
         this.attackInfo =  attackInformation;
         this.healthInfo = healthInformation;
         this.priceInfo = priceInformation;
         this.pieceInfo = information;
         this.attackImageChange = attackImage;
-        this.clicked = clicked;
+        this.scene = scene;
         this.button = catapult;
     }
 
@@ -48,8 +49,7 @@ public class CatapultSelectStatsHandler implements EventHandler<InputEvent> {
             Image url = new Image("Image/crossbow.png");
             this.attackImageChange.setImage(url);
 
-            this.clicked = this.button;
-            this.clicked.getStyleClass().add("buttonCatapult");
+            scene.setLastClicked(button);
         }
     }
 }

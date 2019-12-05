@@ -7,11 +7,9 @@ import team.Team;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.fail;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CatapultTest {
     private Team team = new Team (1);
@@ -87,14 +85,9 @@ class CatapultTest {
         //Assemble
         Piece piece = new Catapult ( this.team );
 
-        //Act
-        try{
-            piece.receiveAttacked ( 120 );
-            fail();
-        }
-        catch(IAmDeadException e){
-            assert true;
-        }
+    //Act
+        piece.receiveAttacked ( 120 );
+        assertFalse(piece.isAlive());
     }
 
 

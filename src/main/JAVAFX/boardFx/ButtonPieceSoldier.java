@@ -17,11 +17,6 @@ public class ButtonPieceSoldier extends ButtonPiece {
 
     @Override
     public String getString(Game game, Player player){
-        if(game.getPlayer1() == player){
-            return "Image/Piece/soldier.png";
+        return "buttonSoldier";
         }
-        else{
-            return "Image/Piece/soldier2.png";
-        }
-    }
 }
