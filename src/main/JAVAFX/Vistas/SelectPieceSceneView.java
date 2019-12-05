@@ -31,6 +31,8 @@ public class SelectPieceSceneView {
     private Label playerTwoTextCoin;
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private Game game;
+
+
     public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois,Game game) throws InterruptedException {
         this.game = game;
         BorderPane borderPane = new BorderPane();
@@ -41,11 +43,7 @@ public class SelectPieceSceneView {
         start.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                borderPane.setLeft(null);
-                borderPane.setTop(null);
-                borderPane.setBottom(null);
-                Pair<RadioButton, RadioButton> pair = setGameStage(board);
-                borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
+                changeScene(board, borderPane);
             }
         });
         start.setMinWidth(150);
@@ -235,13 +233,13 @@ public class SelectPieceSceneView {
     }
 
     private GridPane makeGridPane() {
-        String green = "-fx-background-color: #0000FF; -fx-opacity: 0.8;";
-        String red = "-fx-background-color: #FFFA00; -fx-opacity: 0.6;";
-        String actual = green;
+        String red = "-fx-background-color: #D53032; -fx-opacity: 0.7;";
+        String blue = "-fx-background-color: #2D3C68; -fx-opacity: 0.9;";
+        String actual = red;
         AlgoGrid gridPane = new AlgoGrid();
         for (int i = 0 ; i< 20;i++) {
             if (i == 10){
-                actual = red;
+                actual = blue;
             }
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell(null,actual,i,j);
@@ -264,21 +262,46 @@ public class SelectPieceSceneView {
     public Pair<RadioButton, RadioButton> setGameStage(GridPane grid) {
         final ToggleGroup group = new ToggleGroup();
         RadioButton movePiece = new RadioButton("nope");
-        movePiece.setText("Este boton va a ser para mover");
+        movePiece.setText("Mover");
         movePiece.setToggleGroup(group);
-        movePiece.setStyle("-fx-background-color: #008f39; -fx-opacity: 1.5;");
+        movePiece.setStyle(" -fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
         movePiece.setSelected(true);
+        movePiece.setPadding(new Insets(0,0,0,1100));
+
         RadioButton attackPiece = new RadioButton("sip");
-        attackPiece.setText("Este boton va a ser para atacar");
+        attackPiece.setText("Atacar");
         attackPiece.setToggleGroup(group);
-        attackPiece.setStyle("-fx-background-color: #ED8181; -fx-opacity: 1.5;");
+        attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
+        attackPiece.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent mouseEvent) {
+                                            attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
+                                            movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
+                                        }
+                                    }
+        );
+
+        movePiece.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent mouseEvent) {
+                                            movePiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;");
+                                            attackPiece.setStyle("-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;");
+                                        }
+                                    }
+        );
+
+
         SceneToAttack(this.game, grid, movePiece, attackPiece);
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
+
+
 
         return new Pair<RadioButton, RadioButton>(movePiece, attackPiece);
     }
     private Pair<Integer,Integer> pair = null;
     private ButtonCell lastButton = null;
+
+
     public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton){
         VBox a = new VBox ( moveButton, attackButton);
         for (Node each:  board.getChildren()){
@@ -314,9 +337,84 @@ public class SelectPieceSceneView {
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
                        }
+
+
+
                    }
                }
             );
         }
     }
+
+
+    private void changeScene (GridPane board, BorderPane borderPane){
+       // borderPane.setLeft(null);
+        borderPane.setTop(null);
+        borderPane.setBottom(null);
+        Pair<RadioButton, RadioButton> pair = setGameStage(board);
+        //borderPane.setTop(new VBox(pair.getKey(),pair.getValue()));
+
+
+        //top
+        GridPane gridPane = new GridPane();
+        gridPane.add(pair.getValue(), 0,0);
+        gridPane.add(pair.getKey(), 1,0);
+        gridPane.getStyleClass().add("hbox");
+        borderPane.setTop(gridPane);
+
+        //bottom
+
+        Label playerOneText = new Label("Player One: " + this.game.getPlayer1().name());
+        Label playerTwoText = new Label("Player Two: " + this.game.getPlayer2().name());
+        playerOneText.getStyleClass().add("textStyle");
+        playerTwoText.getStyleClass().add("textStyle");
+
+        if(game.getAvailablePlayer().name().equals(playerOneText.getText())){
+            playerOneText.setStyle("-fx-font-size:30; -fx-text-fill: green;");
+            playerOneText.setStyle("-fx-font-size:30; -fx-text-fill: white;");
+        } else {
+            playerTwoText.setStyle("-fx-font-size:30; -fx-text-fill: green;");
+            playerTwoText.setStyle("-fx-font-size:30; -fx-text-fill: white;");
+        }
+
+        VBox vbox = new VBox(playerOneText);
+        vbox.setAlignment(Pos.CENTER_RIGHT);
+
+        VBox vbox1 = new VBox(playerTwoText);
+        vbox1.setAlignment(Pos.CENTER_RIGHT);
+
+        Region regionLeft = new Region();
+        HBox.setHgrow(regionLeft, Priority.ALWAYS);
+
+        Region regionRigth = new Region();
+        HBox.setHgrow(regionRigth, Priority.ALWAYS);
+
+        //Horizontal box
+        HBox hbox = new HBox(vbox, regionLeft, vbox1, regionRigth);
+        hbox.setMinHeight(150);
+        hbox.getStyleClass().add("hbox");
+        borderPane.setBottom(hbox);
+
+
+
+/*        HBox hbox = (HBox) borderPane.getBottom();
+
+        VBox vBox1 = (VBox) hbox.getChildren().get(0);
+        VBox vBox2 = (VBox) hbox.getChildren().get(2);
+
+        HBox newHBox = new HBox(vBox1.getChildren().get(0), vBox2.getChildren().get(0));
+        hbox.setMinHeight(150);
+        hbox.getStyleClass().add("hbox");
+        borderPane.setBottom(newHBox);*/
+
+
+        //borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
+
+//        GridPane gridPane = (GridPane) borderPane.getLeft();
+//
+//        gridPane.getColumnConstraints().removeAll();
+//        gridPane.getRowConstraints().removeAll();
+    }
+
+
 }
