@@ -13,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,7 +34,7 @@ public class SelectPieceSceneView {
     public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois,Game game) throws InterruptedException {
         this.game = game;
         BorderPane borderPane = new BorderPane();
-
+        GridPane board = makeGridPane();
         //buttons
         Button start = new Button("Start");
         start.getStyleClass().add("buttonStart");
@@ -42,8 +44,8 @@ public class SelectPieceSceneView {
                 borderPane.setLeft(null);
                 borderPane.setTop(null);
                 borderPane.setBottom(null);
-                //Pair<RadioButton,RadioButton> pair = setGameStage(board);
-                //borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
+                Pair<RadioButton, RadioButton> pair = setGameStage(board);
+                borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
             }
         });
         start.setMinWidth(150);
@@ -178,7 +180,6 @@ public class SelectPieceSceneView {
 
 
         //Board
-        GridPane board = makeGridPane();
         board.getStyleClass().add("board");
         setBoardCellAction(board);
 
@@ -258,5 +259,64 @@ public class SelectPieceSceneView {
     }
     private String getCoins(Game game, Player player){
         return "Coins" + Integer.toString(game.getPoints(player));
+    }
+
+    public Pair<RadioButton, RadioButton> setGameStage(GridPane grid) {
+        final ToggleGroup group = new ToggleGroup();
+        RadioButton movePiece = new RadioButton("nope");
+        movePiece.setText("Este boton va a ser para mover");
+        movePiece.setToggleGroup(group);
+        movePiece.setStyle("-fx-background-color: #008f39; -fx-opacity: 1.5;");
+        movePiece.setSelected(true);
+        RadioButton attackPiece = new RadioButton("sip");
+        attackPiece.setText("Este boton va a ser para atacar");
+        attackPiece.setToggleGroup(group);
+        attackPiece.setStyle("-fx-background-color: #ED8181; -fx-opacity: 1.5;");
+        SceneToAttack(this.game, grid, movePiece, attackPiece);
+        //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
+
+        return new Pair<RadioButton, RadioButton>(movePiece, attackPiece);
+    }
+    private Pair<Integer,Integer> pair = null;
+    private ButtonCell lastButton = null;
+    public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton){
+        VBox a = new VBox ( moveButton, attackButton);
+        for (Node each:  board.getChildren()){
+            each.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                   @Override
+                   public void handle(MouseEvent mouseEvent) {
+                       ButtonCell button = (ButtonCell) each;
+                       if (pair == null && !(button.emptyImage())) {
+                           pair = button.getPosition();
+                           lastButton = button;
+                       }
+                       else if(pair != null) {
+                           Pair<Integer,Integer> newPair = button.getPosition();
+                           try {
+                               privateMethod(newPair, game.getAvailablePlayer(),button);
+                               lastButton = null;
+                               pair = null;
+                           }
+                           catch(Exception i){
+                               System.out.println(i);
+                               lastButton = null;
+                               pair = null;
+                           }
+                       }
+                   }
+
+                   private void privateMethod(Pair<Integer, Integer> newPair, Player player,ButtonCell button) {
+                       if (moveButton.isSelected()) {
+                           game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                           lastButton.getStyleClass().removeAll();
+                           button.getStyleClass().add("buttonHealer");
+                       }
+                       if (attackButton.isSelected()){
+                           game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                       }
+                   }
+               }
+            );
+        }
     }
 }

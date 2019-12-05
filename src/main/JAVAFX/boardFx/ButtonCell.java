@@ -18,7 +18,7 @@ public class ButtonCell extends Button {
         return positionCell;
     }
     public boolean emptyImage(){
-        return this.getGraphic().equals(null);
+        return this.getStyleClass().isEmpty();
     }
     public void placeImage(ImageView piece){
         this.setGraphic(new ImageView(String.valueOf(piece)));
