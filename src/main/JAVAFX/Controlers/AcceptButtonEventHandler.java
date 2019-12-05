@@ -41,7 +41,7 @@ public class AcceptButtonEventHandler implements EventHandler<ActionEvent> {
             this.textField.requestFocus ();
             if (count == 2) {
                 try {
-                    this.stage.setScene(this.scene.scene02SelectPieces(stage, this.game.getPlayer1().name(), this.game.getPlayer2().name(), this.game.getPoints(this.game.getPlayer1()), this.game.getPoints(this.game.getPlayer2()),game));
+                    this.stage.setScene(this.scene.scene02SelectPieces(stage,game));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

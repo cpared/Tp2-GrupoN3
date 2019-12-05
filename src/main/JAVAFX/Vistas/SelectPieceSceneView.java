@@ -27,13 +27,15 @@ import player.Player;
 public class SelectPieceSceneView {
     private ButtonPiece lastClicked = null;
     private ButtonPiece lastChoosed = null;
-    private Label playerOneTextCoin;
-    private Label playerTwoTextCoin;
+    private Label playerOneText = new Label("Player One: ");
+    private Label playerTwoText= new Label("Player Two: ");
+    private Label playerOneTextCoin = new Label("Coins: ");
+    private Label playerTwoTextCoin= new Label("Coins: ");
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private Game game;
 
 
-    public Scene scene02SelectPieces( Stage stage , String namePlayerOne, String namePlayerTwo, int playerOneCois, int playerTwoCois,Game game) throws InterruptedException {
+    public Scene scene02SelectPieces( Stage stage , Game game) throws InterruptedException {
         this.game = game;
         BorderPane borderPane = new BorderPane();
         GridPane board = makeGridPane();
@@ -55,6 +57,18 @@ public class SelectPieceSceneView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 lastChoosed = lastClicked;
+                if(game.getAvailablePlayer() == game.getPlayer1()){
+                    playerOneText.setStyle("-fx-text-fill: green");
+                    playerOneTextCoin.setStyle("-fx-text-fill: green");
+                    playerTwoText.setStyle("-fx-text-fill: white");
+                    playerTwoTextCoin.setStyle("-fx-text-fill: white");
+                }
+                else{
+                    playerOneText.setStyle("-fx-text-fill: white");
+                    playerOneTextCoin.setStyle("-fx-text-fill: white");
+                    playerTwoText.setStyle("-fx-text-fill: green");
+                    playerTwoTextCoin.setStyle("-fx-text-fill: green");
+                }
             }
         });
         choosePieceButton.getStyleClass().add("button-choose");
@@ -106,15 +120,14 @@ public class SelectPieceSceneView {
         Label priceInformation = new Label("-");
         Label information = new Label("-");
 
-        Label playerOneText = new Label("Player One: " + namePlayerOne);
-        Label playerTwoText = new Label("Player Two: " + namePlayerTwo);
-        playerOneTextCoin = new Label("Coins: " + Integer.toString(playerOneCois));
-        playerTwoTextCoin = new Label("Coins: " + Integer.toString(playerTwoCois));
-        playerTwoTextCoin.getText();
-        playerOneText.getStyleClass().add("textStyle");
-        playerTwoText.getStyleClass().add("textStyle");
-        playerOneTextCoin.getStyleClass().add("textStyle");
-        playerTwoTextCoin.getStyleClass().add("textStyle");
+        this.playerOneText.setText("Player One: " + this.game.getPlayer1().name());
+        this.playerTwoText.setText("Player Two: " + this.game.getPlayer2().name());
+        this.playerOneTextCoin.setText("Coins: " + Integer.toString(this.game.getPoints(this.game.getPlayer1())));
+        this.playerTwoTextCoin.setText("Coins: " + Integer.toString(this.game.getPoints(this.game.getPlayer2())));
+        this.playerOneText.getStyleClass().add("selectedtextStyle");
+        this.playerTwoText.getStyleClass().add("textStyle");
+        this.playerOneTextCoin.getStyleClass().add("selectedtextStyle");
+        this.playerTwoTextCoin.getStyleClass().add("textStyle");
 
 
         //Set action on buttons
