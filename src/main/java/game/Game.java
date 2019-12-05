@@ -103,7 +103,7 @@ public class Game {
     private boolean isAvailablePlayer ( Player player ) {
         return (this.available.equals ( player ));
     }
-    private void changeAvailablePlayer () {
+    public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
         if (this.player1.equals ( this.available )) this.available = this.player2;
         else this.available = this.player1;

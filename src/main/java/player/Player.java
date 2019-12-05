@@ -24,7 +24,7 @@ public class Player {
     }
 
     public void movePiece ( Board board, Move move ) {
-        board.move ( move );
+        board.move ( move, team );
     }
 
     public Piece removePieceFromTeam (Piece removablePiece) throws NoMembersLeftException, PieceDoesNotBelongToTeamException {

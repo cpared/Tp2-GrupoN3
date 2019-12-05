@@ -12,6 +12,12 @@ class Cell {
     }
 
     public void putPieceInCell ( Piece newPiece ) {
+        if (this.piece != null) {
+            throw new OccupiedCellException ();
+        }
+        this.piece = newPiece;
+    }
+    public void placePieceInCell ( Piece newPiece ) {
         if (! this.team.equals ( newPiece.getTeam() )) {
             throw new EnemyCellException ();
         } else if (this.piece != null) {
@@ -19,7 +25,6 @@ class Cell {
         }
         this.piece = newPiece;
     }
-
     Piece getPiece () {
         if (this.piece == null) {
             throw new EmptyCellException ();

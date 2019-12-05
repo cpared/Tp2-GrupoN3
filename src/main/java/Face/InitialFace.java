@@ -72,8 +72,7 @@ public class InitialFace implements Face {
 
     @Override
     public void playerMovesPieceOnBoard ( Move move ) {
-        Piece piece = this.board.removePiece ( move );
-        player.placePieceOnBoard ( piece, this.board, move );
+        player.movePiece(board,move);
     }
 
     //Methods that this class does not implement

@@ -46,6 +46,7 @@ public class SelectPieceSceneView {
                 borderPane.setBottom(null);
                 Pair<RadioButton, RadioButton> pair = setGameStage(board);
                 borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
+                game.changeAvailablePlayer();
             }
         });
         start.setMinWidth(150);
@@ -246,8 +247,6 @@ public class SelectPieceSceneView {
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell(null,actual,i,j);
                 button.setPrefSize(30, 30);
-                //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
-                //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 gridPane.add(button,i,j);
             }
         }
@@ -280,7 +279,6 @@ public class SelectPieceSceneView {
     private Pair<Integer,Integer> pair = null;
     private ButtonCell lastButton = null;
     public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton){
-        VBox a = new VBox ( moveButton, attackButton);
         for (Node each:  board.getChildren()){
             each.setOnMouseClicked(new EventHandler<MouseEvent>() {
                    @Override
@@ -308,8 +306,7 @@ public class SelectPieceSceneView {
                    private void privateMethod(Pair<Integer, Integer> newPair, Player player,ButtonCell button) {
                        if (moveButton.isSelected()) {
                            game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
-                           lastButton.getStyleClass().removeAll();
-                           button.getStyleClass().add("buttonHealer");
+                           button.getStyleClass().add(lastButton.getStyleClass().remove(1));
                        }
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());

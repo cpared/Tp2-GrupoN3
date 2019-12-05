@@ -30,7 +30,7 @@ public class Board {
 
     public void placePiece ( Piece piece, Move move ) {
         Cell cell = this.destinationCell ( move );
-        cell.putPieceInCell ( piece );
+        cell.placePieceInCell ( piece );
     }
 
     public void movePiece ( Move move ) {
@@ -47,7 +47,12 @@ public class Board {
             throw new CanNotMakeThatMoveException ();
         }
     }
-
+    public void move (Move move, Team team){
+        if (this.originCell(move).getPiece().getTeam() != team){
+            throw new CanNotMakeThatMoveException ();
+        }
+        move(move);
+    }
     public void move ( Move move ) {
         Piece piece = this.originCell ( move ).deletePieceFromCell ();
         this.originCell ( move ).putPieceInCell ( piece );
