@@ -4,11 +4,13 @@ import board.Board;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
+import piece.Piece;
+import piece.PieceFactory;
+import team.NoMembersLeftException;
+import team.PieceDoesNotBelongToTeamException;
+import team.Team;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import piece.*;
-import team.*;
 
 class PlayerTest {
     //Assemble
@@ -84,8 +86,12 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = this.factory.createSoldier ();
+        Piece piece2 = this.factory.createSoldier ();
+
+
         //Act
         player.chosePiece ( piece );
+        player.chosePiece(piece2);
 
         //Assert
         assertEquals ( piece, player.removePieceFromTeam ( piece ) );
@@ -96,6 +102,8 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = this.factory.createCatapult ();
+        Piece piece2 = this.factory.createSoldier ();
+        player.chosePiece(piece2);
         //Act
         player.chosePiece ( piece );
 
@@ -108,6 +116,8 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = this.factory.createRider ();
+        Piece piece2 = this.factory.createSoldier ();
+        player.chosePiece(piece2);
         //Act
         player.chosePiece ( piece );
 
@@ -120,6 +130,8 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = this.factory.createHealer ();
+        Piece piece2 = this.factory.createSoldier ();
+        player.chosePiece(piece2);
         //Act
         player.chosePiece ( piece );
 
@@ -169,12 +181,14 @@ class PlayerTest {
         //Assemble
         Player player = new Player ( "Player0003", team );
         Piece piece = this.factory.createHealer ();
+        Piece piece2 = this.factory.createSoldier ();
+        player.chosePiece(piece2);
         player.chosePiece ( piece );
         Move move = new Builder ().ToRow ( 2 ).ToColumn ( 0 ).build ();
         player.placePieceOnBoard ( piece, board, move );
         //Act
         player.removePieceFromTeam (piece);
         //Assert
-        assertTrue ( player.isNumberOfPiecesOnTeam ( 0 ) );
+        assertTrue ( player.isNumberOfPiecesOnTeam ( 1 ) );
     }
 }

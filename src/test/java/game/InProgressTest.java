@@ -1,7 +1,5 @@
 package game;
 
-import move.Builder;
-import move.Move;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 import player.Player;
@@ -85,18 +83,5 @@ class InProgressTest {
         assertTrue ( piece.isCost ( 5 ) );
     }
 
-    @Test
-    void test07APieceCanBePlacedOnTheBoardInProgressState () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        GameState state = new InProgress ();
-        Player player = state.newPlayer ( "Al" );
-        Piece piece = state.chooseCatapult ( player );
-        //Act
-        Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
-        state.playerPlacesPieceOnBoard ( player, piece, move1 );
-        //Assert
-        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        assertEquals ( piece, state.removePieceFromBoard ( player, move ) );
-    }
 
 }

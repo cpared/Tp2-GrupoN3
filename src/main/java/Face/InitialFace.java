@@ -99,6 +99,6 @@ public class InitialFace implements Face {
 
     @Override
     public Piece getPiece(Move move4) {
-        return null;
+        return board.getPiece(move4);
     }
 }

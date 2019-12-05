@@ -110,7 +110,7 @@ class InitialFaceTest {
         initial.playerPlacesPieceOnBoard ( piece, move1 );
         //Assert
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        assertEquals ( piece, initial.removeDeadPieceFromBoard( move ) );
+        assertEquals ( piece, initial.getPiece( move ) );
     }
 
     @Test
@@ -124,7 +124,7 @@ class InitialFaceTest {
         initial.playerPlacesPieceOnBoard ( piece, move1 );
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        Piece removed = initial.removeDeadPieceFromBoard( move );
+        Piece removed = initial.getPiece( move );
         //Assert
         assertNotNull ( removed );
     }
@@ -154,9 +154,9 @@ class InitialFaceTest {
         Move move4 = new Builder ().fromRow ( 3 ).fromColumn ( 2 ).build ();
         Move move5 = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         Move move6 = new Builder ().fromRow ( 2 ).fromColumn ( 3 ).build ();
-        assertEquals ( soldier2, initial.removeDeadPieceFromBoard( move4 ) );
-        assertEquals ( soldier1, initial.removeDeadPieceFromBoard( move5 ) );
-        assertEquals ( soldier3, initial.removeDeadPieceFromBoard( move6 ) );
+        assertEquals ( soldier2, initial.getPiece( move4 ) );
+        assertEquals ( soldier1, initial.getPiece( move5 ) );
+        assertEquals ( soldier3, initial.getPiece( move6 ) );
     }
 
     @Test

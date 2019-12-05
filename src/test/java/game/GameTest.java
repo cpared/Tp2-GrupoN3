@@ -108,7 +108,7 @@ class GameTest {
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
         //Assert
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
-        Assertions.assertEquals ( piece, game.removePieceFromBoard ( game.getPlayer1 (), 2, 0 ) );
+        Assertions.assertEquals ( piece, game.getPiece ( move ) );
     }
 
     @Test
