@@ -149,4 +149,8 @@ public class Board {
     public boolean cellIsEmpty(int row,int column){
         return cellArray.get(row).get(column).isEmpty();
     }
+
+    public Piece getPiece(Move move) {
+        return originCell(move).getPiece();
+    }
 }

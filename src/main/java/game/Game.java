@@ -121,6 +121,9 @@ public class Game {
     public Board getBoard () {
         return this.state.getBoard ();
     }
+    public Piece getPiece(Move move){
+        return getBoard().getPiece(move);
+    }
     public Player getAvailablePlayer(){
         return available;
     }

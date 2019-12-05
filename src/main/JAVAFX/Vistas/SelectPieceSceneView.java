@@ -70,7 +70,6 @@ public class SelectPieceSceneView {
         soldierButton.getStyleClass().add("buttonSoldier");
         soldierButton.setMinWidth(60);
         soldierButton.setMinHeight(60);
-        lastClicked = soldierButton;
         ButtonPiece riderButton = new ButtonPieceRider();
         riderButton.getStyleClass().add("buttonRider");
         riderButton.setMinWidth(60);
@@ -85,7 +84,7 @@ public class SelectPieceSceneView {
         catapultButton.getStyleClass().add("buttonCatapult");
         catapultButton.setMinWidth(60);
         catapultButton.setMinHeight(60);
-
+        lastClicked = soldierButton;
         //Images
         Image attackImage = new Image("Image/broadsword.png");
         ImageView attackView = new ImageView(attackImage);
@@ -259,7 +258,7 @@ public class SelectPieceSceneView {
         return gridPane;
     }
     private String getCoins(Game game, Player player){
-        return "Coins" + Integer.toString(game.getPoints(player));
+        return "Coins " + Integer.toString(game.getPoints(player));
     }
 
     public Pair<RadioButton, RadioButton> setGameStage(GridPane grid) {
@@ -307,15 +306,16 @@ public class SelectPieceSceneView {
 
                    private void privateMethod(Pair<Integer, Integer> newPair, Player player,ButtonCell button) {
                        if (moveButton.isSelected()) {
-                           game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
-                           button.getStyleClass().add(lastButton.getStyleClass().remove(1));
-                       }
-                       if (attackButton.isSelected()){
-                           game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
-                           if (game.cellIsEmpty(newPair.getKey(),newPair.getValue())){
-                               button.getStyleClass().remove(1);
+                               game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                               button.getStyleClass().add(lastButton.getStyleClass().remove(1));
                            }
-                       }
+                           if (attackButton.isSelected()){
+                               game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                               if (game.cellIsEmpty(newPair.getKey(),newPair.getValue())){
+                                   button.getStyleClass().remove(1);
+                               }
+                           }
+
                    }
                }
             );

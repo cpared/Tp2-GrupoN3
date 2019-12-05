@@ -110,7 +110,7 @@ class InitialFaceTest {
         initial.playerPlacesPieceOnBoard ( piece, move1 );
         //Assert
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        assertEquals ( piece, initial.removePieceFromBoard ( move ) );
+        assertEquals ( piece, initial.removeDeadPieceFromBoard( move ) );
     }
 
     @Test
@@ -124,7 +124,7 @@ class InitialFaceTest {
         initial.playerPlacesPieceOnBoard ( piece, move1 );
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        Piece removed = initial.removePieceFromBoard ( move );
+        Piece removed = initial.removeDeadPieceFromBoard( move );
         //Assert
         assertNotNull ( removed );
     }
@@ -154,9 +154,9 @@ class InitialFaceTest {
         Move move4 = new Builder ().fromRow ( 3 ).fromColumn ( 2 ).build ();
         Move move5 = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         Move move6 = new Builder ().fromRow ( 2 ).fromColumn ( 3 ).build ();
-        assertEquals ( soldier2, initial.removePieceFromBoard ( move4 ) );
-        assertEquals ( soldier1, initial.removePieceFromBoard ( move5 ) );
-        assertEquals ( soldier3, initial.removePieceFromBoard ( move6 ) );
+        assertEquals ( soldier2, initial.removeDeadPieceFromBoard( move4 ) );
+        assertEquals ( soldier1, initial.removeDeadPieceFromBoard( move5 ) );
+        assertEquals ( soldier3, initial.removeDeadPieceFromBoard( move6 ) );
     }
 
     @Test
@@ -173,28 +173,11 @@ class InitialFaceTest {
         initial.playerMovesPieceOnBoard ( move2 );
         //Assert
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 2 ).build ();
-        assertEquals ( piece, initial.removePieceFromBoard ( move ) );
+        assertEquals ( piece, initial.removeDeadPieceFromBoard( move ) );
     }
 
     @Test
-    void test12APieceCanBeMovedOnTheBoardWithoutBeingLimitedToMovingToAdjacentCellsInInitialFace () throws PlayerHas20PointsOnlyException {
-        //Assemble
-        Team team = new Team ( 1 );
-        Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
-        Piece piece = initial.playerChoosesCatapult ();
-        Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
-        initial.playerPlacesPieceOnBoard ( piece, move1 );
-        //Act
-        Move move2 = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 8 ).ToColumn ( 9 ).build ();
-        initial.playerMovesPieceOnBoard ( move2 );
-        //Assert
-        Move move = new Builder ().fromRow ( 8 ).fromColumn ( 9 ).build ();
-        assertEquals ( piece, initial.removePieceFromBoard ( move ) );
-    }
-
-    @Test
-    void test013PiecesCantBeAttackInInitialFace () throws PlayerHas20PointsOnlyException {
+    void test012PiecesCantBeAttackInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
@@ -214,6 +197,6 @@ class InitialFaceTest {
         initial.playerAttacks ( movement );
         //Assert
         Move remove = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        assertEquals ( life, initial.removePieceFromBoard ( remove ).getLife () );
+        assertEquals ( life, initial.removeDeadPieceFromBoard( remove ).getLife () );
     }
 }

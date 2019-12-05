@@ -129,7 +129,7 @@ class GameFaceTest {
         Face face = new GameFace ( board, player );
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        Piece removed = face.removePieceFromBoard ( move );
+        Piece removed = face.getPiece( move );
         //Assert
         assertNotNull ( removed );
     }
@@ -158,9 +158,9 @@ class GameFaceTest {
         Move move4 = new Builder ().fromRow ( 3 ).fromColumn ( 2 ).build ();
         Move move5 = new Builder ().fromRow ( 3 ).fromColumn ( 1 ).build ();
         Move move6 = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
-        assertEquals ( this.soldier2, face.removePieceFromBoard ( move4 ) );
-        assertEquals ( this.soldier1, face.removePieceFromBoard ( move5 ) );
-        assertEquals ( this.soldier3, face.removePieceFromBoard ( move6 ) );
+        assertEquals ( this.soldier2, face.getPiece ( move4 ) );
+        assertEquals ( this.soldier1, face.getPiece ( move5 ) );
+        assertEquals ( this.soldier3, face.getPiece ( move6 ) );
     }
 
     @Test
@@ -180,7 +180,7 @@ class GameFaceTest {
         face.playerMovesPieceOnBoard ( movement );
         //Assert
         Move move = new Builder ().fromRow ( 3 ).fromColumn ( 1 ).build ();
-        assertEquals ( soldier1, face.removePieceFromBoard ( move ) );
+        assertEquals ( soldier1, face.getPiece( move ) );
     }
 
     @Test
@@ -202,7 +202,7 @@ class GameFaceTest {
         } catch (CanNotMakeThatMoveException e) {
             //Assert
             Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-            assertEquals ( soldier1, face.removePieceFromBoard ( move ) );
+            assertEquals ( soldier1, face.getPiece( move ) );
         }
 
     }

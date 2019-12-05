@@ -1,6 +1,7 @@
 package piece;
 
 import board.Board;
+import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
 import piece.AttackState.DistanceAttack;
@@ -26,7 +27,7 @@ public class Catapult implements Piece {
 
     @Override
     public void move ( Board board , Move move) {
-        board.movePiece ( move );
+        throw new CanNotMakeThatMoveException();
     }
 
     @Override
