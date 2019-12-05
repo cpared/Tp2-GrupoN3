@@ -27,6 +27,7 @@ import piece.Piece;
 import player.Player;
 
 public class SelectPieceSceneView {
+    private Button choosePieceButton;
     private ButtonPiece lastClicked = null;
     private ButtonPiece lastChoosed = null;
     private Label playerOneText = new Label("Player One: ");
@@ -56,7 +57,7 @@ public class SelectPieceSceneView {
         start.setMinHeight(40);
 
 
-        Button choosePieceButton = new Button("Choose Piece");
+        choosePieceButton = new Button("Choose Piece");
         choosePieceButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -367,6 +368,7 @@ public class SelectPieceSceneView {
 
     private void changeScene (GridPane board, BorderPane borderPane){
        // borderPane.setLeft(null);
+        choosePieceButton.setText("Choose Battalion");
         borderPane.setTop(null);
         borderPane.setBottom(null);
         Pair<RadioButton, RadioButton> pair = setGameStage(board,borderPane);
