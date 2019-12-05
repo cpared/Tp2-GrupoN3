@@ -24,6 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import player.Player;
 
 import java.io.File;
 
@@ -172,12 +173,12 @@ public class AlgoChess extends Application {
     }
 
 
-    public Scene sceneFinal(Stage stage) {
+    public Scene sceneFinal(Stage stage, Player player) {
 
         // AlgoChess image.
         Image gameover = new Image("Image/gameover.png");
         ImageView gameOverView = new ImageView(gameover);
-
+        Label name = new Label("Player: "+player.name() +" has won.");
         // Exit button
         //Button exit = new Button ("Exit");
         Button exit = this.view.createButton("Exit");
@@ -199,7 +200,7 @@ public class AlgoChess extends Application {
 
 
         // Vertical Box
-        VBox vertical = new VBox(gameOverView, horizontal);
+        VBox vertical = new VBox(gameOverView, horizontal,name);
         vertical.setSpacing(40);
         vertical.prefWidthProperty().bind(vertical.widthProperty().divide(6));
         vertical.prefHeightProperty().bind(vertical.widthProperty().divide(6));

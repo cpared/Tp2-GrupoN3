@@ -8,6 +8,7 @@ import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import player.PlayerMustChooseAtLeastOnePieceToStartGameException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
+import team.NoMembersLeftException;
 import team.Team;
 import Face.*;
 
@@ -79,11 +80,11 @@ public class InProgress implements GameState {
     public void playerAttacks ( Player player, Move move ) {
         if (player == player1){
             player1Face.playerAttacks ( move );
-            player1Face.removeDeadPieceFromBoard(move);
+            player2Face.removeDeadPieceFromBoard(move);
         }
         else{
             player2Face.playerAttacks ( move );
-            player2Face.removeDeadPieceFromBoard(move);
+            player1Face.removeDeadPieceFromBoard(move);
         }
     }
 
@@ -102,8 +103,13 @@ public class InProgress implements GameState {
 
     @Override
     public Piece removePieceFromBoard ( Player player, Move move ) {
-        if (player == player1) return player1Face.removeDeadPieceFromBoard( move );
-        return player2Face.removeDeadPieceFromBoard( move );
+        try {
+            if (player == player1) return player1Face.removeDeadPieceFromBoard(move);
+            return player2Face.removeDeadPieceFromBoard(move);
+        }
+        catch (NoMembersLeftException e){
+            throw new GameHasEndedException();
+        }
     }
 
     @Override

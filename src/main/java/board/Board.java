@@ -60,7 +60,7 @@ public class Board {
     }
 
     public Piece removePiece ( Move move ) {
-        return this.originCell ( move ).deletePieceFromCell ();
+        return this.destinationCell ( move ).deletePieceFromCell ();
     }
     public void attack(Move move, Team team){
         if (this.originCell(move).getPiece().getTeam() != team){

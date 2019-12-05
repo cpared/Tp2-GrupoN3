@@ -6,6 +6,7 @@ import Controlers.RiderSelectStatsHandler;
 import Controlers.SoldierSelectStatsHandler;
 import boardFx.*;
 import game.Game;
+import game.GameHasEndedException;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +48,8 @@ public class SelectPieceSceneView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 changeScene(board, borderPane);
+                game.playerIsReadyToPlay(game.getPlayer1());
+                game.playerIsReadyToPlay(game.getPlayer2());
             }
         });
         start.setMinWidth(150);
@@ -235,6 +239,9 @@ public class SelectPieceSceneView {
                         playerOneTextCoin.setText(getCoins(game,game.getPlayer1()));
                         playerTwoTextCoin.setText(getCoins(game,game.getPlayer2()));
                     }
+                    catch(GameHasEndedException i){
+                        throw i;
+                    }
                     catch (Exception e){
                         System.out.println(e);
                     }
@@ -270,7 +277,7 @@ public class SelectPieceSceneView {
         return "Coins" + Integer.toString(game.getPoints(player));
     }
 
-    public Pair<RadioButton, RadioButton> setGameStage(GridPane grid) {
+    public Pair<RadioButton, RadioButton> setGameStage(GridPane grid,BorderPane borderPane) {
         final ToggleGroup group = new ToggleGroup();
         RadioButton movePiece = new RadioButton("nope");
         movePiece.setText("Mover");
@@ -302,7 +309,7 @@ public class SelectPieceSceneView {
         );
 
 
-        SceneToAttack(this.game, grid, movePiece, attackPiece);
+        SceneToAttack(this.game, grid, movePiece, attackPiece,borderPane);
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
 
         return new Pair<RadioButton, RadioButton>(movePiece, attackPiece);
@@ -311,7 +318,7 @@ public class SelectPieceSceneView {
     private ButtonCell lastButton = null;
 
 
-    public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton){
+    public void SceneToAttack(Game game, GridPane board, RadioButton moveButton, RadioButton attackButton,BorderPane border){
         VBox a = new VBox ( moveButton, attackButton);
         for (Node each:  board.getChildren()){
             each.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -329,6 +336,9 @@ public class SelectPieceSceneView {
                                lastButton = null;
                                pair = null;
                            }
+                           catch(GameHasEndedException e){
+                               sceneFinal(game.getAvailablePlayer(),border);
+                           }
                            catch(Exception i){
                                System.out.println(i);
                                lastButton = null;
@@ -341,10 +351,12 @@ public class SelectPieceSceneView {
                        if (moveButton.isSelected()) {
                            game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
                            lastButton.getStyleClass().removeAll();
-                           button.getStyleClass().add("buttonHealer");
+                           button.getStyleClass().add(lastButton.getStyleClass().remove(1));
                        }
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                           if (game.cellIsEmpty(newPair.getKey(),newPair.getValue()))
+                               button.getStyleClass().remove(1);
                        }
                    }
                }
@@ -357,7 +369,7 @@ public class SelectPieceSceneView {
        // borderPane.setLeft(null);
         borderPane.setTop(null);
         borderPane.setBottom(null);
-        Pair<RadioButton, RadioButton> pair = setGameStage(board);
+        Pair<RadioButton, RadioButton> pair = setGameStage(board,borderPane);
         //borderPane.setTop(new VBox(pair.getKey(),pair.getValue()));
 
 
@@ -400,30 +412,38 @@ public class SelectPieceSceneView {
         hbox.setMinHeight(150);
         hbox.getStyleClass().add("hbox");
         borderPane.setBottom(hbox);
-
-
-
-/*        HBox hbox = (HBox) borderPane.getBottom();
-
-        VBox vBox1 = (VBox) hbox.getChildren().get(0);
-        VBox vBox2 = (VBox) hbox.getChildren().get(2);
-
-        HBox newHBox = new HBox(vBox1.getChildren().get(0), vBox2.getChildren().get(0));
-        hbox.setMinHeight(150);
-        hbox.getStyleClass().add("hbox");
-        borderPane.setBottom(newHBox);*/
-
-
-        //borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
-
-//        GridPane gridPane = (GridPane) borderPane.getLeft();
-//
-//        gridPane.getColumnConstraints().removeAll();
-//        gridPane.getRowConstraints().removeAll();
     }
 
 
     public void setLastClicked(ButtonPiece button) {
         lastClicked = button;
+    }
+    public void sceneFinal(Player player,BorderPane borderPane) {
+        borderPane.setBottom(null);
+        borderPane.setTop(null);
+        borderPane.setLeft(null);
+        borderPane.setRight(null);
+        borderPane.setCenter(null);
+        // AlgoChess image.
+        Image gameover = new Image("Image/gameover.png");
+        ImageView gameOverView = new ImageView(gameover);
+        Label name = new Label("Player: " + player.name() + " has won.");
+        name.setPrefSize(20,20);
+        name.setEffect(new Glow());
+        // Exit button
+
+        // Play again button.
+
+        // Horizontal box containing exit & playAgain
+
+        // Vertical Box
+        VBox vertical = new VBox(gameOverView, name);
+        vertical.setSpacing(40);
+        vertical.prefWidthProperty().bind(vertical.widthProperty().divide(6));
+        vertical.prefHeightProperty().bind(vertical.widthProperty().divide(6));
+
+        vertical.setAlignment(Pos.CENTER);
+        vertical.setBackground(this.background);
+        borderPane.setCenter(vertical);
     }
 }

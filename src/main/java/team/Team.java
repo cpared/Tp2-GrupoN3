@@ -18,12 +18,12 @@ public class Team {
     }
 
     public Piece subtractPieceFromTeam (Piece removablePiece) throws  PieceDoesNotBelongToTeamException {
-        if (this.pieces.size () == 0) throw  new NoMembersLeftException ();
         if (!this.pieces.contains ( removablePiece )) throw  new PieceDoesNotBelongToTeamException ();
-
-        //this.pieces.remove ( removablePiece );
         int index = this.pieces.indexOf ( removablePiece );
-        return this.pieces.remove ( index );
+        Piece piece = this.pieces.remove ( index );
+        //this.pieces.remove ( removablePiece );
+        if (this.pieces.size ()  == 0) throw  new NoMembersLeftException ();
+        return piece;
     }
 
     public boolean isNumberOfMembersStillOnTeam ( int numberOfMembers ) {
