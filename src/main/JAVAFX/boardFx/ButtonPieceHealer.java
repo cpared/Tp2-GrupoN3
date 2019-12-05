@@ -14,4 +14,9 @@ public class ButtonPieceHealer extends ButtonPiece {
     public Piece choosePiece(Game game, Player player) {
         return game.playerChoosesHealer(player);
     }
+
+    @Override
+    public String getString(){
+        return "Image/Piece/healer2.png";
+    }
 }

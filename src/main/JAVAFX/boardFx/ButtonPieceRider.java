@@ -14,4 +14,9 @@ public class ButtonPieceRider extends ButtonPiece {
     public Piece choosePiece(Game game, Player player) {
         return game.playerChoosesRider(player);
     }
+
+    @Override
+    public String getString(){
+        return "Image/Piece/rider2.png";
+    }
 }

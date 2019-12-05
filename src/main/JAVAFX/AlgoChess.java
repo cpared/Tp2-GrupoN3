@@ -45,24 +45,11 @@ public class AlgoChess extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        stage.setTitle(" AlgoChess ");
-
-        this.scene00InitialStage(stage);
-        //this.scene2.scene02SelectPieces(stage, this.game.getPlayer1().name(), this.game.getPlayer2().name());
-
-
-        //this.scene02SelectPieces( stage );
-
-        //sceneMainGame( stage );
-        //this.sceneFinal ( stage );
+        stage.setTitle ( " AlgoChess " );
+        this.scene00InitialStage ( stage );
     }
 
-    public void sceneMainGame(Stage stage) {
-
-
-    }
-
-    public void scene00InitialStage(Stage stage) throws InterruptedException {
+    public void scene00InitialStage ( Stage stage ) throws InterruptedException {
 
         //Set game music
         String path = "src/main/JAVAFX/Image/Metallica-Master_Of_Puppets.mp3";

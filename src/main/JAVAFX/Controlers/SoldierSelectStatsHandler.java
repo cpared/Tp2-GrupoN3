@@ -1,6 +1,7 @@
 package Controlers;
 
 import boardFx.ButtonCell;
+import boardFx.ButtonPiece;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
+    private ButtonPiece clicked;
+    private final ButtonPiece button;
     private String attack = "10";
     private String cost = "1";
     private String health = "100";
@@ -24,12 +27,14 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
     private Label pieceInfo;
     private ImageView attackImageChange;
 
-    public SoldierSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage){
+    public SoldierSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, ButtonPiece clicked, ButtonPiece soldierButton){
         this.attackInfo =  attackInformation;
         this.healthInfo = healthInformation;
         this.priceInfo = priceInformation;
         this.pieceInfo = information;
         this.attackImageChange = attackImage;
+        this.clicked = clicked;
+        this.button = soldierButton;
     }
 
     @Override
@@ -46,6 +51,8 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
 
             Image url = new Image("Image/broadsword.png");
             this.attackImageChange.setImage(url);
+
+            this.clicked = this.button;
         }
     }
 

@@ -55,7 +55,6 @@ public class SelectPieceSceneView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 lastChoosed = lastClicked;
-
             }
         });
         choosePieceButton.getStyleClass().add("button-choose");
@@ -120,16 +119,16 @@ public class SelectPieceSceneView {
 
 
         //Set action on buttons
-        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, soldierButton);
         soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
 
-        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, riderButton);
         riderButton.setOnMouseClicked( riderSelectStatsHandler );
 
-        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, healerButton);
         healerButton.setOnMouseClicked( healerSelectStatsHandler );
 
-        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView);
+        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, this.lastClicked, catapultButton);
         catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
 
         //Vertical box

@@ -13,4 +13,9 @@ public class ButtonPieceCatapult extends ButtonPiece {
     public Piece choosePiece(Game game, Player player) {
         return game.playerChoosesCatapult(player);
     }
+
+    @Override
+    public String getString(){
+        return "Image/Piece/catapult2.png";
+    }
 }

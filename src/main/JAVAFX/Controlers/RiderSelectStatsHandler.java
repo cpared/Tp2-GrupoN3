@@ -1,5 +1,6 @@
 package Controlers;
 
+import boardFx.ButtonPiece;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,7 +11,9 @@ import javafx.scene.paint.Color;
 
 public class RiderSelectStatsHandler implements EventHandler<InputEvent>{
 
-        private String attack = "15 / 5";
+    private ButtonPiece clicked;
+    private final ButtonPiece button;
+    private String attack = "15 / 5";
         private String cost = "3";
         private String health = "100";
         private String info = "Lorem";
@@ -20,12 +23,14 @@ public class RiderSelectStatsHandler implements EventHandler<InputEvent>{
         private Label pieceInfo;
         private ImageView attackImageChange;
 
-        public RiderSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage){
+        public RiderSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, ButtonPiece clicked, ButtonPiece rider){
             this.attackInfo =  attackInformation;
             this.healthInfo = healthInformation;
             this.priceInfo = priceInformation;
             this.pieceInfo = information;
             this.attackImageChange = attackImage;
+            this.clicked = clicked;
+            this.button = rider;
         }
 
         @Override
@@ -42,6 +47,8 @@ public class RiderSelectStatsHandler implements EventHandler<InputEvent>{
 
                 Image url = new Image("Image/piercing-sword.png");
                 this.attackImageChange.setImage(url);
+
+                this.clicked = this.button;
 
             }
         }
