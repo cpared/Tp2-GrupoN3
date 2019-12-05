@@ -351,13 +351,25 @@ public class SelectPieceSceneView {
                    private void privateMethod(Pair<Integer, Integer> newPair, Player player,ButtonCell button) {
                        if (moveButton.isSelected()) {
                            game.playerMovesPieceOnBoard(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
-                           lastButton.getStyleClass().removeAll();
+                           //lastButton.getStyleClass().removeAll();
                            button.getStyleClass().add(lastButton.getStyleClass().remove(1));
                        }
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
                            if (game.cellIsEmpty(newPair.getKey(),newPair.getValue()))
                                button.getStyleClass().remove(1);
+                       }
+                       if(game.getAvailablePlayer() == game.getPlayer1()){
+                           playerOneText.setStyle("-fx-text-fill: green");
+                           playerOneTextCoin.setStyle("-fx-text-fill: green");
+                           playerTwoText.setStyle("-fx-text-fill: white");
+                           playerTwoTextCoin.setStyle("-fx-text-fill: white");
+                       }
+                       else{
+                           playerOneText.setStyle("-fx-text-fill: white");
+                           playerOneTextCoin.setStyle("-fx-text-fill: white");
+                           playerTwoText.setStyle("-fx-text-fill: green");
+                           playerTwoTextCoin.setStyle("-fx-text-fill: green");
                        }
                    }
                }
@@ -384,8 +396,11 @@ public class SelectPieceSceneView {
 
         //bottom
 
-        Label playerOneText = new Label("Player One: " + this.game.getPlayer1().name());
-        Label playerTwoText = new Label("Player Two: " + this.game.getPlayer2().name());
+        this.playerOneText.setText("Player One: " + this.game.getPlayer1().name());
+        this.playerTwoText.setText("Player Two: " + this.game.getPlayer2().name());
+
+/*        Label playerOneText = new Label();
+        Label playerTwoText = new Label();*/
         playerOneText.getStyleClass().add("textStyle");
         playerTwoText.getStyleClass().add("textStyle");
 
@@ -430,8 +445,9 @@ public class SelectPieceSceneView {
         Image gameover = new Image("Image/gameover.png");
         ImageView gameOverView = new ImageView(gameover);
         Label name = new Label("Player: " + player.name() + " has won.");
-        name.setPrefSize(20,20);
-        name.setEffect(new Glow());
+        name.getStyleClass().add("textStyle");
+        //name.setPrefSize(20,20);
+        //name.setEffect(new Glow());
         // Exit button
 
         // Play again button.
@@ -440,7 +456,7 @@ public class SelectPieceSceneView {
 
         // Vertical Box
         VBox vertical = new VBox(gameOverView, name);
-        vertical.setSpacing(40);
+        vertical.setSpacing(100);
         vertical.prefWidthProperty().bind(vertical.widthProperty().divide(6));
         vertical.prefHeightProperty().bind(vertical.widthProperty().divide(6));
 
