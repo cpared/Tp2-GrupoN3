@@ -77,8 +77,14 @@ public class InProgress implements GameState {
 
     @Override
     public void playerAttacks ( Player player, Move move ) {
-        if (player == player1) player1Face.playerAttacks ( move );
-        else player2Face.playerAttacks ( move );
+        if (player == player1){
+            player1Face.playerAttacks ( move );
+            player1Face.removePieceFromBoard(move);
+        }
+        else{
+            player2Face.playerAttacks ( move );
+            player2Face.removePieceFromBoard(move);
+        }
     }
 
     @Override

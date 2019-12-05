@@ -62,7 +62,12 @@ public class Board {
     public Piece removePiece ( Move move ) {
         return this.originCell ( move ).deletePieceFromCell ();
     }
-
+    public void attack(Move move, Team team){
+        if (this.originCell(move).getPiece().getTeam() != team){
+            throw new CanNotMakeThatMoveException ();
+        }
+        attack(move);
+    }
     public void attack ( Move move ) {
         int firstRow = move.fromRow;
         int secondRow = move.toRow;
@@ -140,5 +145,8 @@ public class Board {
 
     public Piece removeDeadPiece(Move move) {
         return destinationCell(move).removeDeadPiece();
+    }
+    public boolean cellIsEmpty(int row,int column){
+        return cellArray.get(row).get(column).isEmpty();
     }
 }

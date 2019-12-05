@@ -128,4 +128,7 @@ public class Game {
     public int getPoints ( Player player ) {
         return this.state.getPoints ( player );
     }
+    public boolean cellIsEmpty(int row, int column){
+        return getBoard().cellIsEmpty(row,column);
+    }
 }

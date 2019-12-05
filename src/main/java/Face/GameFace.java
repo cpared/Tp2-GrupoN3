@@ -21,7 +21,7 @@ public class GameFace implements Face {
 
     @Override
     public Piece removePieceFromBoard ( Move move ) {
-        Piece removed = board.removePiece ( move );
+        Piece removed = board.removeDeadPiece( move );
         player.removePieceFromTeam (removed);
         return removed;
     }

@@ -47,6 +47,8 @@ public class SelectPieceSceneView {
                 Pair<RadioButton, RadioButton> pair = setGameStage(board);
                 borderPane.setLeft(new VBox(pair.getKey(),pair.getValue()));
                 game.changeAvailablePlayer();
+                game.playerIsReadyToPlay(game.getPlayer1());
+                game.playerIsReadyToPlay(game.getPlayer2());
             }
         });
         start.setMinWidth(150);
@@ -310,6 +312,9 @@ public class SelectPieceSceneView {
                        }
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
+                           if (game.cellIsEmpty(newPair.getKey(),newPair.getValue())){
+                               button.getStyleClass().remove(1);
+                           }
                        }
                    }
                }

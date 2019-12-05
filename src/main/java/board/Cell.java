@@ -46,4 +46,7 @@ class Cell {
         }
         return null;
     }
+    public boolean isEmpty(){
+        return piece == null;
+    }
 }
