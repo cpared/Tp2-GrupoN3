@@ -20,8 +20,8 @@ public class GameFace implements Face {
     }
 
     @Override
-    public Piece removePieceFromBoard ( Move move ) {
-        Piece removed = board.removePiece ( move );
+    public Piece removeDeadPieceFromBoard(Move move ) {
+        Piece removed = board.removeDeadPiece( move );
         player.removePieceFromTeam (removed);
         return removed;
     }
@@ -84,7 +84,9 @@ public class GameFace implements Face {
         return this.player;
     }
 
-
+    public Piece getPiece(Move move){
+        return board.getPiece(move);
+    }
     @Override
     public int getPoints () {
         return 0;

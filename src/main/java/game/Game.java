@@ -103,7 +103,7 @@ public class Game {
     private boolean isAvailablePlayer ( Player player ) {
         return (this.available.equals ( player ));
     }
-    private void changeAvailablePlayer () {
+    public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
         if (this.player1.equals ( this.available )) this.available = this.player2;
         else this.available = this.player1;
@@ -121,11 +121,17 @@ public class Game {
     public Board getBoard () {
         return this.state.getBoard ();
     }
+    public Piece getPiece(Move move){
+        return getBoard().getPiece(move);
+    }
     public Player getAvailablePlayer(){
         return available;
     }
     //These getters are for the views.
     public int getPoints ( Player player ) {
         return this.state.getPoints ( player );
+    }
+    public boolean cellIsEmpty(int row, int column){
+        return getBoard().cellIsEmpty(row,column);
     }
 }

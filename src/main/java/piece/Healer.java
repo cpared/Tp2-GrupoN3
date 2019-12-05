@@ -31,7 +31,7 @@ public class Healer implements Piece {
     @Override
     public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life <= 0) throw new IAmDeadException ();
+        if (this.life <= 0) alive = false;;
     }
 
     @Override

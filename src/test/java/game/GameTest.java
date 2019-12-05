@@ -152,11 +152,11 @@ class GameTest {
         Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
         game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
         game.playerIsReadyToPlay ( game.getPlayer1 ( ));
-
+        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         //Act
         game.playerMovesPieceOnBoard (  game.getPlayer2 (), 11, 0, 11, 1 );
         game.playerMovesPieceOnBoard ( game.getPlayer1 (), 2, 0, 2, 1 );
-        Piece removed = game.removePieceFromBoard ( game.getPlayer1 (), 2, 1 );
+        Piece removed = game.getPiece ( move );
         //Assert
         Assertions.assertEquals ( piece, removed );
     }

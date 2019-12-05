@@ -35,7 +35,7 @@ public class InitialFace implements Face {
     }
 
     @Override
-    public Piece removePieceFromBoard ( Move move ) throws PieceDoesNotBelongToTeamException {
+    public Piece removeDeadPieceFromBoard(Move move ) throws PieceDoesNotBelongToTeamException {
         Piece removed = board.removePiece ( move );
         this.factory.eliminatePiece ( removed );
         this.player.removePieceFromTeam ( removed );
@@ -72,8 +72,7 @@ public class InitialFace implements Face {
 
     @Override
     public void playerMovesPieceOnBoard ( Move move ) {
-        Piece piece = this.board.removePiece ( move );
-        player.placePieceOnBoard ( piece, this.board, move );
+        player.movePiece(board,move);
     }
 
     //Methods that this class does not implement
@@ -96,5 +95,10 @@ public class InitialFace implements Face {
     @Override
     public int getPoints () {
         return this.factory.getPoints();
+    }
+
+    @Override
+    public Piece getPiece(Move move4) {
+        return null;
     }
 }

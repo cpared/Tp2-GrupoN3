@@ -294,8 +294,6 @@ public class SelectPieceSceneView {
         SceneToAttack(this.game, grid, movePiece, attackPiece);
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
 
-
-
         return new Pair<RadioButton, RadioButton>(movePiece, attackPiece);
     }
     private Pair<Integer,Integer> pair = null;
@@ -337,9 +335,6 @@ public class SelectPieceSceneView {
                        if (attackButton.isSelected()){
                            game.playerAttacks(player,pair.getKey(),pair.getValue(),newPair.getKey(),newPair.getValue());
                        }
-
-
-
                    }
                }
             );

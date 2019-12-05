@@ -6,7 +6,6 @@ import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import team.PieceDoesNotBelongToTeamException;
-import team.Team;
 
 public interface Face {
     Player player = null;
@@ -18,7 +17,7 @@ public interface Face {
 
     void playerPlacesPieceOnBoard ( Piece piece, Move move );
 
-    Piece removePieceFromBoard ( Move move ) throws PieceDoesNotBelongToTeamException;
+    Piece removeDeadPieceFromBoard(Move move ) throws PieceDoesNotBelongToTeamException;
 
     void playerAttacks ( Move move );
 
@@ -37,4 +36,6 @@ public interface Face {
 
     // This getter is only for views
     public int getPoints ();
+
+    Piece getPiece(Move move4);
 }

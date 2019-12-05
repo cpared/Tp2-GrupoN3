@@ -24,10 +24,13 @@ public class Player {
     }
 
     public void movePiece ( Board board, Move move ) {
-        board.move ( move );
+        board.move ( move, team );
     }
-
-    public Piece removePieceFromTeam (Piece removablePiece) throws NoMembersLeftException, PieceDoesNotBelongToTeamException {
+    public Piece removePieceFromTeam(Piece removablePiece){
+        if (removablePiece == null) return null;
+        return this.team.subtractPieceFromTeam (removablePiece);
+    }
+    public Piece removePieceFromTeam (Move move, Board board) throws NoMembersLeftException, PieceDoesNotBelongToTeamException {
         /*
         try {
             this.team.subtractPieceFromTeam (removablePiece);
@@ -35,6 +38,7 @@ public class Player {
             if (this.team.isNumberOfMembersStillOnTeam ( 0 )) throw new NoMembersLeftException ();
         }
         */
+        Piece removablePiece = board.removeDeadPiece ( move );
         if (removablePiece == null) return null;
         return this.team.subtractPieceFromTeam (removablePiece);
 
@@ -57,9 +61,7 @@ public class Player {
     }
 
     public void attack (Board board, Move move) throws PieceDoesNotBelongToTeamException {
-        board.attack ( move );
-        Piece removed = board.removeDeadPiece ( move );
-        this.removePieceFromTeam (removed);
+        board.attack ( move, team );
 
     }
 
