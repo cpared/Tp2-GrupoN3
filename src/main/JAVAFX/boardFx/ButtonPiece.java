@@ -11,6 +11,6 @@ public abstract class ButtonPiece extends Button {
     }
     public abstract Piece choosePiece(Game game, Player player);
 
-    public abstract String getString();
+    public abstract String getString(Game game, Player player);
 
 }
