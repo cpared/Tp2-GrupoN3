@@ -25,6 +25,7 @@
 
 .label{
     -fx-text-fill: white;
+    -fx-font-size: 20;
 }
 
 GridPane{
@@ -38,7 +39,7 @@ VBox{
 }
 
 .welcome{
-    -fx-font-size:40;
+    -fx-font-size:50;
 }
 
 .buttonStop{

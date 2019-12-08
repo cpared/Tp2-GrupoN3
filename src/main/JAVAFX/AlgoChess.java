@@ -10,6 +10,7 @@ import game.Game;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -96,24 +97,45 @@ public class AlgoChess extends Application {
         // Start button.
         //Button buttonStart = this.view.createButton ( "Start" );
         Button buttonStart = new Button("Start");
+        buttonStart.setMinWidth(150);
+        buttonStart.setMinHeight(40);
+
+        buttonStart.setAlignment(Pos.BOTTOM_CENTER);
         Scene playerChoosesName = this.scene01PlayerChoosesName(stage);
         this.scene1 = playerChoosesName;
         ButtonsThatChangeScenesEventHandler buttonsThatChangeScenesEventHandler = new ButtonsThatChangeScenesEventHandler(stage, playerChoosesName);
         buttonStart.setOnAction(buttonsThatChangeScenesEventHandler);
 
         // Creating the vertical box containing welcoming, instruction and instructions.
-        VBox verticalB = new VBox(welcome, instruction, instructions, buttonStart);
+        Region topRegion = new Region();
+        VBox.setVgrow(topRegion, Priority.ALWAYS);
+
+        Region centerRigion = new Region();
+        VBox.setVgrow(centerRigion, Priority.ALWAYS);
+
+        VBox verticalB = new VBox(welcome, topRegion, instruction, instructions, centerRigion, buttonStart);
+        VBox.setMargin(welcome, new Insets(20));
+        VBox.setMargin(buttonStart, new Insets(20));
         verticalB.setSpacing(3);
         verticalB.setAlignment(Pos.CENTER);
-        verticalB.setMaxSize(600, 300);
+        verticalB.setMaxSize(1000, 700);
+
+        Region regionLeft = new Region();
+        HBox.setHgrow(regionLeft, Priority.ALWAYS);
+
+        Region regionCenter = new Region();
+        HBox.setHgrow(regionCenter, Priority.ALWAYS);
+
+        Label emptyLabel = new Label("");
+
+        HBox hbox = new HBox(emptyLabel, regionLeft, name, regionCenter, stopButton);
+        HBox.setMargin(stopButton, new Insets(10));
 
         // Setting panes.
-        borderPane.setTop(name);
+        borderPane.setTop(hbox);
         BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
         borderPane.setCenter(verticalB);
         BorderPane.setAlignment(name, Pos.TOP_CENTER);
-        borderPane.setBottom(stopButton);
-        BorderPane.setAlignment(stopButton, Pos.BOTTOM_CENTER);
 
         //Adding background.
         borderPane.setBackground(this.background);
@@ -133,21 +155,28 @@ public class AlgoChess extends Application {
 
         // Text
         TextField text = new TextField();
+        text.setPadding(new Insets(10));
 
         //Buttons
         Button acceptButton = new Button("Accept");
+        acceptButton.setPadding(new Insets(10));
+        acceptButton.setMinWidth(150);
+        acceptButton.setMinHeight(40);
 
         //Label
         Label label = new Label("Select your name");
+        label.setStyle("-fx-font-size:30;");
+        label.setPadding(new Insets(10));
+
         Label errorText = new Label();
+        errorText.setPadding(new Insets(10));
 
         //Grid position on scene
         GridPane grid = new GridPane();
 
         //Set position on scene
         grid.setAlignment(Pos.CENTER);
-        //grid.setStyle("-fx-background-color: black");
-        grid.setMaxSize(270, 100);
+        grid.setMaxSize(800, 500);
 
         //Set separation
         grid.setVgap(10);

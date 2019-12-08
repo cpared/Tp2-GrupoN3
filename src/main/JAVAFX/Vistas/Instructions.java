@@ -27,6 +27,7 @@ public class Instructions extends TextFlow {
         Text newText = new Text ( text );
         newText.setTextAlignment ( this.textAlignment );
         newText.setFill ( this.textColor );
+        newText.setStyle("-fx-font-size:25;");
         return newText;
     }
 
