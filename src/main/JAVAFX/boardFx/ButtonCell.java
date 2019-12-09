@@ -5,6 +5,7 @@ import javafx.util.Pair;
 
 public class ButtonCell extends Button {
     Pair<Integer,Integer> positionCell;
+    Boolean bool = false;
 
     public ButtonCell(String name, String color, int row, int column) {
         super(name);
@@ -18,4 +19,10 @@ public class ButtonCell extends Button {
         return this.getStyleClass().isEmpty();
     }
 
+    public void setBattalion() {
+        bool =  true;
+    }
+    public boolean getBattalion(){
+        return bool;
+    }
 }

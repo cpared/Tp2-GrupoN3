@@ -1,13 +1,18 @@
 package board;
 
 import criteria.BattalionCriteria;
+import criteria.CatapultCriteria;
+import criteria.Criteria;
 import javafx.util.Pair;
 import move.Move;
+import piece.Catapult;
 import piece.Piece;
 import piece.battalion.BattalionComposite;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Board {
     protected ArrayList<ArrayList<Cell>> cellArray;
@@ -73,9 +78,38 @@ public class Board {
         int secondRow = move.toRow;
         int firstColumn = move.fromColumn;
         int secondColumn = move.toColumn;
-        ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
-        Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
-        this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
+        Piece piece = originCell(move).getPiece();
+        ArrayList<Piece> array = new ArrayList<Piece>();
+        array.add(piece);
+        Criteria criteria = new CatapultCriteria();
+        if (!criteria.criteria(array).isEmpty()) {
+            this.catapultAttack((Catapult) piece, secondRow, secondColumn);
+        } else {
+            ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow, firstColumn)));
+            Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer>(this.destinationCell(move).getPiece(), Math.max(Math.abs(firstRow - secondRow), Math.abs(firstColumn - secondColumn)));
+            piece.attack(pieceArray, pieceToAttack);
+        }
+    }
+
+    private void catapultAttack(Catapult piece, int row,int column) {
+        Set<Piece> pieces = new HashSet<Piece>();
+        getAttackPieces(pieces,row, column);
+        piece.attack(pieces,cellArray.get(row).get(column).getPiece());/*
+        piece.attack(new ArrayList<Piece>(pieces),cellArray.get(row).get(column).getPiece());*/
+    }
+
+    private void getAttackPieces(Set<Piece> pieces,int row, int column ) {
+        pieces.add(cellArray.get(row).get(column).getPiece());
+        for (int actualRow = row-1; actualRow < row+2; actualRow++){
+            for (int actualColumn = column-1;actualColumn<column+2;actualColumn++){
+                if (actualRow < 0 || actualRow > 19 || actualColumn < 0 || actualColumn > 19){
+                    continue;
+                }
+                if (!(cellIsEmpty(actualRow,actualColumn) || pieces.contains(cellArray.get(actualRow).get(actualColumn).getPiece()))){
+                    this.getAttackPieces(pieces,actualRow,actualColumn);
+                }
+            }
+        }
     }
 
     private ArrayList<Cell> adjacentCells ( int firstRow, int firstColumn ) {

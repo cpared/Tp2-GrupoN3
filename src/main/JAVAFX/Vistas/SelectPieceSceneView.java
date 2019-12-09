@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +48,7 @@ public class SelectPieceSceneView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 changeScene(board, borderPane);
+                setChooseButton();
                 game.playerIsReadyToPlay(game.getPlayer1());
                 game.playerIsReadyToPlay(game.getPlayer2());
             }
@@ -219,6 +219,23 @@ public class SelectPieceSceneView {
         return scene;
     }
 
+    private void setChooseButton() {
+        choosePieceButton.setText("Choose Battalion");
+        choosePieceButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    game.playerChoosesBattalion(game.getAvailablePlayer(),pair.getKey(),pair.getValue());
+                    lastButton.setBattalion();
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+        });
+
+    }
+
     private void setBoardCellAction(GridPane board) {
         for (Node node: board.getChildren()){
             setButtonCellAction((ButtonCell) node);
@@ -380,7 +397,6 @@ public class SelectPieceSceneView {
 
     private void changeScene (GridPane board, BorderPane borderPane){
        // borderPane.setLeft(null);
-        choosePieceButton.setText("Choose Battalion");
         borderPane.setTop(null);
         borderPane.setBottom(null);
         Pair<RadioButton, RadioButton> pair = setGameStage(board,borderPane);

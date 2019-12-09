@@ -10,6 +10,7 @@ import team.SameTeamException;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Catapult implements Piece {
     public Team team;
@@ -47,6 +48,13 @@ public class Catapult implements Piece {
         this.distanceAttack.attack(attackedPieces, this.attackRange);
     }
 
+    public void attack(Set<Piece> pieces, Piece piece) {
+        if (this.isSameTeamAs ( piece )) throw new SameTeamException ();
+        for (Piece attackedPiece: pieces){
+            attackedPiece.receiveAttacked(20);
+        }
+    }
+
     @Override
     public void receiveHealed ( int heal ) {}
 
@@ -80,4 +88,5 @@ public class Catapult implements Piece {
     public int getLife () {
         return this.life;
     }
+
 }

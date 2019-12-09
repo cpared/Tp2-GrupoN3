@@ -47,7 +47,7 @@ public class Rider implements Piece {
 
         if (this.attackCriteria.criteria(allyPieces).size() != 0 || enemyPieces.size() == 0){
             this.riderAttack = new DistanceAttack (15);
-            this.attackRange = 2;
+            this.attackRange = 8;
 
         }
         else{

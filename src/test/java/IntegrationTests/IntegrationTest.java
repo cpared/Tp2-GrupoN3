@@ -509,4 +509,27 @@ class IntegrationTest {
         }
 
     }
+    @Test
+    void test19WhenACatapultAttacksIfTheAttackedPiecesHasAnotherPiecesAroundTheyGetAttacked(){
+        Game game = new Game ();
+        game.newPlayer ( "Pepe" );
+        game.newPlayer ( "Juan" );
+        Piece cris = game.playerChoosesSoldier ( game.getPlayer1 () );
+        Piece sol = game.playerChoosesRider ( game.getPlayer2 () );
+        Piece euge = game.playerChoosesHealer ( game.getPlayer2 () );
+        Piece nacho = game.playerChoosesCatapult ( game.getPlayer1 () );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), cris, 9, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), sol, 10, 1 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), nacho, 0, 3 );
+        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), euge, 10, 2 );
+        game.playerIsReadyToPlay ( game.getPlayer1 () );
+        game.playerIsReadyToPlay ( game.getPlayer2 () );
+        game.playerAttacks(game.getPlayer1(),0,3,10,1);
+        assertEquals ( cris.getLife(), 80 );
+        assertEquals ( sol.getLife(), 80 );
+        assertEquals ( euge.getLife(),55);
+        assertEquals ( nacho.getLife(), 50 );
+
+
+    }
 }
