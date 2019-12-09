@@ -5,9 +5,14 @@ import piece.Piece;
 import player.Player;
 
 public class ButtonPieceHealer extends ButtonPiece {
+    private String style;
 
-    public ButtonPieceHealer(){
+    public ButtonPieceHealer(String style){
         super();
+        this.style = style;
+        this.getStyleClass().add(style);
+        this.setMinWidth(60);
+        this.setMinHeight(60);
     }
 
     @Override
@@ -17,6 +22,7 @@ public class ButtonPieceHealer extends ButtonPiece {
 
     @Override
     public String getString(Game game, Player player){
-        return "buttonHealer";
+        return this.style;
+        //return "buttonHealer";
     }
 }

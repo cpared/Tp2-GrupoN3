@@ -50,24 +50,10 @@ public class PlayerSelectsPieceVerticalBox extends VBox {
         choosePieceButton.getStyleClass().add("button-choose");
         choosePieceButton.setAlignment( Pos.CENTER);
 
-        ButtonPiece soldierButton = new ButtonPieceSoldier();
-        soldierButton.getStyleClass().add("leftButtonSoldier");
-        soldierButton.setMinWidth(60);
-        soldierButton.setMinHeight(60);
-        ButtonPiece riderButton = new ButtonPieceRider();
-        riderButton.getStyleClass().add("leftButtonRider");
-        riderButton.setMinWidth(60);
-        riderButton.setMinHeight(60);
-
-        ButtonPiece healerButton = new ButtonPieceHealer();
-        healerButton.getStyleClass().add("leftButtonHealer");
-        healerButton.setMinWidth(60);
-        healerButton.setMinHeight(60);
-
-        ButtonPiece catapultButton = new ButtonPieceCatapult();
-        catapultButton.getStyleClass().add("leftButtonCatapult");
-        catapultButton.setMinWidth(60);
-        catapultButton.setMinHeight(60);
+        ButtonPiece soldierButton = new ButtonPieceSoldier("leftButtonSoldier");
+        ButtonPiece riderButton = new ButtonPieceRider("leftButtonRider");
+        ButtonPiece healerButton = new ButtonPieceHealer("leftButtonHealer");
+        ButtonPiece catapultButton = new ButtonPieceCatapult("leftButtonCatapult");
 
         //Images
         Image attackImage = new Image("Image/broadsword.png");

@@ -2,6 +2,7 @@ package Vistas;
 
 import Controlers.PieceStatHandlers.*;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
+import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
 import boardFx.*;
 import game.Game;
 import game.GameHasEndedException;
@@ -33,6 +34,7 @@ public class SelectPieceSceneView {
     private Label playerPoints = new Label("Points: ");
     //private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private Game game;
+    private Turn turn;
 
 
     public Scene scene02SelectPieces( Stage stage , Game game) throws InterruptedException {
@@ -80,24 +82,24 @@ public class SelectPieceSceneView {
         choosePieceButton.getStyleClass().add("button-choose");
         choosePieceButton.setAlignment(Pos.CENTER);
 
-        ButtonPiece soldierButton = new ButtonPieceSoldier();
-        soldierButton.getStyleClass().add("leftButtonSoldier");
-        soldierButton.setMinWidth(60);
-        soldierButton.setMinHeight(60);
-        ButtonPiece riderButton = new ButtonPieceRider();
-        riderButton.getStyleClass().add("leftButtonRider");
-        riderButton.setMinWidth(60);
-        riderButton.setMinHeight(60);
+        ButtonPiece soldierButton = new ButtonPieceSoldier("leftButtonSoldier");
+        //soldierButton.getStyleClass().add("leftButtonSoldier");
+        //soldierButton.setMinWidth(60);
+        //soldierButton.setMinHeight(60);
+        ButtonPiece riderButton = new ButtonPieceRider("leftButtonRider");
+        //riderButton.getStyleClass().add("leftButtonRider");
+        //riderButton.setMinWidth(60);
+        //riderButton.setMinHeight(60);
 
-        ButtonPiece healerButton = new ButtonPieceHealer();
-        healerButton.getStyleClass().add("leftButtonHealer");
-        healerButton.setMinWidth(60);
-        healerButton.setMinHeight(60);
+        ButtonPiece healerButton = new ButtonPieceHealer("leftButtonHealer");
+        //healerButton.getStyleClass().add("leftButtonHealer");
+        //healerButton.setMinWidth(60);
+        //healerButton.setMinHeight(60);
 
-        ButtonPiece catapultButton = new ButtonPieceCatapult();
-        catapultButton.getStyleClass().add("leftButtonCatapult");
-        catapultButton.setMinWidth(60);
-        catapultButton.setMinHeight(60);
+        ButtonPiece catapultButton = new ButtonPieceCatapult("leftButtonCatapult");
+        //catapultButton.getStyleClass().add("leftButtonCatapult");
+        //catapultButton.setMinWidth(60);
+        //catapultButton.setMinHeight(60);
 
 
         //Images
