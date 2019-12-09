@@ -20,6 +20,7 @@ public class NameEventHandler implements EventHandler<KeyEvent> {
     public void handle ( KeyEvent event ) {
         if (event.getCode () == KeyCode.ENTER) {
             Event.fireEvent ( this.acceptButton, new ActionEvent () );
+
         }
 
     }

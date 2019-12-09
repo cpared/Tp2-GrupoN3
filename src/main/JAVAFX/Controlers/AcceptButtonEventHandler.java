@@ -31,21 +31,21 @@ public class AcceptButtonEventHandler implements EventHandler<ActionEvent> {
     public void handle ( ActionEvent event ) {
 
         if (this.textField.getText ().trim ().equals ( "" )) {
-            this.textField.setPromptText ( "Debe ingresar un nombre" );
-            this.errorText.setText("Oops, empty name is not allow. Please try again");
-            this.errorText.setStyle("-fx-text-fill: #FF0000");
+            this.textField.setPromptText ( "Player must choose a name." );
+            this.errorText.setText("Oops, no name has been entered. Please try again");
+            this.errorText.setStyle("-fx-text-fill: #fffb03; -fx-font-size:20");
         } else {
             this.game.newPlayer ( this.textField.getText () );
             this.count++;
-            this.textField.setText ( "" );
-            this.textField.requestFocus ();
             if (count == 2) {
                 try {
                     this.stage.setScene(this.scene.scene02SelectPieces(stage,game));
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    e.printStackTrace ();
                 }
             }
+            this.textField.setText ( "" );
+            this.textField.requestFocus ();
         }
     }
 

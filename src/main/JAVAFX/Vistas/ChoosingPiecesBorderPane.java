@@ -25,7 +25,8 @@ public class ChoosingPiecesBorderPane extends BorderPane {
 
         // Bottom pane
         Button ready = new Button ( "Ready to play" );
-        ready.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, scene ) );
+        ready.setOnKeyPressed ( new ButtonsThatChangeScenesEventHandler ( stage, scene ) );
+        ready.setOnMouseClicked ( new ButtonsThatChangeScenesEventHandler ( stage, scene ) );
 
         HBox bottom = new HBox ( ready );
         bottom.setAlignment ( Pos.CENTER );

@@ -1,0 +1,154 @@
+.rightButtonSoldier{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/soldier.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-position: center;
+}
+
+.rightButtonSoldier:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+.rightButtonRider{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/rider.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-position: center;
+
+}
+
+.rightButtonRider:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+.rightButtonHealer{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/healer.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-position: center;
+}
+
+.rightButtonHealer:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+.rightButtonCatapult{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/catapult2.png");
+    -fx-background-size: 60px 60px;
+    -fx-background-position: center;
+}
+
+.rightButtonCatapult:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+.piecesGrid{
+    -fx-background-color: #4a4a4a;
+    -fx-border-color: black;
+}
+
+.buttonStart{
+    -fx-background-color:
+            linear-gradient(#f0ff35, #a9ff00),
+            radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    /*-fx-background-radius: 6, 5;*/
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+    -fx-font-size: 25;
+    -fx-cursor: hand;
+    -fx-border-width: 3;
+}
+
+.buttonStart:hover{
+    -fx-background-color:
+        linear-gradient(rgba(240, 255, 53, 0.61), rgba(169, 255, 0, 0.62)),
+        radial-gradient(center 50% -40%, radius 200%, rgba(184, 238, 54, 0.4) 45%, rgba(128, 200, 0, 0.34) 50%);
+}
+
+.hbox{
+    -fx-background-color: linear-gradient(rgba(42,42,42,1) 33%, rgba(74,74,74,1) 78%);
+    -fx-border-color: black;
+}
+
+.textStyle{
+    -fx-font-size:30;
+    -fx-text-fill: white;
+}
+
+.board{
+    -fx-background-image: url("Image/board.jpg");
+    -fx-background-size: cover;
+}
+
+.button-choose{
+    /*-fx-border-color: #fd3d3d3;*/
+    -fx-border-width: 5px;
+    /*-fx-background-color: #b0c4de,linear-gradient(#fafdfe, #e8f5fc),linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);*/
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+
+.button-choose:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+
+.selectedtextStyle{
+    -fx-font-size:30;
+    -fx-text-fill: white;
+}

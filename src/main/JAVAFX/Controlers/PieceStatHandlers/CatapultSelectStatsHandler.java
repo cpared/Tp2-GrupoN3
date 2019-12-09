@@ -1,4 +1,4 @@
-package Controlers;
+package Controlers.PieceStatHandlers;
 
 import Vistas.SelectPieceSceneView;
 import boardFx.ButtonPiece;
@@ -10,28 +10,28 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class HealerSelectStatsHandler implements EventHandler<InputEvent>{
+public class CatapultSelectStatsHandler implements EventHandler<InputEvent> {
 
     private SelectPieceSceneView scene;
-    private final ButtonPiece button;
-    private String attack = "15";
-    private String cost = "2";
-    private String health = "75";
+    private  ButtonPiece button;
+    private String attack = "20";
+    private String cost = "5";
+    private String health = "50";
     private String info = "Lorem";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;
     private Label pieceInfo;
-    private ImageView heal;
+    private ImageView attackImageChange;
 
-    public HealerSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView healImage, SelectPieceSceneView scene, ButtonPiece healer){
+    public CatapultSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, SelectPieceSceneView scene, ButtonPiece catapult){
         this.attackInfo =  attackInformation;
         this.healthInfo = healthInformation;
         this.priceInfo = priceInformation;
         this.pieceInfo = information;
-        this.heal = healImage;
+        this.attackImageChange = attackImage;
         this.scene = scene;
-        this.button = healer;
+        this.button = catapult;
     }
 
     @Override
@@ -46,11 +46,14 @@ public class HealerSelectStatsHandler implements EventHandler<InputEvent>{
             this.pieceInfo.setText(this.info);
             this.pieceInfo.setTextFill(Color.WHITE);
 
-            Image url = new Image("Image/health-increase.png");
-            this.heal.setImage(url);
+            Image url = new Image("Image/crossbow.png");
+            this.attackImageChange.setImage(url);
 
             scene.setLastClicked(button);
         }
     }
-
 }
+
+
+
+

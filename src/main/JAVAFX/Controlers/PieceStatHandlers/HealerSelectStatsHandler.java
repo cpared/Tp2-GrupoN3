@@ -1,4 +1,4 @@
-package Controlers;
+package Controlers.PieceStatHandlers;
 
 import Vistas.SelectPieceSceneView;
 import boardFx.ButtonPiece;
@@ -10,27 +10,28 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
+public class HealerSelectStatsHandler implements EventHandler<InputEvent>{
+
     private SelectPieceSceneView scene;
     private final ButtonPiece button;
-    private String attack = "10";
-    private String cost = "1";
-    private String health = "100";
+    private String attack = "15";
+    private String cost = "2";
+    private String health = "75";
     private String info = "Lorem";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;
     private Label pieceInfo;
-    private ImageView attackImageChange;
+    private ImageView heal;
 
-    public SoldierSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView attackImage, SelectPieceSceneView scene, ButtonPiece soldierButton){
+    public HealerSelectStatsHandler(Label attackInformation, Label healthInformation, Label priceInformation, Label information, ImageView healImage, SelectPieceSceneView scene, ButtonPiece healer){
         this.attackInfo =  attackInformation;
         this.healthInfo = healthInformation;
         this.priceInfo = priceInformation;
         this.pieceInfo = information;
-        this.attackImageChange = attackImage;
+        this.heal = healImage;
         this.scene = scene;
-        this.button = soldierButton;
+        this.button = healer;
     }
 
     @Override
@@ -44,9 +45,11 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
             this.priceInfo.setTextFill(Color.WHITE);
             this.pieceInfo.setText(this.info);
             this.pieceInfo.setTextFill(Color.WHITE);
+
+            Image url = new Image("Image/health-increase.png");
+            this.heal.setImage(url);
+
             scene.setLastClicked(button);
-            Image url = new Image("Image/broadsword.png");
-            this.attackImageChange.setImage(url);
         }
     }
 

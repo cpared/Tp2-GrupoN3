@@ -1,4 +1,4 @@
-package Controlers;
+package Controlers.PieceStatHandlers;
 
 import Vistas.SelectPieceSceneView;
 import boardFx.ButtonPiece;
