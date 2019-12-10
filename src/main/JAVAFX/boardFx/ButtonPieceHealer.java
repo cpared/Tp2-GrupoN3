@@ -23,6 +23,12 @@ public class ButtonPieceHealer extends ButtonPiece {
     @Override
     public String getString(Game game, Player player){
         return this.style;
-        //return "buttonHealer";
     }
+
+    @Override
+    public void setString (String style) {
+        this.style = style;
+        this.getStyleClass().add(style);
+    }
+
 }

@@ -1,5 +1,6 @@
 package HaganmeElFavorDeNoBorrarLoQueNoCodean;
 
+import boardFx.ButtonPiece;
 import game.Game;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,7 +8,6 @@ import javafx.scene.layout.VBox;
 import player.Player;
 
 public class Turn {
-    private Player currentPlayer;
     private String soldierButtonStyle;
     private String healerButtonStyle;
     private String riderButtonStyle;
@@ -15,7 +15,6 @@ public class Turn {
     private Game game;
 
     public Turn ( Game game ) {
-        this.currentPlayer = game.getAvailablePlayer ();
         this.game = game;
         this.leftPlayerStyle ();
     }
@@ -24,32 +23,40 @@ public class Turn {
         this.soldierButtonStyle = "leftButtonSoldier";
         this.healerButtonStyle = "leftButtonHealer";
         this.riderButtonStyle = "leftButtonRider";
-        this.riderButtonStyle = "leftButtonCatapult";
+        this.catapultButtonStyle = "leftButtonCatapult";
     }
 
     private void rightPlayerStyle () {
         this.soldierButtonStyle = "rightButtonSoldier";
         this.healerButtonStyle = "rightButtonHealer";
         this.riderButtonStyle = "rightButtonRider";
-        this.riderButtonStyle = "rightButtonCatapult";
+        this.catapultButtonStyle = "rightButtonCatapult";
     }
 
-    private VBox playerInformationDisplay () {
-        Label name = new Label ( "Player: " + this.currentPlayer.name () );
-        Label points = new Label ( "Points: " + Integer.toString ( game.getPoints ( this.currentPlayer ) ) );
-
-        //Style
+    public Label getCurrentPlayersName () {
+        Label name = new Label ( "Player: " + this.game.getAvailablePlayer ().name () );
         name.setStyle ( "-fx-text-fill: white;-fx-font-size: 20" );
-        points.setStyle ( "-fx-text-fill: white;-fx-font-size: 20" );
-
-        VBox vertical = new VBox ( name, points );
-        return vertical;
+        return name;
     }
 
-    public void applyStyleToButtons ( Button soldierButton, Button riderButton, Button healerButton, Button catapultButton ) {
-        soldierButton.getStyleClass().add(this.soldierButtonStyle);
-        riderButton.getStyleClass().add(this.riderButtonStyle);
-        healerButton.getStyleClass().add(this.healerButtonStyle);
-        catapultButton.getStyleClass().add(this.catapultButtonStyle);
+    public  Label getCurrentPlayersPoints() {
+        Label points = new Label ( "Points: " + Integer.toString ( this.game.getPoints ( this.game.getAvailablePlayer () ) ) );
+        points.setStyle ( "-fx-text-fill: white;-fx-font-size: 20" );
+        return points;
+    }
+
+    public void applyStyleToButtons ( ButtonPiece soldierButton, ButtonPiece riderButton, ButtonPiece healerButton, ButtonPiece catapultButton ) {
+        soldierButton.setString ( this.soldierButtonStyle );
+        riderButton.setString ( this.riderButtonStyle );
+        healerButton.setString ( this.healerButtonStyle );
+        catapultButton.setString ( this.catapultButtonStyle );
+    }
+
+    public void changeTurn(){
+        if (this.game.getAvailablePlayer ().equals ( this.game.getPlayer1 () )) {
+            this.leftPlayerStyle ();
+        } else {
+            this.rightPlayerStyle ();
+        }
     }
 }

@@ -23,6 +23,13 @@ public class ButtonPieceCatapult extends ButtonPiece {
     @Override
     public String getString(Game game, Player player){
         return this.style;
-        //return "buttonCatapult";
     }
+
+    @Override
+    public void setString (String style) {
+        this.style = style;
+        this.getStyleClass().add(style);
+    }
+
+
 }

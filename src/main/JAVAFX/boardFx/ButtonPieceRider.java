@@ -20,9 +20,17 @@ public class ButtonPieceRider extends ButtonPiece {
         return game.playerChoosesRider(player);
     }
 
+
     @Override
-    public String getString(Game game, Player player) {
+    public String getString(Game game, Player player){
         return this.style;
-        //return "buttonRider";
     }
+
+    @Override
+    public void setString (String style) {
+        this.style = style;
+        this.getStyleClass().add(style);
+    }
+
+
 }
