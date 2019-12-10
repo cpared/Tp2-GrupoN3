@@ -33,12 +33,13 @@ import java.io.File;
 public class AlgoChess extends Application {
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private ButtonView view = new ButtonView ();
-    private Game game = new Game ();
+    private Game game;
     private Scene scene1;
-    private SelectPieceSceneView scene2 = new SelectPieceSceneView ();
+    private SelectPieceSceneView scene2;
     private MediaPlayer mediaPlayer;
 
     public AlgoChess () {
+        this.scene2 = new SelectPieceSceneView (this);
     }
 
     public static void main ( String[] args ) {
@@ -49,6 +50,7 @@ public class AlgoChess extends Application {
     public void start ( Stage stage ) throws Exception {
 
         stage.setTitle ( " AlgoChess " );
+        this.game = new Game ();
 
         String path = "src/main/JAVAFX/Image/Metallica-Master_Of_Puppets.mp3";
         this.soundtrack ( path );

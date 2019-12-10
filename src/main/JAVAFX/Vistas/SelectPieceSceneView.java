@@ -1,27 +1,37 @@
 package Vistas;
 
+import Controlers.ExitButtonEventHandler;
 import Controlers.PieceStatHandlers.*;
+import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
 import boardFx.*;
 import game.Game;
 import game.GameHasEndedException;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
 import player.Player;
+
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class SelectPieceSceneView {
     private Button choosePieceButton;
@@ -33,10 +43,16 @@ public class SelectPieceSceneView {
     //private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private Game game;
     private Turn turn;
+    private Stage stage;
+    private Application app;
 
+    public SelectPieceSceneView ( Application game ) {
+        this.app = game;
+    }
 
     public Scene scene02SelectPieces ( Stage stage, Game game ) throws InterruptedException {
         this.game = game;
+        this.stage = stage;
         this.turn = new Turn ( this.game );
 
         //Main Panes
@@ -279,9 +295,19 @@ public class SelectPieceSceneView {
                          game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                          player = turn.getCurrentPlayersName ();
                          turn.changeTurn ();
+                         moveButton.getStyleClass ().add ( "button-choose" );
+                         attackButton.getStyleClass ().add ( "button-choose" );
+
+                         VBox vertical = new VBox (player, moveButton, attackButton );
+                         vertical.setAlignment ( Pos.CENTER );
+                         vertical.setSpacing ( 40 );
+                         vertical.getStyleClass().add("piecesGrid");
+                         borderpane.setLeft ( vertical);
+                         BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
 
                          if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () ))
                              button.getStyleClass ().remove ( 1 );
+
                      }
                  }
              }
@@ -305,12 +331,24 @@ public class SelectPieceSceneView {
 
         ToggleButton move = pair.getValue ();
         move.getStyleClass ().add ( "button-choose" );
-        ToggleButton attack =   pair.getKey ();
-        attack.getStyleClass ().add ( "button-choose" );
+        ToggleButton attack =   pair.getKey ();attack.getStyleClass ().add ( "button-choose" );
 
+        /*
+        Scrollbar barraTemp = new Scrollbar(Scrollbar.HORIZONTAL, 0, 10, -50, 160);
+        Frame frameTemp = new Frame("Error"); //creamos el marco
+        Label
+        frameTemp.add ( new Text ("Player must choose at least one piece to play.") )
+        frameTemp.add("Center", barraTemp); //agregamos la barra
+        frameTemp.setSize(300,100);
+        frameTemp.setVisible(true);  //mostramos el marco
+        frameTemp.addWindowListener(new CloseListener());
+        */
+
+        //Adding the components to the bar
         VBox vertical = new VBox (name, piece, move,attack);
+        //VBox vertical = new VBox (name, piece);
         vertical.getStyleClass().add("piecesGrid");
-        vertical.setAlignment ( Pos.CENTER );
+        vertical.setAlignment ( Pos.TOP_CENTER );
         vertical.setSpacing ( 40 );
         BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
         borderPane.setLeft ( vertical );
@@ -334,16 +372,30 @@ public class SelectPieceSceneView {
         ImageView gameOverView = new ImageView ( gameover );
         Label name = new Label ( "Player: " + player.name () + " has won." );
         name.getStyleClass ().add ( "textStyle" );
-        //name.setPrefSize(20,20);
-        //name.setEffect(new Glow());
+
+
         // Exit button
+        Button exit = new Button ( "Exit" );
+        exit.getStyleClass ().add ( "button-choose" );
+        ExitButtonEventHandler exitButtonEventHandler = new ExitButtonEventHandler ( exit, stage );
+        exit.setOnKeyPressed ( exitButtonEventHandler );
+        exit.setOnMouseClicked ( exitButtonEventHandler );
 
         // Play again button.
+        Button playAgain = new Button ( "New Game" );
+        playAgain.getStyleClass ().add ( "button-choose" );
+        playAgain.setOnAction ( new NewGameButtonEventHandler (this.app, exit) );
 
         // Horizontal box containing exit & playAgain
+        HBox horizontalEndButtons = new HBox ( exit, playAgain );
+        horizontalEndButtons.setAlignment ( Pos.CENTER );
+        horizontalEndButtons.setSpacing ( 60 );
+
+        exit.prefWidthProperty ().bind ( horizontalEndButtons.widthProperty ().divide ( 8 ) );
+        playAgain.prefWidthProperty ().bind ( horizontalEndButtons.widthProperty ().divide ( 8 ) );
 
         // Vertical Box
-        VBox vertical = new VBox ( gameOverView, name );
+        VBox vertical = new VBox ( gameOverView, name, horizontalEndButtons );
         vertical.setSpacing ( 100 );
         vertical.prefWidthProperty ().bind ( vertical.widthProperty ().divide ( 6 ) );
         vertical.prefHeightProperty ().bind ( vertical.widthProperty ().divide ( 6 ) );
@@ -351,5 +403,11 @@ public class SelectPieceSceneView {
         vertical.setAlignment ( Pos.CENTER );
         //vertical.setBackground(this.background);
         borderPane.setCenter ( vertical );
+    }
+
+    public static class CloseListener extends WindowAdapter {
+        public void windowClosing( WindowEvent e) {
+            e.getWindow().setVisible(false);
+        }
     }
 }

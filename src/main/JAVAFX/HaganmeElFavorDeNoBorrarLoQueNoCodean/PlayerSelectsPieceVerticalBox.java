@@ -84,6 +84,7 @@ public class PlayerSelectsPieceVerticalBox extends VBox {
 
 
         //Set action on buttons
+        /*
         SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, new SelectPieceSceneView (), soldierButton);
         soldierButton.setOnMouseClicked( soldierSelectStatsHandler );
 
@@ -95,6 +96,8 @@ public class PlayerSelectsPieceVerticalBox extends VBox {
 
         CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler(attackInformation,healthInformation, priceInformation, information, attackView, new SelectPieceSceneView (), catapultButton);
         catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
+
+         */
 
         //Pieces grid.
         //GridPane piecesGrid = new PiecesGridPane ( choosePieceButton,soldierButton, riderButton,healerButton,catapultButton, attackView, healthView, coinView, behaviorView, attackInformation,healthInformation, priceInformation, information);
