@@ -11,10 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -192,15 +189,15 @@ public class SelectPieceSceneView {
     }
 
 
-    public Pair<RadioButton, RadioButton> setGameStage ( GridPane grid, BorderPane borderPane ) {
+    public Pair<ToggleButton, ToggleButton> setGameStage ( GridPane grid, BorderPane borderPane ) {
         final ToggleGroup group = new ToggleGroup ();
-        RadioButton moveButton = new RadioButton ( "Move" );
+        ToggleButton moveButton = new ToggleButton ( "Move" );
         moveButton.setToggleGroup ( group );
         moveButton.getStyleClass().add("button-choose");
         //movePiece.setSelected ( true );
         moveButton.setPadding ( new Insets ( 0, 0, 0, 1100 ) );
 
-        RadioButton attackButton = new RadioButton ( "Attack" );
+        ToggleButton attackButton = new ToggleButton ( "Attack" );
         attackButton.setToggleGroup ( group );
         attackButton.getStyleClass().add("button-choose");
         attackButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
@@ -208,6 +205,7 @@ public class SelectPieceSceneView {
                 public void handle ( MouseEvent mouseEvent ) {
                     attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
                     moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+
                 }
             }
         );
@@ -217,6 +215,7 @@ public class SelectPieceSceneView {
               public void handle ( MouseEvent mouseEvent ) {
                   moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
                   attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+
               }
           }
         );
@@ -225,14 +224,14 @@ public class SelectPieceSceneView {
         SceneToAttack ( this.game, grid, moveButton, attackButton, borderPane );
         //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
 
-        return new Pair<RadioButton, RadioButton> ( moveButton, attackButton );
+        return new Pair<ToggleButton, ToggleButton> ( moveButton, attackButton );
     }
 
     private Pair<Integer, Integer> pair = null;
     private ButtonCell lastButton = null;
 
 
-    public void SceneToAttack ( Game game, GridPane board, RadioButton moveButton, RadioButton attackButton, BorderPane border ) {
+    public void SceneToAttack ( Game game, GridPane board, ToggleButton moveButton, ToggleButton attackButton, BorderPane border ) {
         VBox a = new VBox ( moveButton, attackButton );
         for (Node each : board.getChildren ()) {
             each.setOnMouseClicked ( new EventHandler<MouseEvent> () {
@@ -264,11 +263,15 @@ public class SelectPieceSceneView {
                          player = turn.getCurrentPlayersName ();
                          turn.changeTurn ();
 
+                         moveButton.getStyleClass ().add ( "button-choose" );
+                         attackButton.getStyleClass ().add ( "button-choose" );
+
                          VBox vertical = new VBox (player, moveButton, attackButton );
                          vertical.setAlignment ( Pos.CENTER );
                          vertical.setSpacing ( 40 );
                          vertical.getStyleClass().add("piecesGrid");
                          borderpane.setLeft ( vertical);
+                         BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
 
                          button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
                      }
@@ -291,7 +294,7 @@ public class SelectPieceSceneView {
         // borderPane.setLeft(null);
         borderPane.setTop ( null );
         borderPane.setBottom ( null );
-        Pair<RadioButton, RadioButton> pair = setGameStage ( board, borderPane );
+        Pair<ToggleButton, ToggleButton> pair = setGameStage ( board, borderPane );
 
 
         //Left
@@ -300,10 +303,16 @@ public class SelectPieceSceneView {
         Label piece = new Label ( "Choose a Piece" );
         piece.getStyleClass ().add ( "textStyle" );
 
-        VBox vertical = new VBox (name, piece, pair.getValue (),pair.getKey ());
+        ToggleButton move = pair.getValue ();
+        move.getStyleClass ().add ( "button-choose" );
+        ToggleButton attack =   pair.getKey ();
+        attack.getStyleClass ().add ( "button-choose" );
+
+        VBox vertical = new VBox (name, piece, move,attack);
         vertical.getStyleClass().add("piecesGrid");
         vertical.setAlignment ( Pos.CENTER );
         vertical.setSpacing ( 40 );
+        BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
         borderPane.setLeft ( vertical );
         //BorderPane.setAlignment ( vertical, Pos.CENTER );
 
