@@ -45,6 +45,7 @@ public class SelectPieceSceneView {
     private Turn turn;
     private Stage stage;
     private Application app;
+    private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
 
     public SelectPieceSceneView ( Application game ) {
         this.app = game;
@@ -370,6 +371,7 @@ public class SelectPieceSceneView {
         // AlgoChess image.
         Image gameover = new Image ( "Image/gameover.png" );
         ImageView gameOverView = new ImageView ( gameover );
+
         Label name = new Label ( "Player: " + player.name () + " has won." );
         name.getStyleClass ().add ( "textStyle" );
 
@@ -394,15 +396,25 @@ public class SelectPieceSceneView {
         exit.prefWidthProperty ().bind ( horizontalEndButtons.widthProperty ().divide ( 8 ) );
         playAgain.prefWidthProperty ().bind ( horizontalEndButtons.widthProperty ().divide ( 8 ) );
 
+        VBox contrast = new VBox ( name, horizontalEndButtons );
+        contrast.setSpacing ( 100 );
+        contrast.setAlignment ( Pos.CENTER );
+        contrast.getStylesheets ().add ( "AlgoStyle.css" );
+        contrast.prefWidthProperty ().bind ( contrast.widthProperty ().divide ( 6 ) );
+        contrast.prefHeightProperty ().bind ( contrast.widthProperty ().divide ( 6 ) );
+
+
+
         // Vertical Box
-        VBox vertical = new VBox ( gameOverView, name, horizontalEndButtons );
+        VBox vertical = new VBox ( gameOverView, contrast );
         vertical.setSpacing ( 100 );
         vertical.prefWidthProperty ().bind ( vertical.widthProperty ().divide ( 6 ) );
         vertical.prefHeightProperty ().bind ( vertical.widthProperty ().divide ( 6 ) );
 
+
         vertical.setAlignment ( Pos.CENTER );
-        //vertical.setBackground(this.background);
         borderPane.setCenter ( vertical );
+        borderPane.setBackground ( this.background );
     }
 
     public static class CloseListener extends WindowAdapter {
