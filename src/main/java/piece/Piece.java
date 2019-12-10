@@ -3,9 +3,8 @@ package piece;
 import board.Board;
 import javafx.util.Pair;
 import move.Move;
-import team.Team;
 import piece.battalion.BattalionComposite;
-import team.*;
+import team.Team;
 
 import java.util.ArrayList;
 
@@ -37,5 +36,7 @@ public interface Piece {
     Team getTeam();
 
     boolean isAlive();
+
+    void penalize(Team team);
 }
 

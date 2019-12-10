@@ -36,5 +36,7 @@ public interface GameState {
 
     // This getter is only for views,
     public int getPoints (Player player);
+
+    void penalizePieces();
 }
 

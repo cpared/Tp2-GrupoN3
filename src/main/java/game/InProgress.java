@@ -131,6 +131,11 @@ public class InProgress implements GameState {
         return player2Face.getPoints ();
     }
 
+    @Override
+    public void penalizePieces() {
+        board.penalizePieces();
+    }
+
     // This getter is only for vi
 
 }

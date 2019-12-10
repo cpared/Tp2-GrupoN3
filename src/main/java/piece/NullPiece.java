@@ -60,6 +60,11 @@ public class NullPiece implements Piece {
     }
 
     @Override
+    public void penalize(Team team) {
+
+    }
+
+    @Override
     public int getLife () {
         return this.life;
     }

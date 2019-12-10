@@ -92,7 +92,11 @@ public class Rider implements Piece {
     public void notFormPartOfBattalion ( BattalionComposite battalion){
 
     }
-
+    @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
     // These getters are for testing only.
     @Override
     public Team getTeam(){

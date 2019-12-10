@@ -49,4 +49,10 @@ class Cell {
     public boolean isEmpty(){
         return piece == null;
     }
+
+    public void penalizePiece() {
+        if (piece != null){
+            piece.penalize(team);
+        }
+    }
 }

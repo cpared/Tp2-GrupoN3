@@ -94,8 +94,7 @@ public class Board {
     private void catapultAttack(Catapult piece, int row,int column) {
         Set<Piece> pieces = new HashSet<Piece>();
         getAttackPieces(pieces,row, column);
-        piece.attack(pieces,cellArray.get(row).get(column).getPiece());/*
-        piece.attack(new ArrayList<Piece>(pieces),cellArray.get(row).get(column).getPiece());*/
+        piece.attack(pieces,cellArray.get(row).get(column).getPiece());
     }
 
     private void getAttackPieces(Set<Piece> pieces,int row, int column ) {
@@ -186,5 +185,14 @@ public class Board {
 
     public Piece getPiece(Move move) {
         return originCell(move).getPiece();
+    }
+
+    public void penalizePieces() {
+        for (ArrayList<Cell> cells: cellArray){
+            for (Cell cell: cells){
+                cell.penalizePiece();
+            }
+
+        }
     }
 }

@@ -2,10 +2,8 @@ package game;
 
 import board.Board;
 import move.Move;
-import piece.NullPiece;
 import piece.Piece;
 import player.Player;
-import player.ThereAreOnlyTwoPlayersPerGameException;
 
 public class Ended implements GameState {
 
@@ -75,5 +73,10 @@ public class Ended implements GameState {
     @Override
     public int getPoints (Player player){
         return 0;
+    }
+
+    @Override
+    public void penalizePieces() {
+        throw new GameHasEndedException ();
     }
 }

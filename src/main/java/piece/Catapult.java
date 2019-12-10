@@ -85,6 +85,12 @@ public class Catapult implements Piece {
     }
 
     @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
+
+    @Override
     public int getLife () {
         return this.life;
     }

@@ -106,7 +106,10 @@ public class Game {
     public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
         if (this.player1.equals ( this.available )) this.available = this.player2;
-        else this.available = this.player1;
+        else{
+            this.available = this.player1;
+            state.penalizePieces();
+        }
     }
 
     // These getters are only for testing, they dont belong in the model.
