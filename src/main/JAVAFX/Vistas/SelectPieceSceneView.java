@@ -204,8 +204,9 @@ public class SelectPieceSceneView {
     }
 
     private GridPane makeGridPane() {
-        String left = "-fx-background-color: #1a7749; -fx-border-color: black;";
-        String right = "-fx-background-color: #8f9779; -fx-border-color: black;";
+        String left = "-fx-background-color: #1a7749; -fx-border-color: black; -fx-border-width: 1px;";
+        String right = "-fx-background-color: #8f9779; -fx-border-color: black; -fx-border-width: 1px;";
+
 
         String actual = left;
         AlgoGrid gridPane = new AlgoGrid();
@@ -215,14 +216,16 @@ public class SelectPieceSceneView {
             }
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell ( null, actual, i, j );
-                button.setPrefSize ( 30, 30 );
+                //button.setPrefSize ( 30, 30 );
+                button.setMinSize(41,41);
+                button.setMaxSize(41,41);
                 //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 gridPane.add ( button, i, j );
             }
         }
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
+        gridPane.setHgap(1);
+        gridPane.setVgap(1);
         gridPane.setPadding(new Insets(20, 20, 20, 20));
         gridPane.setAlignment(Pos.CENTER);
         return gridPane;
