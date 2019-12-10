@@ -124,7 +124,7 @@
 }
 
 .board{
-    -fx-background-image: url("Image/board.jpg");
+    -fx-background-image: url("Image/waterfall.jpg");
     -fx-background-size: cover;
 }
 
