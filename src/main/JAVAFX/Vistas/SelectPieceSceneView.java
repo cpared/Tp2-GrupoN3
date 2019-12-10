@@ -30,8 +30,9 @@ public class SelectPieceSceneView {
     private Button choosePieceButton;
     private ButtonPiece lastClicked = null;
     private ButtonPiece lastChosen = null;
-    private Label player = new Label ( "Player One: " );
-    private Label playerPoints = new Label ( "Points: " );
+    private BorderPane borderpane;
+    private Label player = new Label ();
+    private Label playerPoints = new Label ();
     //private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private Game game;
     private Turn turn;
@@ -43,6 +44,7 @@ public class SelectPieceSceneView {
 
         //Main Panes
         BorderPane borderPane = new BorderPane ();
+        this.borderpane = borderPane;
         GridPane board = makeGridPane ();
 
         //Buttons
@@ -72,81 +74,30 @@ public class SelectPieceSceneView {
         start.setMinWidth ( 150 );
         start.setMinHeight ( 40 );
 
-
         choosePieceButton = new Button ( "Choose Piece" );
-
         choosePieceButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
             @Override
             public void handle ( MouseEvent mouseEvent ) {
                 lastChosen = lastClicked;
             }
         } );
-
         choosePieceButton.getStyleClass ().add ( "button-choose" );
         choosePieceButton.setAlignment ( Pos.CENTER );
 
-        ButtonPiece soldierButton = new ButtonPieceSoldier ( "leftButtonSoldier" );
-        ButtonPiece riderButton = new ButtonPieceRider ( "leftButtonRider" );
-        ButtonPiece healerButton = new ButtonPieceHealer ( "leftButtonHealer" );
-        ButtonPiece catapultButton = new ButtonPieceCatapult ( "leftButtonCatapult" );
-
-
-        //Images
-        Image attackImage = new Image ( "Image/broadsword.png" );
-        ImageView attackView = new ImageView ( attackImage );
-        attackView.setFitHeight ( 30 );
-        attackView.setFitWidth ( 30 );
-
-        Image healthImage = new Image ( "Image/heart-plus.png" );
-        ImageView healthView = new ImageView ( healthImage );
-        healthView.setFitHeight ( 30 );
-        healthView.setFitWidth ( 30 );
-
-        Image coinImage = new Image ( "Image/crown-coin.png" );
-        ImageView coinView = new ImageView ( coinImage );
-        coinView.setFitHeight ( 30 );
-        coinView.setFitWidth ( 30 );
-
-        Image behaviorImage = new Image ( "Image/guards.png" );
-        ImageView behaviorView = new ImageView ( behaviorImage );
-        behaviorView.setFitHeight ( 30 );
-        behaviorView.setFitWidth ( 30 );
-
-        //Text
-        Label attackInformation = new Label ( "-" );
-        Label healthInformation = new Label ( "-" );
-        Label priceInformation = new Label ( "-" );
-        Label information = new Label ( "-" );
-
-
-        //Set action on buttons
-        SoldierSelectStatsHandler soldierSelectStatsHandler = new SoldierSelectStatsHandler ( attackInformation, healthInformation, priceInformation, information, attackView, this, soldierButton );
-        soldierButton.setOnMouseClicked ( soldierSelectStatsHandler );
-
-        RiderSelectStatsHandler riderSelectStatsHandler = new RiderSelectStatsHandler ( attackInformation, healthInformation, priceInformation, information, attackView, this, riderButton );
-        riderButton.setOnMouseClicked ( riderSelectStatsHandler );
-
-        HealerSelectStatsHandler healerSelectStatsHandler = new HealerSelectStatsHandler ( attackInformation, healthInformation, priceInformation, information, attackView, this, healerButton );
-        healerButton.setOnMouseClicked ( healerSelectStatsHandler );
-
-        CatapultSelectStatsHandler catapultSelectStatsHandler = new CatapultSelectStatsHandler ( attackInformation, healthInformation, priceInformation, information, attackView, this, catapultButton );
-        catapultButton.setOnMouseClicked ( catapultSelectStatsHandler );
-
-        //Pieces grid.
-        GridPane piecesGrid = new PiecesGridPane ( choosePieceButton, soldierButton, riderButton, healerButton, catapultButton, attackView, healthView, coinView, behaviorView, attackInformation, healthInformation, priceInformation, information );
-
         //Board
         board.getStyleClass ().add ( "board" );
-        setBoardCellAction ( board );
+        setBoardCellAction ( board, this );
 
         //Left toolbar
+        VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ) );
+        vertical.setAlignment ( Pos.CENTER );
+        vertical.setSpacing ( 40 );
+        vertical.getStyleClass().add("piecesGrid");
 
-        //borderPane.setMaxSize(600,400);
-        borderPane.setLeft ( piecesGrid );
-        BorderPane.setAlignment ( piecesGrid, Pos.CENTER_LEFT );
+
+        borderPane.setLeft ( vertical );
         BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
         BorderPane.setMargin ( start, new Insets ( 12, 12, 12, 12 ) );
-        //borderPane.setBackground(this.background);
         borderPane.setTop ( start );
         borderPane.setCenter ( board );
         BorderPane.setAlignment ( board, Pos.CENTER );
@@ -174,25 +125,34 @@ public class SelectPieceSceneView {
 
     }
 
-    private void setBoardCellAction ( GridPane board ) {
+    private void setBoardCellAction ( GridPane board, SelectPieceSceneView view ) {
         for (Node node : board.getChildren ()) {
-            setButtonCellAction ( (ButtonCell) node );
+            setButtonCellAction ( (ButtonCell) node, view );
         }
     }
 
-    private void setButtonCellAction ( ButtonCell button ) {
+    private void setButtonCellAction ( ButtonCell button , SelectPieceSceneView view) {
         button.setOnMouseClicked ( new EventHandler<MouseEvent> () {
             @Override
             public void handle ( MouseEvent event ) {
                 if (!(lastChosen == null)) {
-                    Player player = game.getAvailablePlayer ();
+                    Player currentPlayer = game.getAvailablePlayer ();
                     try {
-                        Piece piece = lastChosen.choosePiece ( game, player );
+                        System.out.println ( "aca paso" );
+                        Piece piece = lastChosen.choosePiece ( game, currentPlayer );
                         Pair<Integer, Integer> pair = button.getPosition ();
-                        game.playerPlacesPieceOnBoard ( player, piece, pair.getKey (), pair.getValue () );
+                        game.playerPlacesPieceOnBoard ( currentPlayer, piece, pair.getKey (), pair.getValue () );
                         button.getStyleClass ().add ( lastChosen.getString ( game, game.getAvailablePlayer () ) );
                         lastChosen = null;
-                        playerPoints.setText ( getCoins ( game, game.getAvailablePlayer () ) );
+                        playerPoints = turn.getCurrentPlayersPoints ();
+                        player = turn.getCurrentPlayersName ();
+                        turn.changeTurn ();
+                        VBox vertical = new VBox ( turn.getCurrentPlayersName (), turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, view, turn ) );
+                        vertical.setAlignment ( Pos.CENTER );
+                        vertical.setSpacing ( 40 );
+                        vertical.getStyleClass().add("piecesGrid");
+                        borderpane.setLeft ( vertical );
+
                     } catch (GameHasEndedException i) {
                         throw i;
                     } catch (Exception e) {
@@ -231,9 +191,6 @@ public class SelectPieceSceneView {
         return gridPane;
     }
 
-    private String getCoins ( Game game, Player player ) {
-        return "Coins" + Integer.toString ( game.getPoints ( player ) );
-    }
 
     public Pair<RadioButton, RadioButton> setGameStage ( GridPane grid, BorderPane borderPane ) {
         final ToggleGroup group = new ToggleGroup ();

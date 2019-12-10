@@ -97,7 +97,7 @@ public class PlayerSelectsPieceVerticalBox extends VBox {
         catapultButton.setOnMouseClicked( catapultSelectStatsHandler );
 
         //Pieces grid.
-        GridPane piecesGrid = new PiecesGridPane ( choosePieceButton,soldierButton, riderButton,healerButton,catapultButton, attackView, healthView, coinView, behaviorView, attackInformation,healthInformation, priceInformation, information);
+        //GridPane piecesGrid = new PiecesGridPane ( choosePieceButton,soldierButton, riderButton,healerButton,catapultButton, attackView, healthView, coinView, behaviorView, attackInformation,healthInformation, priceInformation, information);
     }
 
 
