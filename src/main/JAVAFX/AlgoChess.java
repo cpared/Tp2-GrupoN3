@@ -39,7 +39,6 @@ public class AlgoChess extends Application {
     private MediaPlayer mediaPlayer;
 
     public AlgoChess () {
-        this.scene2 = new SelectPieceSceneView (this);
     }
 
     public static void main ( String[] args ) {
@@ -52,8 +51,9 @@ public class AlgoChess extends Application {
         stage.setTitle ( " AlgoChess " );
         this.game = new Game ();
 
-        String path = "src/main/JAVAFX/Image/Metallica-Master_Of_Puppets.mp3";
+        String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
         this.soundtrack ( path );
+        this.scene2 = new SelectPieceSceneView (this, this.mediaPlayer);
 
         this.scene00InitialStage ( stage );
     }
@@ -62,6 +62,7 @@ public class AlgoChess extends Application {
 
         Media media = new Media ( new File ( path ).toURI ().toString () );
         this.mediaPlayer = new MediaPlayer ( media );
+        this.mediaPlayer.setCycleCount ( MediaPlayer.INDEFINITE );
         this.mediaPlayer.setAutoPlay ( true );
     }
 

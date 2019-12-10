@@ -6,7 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 
 public class AcceptButtonEventHandler implements EventHandler<ActionEvent> {
@@ -38,7 +42,12 @@ public class AcceptButtonEventHandler implements EventHandler<ActionEvent> {
             this.game.newPlayer ( this.textField.getText () );
             this.count++;
             if (count == 2) {
+
                 try {
+                    String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+                    Media media = new Media ( new File ( path ).toURI ().toString () );
+                    MediaPlayer mp = new MediaPlayer ( media );
+                    mp.play ();
                     this.stage.setScene(this.scene.scene02SelectPieces(stage,game));
                 } catch (InterruptedException e) {
                     e.printStackTrace ();

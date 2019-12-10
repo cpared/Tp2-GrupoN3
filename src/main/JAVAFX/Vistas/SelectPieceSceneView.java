@@ -9,6 +9,7 @@ import boardFx.*;
 import game.Game;
 import game.GameHasEndedException;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +24,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -32,6 +35,7 @@ import player.Player;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class SelectPieceSceneView {
     private Button choosePieceButton;
@@ -46,9 +50,12 @@ public class SelectPieceSceneView {
     private Stage stage;
     private Application app;
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
+    private  MediaPlayer mediaPlayer;
+    private  MediaPlayer soundEffects;
 
-    public SelectPieceSceneView ( Application game ) {
+    public SelectPieceSceneView ( Application game, MediaPlayer mediaPlayer ) {
         this.app = game;
+        this.mediaPlayer = mediaPlayer;
     }
 
     public Scene scene02SelectPieces ( Stage stage, Game game ) throws InterruptedException {
@@ -72,6 +79,10 @@ public class SelectPieceSceneView {
                 setChooseButton ();
                 game.playerIsReadyToPlay ( game.getPlayer1 () );
                 game.playerIsReadyToPlay ( game.getPlayer2 () );
+                String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+                Media media = new Media ( new File ( path ).toURI ().toString () );
+                mediaPlayer = new MediaPlayer ( media );
+                mediaPlayer.play ();
             }
         } );
         start.setOnKeyPressed ( new EventHandler<KeyEvent> () {
@@ -88,11 +99,31 @@ public class SelectPieceSceneView {
         start.setMinWidth ( 150 );
         start.setMinHeight ( 40 );
 
+        //Button stop
+        Button stopButton = new Button ();
+        stopButton.getStyleClass ().add ( "buttonStop" );
+        stopButton.setOnAction ( new EventHandler<ActionEvent> () {
+            @Override
+            public void handle ( ActionEvent actionEvent ) {
+                mediaPlayer.stop ();
+                ImageView view = new ImageView ( "Image/speaker-off.png" );
+                stopButton.getStyleClass ().add ( "buttonStop" );
+                //view.setFitHeight ( 10 );
+                //view.setFitWidth ( 10 );
+                stopButton.setGraphic (view  );
+
+            }
+        } );
+
         choosePieceButton = new Button ( "Choose Piece" );
         choosePieceButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
             @Override
             public void handle ( MouseEvent mouseEvent ) {
                 lastChosen = lastClicked;
+                String path = "src/main/JAVAFX/SoundEffects/choosePiece.mp3";
+                Media media = new Media ( new File ( path ).toURI ().toString () );
+                mediaPlayer = new MediaPlayer ( media );
+                mediaPlayer.play ();
             }
         } );
         choosePieceButton.getStyleClass ().add ( "button-choose" );
@@ -108,11 +139,17 @@ public class SelectPieceSceneView {
         vertical.setSpacing ( 40 );
         vertical.getStyleClass().add("piecesGrid");
 
+        //Top
+        //HBox horizontal = new HBox ( start, stopButton );
+        //horizontal.setAlignment (Pos.CENTER);
+        //HBox.setMargin ( stopButton, new Insets ( 10 ) );
+
 
         borderPane.setLeft ( vertical );
         BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
         BorderPane.setMargin ( start, new Insets ( 12, 12, 12, 12 ) );
         borderPane.setTop ( start );
+        //borderPane.setTop ( horizontal );
         borderPane.setCenter ( board );
         BorderPane.setAlignment ( board, Pos.CENTER );
 
@@ -152,7 +189,7 @@ public class SelectPieceSceneView {
                 if (!(lastChosen == null)) {
                     Player currentPlayer = game.getAvailablePlayer ();
                     try {
-                        System.out.println ( "aca paso" );
+                        System.out.println ( "puso pieza tablero" );
                         Piece piece = lastChosen.choosePiece ( game, currentPlayer );
                         Pair<Integer, Integer> pair = button.getPosition ();
                         game.playerPlacesPieceOnBoard ( currentPlayer, piece, pair.getKey (), pair.getValue () );
@@ -161,6 +198,14 @@ public class SelectPieceSceneView {
                         playerPoints = turn.getCurrentPlayersPoints ();
                         player = turn.getCurrentPlayersName ();
                         turn.changeTurn ();
+
+                        String path = "src/main/JAVAFX/SoundEffects/placePiece.mp3";
+                        Media media = new Media ( new File ( path ).toURI ().toString () );
+                        mediaPlayer = new MediaPlayer ( media );
+                        mediaPlayer.play ();
+
+
+
                         VBox vertical = new VBox (player, playerPoints, new PiecesGridPane ( choosePieceButton, view, turn ) );
                         vertical.setAlignment ( Pos.CENTER );
                         vertical.setSpacing ( 40 );
@@ -265,6 +310,10 @@ public class SelectPieceSceneView {
                              lastButton = null;
                              pair = null;
                          } catch (GameHasEndedException e) {
+                             String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+                             Media media = new Media ( new File ( path ).toURI ().toString () );
+                             MediaPlayer mp = new MediaPlayer ( media );
+                             mp.play ();
                              sceneFinal ( game.getAvailablePlayer (), border );
                          } catch (Exception i) {
                              System.out.println ( i );
@@ -273,11 +322,25 @@ public class SelectPieceSceneView {
                          }
                      }
                  }
+                 private void attackSound () {
+                     String path = "src/main/JAVAFX/SoundEffects/punch.mp3";
+                     Media media = new Media ( new File ( path ).toURI ().toString () );
+                     soundEffects = new MediaPlayer ( media );
+                     soundEffects.play ();
+                 }
+
+                private void moveSound () {
+                    String path = "src/main/JAVAFX/SoundEffects/walking.mp3";
+                    Media media = new Media ( new File ( path ).toURI ().toString () );
+                    soundEffects = new MediaPlayer ( media );
+                    soundEffects.play ();
+                }
 
                  private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button ) {
                      if (moveButton.isSelected ()) {
                          game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                          player = turn.getCurrentPlayersName ();
+                         this.moveSound ();
                          turn.changeTurn ();
 
                          moveButton.getStyleClass ().add ( "button-choose" );
@@ -295,6 +358,7 @@ public class SelectPieceSceneView {
                      if (attackButton.isSelected ()) {
                          game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                          player = turn.getCurrentPlayersName ();
+                         this.attackSound ();
                          turn.changeTurn ();
                          moveButton.getStyleClass ().add ( "button-choose" );
                          attackButton.getStyleClass ().add ( "button-choose" );

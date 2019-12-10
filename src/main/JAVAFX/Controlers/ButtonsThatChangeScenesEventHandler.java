@@ -7,7 +7,11 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class ButtonsThatChangeScenesEventHandler implements EventHandler<InputEvent> {
     private Stage stage;
@@ -34,22 +38,29 @@ public class ButtonsThatChangeScenesEventHandler implements EventHandler<InputEv
             //this.stage.setFullScreen ( true );
             this.stage.setWidth ( width );
             this.stage.setHeight ( height );
+            this.sound ();
             //this.stage.show ();
         }
     }
 
     public void handleMouse(MouseEvent event) {
-        if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED ) ) {
+        if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED )) {
             Double width = stage.getWidth ();
             Double height = stage.getHeight ();
-            this.stage.setScene(this.scene);
+            this.stage.setScene ( this.scene );
             this.stage.setForceIntegerRenderScale ( true );
             //this.stage.setFullScreen ( true );
             this.stage.setWidth ( width );
             this.stage.setHeight ( height );
+            this.sound ();
             //this.stage.show ();
         }
     }
-
+    private void sound() {
+        String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+        Media media = new Media ( new File ( path ).toURI ().toString () );
+        MediaPlayer mp = new MediaPlayer ( media );
+        mp.play ();
+    }
 
 }
