@@ -315,6 +315,11 @@ public class SelectPieceSceneView {
 
     public void SceneToAttack ( Game game, GridPane board, ToggleButton moveButton, ToggleButton attackButton, BorderPane border ) {
         VBox a = new VBox ( moveButton, attackButton );
+
+        //labels for log
+        Label label1 = new Label();
+        Label label2 = new Label();
+
         for (Node each : board.getChildren ()) {
             each.setOnMouseClicked ( new EventHandler<MouseEvent> () {
                  @Override
