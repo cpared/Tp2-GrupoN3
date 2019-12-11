@@ -70,7 +70,7 @@ public class Rider implements Piece {
 
     @Override
     public boolean isSameTeamAs ( Piece otherPiece ){
-        return this.team.equals ( otherPiece.team );
+        return this.team.equals ( otherPiece.getTeam() );
     }
 
     @Override

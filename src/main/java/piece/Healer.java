@@ -36,7 +36,7 @@ public class Healer implements Piece {
 
     @Override
     public boolean isSameTeamAs ( Piece otherPiece ) {
-        return this.team.equals ( otherPiece.team );
+        return this.team.equals ( otherPiece.getTeam() );
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Healer implements Piece {
 
     @Override
     public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces ) {
-        if (this.isSameTeamAs ( attackedPieces.getKey () )) throw new ThisPieceCantAttackException ();
+        if (!this.isSameTeamAs ( attackedPieces.getKey () )) throw new ThisPieceCantAttackException ();
         this.heal.attack ( attackedPieces, this.healRange );
     }
 
