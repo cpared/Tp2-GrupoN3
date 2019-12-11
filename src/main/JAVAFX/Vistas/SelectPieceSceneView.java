@@ -1,11 +1,11 @@
 package Vistas;
 
 import Controlers.ExitButtonEventHandler;
-import Controlers.PieceStatHandlers.*;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
-import boardFx.*;
+import boardFx.ButtonCell;
+import boardFx.ButtonPiece;
 import game.Game;
 import game.GameHasEndedException;
 import javafx.application.Application;
@@ -15,9 +15,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -26,13 +27,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
 import player.Player;
 
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -436,7 +435,7 @@ public class SelectPieceSceneView {
         Image gameover = new Image ( "Image/gameover.png" );
         ImageView gameOverView = new ImageView ( gameover );
 
-        Label name = new Label ( "Player: " + player.name () + " has won." );
+        Label name = new Label ( "Player: " + player.name () + " has lost." );
         name.getStyleClass ().add ( "textStyle" );
 
 
