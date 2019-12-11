@@ -331,7 +331,7 @@ public class SelectPieceSceneView {
                      } else if (pair != null) {
                          Pair<Integer, Integer> newPair = button.getPosition ();
                          try {
-                             privateMethod ( newPair, game.getAvailablePlayer (), button );
+                             privateMethod ( newPair, game.getAvailablePlayer (), button,label1,label2 );
                              lastButton = null;
                              pair = null;
                          } catch (GameHasEndedException e) {
@@ -361,7 +361,7 @@ public class SelectPieceSceneView {
                     soundEffects.play ();
                 }
 
-                 private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button ) {
+                 private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button,Label first, Label second ) {
                      if (moveButton.isSelected ()) {
                          game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                          player = turn.getCurrentPlayersName ();
@@ -379,6 +379,7 @@ public class SelectPieceSceneView {
                          BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
 
                          button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
+                         changeLabelMove(first,second,pair,newPair);
                      }
                      if (attackButton.isSelected ()) {
                          game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
@@ -394,8 +395,9 @@ public class SelectPieceSceneView {
                          vertical.getStyleClass().add("piecesGrid");
                          borderpane.setLeft ( vertical);
                          BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
-
+                         changeLabelAttack(first,second,pair,newPair);
                          if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () ))
+                             changeLabelPieceDied(first,second,newPair);
                              button.getStyleClass ().remove ( 1 );
 
                      }
@@ -510,5 +512,17 @@ public class SelectPieceSceneView {
         public void windowClosing( WindowEvent e) {
             e.getWindow().setVisible(false);
         }
+    }
+    private void changeLabelMove(Label firstLabel, Label secondLabel,Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
+        firstLabel.setText(secondLabel.getText());
+        secondLabel.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has moved to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+    }
+    private void changeLabelAttack(Label firstLabel, Label secondLabel,Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
+        firstLabel.setText(secondLabel.getText());
+        secondLabel.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has attacked to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+    }
+    private void changeLabelPieceDied(Label firstLabel,Label secondLabel, Pair<Integer,Integer> ripPiece){
+        firstLabel.setText(secondLabel.getText());
+        secondLabel.setText("The piece from (" + ripPiece.getKey() + "," + ripPiece.getValue() + ") has died");
     }
 }
