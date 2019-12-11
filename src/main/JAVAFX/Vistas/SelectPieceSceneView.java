@@ -329,7 +329,7 @@ public class SelectPieceSceneView {
                      } else if (pair != null) {
                          Pair<Integer, Integer> newPair = button.getPosition ();
                          try {
-                             privateMethod ( newPair, game.getAvailablePlayer (), button,label1,label2 );
+                             privateMethod ( newPair, game.getAvailablePlayer (), button );
                              lastButton = null;
                              pair = null;
                          } catch (GameHasEndedException e) {
@@ -359,7 +359,7 @@ public class SelectPieceSceneView {
                     soundEffects.play ();
                 }
 
-                 private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button,Label first, Label second ) {
+                 private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button ) {
                      if (moveButton.isSelected ()) {
                          game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                          player = turn.getCurrentPlayersName ();
@@ -369,7 +369,7 @@ public class SelectPieceSceneView {
                          moveButton.getStyleClass ().add ( "button-choose" );
                          attackButton.getStyleClass ().add ( "button-choose" );
 
-                         VBox vertical = new VBox (player, moveButton, attackButton, first, second );
+                         VBox vertical = new VBox (player, moveButton, attackButton, label1, label2 );
                          vertical.setAlignment ( Pos.CENTER );
                          vertical.setSpacing ( 40 );
                          vertical.getStyleClass().add("piecesGrid");
@@ -377,7 +377,7 @@ public class SelectPieceSceneView {
                          BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
 
                          button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
-                         changeLabelMove(first,second,pair,newPair);
+                         changeLabelMove(pair,newPair);
                      }
                      if (attackButton.isSelected ()) {
                          game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
@@ -387,16 +387,17 @@ public class SelectPieceSceneView {
                          moveButton.getStyleClass ().add ( "button-choose" );
                          attackButton.getStyleClass ().add ( "button-choose" );
 
-                         VBox vertical = new VBox (player, moveButton, attackButton, first, second );
+                         VBox vertical = new VBox (player, moveButton, attackButton, label1, label2 );
                          vertical.setAlignment ( Pos.CENTER );
                          vertical.setSpacing ( 40 );
                          vertical.getStyleClass().add("piecesGrid");
                          borderpane.setLeft ( vertical);
                          BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
-                         changeLabelAttack(first,second,pair,newPair);
-                         if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () ))
-                             changeLabelPieceDied(first,second,newPair);
-                             button.getStyleClass ().remove ( 1 );
+                         changeLabelAttack(pair,newPair);
+                         if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () )) {
+                             changeLabelPieceDied(newPair);
+                             button.getStyleClass().remove(1);
+                         }
 
                      }
                  }
@@ -511,16 +512,16 @@ public class SelectPieceSceneView {
             e.getWindow().setVisible(false);
         }
     }
-    private void changeLabelMove(Label firstLabel, Label secondLabel,Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
-        firstLabel.setText(secondLabel.getText());
-        secondLabel.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has moved to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+    private void changeLabelMove(Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
+        label1.setText(label2.getText());
+        label2.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has moved to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
     }
-    private void changeLabelAttack(Label firstLabel, Label secondLabel,Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
-        firstLabel.setText(secondLabel.getText());
-        secondLabel.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has attacked to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+    private void changeLabelAttack(Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
+        label1.setText(label2.getText());
+        label2.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has attacked to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
     }
-    private void changeLabelPieceDied(Label firstLabel,Label secondLabel, Pair<Integer,Integer> ripPiece){
-        firstLabel.setText(secondLabel.getText());
-        secondLabel.setText("The piece from (" + ripPiece.getKey() + "," + ripPiece.getValue() + ") has died");
+    private void changeLabelPieceDied( Pair<Integer,Integer> ripPiece){
+        label1.setText(label2.getText());
+        label2.setText("The piece from (" + ripPiece.getKey() + "," + ripPiece.getValue() + ") has died");
     }
 }
