@@ -52,6 +52,8 @@ public class SelectPieceSceneView {
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
     private  MediaPlayer mediaPlayer;
     private  MediaPlayer soundEffects;
+    private Label label1 = new Label();
+    private Label label2 = new Label();
 
     public SelectPieceSceneView ( Application game, MediaPlayer mediaPlayer ) {
         this.app = game;
@@ -316,10 +318,6 @@ public class SelectPieceSceneView {
     public void SceneToAttack ( Game game, GridPane board, ToggleButton moveButton, ToggleButton attackButton, BorderPane border ) {
         VBox a = new VBox ( moveButton, attackButton );
 
-        //labels for log
-        Label label1 = new Label();
-        Label label2 = new Label();
-
         for (Node each : board.getChildren ()) {
             each.setOnMouseClicked ( new EventHandler<MouseEvent> () {
                  @Override
@@ -371,7 +369,7 @@ public class SelectPieceSceneView {
                          moveButton.getStyleClass ().add ( "button-choose" );
                          attackButton.getStyleClass ().add ( "button-choose" );
 
-                         VBox vertical = new VBox (player, moveButton, attackButton );
+                         VBox vertical = new VBox (player, moveButton, attackButton, first, second );
                          vertical.setAlignment ( Pos.CENTER );
                          vertical.setSpacing ( 40 );
                          vertical.getStyleClass().add("piecesGrid");
@@ -389,7 +387,7 @@ public class SelectPieceSceneView {
                          moveButton.getStyleClass ().add ( "button-choose" );
                          attackButton.getStyleClass ().add ( "button-choose" );
 
-                         VBox vertical = new VBox (player, moveButton, attackButton );
+                         VBox vertical = new VBox (player, moveButton, attackButton, first, second );
                          vertical.setAlignment ( Pos.CENTER );
                          vertical.setSpacing ( 40 );
                          vertical.getStyleClass().add("piecesGrid");
