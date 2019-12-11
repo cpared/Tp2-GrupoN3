@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
@@ -80,7 +81,7 @@ public class SelectPieceSceneView {
                 game.playerIsReadyToPlay ( game.getPlayer2 () );
                 String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
                 Media media = new Media ( new File ( path ).toURI ().toString () );
-                mediaPlayer = new MediaPlayer ( media );
+                mediaPlayer = new MediaPlayer( media );
                 mediaPlayer.play ();
             }
         } );
@@ -97,6 +98,10 @@ public class SelectPieceSceneView {
         } );
         start.setMinWidth ( 150 );
         start.setMinHeight ( 40 );
+
+        HBox topContainer = new HBox(start);
+        topContainer.setMinHeight(100);
+        topContainer.getStyleClass().add("hbox");
 
         //Button stop
         Button stopButton = new Button ();
@@ -132,22 +137,38 @@ public class SelectPieceSceneView {
         board.getStyleClass ().add ( "board" );
         setBoardCellAction ( board, this );
 
+        //Circle
+        Circle playerOneBoard = new Circle(10);
+        Circle playerTwoBoard = new Circle(10);
+        playerOneBoard.setStyle("-fx-fill: #1a7749;");
+        playerTwoBoard.setStyle("-fx-fill: #8f9779;");
+
+        Label labelOne = new Label("Player One");
+        Label labelTwo = new Label("Player Two");
+        labelOne.setPadding(new Insets(5));
+        labelTwo.setPadding(new Insets(5));
+        labelOne.getStyleClass().add("textStyle");
+        labelTwo.getStyleClass().add("textStyle");
+
+        Region leftRegion = new Region();
+        HBox.setHgrow(leftRegion, Priority.ALWAYS);
+
+        Region rightRegion = new Region();
+        HBox.setHgrow(rightRegion, Priority.ALWAYS);
+
+        HBox playerOneInfo = new HBox(playerOneBoard,leftRegion, labelOne, rightRegion);
+        HBox playerTwoInfo = new HBox(playerTwoBoard,leftRegion, labelTwo, rightRegion);
+
         //Left toolbar
-        VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ) );
+        VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ), playerOneInfo, playerTwoInfo );
         vertical.setAlignment ( Pos.CENTER );
         vertical.setSpacing ( 40 );
         vertical.getStyleClass().add("piecesGrid");
 
-        //Top
-        //HBox horizontal = new HBox ( start, stopButton );
-        //horizontal.setAlignment (Pos.CENTER);
-        //HBox.setMargin ( stopButton, new Insets ( 10 ) );
-
-
         borderPane.setLeft ( vertical );
-        BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
-        BorderPane.setMargin ( start, new Insets ( 12, 12, 12, 12 ) );
-        borderPane.setTop ( start );
+        //BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
+        //BorderPane.setMargin ( topContainer, new Insets ( 12, 12, 12, 12 ) );
+        borderPane.setTop ( topContainer );
         //borderPane.setTop ( horizontal );
         borderPane.setCenter ( board );
         BorderPane.setAlignment ( board, Pos.CENTER );

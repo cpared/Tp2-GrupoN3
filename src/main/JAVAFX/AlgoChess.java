@@ -150,7 +150,7 @@ public class AlgoChess extends Application {
         borderPane.setBackground ( this.background );
 
         // Final layout.
-        Scene scene = new Scene ( borderPane );
+        Scene scene = new Scene ( borderPane, 1500, 1000 );
         stage.setScene ( scene );
         scene.getStylesheets ().add ( "AlgoStyle.css" );
         //stage.setFullScreen ( true );

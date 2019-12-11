@@ -20,6 +20,10 @@
     -fx-cursor: hand;
 }
 
+.rightButtonSoldier:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #6787ff 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+}
+
 .rightButtonRider{
     -fx-border-width: 5px;
     -fx-text-fill: #000000;

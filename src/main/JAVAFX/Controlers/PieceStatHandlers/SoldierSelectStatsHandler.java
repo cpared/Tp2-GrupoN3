@@ -45,6 +45,7 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
             this.pieceInfo.setText(this.info);
             this.pieceInfo.setTextFill(Color.WHITE);
             scene.setLastClicked(button);
+
             Image url = new Image("Image/broadsword.png");
             this.attackImageChange.setImage(url);
         }

@@ -10,14 +10,20 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/soldier2.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 55px 55px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .leftButtonSoldier:hover{
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
+}
+
+.leftButtonSoldier:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
 }
 
 .leftButtonRider{
@@ -32,9 +38,9 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/rider2.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 47px 47px;
     -fx-background-position: center;
-
+    -fx-background-repeat: no-repeat;
 }
 
 .leftButtonRider:hover{
@@ -42,6 +48,12 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
 }
+
+.leftButtonRider:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+
 
 .leftButtonHealer{
     -fx-border-width: 5px;
@@ -55,8 +67,9 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/healer2.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 55px 55px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .leftButtonHealer:hover{
@@ -64,6 +77,12 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
 }
+
+.leftButtonHealer:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+
 
 .leftButtonCatapult{
     -fx-border-width: 5px;
@@ -76,15 +95,21 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
-    -fx-background-image: url("Image/pieces/catapult.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-image: url("Image/pieces/catapult2.png");
+    -fx-background-size: 45px 45px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .leftButtonCatapult:hover{
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
+}
+
+.leftButtonCatapult:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
 }
 
 .piecesGrid{
@@ -149,12 +174,10 @@
     -fx-cursor: hand;
 }
 
-
 .selectedtextStyle{
     -fx-font-size:30;
     -fx-text-fill: white;
 }
-
 
 .rightButtonSoldier{
     -fx-border-width: 5px;
@@ -168,14 +191,20 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/soldier.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 55px 55px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .rightButtonSoldier:hover{
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
+}
+
+.rightButtonSoldier:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
 }
 
 .rightButtonRider{
@@ -190,9 +219,9 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/rider.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 50px 50px;
     -fx-background-position: center;
-
+    -fx-background-repeat: no-repeat;
 }
 
 .rightButtonRider:hover{
@@ -200,6 +229,12 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
 }
+
+.rightButtonRider:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+
 
 .rightButtonHealer{
     -fx-border-width: 5px;
@@ -213,8 +248,9 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/healer.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-size: 55px 55px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .rightButtonHealer:hover{
@@ -222,6 +258,12 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
 }
+
+.rightButtonHealer:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+
 
 .rightButtonCatapult{
     -fx-border-width: 5px;
@@ -234,13 +276,19 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
-    -fx-background-image: url("Image/pieces/catapult2.png");
-    -fx-background-size: 60px 60px;
+    -fx-background-image: url("Image/pieces/catapult.png");
+    -fx-background-size: 45px 45px;
     -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .rightButtonCatapult:hover{
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-cursor: hand;
+}
+
+.rightButtonCatapult:focused{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
 }
