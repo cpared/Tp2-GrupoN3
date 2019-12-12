@@ -6,6 +6,7 @@ import javafx.util.Pair;
 public class ButtonCell extends Button {
     Pair<Integer,Integer> positionCell;
     Boolean bool = false;
+    Pair<ButtonCell, ButtonCell> adj=null;
 
     public ButtonCell(String name, String color, int row, int column) {
         super(name);
@@ -24,5 +25,12 @@ public class ButtonCell extends Button {
     }
     public boolean getBattalion(){
         return bool;
+    }
+
+    public void setAdj(Pair<ButtonCell, ButtonCell> adj){
+        this.adj = adj;
+    }
+    public Pair<ButtonCell, ButtonCell>  getAdj(){
+        return this.adj;
     }
 }

@@ -330,3 +330,50 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
+
+
+.rightButtonBattalion{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/backup/archer2.png");
+    -fx-background-size: 45px 45px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.rightButtonBattalion:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}
+
+.leftButtonBattalion{
+    -fx-border-width: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-size:40;
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #3f58a3 0%, #164d90 100%),#034b9d,#168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-background-image: url("Image/pieces/backup/archer.png");
+    -fx-background-size: 45px 45px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.leftButtonBattalion:hover{
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, #168ad8, #034b9d);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-cursor: hand;
+}

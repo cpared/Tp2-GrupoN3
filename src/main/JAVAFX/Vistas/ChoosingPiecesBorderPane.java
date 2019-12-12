@@ -60,7 +60,9 @@ public class ChoosingPiecesBorderPane extends BorderPane {
         String green = "-fx-background-color: #008f39;";
         String red = "-fx-background-color: #ff0000;";
         String actual = green;
-        AlgoGrid gridPane = new AlgoGrid();
+
+        //AlgoGrid gridPane = new AlgoGrid();
+        GridPane gridPane = new GridPane();
         for (int i = 0 ; i< 20;i++) {
             if (i == 10){
                 actual = red;

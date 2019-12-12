@@ -1,7 +1,10 @@
 package Vistas.PieceInformationDuringGame;
 
+import Controlers.BattalionButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
+import game.Game;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -26,6 +29,7 @@ public class SoldierInformationDuringGame extends VBox {
         VBox pieceInfo = new VBox ( player, piece, pieceLife );
         pieceInfo.setSpacing ( 20 );
         pieceInfo.setAlignment ( Pos.TOP_CENTER );
+
 
         VBox buttons = new VBox ( moveButton, attackButton );
         moveButton.prefWidthProperty ().bind ( buttons.widthProperty ().divide ( 2 ) );

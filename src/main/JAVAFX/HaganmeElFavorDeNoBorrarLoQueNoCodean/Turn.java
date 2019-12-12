@@ -18,6 +18,7 @@ public class Turn {
     private String healerButtonStyle;
     private String riderButtonStyle;
     private String catapultButtonStyle;
+    private String battalionButtonStyle;
     private Game game;
     private Circle circle = new Circle(10);
 
@@ -32,6 +33,7 @@ public class Turn {
         this.healerButtonStyle = "leftButtonHealer";
         this.riderButtonStyle = "leftButtonRider";
         this.catapultButtonStyle = "leftButtonCatapult";
+        this.battalionButtonStyle = "leftButtonBattalion";
     }
 
     private void rightPlayerStyle () {
@@ -40,14 +42,13 @@ public class Turn {
         this.healerButtonStyle = "rightButtonHealer";
         this.riderButtonStyle = "rightButtonRider";
         this.catapultButtonStyle = "rightButtonCatapult";
+        this.battalionButtonStyle = "rightButtonBattalion";
     }
 
     public HBox getCurrentPlayersName () {
 
 
         Label name = new Label ( "Player: " + this.game.getAvailablePlayer ().name () );
-        //name.setStyle ( "-fx-text-fill: white;-fx-font-size: 20" );
-        //name.setPadding(new Insets (0,0,50,20));
         name.getStyleClass().add("textStyle");
 
         HBox playerInfo = new HBox(name,this.circle);

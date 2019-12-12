@@ -5,6 +5,7 @@ import Controlers.MusicButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
+import Vistas.PieceInformationDuringGame.BattalionDuringGame;
 import Vistas.PieceInformationDuringGame.DefaultPieceView;
 import Vistas.PieceInformationDuringGame.InformationDuringGameController;
 import boardFx.ButtonCell;
@@ -222,7 +223,8 @@ public class SelectPieceSceneView {
 
 
         String actual = left;
-        AlgoGrid gridPane = new AlgoGrid ();
+        //Algogrid
+        GridPane gridPane = new GridPane ();
         for (int i = 0; i < 20; i++) {
             if (i == 10) {
                 actual = right;
@@ -289,14 +291,17 @@ public class SelectPieceSceneView {
         VBox a = new VBox ( moveButton, attackButton );
 
         for (Node each : board.getChildren ()) {
+
             each.setOnMouseClicked ( new EventHandler<MouseEvent> () {
                                          @Override
                                          public void handle ( MouseEvent mouseEvent ) {
                                              ButtonCell button = (ButtonCell) each;
+
                                              if (pair == null && !(button.emptyImage ())) {
                                                  pair = button.getPosition ();
 
-                                                 InformationDuringGameController control = new InformationDuringGameController ( button, turn, moveButton, attackButton, game, pair, label1, label2 );
+
+                                                 InformationDuringGameController control = new InformationDuringGameController ( button, turn, moveButton, attackButton, game, pair, label1, label2,board );
                                                  VBox vertical = control.createPieceView ();
                                                  borderpane.setLeft ( vertical );
                                                  BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
@@ -307,6 +312,7 @@ public class SelectPieceSceneView {
                                                  try {
 
                                                      privateMethod ( newPair, button, label1, label2 );
+
                                                      lastButton = null;
                                                      pair = null;
                                                  } catch (GameHasEndedException e) {
@@ -322,7 +328,6 @@ public class SelectPieceSceneView {
                                                  }
                                              }
                                          }
-
                                          private void attackSound () {
                                              String path = "src/main/JAVAFX/SoundEffects/punch.mp3";
                                              Media media = new Media ( new File ( path ).toURI ().toString () );
@@ -337,37 +342,9 @@ public class SelectPieceSceneView {
                                              soundEffects.play ();
                                          }
 
-                                         private void moveCells() {
-                                            int row = pair.getKey ();
-                                            int column = pair.getValue ();
 
+                                         private void privateMethod ( Pair<Integer, Integer> newPair, ButtonCell button, Label first, Label second) {
 
-                                            Pair<Integer, Integer> adj1 = new Pair<>(row,column+1);
-                                            Pair<Integer, Integer> adj2 = new Pair<>(row,column-1);
-
-                                            Pair<Integer, Integer> topAdj1 = new Pair<>(row+1,column+1);
-                                            Pair<Integer, Integer> topAdj2 = new Pair<>(row+1,column);
-                                            Pair<Integer, Integer> topAdj3 = new Pair<>(row+1,column-1);
-
-                                            Pair<Integer, Integer> bottomAdj1 = new Pair<>(row-1,column+1);
-                                            Pair<Integer, Integer> bottomAdj2 = new Pair<>(row-1,column);
-                                            Pair<Integer, Integer> bottomAdj3 = new Pair<>(row-1,column-1);
-
-                                            ObservableList<Node> cells = board.getChildren ();
-                                            ArrayList<Pair> adjacent = new ArrayList<Pair> ();
-                                            adjacent.add ( adj1);
-                                             adjacent.add ( adj2);
-                                             adjacent.add ( topAdj1);
-                                             adjacent.add ( topAdj2);
-                                             adjacent.add ( topAdj3);
-                                             adjacent.add ( bottomAdj1);
-                                             adjacent.add ( bottomAdj2);
-                                             adjacent.add ( bottomAdj3);
-
-                                         }
-
-                                         private void privateMethod ( Pair<Integer, Integer> newPair, ButtonCell button, Label first, Label second ) {
-                                             moveCells ();;
                                              if (moveButton.isSelected ()) {
                                                  game.playerMovesPieceOnBoard ( pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                                  turn.changeTurn ();
@@ -393,7 +370,9 @@ public class SelectPieceSceneView {
                                          }
                                      }
             );
-        }
+
+
+            }
     }
 
 
@@ -472,17 +451,17 @@ public class SelectPieceSceneView {
         }
     }
 
-    private void changeLabelMove ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
+    public void changeLabelMove ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
         firstLabel.setText ( secondLabel.getText () );
         secondLabel.setText ( "The piece from (" + firstPair.getKey () + "," + firstPair.getValue () + ") has moved to (" + secondPair.getKey () + "," + secondPair.getValue () + ")" );
     }
 
-    private void changeLabelAttack ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
+    public void changeLabelAttack ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
         firstLabel.setText ( secondLabel.getText () );
         secondLabel.setText ( "The piece from (" + firstPair.getKey () + "," + firstPair.getValue () + ") has attacked to (" + secondPair.getKey () + "," + secondPair.getValue () + ")" );
     }
 
-    private void changeLabelPieceDied ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> ripPiece ) {
+    public void changeLabelPieceDied ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> ripPiece ) {
         firstLabel.setText ( secondLabel.getText () );
         secondLabel.setText ( "The piece from (" + ripPiece.getKey () + "," + ripPiece.getValue () + ") has died" );
     }
