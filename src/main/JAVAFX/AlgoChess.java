@@ -27,6 +27,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import player.Player;
 
+import java.awt.*;
 import java.io.File;
 
 
@@ -37,7 +38,7 @@ public class AlgoChess extends Application {
     private Scene scene1;
     private SelectPieceSceneView scene2;
     private MediaPlayer mediaPlayer;
-
+    Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
     public AlgoChess () {
     }
 
@@ -47,7 +48,7 @@ public class AlgoChess extends Application {
 
     @Override
     public void start ( Stage stage ) throws Exception {
-
+        stage.setMaximized(true);
         stage.setTitle ( " AlgoChess " );
         this.game = new Game ();
 
@@ -150,10 +151,10 @@ public class AlgoChess extends Application {
         borderPane.setBackground ( this.background );
 
         // Final layout.
-        Scene scene = new Scene ( borderPane, 1500, 800 );
+        Scene scene = new Scene ( borderPane, screenSize.getWidth(), screenSize.getHeight() );
         stage.setScene ( scene );
         scene.getStylesheets ().add ( "AlgoStyle.css" );
-        //stage.setFullScreen ( true );
+        stage.setMaximized ( true );
         stage.show ();
     }
 
