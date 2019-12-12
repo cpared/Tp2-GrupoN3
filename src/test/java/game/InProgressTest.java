@@ -4,15 +4,18 @@ import org.junit.jupiter.api.Test;
 import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
+import team.Team;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InProgressTest {
+    private Team team = new Team(1);
+    private Team team2 = new Team(1);
 
     @Test
     void test00AnStateCanBeCreated () {
         //Act
-        GameState state = new InProgress ();
+        GameState state = new InProgress (team, team2);
         //Assert
         assertNotNull ( state );
     }
@@ -20,9 +23,9 @@ class InProgressTest {
     @Test
     void test01ANewPlayerCanBeCreatedInProgressState () {
         //Assemble
-        GameState state = new InProgress ();
+        GameState state = new InProgress (team, team2);
         //Act
-        Player player = state.newPlayer ( "Al" );
+        Player player = state.newPlayer ( "Al",team );
         //Assert
         assertNotNull ( player );
     }
@@ -30,10 +33,10 @@ class InProgressTest {
     @Test
     void test02TwoPlayersCanBeCreatedInProgressState () {
         //Assemble
-        GameState state = new InProgress ();
+        GameState state = new InProgress (team, team2);
         //Act
-        Player player = state.newPlayer ( "Al" );
-        Player player2 = state.newPlayer ( "Pete" );
+        Player player = state.newPlayer ( "Al" ,team);
+        Player player2 = state.newPlayer ( "Pete", new Team(2) );
 
         assertFalse ( player.equals ( player2 ) );
 
@@ -42,8 +45,8 @@ class InProgressTest {
     @Test
     void test03ASoldierCanBeCreatedInProgressState () throws PlayerHas20PointsOnlyException {
         //Assemble
-        GameState state = new InProgress ();
-        Player player = state.newPlayer ( "Al" );
+        GameState state = new InProgress (team, team2);
+        Player player = state.newPlayer ( "Al" ,team);
         //Act
         Piece piece = state.chooseSoldier ( player );
         //Assert
@@ -53,8 +56,8 @@ class InProgressTest {
     @Test
     void test04ARiderCanBeCreatedInProgressState () throws PlayerHas20PointsOnlyException {
         //Assemble
-        GameState state = new InProgress ();
-        Player player = state.newPlayer ( "Al" );
+        GameState state = new InProgress (team, team2);
+        Player player = state.newPlayer ( "Al",team);
         //Act
         Piece piece = state.chooseRider ( player );
         //Assert
@@ -64,8 +67,8 @@ class InProgressTest {
     @Test
     void test05AHealerCanBeCreatedInProgressState () throws PlayerHas20PointsOnlyException {
         //Assemble
-        GameState state = new InProgress ();
-        Player player = state.newPlayer ( "Al" );
+        GameState state = new InProgress (team, team2);
+        Player player = state.newPlayer ( "Al" ,team);
         //Act
         Piece piece = state.chooseHealer ( player );
         //Assert
@@ -75,8 +78,8 @@ class InProgressTest {
     @Test
     void test06ACatapultCanBeCreatedInProgressState () throws PlayerHas20PointsOnlyException {
         //Assemble
-        GameState state = new InProgress ();
-        Player player = state.newPlayer ( "Al" );
+        GameState state = new InProgress (team, team2);
+        Player player = state.newPlayer ( "Al",team );
         //Act
         Piece piece = state.chooseCatapult ( player );
         //Assert

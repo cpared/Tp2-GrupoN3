@@ -16,63 +16,48 @@ public class InitialFace implements Face {
     private PieceFactory factory;
     private Team team;
 
-    public InitialFace ( Board board , Team team ) {
+    public InitialFace ( Board board, Team team ) {
         this.board = board;
         this.team = team;
         this.factory = new PieceFactory ( this.team );
     }
 
-    @Override
-    public Player newPlayer ( String name ) {
-        if (this.player != null) throw new APlayerAlreadyExistsException ();
-        this.player = new Player ( name, team );
-        return this.player;
-    }
 
     @Override
     public void playerPlacesPieceOnBoard ( Piece piece, Move move ) {
-        player.placePieceOnBoard ( piece, this.board, move );
+        board.placePiece ( piece, move );
     }
 
     @Override
-    public Piece removeDeadPieceFromBoard(Move move ) throws PieceDoesNotBelongToTeamException {
+    public Piece removeDeadPieceFromBoard ( Move move ) throws PieceDoesNotBelongToTeamException {
         Piece removed = board.removePiece ( move );
         this.factory.eliminatePiece ( removed );
-        this.player.removePieceFromTeam ( removed );
         return removed;
     }
 
     @Override
     public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.createSoldier ();
-        this.player.chosePiece ( piece );
-        return piece;
+        return this.factory.createSoldier ();
     }
 
     @Override
     public Piece playerChoosesHealer () throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.createHealer ();
-        this.player.chosePiece ( piece );
-        return piece;
+        return this.factory.createHealer ();
     }
 
     @Override
     public Piece playerChoosesRider () throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.createRider ();
-        this.player.chosePiece ( piece );
-        return piece;
+        return this.factory.createRider ();
     }
 
     @Override
     public Piece playerChoosesCatapult () throws PlayerHas20PointsOnlyException {
-        Piece piece = this.factory.createCatapult ();
-        this.player.chosePiece ( piece );
-        return piece;
+        return this.factory.createCatapult ();
     }
 
     @Override
     public void playerMovesPieceOnBoard ( Move move ) {
-        player.movePiece(board,move);
+        board.move ( move, team );
     }
 
     //Methods that this class does not implement
@@ -94,11 +79,11 @@ public class InitialFace implements Face {
 
     @Override
     public int getPoints () {
-        return this.factory.getPoints();
+        return this.factory.getPoints ();
     }
 
     @Override
-    public Piece getPiece(Move move4) {
-        return board.getPiece(move4);
+    public Piece getPiece ( Move move4 ) {
+        return board.getPiece ( move4 );
     }
 }

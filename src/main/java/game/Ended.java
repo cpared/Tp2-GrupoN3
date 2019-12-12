@@ -4,11 +4,12 @@ import board.Board;
 import move.Move;
 import piece.Piece;
 import player.Player;
+import team.Team;
 
 public class Ended implements GameState {
 
     @Override
-    public Player newPlayer ( String name ) {
+    public Player newPlayer ( String name , Team team) {
        throw new GameHasEndedException ();
     }
 

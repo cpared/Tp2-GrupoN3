@@ -6,10 +6,11 @@ import move.Move;
 import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
+import team.Team;
 
 public interface GameState {
 
-    public Player newPlayer ( String name );
+    public Player newPlayer ( String name , Team team);
 
     Piece chooseSoldier ( Player player ) throws PlayerHas20PointsOnlyException;
 
@@ -29,15 +30,16 @@ public interface GameState {
 
     void playerIsReadyToPlay ( Player player );
 
-    void playerChoosesBattalion (Player player, Move move);
+    void playerChoosesBattalion ( Player player, Move move );
 
     // This getter is only for testing, it doesnt belong in the model.
     public Board getBoard ();
 
     // This getter is only for views,
-    public int getPoints (Player player);
-    public Piece getPieceOnCell (int row, int column);
+    public int getPoints ( Player player );
 
-    void penalizePieces();
+    public Piece getPieceOnCell ( int row, int column );
+
+    void penalizePieces ();
 }
 

@@ -24,38 +24,12 @@ class InitialFaceTest {
         assertNotNull ( initial );
     }
 
-    @Test
-    void test01ANewPlayerCanBeCreatedInInitialFace () {
-        //Assemble
-        Team team = new Team ( 1 );
-        Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        //Act
-        Player player = initial.newPlayer ( "George");
-        //Assert
-        assertNotNull ( player );
-    }
-
-    @Test
-    void test02OnlyOnePlayerCanBeCreatedInInitialFace () {
-        //Assemble
-        Team team = new Team ( 1 );
-        Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        //Act
-        Player player = initial.newPlayer ( "George");
-        try {
-            Player player2 = initial.newPlayer ( "9900IamTheBest");
-        } catch (APlayerAlreadyExistsException e) {
-            //Assert
-            assertTrue ( player.equals ( initial.getPlayer () ) );
-        }
-    }
 
     @Test
     void test03ASoldierCanBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         //Act
         Piece piece = initial.playerChoosesSoldier ();
         //Assert
@@ -67,7 +41,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         //Act
         Piece piece = initial.playerChoosesRider ();
         //Assert
@@ -79,7 +52,7 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
+
         //Act
         Piece piece = initial.playerChoosesHealer ();
         //Assert
@@ -91,7 +64,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         //Act
         Piece piece = initial.playerChoosesCatapult ();
         //Assert
@@ -103,7 +75,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         Piece piece = initial.playerChoosesCatapult ();
         //Act
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
@@ -118,7 +89,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         Piece piece = initial.playerChoosesCatapult ();
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
         initial.playerPlacesPieceOnBoard ( piece, move1 );
@@ -134,7 +104,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         Piece soldier1 = initial.playerChoosesSoldier ();
         Piece soldier2 = initial.playerChoosesSoldier ();
         Piece soldier3 = initial.playerChoosesSoldier ();
@@ -164,7 +133,6 @@ class InitialFaceTest {
         //Assemble
         Team team = new Team ( 1 );
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
-        initial.newPlayer ( "0000Mike");
         Piece soldier1 = initial.playerChoosesSoldier ();
         Piece soldier2 = initial.playerChoosesSoldier ();
         Piece soldier3 = initial.playerChoosesSoldier ();

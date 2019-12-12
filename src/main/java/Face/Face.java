@@ -11,7 +11,6 @@ public interface Face {
     Player player = null;
     Board board = null;
 
-    Player newPlayer ( String name );
 
     void playerMovesPieceOnBoard ( Move move );
 

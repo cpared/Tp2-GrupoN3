@@ -286,7 +286,6 @@ class IntegrationTest {
         Piece catapult4 = game.playerChoosesCatapult ();
         game.playerPlacesPieceOnBoard ( catapult4, 9, 3 );
 
-
         game.playerIsReadyToPlay ( player1 );
         game.playerIsReadyToPlay ( player2 );
 

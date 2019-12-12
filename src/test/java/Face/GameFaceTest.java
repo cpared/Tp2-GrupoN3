@@ -11,6 +11,7 @@ import piece.Soldier;
 import player.APlayerAlreadyExistsException;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
+import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.Team;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ class GameFaceTest {
     private Team team = new Team ( 1 );
     private Team team2 = new Team ( 2 );
     private Board board = new Board ( team, team2 );
-    private Player player = new Player ( "Mike", team );
+    private Player player = new Player ( "Mike", team ,board);
     private PieceFactory factory = new PieceFactory ( team );
     private Piece soldier1 = this.factory.createSoldier ();
     private Piece soldier2 = this.factory.createSoldier ();
@@ -30,28 +31,16 @@ class GameFaceTest {
     @Test
     void test00AGameFaceCanBeCreated () {
         //Act
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         //Assert
         assertNotNull ( face );
     }
 
-    @Test
-    void test01ANewPlayerCanBeCreatedInGameFace () {
-        //Assemble
-        Face face = new GameFace ( board, player );
-        //Act
-        try {
-            Player player = face.newPlayer ( "George");
-        } catch (APlayerAlreadyExistsException e) {
-            //Assert
-            assertNotNull ( player );
-        }
-    }
 
     @Test
     void test02ASoldierCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             face.playerChoosesSoldier ();
@@ -64,7 +53,7 @@ class GameFaceTest {
     @Test
     void test03ARiderCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         //Act
         try {
             face.playerChoosesRider ();
@@ -77,7 +66,7 @@ class GameFaceTest {
     @Test
     void test04AHealerCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team);
         //Act
         //Act
         try {
@@ -91,7 +80,7 @@ class GameFaceTest {
     @Test
     void test05ACatapultCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             face.playerChoosesCatapult ();
@@ -104,7 +93,7 @@ class GameFaceTest {
     @Test
     void test06APieceCantBePlacedOnTheBoardInGameFace () {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
@@ -126,7 +115,7 @@ class GameFaceTest {
         this.board.placePiece ( this.soldier1, move1 );
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
         this.board.placePiece ( this.soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         Piece removed = face.getPiece( move );
@@ -147,7 +136,7 @@ class GameFaceTest {
         this.board.placePiece ( this.soldier1, move1 );
         this.board.placePiece ( this.soldier2, move2 );
         this.board.placePiece ( this.soldier3, move3 );
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
 
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 2 ).build ();
@@ -174,7 +163,7 @@ class GameFaceTest {
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
         this.board.placePiece ( this.soldier1, move1 );
         this.board.placePiece ( this.soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         //Act
         Move movement = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 3 ).ToColumn ( 1 ).build ();
         face.playerMovesPieceOnBoard ( movement );
@@ -194,7 +183,7 @@ class GameFaceTest {
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
         this.board.placePiece ( this.soldier1, move1 );
         this.board.placePiece ( this.soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team);
         //Act
         Move movement = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 8 ).ToColumn ( 9 ).build ();
         try {
@@ -220,7 +209,7 @@ class GameFaceTest {
         Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 2 ).build ();
         this.board.placePiece ( soldier1, move1 );
         this.board.placePiece ( enemysoldier, move2 );
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         int life = enemysoldier.getLife ();
         //Act
         Move movement = new Builder ().fromRow ( 9 ).fromColumn ( 1 ).ToRow ( 10 ).ToColumn ( 2 ).build ();

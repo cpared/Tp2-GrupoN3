@@ -6,17 +6,21 @@ import move.Move;
 import piece.Piece;
 import player.APlayerAlreadyExistsException;
 import player.Player;
+import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.NoMembersLeftException;
+import team.Team;
 
 public class GameFace implements Face {
 
     private Player player;
     private Board board;
     boolean state = false;
+    private Team team;
 
-    public GameFace ( Board board , Player player) {
+    public GameFace ( Board board , Player player, Team team) {
         this.board = board;
         this.player = player;
+        this.team = team;
     }
 
     @Override
@@ -29,7 +33,8 @@ public class GameFace implements Face {
     @Override
     public void playerAttacks ( Move move ) {
         try {
-            this.player.attack ( this.board, move );
+            //this.player.attack ( this.board, move );
+            board.attack ( move, team );
         } catch (NoMembersLeftException e) {
             throw e;
         }
@@ -37,12 +42,14 @@ public class GameFace implements Face {
 
     @Override
     public void playerMovesPieceOnBoard ( Move move ) {
-        player.movePiece ( this.board, move );
+        //player.movePiece ( this.board, move );
+        board.move ( move, team );
     }
 
     @Override
     public void playerChoosesBattalion ( Move move ) {
-        player.chooseBattalion ( this.board, move );
+        //player.chooseBattalion ( this.board, move );
+        board.createBattalion ( move );
     }
 
     //Methods that this class does not implement
@@ -55,7 +62,6 @@ public class GameFace implements Face {
     @Override
     public Piece playerChoosesSoldier () {
         throw new CanNotMakeThatMoveException ();
-//        return new NullPiece ();
     }
 
     @Override
@@ -73,10 +79,6 @@ public class GameFace implements Face {
         throw new CanNotMakeThatMoveException ();
     }
 
-    @Override
-    public Player newPlayer ( String name ) {
-        throw new APlayerAlreadyExistsException ();
-    }
 
     // This getter is only for testing, they dont belong in the model.
     @Override
@@ -84,9 +86,11 @@ public class GameFace implements Face {
         return this.player;
     }
 
+    @Override
     public Piece getPiece(Move move){
         return board.getPiece(move);
     }
+
     @Override
     public int getPoints () {
         return 0;

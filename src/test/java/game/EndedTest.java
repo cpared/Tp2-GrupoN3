@@ -10,6 +10,7 @@ import team.Team;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EndedTest {
+    private Team team = new Team(1);
 
     @Test
     void test00AnEndedStateCanBeCreated () {
@@ -25,7 +26,7 @@ class EndedTest {
         GameState state = new Ended ();
 
         try {
-            state.playerMovesPieceOnBoard ( new Player ( "DUDE", new Team (1) ) , new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
+            state.playerMovesPieceOnBoard ( new Player ( "DUDE", new Team (1) , state.getBoard ()) , new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
         } catch (GameHasEndedException e ){
             //Assert
             assertTrue ( true );
@@ -39,7 +40,7 @@ class EndedTest {
         GameState state = new Ended ();
         Piece removed = null;
         try {
-            removed = state.removePieceFromBoard ( new Player ( "DUDE", new Team (1) ) , new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
+            removed = state.removePieceFromBoard ( new Player ( "DUDE", new Team (1), state.getBoard () ) , new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
         } catch (GameHasEndedException e ){
             //Assert
             assertNull( removed );
@@ -53,7 +54,7 @@ class EndedTest {
         GameState state = new Ended ();
 
         try {
-           state.playerPlacesPieceOnBoard ( new Player ( "DUDE", new Team (1) ) , new Soldier ( new Team (1) ), new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
+           state.playerPlacesPieceOnBoard ( new Player ( "DUDE", new Team (1) , state.getBoard ()) , new Soldier ( new Team (1) ), new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
         } catch (GameHasEndedException e ){
             //Assert
             assertTrue ( true );
@@ -67,7 +68,7 @@ class EndedTest {
         GameState state = new Ended ();
         Piece piece= null;
         try {
-            piece = state.chooseCatapult ( new Player ( "DUDE", new Team (1) ) );
+            piece = state.chooseCatapult ( new Player ( "DUDE", new Team (1) , state.getBoard ()) );
         } catch (GameHasEndedException e ){
             //Assert
             assertNull ( piece );
@@ -81,7 +82,7 @@ class EndedTest {
         //Act
         Player player= null;
         try {
-            player = state.newPlayer ( "Al" );
+            player = state.newPlayer ( "Al",team );
         } catch (GameHasEndedException e ){
             //Assert
             assertNull ( player );
@@ -96,7 +97,7 @@ class EndedTest {
         GameState state = new Ended ();
 
         try {
-            state.playerAttacks ( new Player ( "DUDE", new Team (1) ) ,  new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
+            state.playerAttacks ( new Player ( "DUDE", new Team (1) , state.getBoard ()) ,  new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
         } catch (GameHasEndedException e ){
             //Assert
             assertTrue ( true );
@@ -110,7 +111,7 @@ class EndedTest {
         GameState state = new Ended ();
 
         try {
-            state.playerChoosesBattalion ( new Player ( "DUDE", new Team (1) ) ,  new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
+            state.playerChoosesBattalion ( new Player ( "DUDE", new Team (1) , state.getBoard ()) ,  new Builder ().fromRow ( 2 ).fromColumn ( 2 ).ToRow ( 3 ).ToColumn ( 2 ).build () );
         } catch (GameHasEndedException e ){
             //Assert
             assertTrue ( true );

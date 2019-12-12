@@ -8,25 +8,30 @@ import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.NoMembersLeftException;
+import team.Team;
 
 public class Game {
 
     private Player player1 = null;
     private Player player2 = null;
+    private Team team1 = new Team ( 1 );
+    private Team team2 = new Team ( 2 );
     private GameState state;
     private Player available;
+    private TurnAdministrator turnAdministrator;
 
     public Game () {
-        this.state = new InProgress ();
+        this.state = new InProgress ( team1, team2 );
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
 
         if (this.player1 == null) {
-            this.player1 = this.state.newPlayer ( name );
+            this.player1 = this.state.newPlayer ( name, team1 );
             this.available = this.player1;
         } else if (this.player2 == null) {
-            this.player2 = this.state.newPlayer ( name );
+            this.player2 = this.state.newPlayer ( name, team2 );
+            this.turnAdministrator = new TurnAdministrator ( player1, player2 );
         } else throw new ThereAreOnlyTwoPlayersPerGameException ();
 
     }
@@ -86,19 +91,15 @@ public class Game {
 
     public void playerIsReadyToPlay ( Player player ) {
         this.state.playerIsReadyToPlay ( player );
-        if (player.equals ( this.player1 )) this.available = this.player2;
-        else this.available = this.player1;
+        this.available = this.turnAdministrator.playerIsReadyToPlay ( player );
     }
 
     // Private
 
     public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
-        if (this.player1.equals ( this.available )) this.available = this.player2;
-        else {
-            this.available = this.player1;
-            state.penalizePieces ();
-        }
+        this.available = this.turnAdministrator.changeAvailablePlayer ();
+        this.state.penalizePieces ();
     }
 
     // These getters are only for testing, they dont belong in the model.

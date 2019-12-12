@@ -15,108 +15,74 @@ import Face.*;
 
 
 public class InProgress implements GameState {
-    private Player player1;
-    private Player player2;
-    private Face player1Face;
-    private Face player2Face;
-    private Team team1 = new Team ( 1 );
-    private Team team2 = new Team ( 2 );
-    public Board board = new Board ( team1, team2 );
+    private Team team1;
+    private Team team2;
+    public Board board;
 
-    public InProgress () {
-        this.player1Face = new InitialFace ( board, this.team1 );
-        this.player2Face = new InitialFace ( board, this.team2 );
-    }
-
-    private void changeFace ( Player player ) {
-        if (player.isNumberOfPiecesOnTeam ( 0 )) throw new PlayerMustChooseAtLeastOnePieceToStartGameException ();
-
-        if (this.player1.equals ( player )) this.player1Face = new GameFace ( this.board, player1 );
-        else this.player2Face = new GameFace ( this.board, player2 );
-
+    public InProgress ( Team team1, Team team2 ) {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.board = new Board ( team1, team2 );
     }
 
     @Override
     public void playerIsReadyToPlay ( Player player ) {
-        changeFace ( player );
+        player.changeFace ();
     }
 
     @Override
-    public Player newPlayer ( String name ) {
-
-        if (this.player1 == null) {
-            this.player1 = this.player1Face.newPlayer ( name );
-            return this.player1;
-        } else if (this.player2 == null) {
-            this.player2 = this.player2Face.newPlayer ( name );
-            return this.player2;
-        } else throw new ThereAreOnlyTwoPlayersPerGameException ();
+    public Player newPlayer ( String name, Team team ) {
+        return new Player ( name, team, board );
     }
 
     @Override
     public Piece chooseSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
-        if (this.player1 == player) return player1Face.playerChoosesSoldier ();
-        return player2Face.playerChoosesSoldier ();
+        return player.playerChoosesSoldier ();
     }
 
     @Override
     public Piece chooseHealer ( Player player ) throws PlayerHas20PointsOnlyException {
-        if (this.player1 == player) return player1Face.playerChoosesHealer ();
-        return player2Face.playerChoosesHealer ();
+        return player.playerChoosesHealer ();
     }
 
     @Override
     public Piece chooseRider ( Player player ) throws PlayerHas20PointsOnlyException {
-        if (this.player1 == player) return player1Face.playerChoosesRider ();
-        return player2Face.playerChoosesRider ();
+        return player.playerChoosesRider ();
     }
 
     @Override
     public Piece chooseCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
-        if (this.player1 == player) return player1Face.playerChoosesCatapult ();
-        return player2Face.playerChoosesCatapult ();
+        return player.playerChoosesCatapult ();
     }
 
     @Override
     public void playerAttacks ( Player player, Move move ) {
-        if (player == player1){
-            player1Face.playerAttacks ( move );
-            player2Face.removeDeadPieceFromBoard(move);
-        }
-        else{
-            player2Face.playerAttacks ( move );
-            player1Face.removeDeadPieceFromBoard(move);
-        }
+        player.attack ( move );
+        player.removeDeadPieceFromBoard ( move );
     }
 
     @Override
     public void playerMovesPieceOnBoard ( Player player, Move move ) {
-        if (player == player1) player1Face.playerMovesPieceOnBoard ( move );
-        else player2Face.playerMovesPieceOnBoard ( move );
-
+        player.movePiece ( move );
     }
 
     @Override
     public void playerPlacesPieceOnBoard ( Player player, Piece piece, Move move ) {
-        if (player == player1) player1Face.playerPlacesPieceOnBoard ( piece, move );
-        else player2Face.playerPlacesPieceOnBoard ( piece, move );
+        player.placePieceOnBoard ( piece, move );
     }
 
     @Override
     public Piece removePieceFromBoard ( Player player, Move move ) {
         try {
-            if (player == player1) return player1Face.removeDeadPieceFromBoard(move);
-            return player2Face.removeDeadPieceFromBoard(move);
-        }
-        catch (NoMembersLeftException e){
-            throw new GameHasEndedException();
+            return player.removeDeadPieceFromBoard ( move );
+        } catch (NoMembersLeftException e) {
+            throw new GameHasEndedException ();
         }
     }
 
     @Override
     public void playerChoosesBattalion ( Player player, Move move ) {
-        if (player == player1) player1Face.playerChoosesBattalion ( move );
-        else player2Face.playerChoosesBattalion ( move );
+        player.chooseBattalion ( move );
     }
 
     // This getter is only for testing, it doesnt belong in the model.
@@ -127,21 +93,19 @@ public class InProgress implements GameState {
 
     // This getter is only for views,
     @Override
-    public int getPoints (Player player){
-        if (player == player1) return player1Face.getPoints ();
-        return player2Face.getPoints ();
+    public int getPoints ( Player player ) {
+        return player.getPoints ();
     }
+
     @Override
-    public Piece getPieceOnCell (int row, int column) {
+    public Piece getPieceOnCell ( int row, int column ) {
         Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
         return this.board.getPiece ( move );
     }
 
     @Override
-    public void penalizePieces() {
-        board.penalizePieces();
+    public void penalizePieces () {
+        board.penalizePieces ();
     }
-
-    // This getter is only for vi
 
 }

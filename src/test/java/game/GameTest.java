@@ -51,12 +51,9 @@ class GameTest {
 
         try {
             game.newPlayer ( "Alfred" );
-            fail ();
 
             //Assert
-        } catch (ThereAreOnlyTwoPlayersPerGameException e) {
-            e.printStackTrace ();
-        } catch (ThereCantBeTwoPlayersOnTheSameTeamException e) {
+        } catch (ThereAreOnlyTwoPlayersPerGameException | ThereCantBeTwoPlayersOnTheSameTeamException e) {
             Assertions.assertTrue ( player1.equals ( game.getPlayer1 () ) );
             Assertions.assertTrue ( player2.equals ( game.getPlayer2 () ) );
         }
@@ -107,7 +104,7 @@ class GameTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
-        Piece piece = game.playerChoosesSoldier (  );
+        Piece piece = game.playerChoosesSoldier ( );
         //Act
         game.playerPlacesPieceOnBoard ( piece, 2, 0 );
         //Assert
@@ -151,15 +148,16 @@ class GameTest {
 
         Piece piece3 = game.playerChoosesSoldier (  );
         game.playerPlacesPieceOnBoard (  piece3, 11, 0 );
-        game.playerIsReadyToPlay ( game.getPlayer2 ( ));
 
         Piece piece2 = game.playerChoosesSoldier ( );
         game.playerPlacesPieceOnBoard (  piece2, 3, 0 );
         game.playerIsReadyToPlay ( game.getPlayer1 ( ));
-        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
+        game.playerIsReadyToPlay ( game.getPlayer2 ( ));
+        Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
         //Act
-        game.playerMovesPieceOnBoard (   11, 0, 11, 1 );
         game.playerMovesPieceOnBoard (  2, 0, 2, 1 );
+        game.playerMovesPieceOnBoard (   11, 0, 12, 1 );
+        game.playerMovesPieceOnBoard (  2, 1, 2, 0 );
         Piece removed = game.getPiece ( move );
         //Assert
         Assertions.assertEquals ( piece, removed );
