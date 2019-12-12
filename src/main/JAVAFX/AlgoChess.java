@@ -96,7 +96,6 @@ public class AlgoChess extends Application {
         Instructions instructions = new Instructions ( borderPane );
 
         // Start button.
-        //Button buttonStart = this.view.createButton ( "Start" );
         Button buttonStart = new Button ( "Start" );
         buttonStart.setMinWidth ( 150 );
         buttonStart.setMinHeight ( 40 );
@@ -130,14 +129,20 @@ public class AlgoChess extends Application {
 
         Label emptyLabel = new Label ( "" );
 
-        HBox hbox = new HBox ( emptyLabel, regionLeft, name, regionCenter, stopButton );
+        HBox hbox = new HBox ( emptyLabel, regionLeft, name, regionCenter );
         HBox.setMargin ( stopButton, new Insets ( 10 ) );
 
+
+        HBox bottom = new HBox ( stopButton );
+        //HBox.setMargin ( stopButton, new Insets ( 10 ) );
+        BorderPane.setAlignment ( stopButton, Pos.CENTER_RIGHT );
         // Setting panes.
         borderPane.setTop ( hbox );
         BorderPane.setAlignment ( name, Pos.BOTTOM_CENTER );
         borderPane.setCenter ( verticalB );
         BorderPane.setAlignment ( name, Pos.TOP_CENTER );
+        borderPane.setBottom ( bottom );
+        BorderPane.setAlignment ( bottom, Pos.CENTER_RIGHT );
 
         //Adding background.
         borderPane.setBackground ( this.background );
@@ -187,10 +192,20 @@ public class AlgoChess extends Application {
         grid.add ( acceptButton, 0, 3 );
         grid.add ( errorText, 0, 4 );
 
+        //Bottom
+        Button stopButton = new Button ();
+        stopButton.getStyleClass ().add ( "buttonStop" );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
+
+        HBox bottom = new HBox ( stopButton );
+        HBox.setMargin ( stopButton,  new Insets ( 10 ) );
+
+
         //BorderPane
         BorderPane borderpane = new BorderPane ();
         borderpane.setBackground ( this.background );
         borderpane.setCenter ( grid );
+        borderpane.setBottom ( bottom );
 
         acceptButton.setOnAction ( new AcceptButtonEventHandler ( text, this.game, stage, errorText, this.scene2 ) );
         text.setOnKeyPressed ( new NameEventHandler ( acceptButton ) );
