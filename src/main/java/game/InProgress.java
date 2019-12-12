@@ -7,12 +7,8 @@ import move.Move;
 import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
-import player.PlayerMustChooseAtLeastOnePieceToStartGameException;
-import player.ThereAreOnlyTwoPlayersPerGameException;
-import team.NoMembersLeftException;
-import team.Team;
-import Face.*;
 
+import team.Team;
 
 public class InProgress implements GameState {
     private Team team1;
@@ -75,11 +71,7 @@ public class InProgress implements GameState {
 
     @Override
     public Piece removePieceFromBoard ( Player player, Move move ) {
-        try {
-            return player.removeDeadPieceFromBoard ( move );
-        } catch (NoMembersLeftException e) {
-            throw new GameHasEndedException ();
-        }
+        return player.removeDeadPieceFromBoard ( move );
     }
 
     @Override

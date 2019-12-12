@@ -1,6 +1,7 @@
 package piece;
 
 
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RiderTest {
-    private Team team = new Team ( 34 );
+    private Team team = new Team ( 34 , new Game ());
 
     @Test
     void test00CreateRiderWithATeamAndGetTheCorrectTeam () {
@@ -44,7 +45,7 @@ class RiderTest {
     @Test
     void test03RiderReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assemble
-        Team blue = new Team ( 25 );
+        Team blue = new Team ( 25, new Game () );
         Piece rider = new Rider ( this.team );
         Piece blueRider = new Rider ( blue );
 
@@ -128,7 +129,7 @@ class RiderTest {
     @Test
     void test09RiderMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assemble
-        Team blue = new Team ( 7 );
+        Team blue = new Team ( 7, new Game () );
         Piece rider = new Rider ( this.team );
         Piece healer = new Healer ( blue );
 

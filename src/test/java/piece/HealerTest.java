@@ -1,5 +1,6 @@
 package piece;
 
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
@@ -10,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HealerTest {
-    Team team = new Team ( 1 );
+    Game game =  new Game ();
+    Team team = new Team ( 1 ,game);
 
     @Test
     void test00CreateHealerWithATeamAndGetTheCorrectTeam () {
@@ -42,7 +44,7 @@ class HealerTest {
     @Test
     void test03HealerReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assemble
-        Team team2 = new Team ( 2 );
+        Team team2 = new Team ( 2 , game);
         Piece healer = new Healer ( this.team );
         Piece soldier = new Soldier ( team2 );
 

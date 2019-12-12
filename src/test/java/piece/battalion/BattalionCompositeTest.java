@@ -1,6 +1,7 @@
 package piece.battalion;
 
 import board.Board;
+import game.Game;
 import move.Builder;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BattalionCompositeTest {
-    Team team = new Team (1);
+    Team team = new Team (1, new Game ());
     PieceFactory factory = new PieceFactory ( team );
     Piece soldier1 = factory.createSoldier ();
     Piece soldier2 = factory.createSoldier ();
     Piece soldier3 = factory.createSoldier ();
     ArrayList<Piece> soldiers = new ArrayList<Piece>();
-    Board board = new Board ( team, new Team (2) );
+    Board board = new Board ( team, new Team (2, new Game()) );
 
 
     @Test

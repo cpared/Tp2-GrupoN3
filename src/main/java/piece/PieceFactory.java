@@ -63,9 +63,12 @@ public class PieceFactory {
             this.playerPoints += this.catapultCost;
         }
     }
+
     public int getPoints(){
         return this.playerPoints;
     }
+
+
 }
 
 

@@ -15,10 +15,11 @@ import piece.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationTest {
-    Team team = new Team ( 1 );
-    Team team2 = new Team ( 2 );
-    private PieceFactory factory = new PieceFactory ( team );
-    private PieceFactory efactory = new PieceFactory ( team2 );
+    Game game = new Game();
+    Team team = new Team ( 1 ,game);
+    Team team2 = new Team ( 2 ,game);
+    PieceFactory factory = new PieceFactory ( team );
+    PieceFactory efactory = new PieceFactory ( team2 );
 
     @Test
     void test00CanMoveAPieceFromRow3AndColumn3InAllPossibleWays () throws PlayerHas20PointsOnlyException {

@@ -2,6 +2,7 @@ package Face;
 
 import board.Board;
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,9 @@ import team.Team;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameFaceTest {
-    private Team team = new Team ( 1 );
-    private Team team2 = new Team ( 2 );
+    Game game = new Game ();
+    private Team team = new Team ( 1 ,game);
+    private Team team2 = new Team ( 2 ,game);
     private Board board = new Board ( team, team2 );
     private Player player = new Player ( "Mike", team ,board);
     private PieceFactory factory = new PieceFactory ( team );

@@ -26,6 +26,7 @@ public class InitialFace implements Face {
     @Override
     public void playerPlacesPieceOnBoard ( Piece piece, Move move ) {
         board.placePiece ( piece, move );
+        if (factory.getPoints ()==0) team.playerIsReadyToPlay ();
     }
 
     @Override

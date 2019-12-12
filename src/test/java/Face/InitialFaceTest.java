@@ -1,6 +1,7 @@
 package Face;
 
 import board.Board;
+import game.Game;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,9 @@ import team.Team;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InitialFaceTest {
-    Team team = new Team ( 1 );
-    Team team2 = new Team ( 2 );
+    Game game = new Game ();
+    Team team = new Team ( 1 ,game);
+    Team team2 = new Team ( 2 ,game);
 
     @Test
     void test00AnInitialFaceCanBeCreated () {
@@ -28,7 +30,7 @@ class InitialFaceTest {
     @Test
     void test03ASoldierCanBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         //Act
         Piece piece = initial.playerChoosesSoldier ();
@@ -39,7 +41,7 @@ class InitialFaceTest {
     @Test
     void test04ARiderCanBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         //Act
         Piece piece = initial.playerChoosesRider ();
@@ -50,7 +52,7 @@ class InitialFaceTest {
     @Test
     void test05AHealerCanBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
 
         //Act
@@ -62,7 +64,7 @@ class InitialFaceTest {
     @Test
     void test06ACatapultCanBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         //Act
         Piece piece = initial.playerChoosesCatapult ();
@@ -73,7 +75,7 @@ class InitialFaceTest {
     @Test
     void test07APieceCanBePlacedOnTheBoardInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         Piece piece = initial.playerChoosesCatapult ();
         //Act
@@ -87,7 +89,7 @@ class InitialFaceTest {
     @Test
     void test08APieceCanBeRemovedFromTheBoardInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         Piece piece = initial.playerChoosesCatapult ();
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
@@ -102,7 +104,7 @@ class InitialFaceTest {
     @Test
     void test09ABattalionCantBeCreatedInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         Piece soldier1 = initial.playerChoosesSoldier ();
         Piece soldier2 = initial.playerChoosesSoldier ();
@@ -131,7 +133,7 @@ class InitialFaceTest {
     @Test
     void test010PiecesCantBeAttackInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Team team = new Team ( 1 );
+        Team team = new Team ( 1 ,game);
         Face initial = new InitialFace ( new Board ( this.team, this.team2 ), this.team );
         Piece soldier1 = initial.playerChoosesSoldier ();
         Piece soldier2 = initial.playerChoosesSoldier ();

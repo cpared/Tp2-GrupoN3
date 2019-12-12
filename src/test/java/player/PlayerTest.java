@@ -1,12 +1,13 @@
 package player;
 
 import board.Board;
+import game.Game;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 import piece.PieceFactory;
-import team.NoMembersLeftException;
+
 import team.PieceDoesNotBelongToTeamException;
 import team.Team;
 
@@ -14,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     //Assemble
-    private Team team = new Team ( 1 );
-    private Board board = new Board ( team, new Team ( 2 ) );
+    private Team team = new Team ( 1 , new Game());
+    private Board board = new Board ( team, new Team ( 2 , new Game ()) );
     private PieceFactory factory = new PieceFactory ( this.team );
 
     //Initiation tests.
@@ -177,7 +178,7 @@ class PlayerTest {
     // Tests related to teams.
 
     @Test
-    void test11PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, NoMembersLeftException, PieceDoesNotBelongToTeamException {
+    void test11PlayerHasRemovedAPiece () throws PlayerHas20PointsOnlyException, PieceDoesNotBelongToTeamException {
         //Assemble
         Player player = new Player ( "Player0003", team, board );
         Piece piece = this.factory.createHealer ();

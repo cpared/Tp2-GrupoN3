@@ -4,10 +4,7 @@ import board.Board;
 import board.CanNotMakeThatMoveException;
 import move.Move;
 import piece.Piece;
-import player.APlayerAlreadyExistsException;
 import player.Player;
-import player.ThereAreOnlyTwoPlayersPerGameException;
-import team.NoMembersLeftException;
 import team.Team;
 
 public class GameFace implements Face {

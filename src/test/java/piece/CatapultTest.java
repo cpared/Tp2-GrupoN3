@@ -1,6 +1,7 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
@@ -12,7 +13,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatapultTest {
-    private Team team = new Team (1);
+    Game game = new Game ();
+    private Team team = new Team (1,game);
 
     @Test
     void test00CreateCatapultWithATeamAndGetTheCorrectTeam () {
@@ -43,7 +45,7 @@ class CatapultTest {
     @Test
     void test03CatapultReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assemble
-        Team blue = new Team (2);
+        Team blue = new Team (2, new Game());
         Piece piece = new Catapult ( this.team );
         Piece blueSoldier = new Soldier ( blue );
 
@@ -110,7 +112,7 @@ class CatapultTest {
     @Test
     void test08CatapultMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assemble
-        Team blue = new Team (2);
+        Team blue = new Team (2,game);
         Piece piece = new Catapult ( this.team );
         Piece healer = new Healer ( blue );
 

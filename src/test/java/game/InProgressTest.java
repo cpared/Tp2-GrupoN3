@@ -9,8 +9,9 @@ import team.Team;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InProgressTest {
-    private Team team = new Team(1);
-    private Team team2 = new Team(1);
+    Game game = new Game ();
+    private Team team = new Team(1,game);
+    private Team team2 = new Team(1,game);
 
     @Test
     void test00AnStateCanBeCreated () {
@@ -36,7 +37,7 @@ class InProgressTest {
         GameState state = new InProgress (team, team2);
         //Act
         Player player = state.newPlayer ( "Al" ,team);
-        Player player2 = state.newPlayer ( "Pete", new Team(2) );
+        Player player2 = state.newPlayer ( "Pete", new Team(2,game) );
 
         assertFalse ( player.equals ( player2 ) );
 

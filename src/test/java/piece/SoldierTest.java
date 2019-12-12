@@ -1,6 +1,7 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,8 @@ import team.Team;
 import java.util.ArrayList;
 
 class SoldierTest {
-    private Team team = new Team ( 1 );
+    Game game = new Game ();
+    private Team team = new Team ( 1,game );
 
     @Test
     void test00CreateSoldierWithATeamAndGetTheCorrectTeam () {
@@ -47,7 +49,7 @@ class SoldierTest {
     void test03soldierReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
         //Assemble
 
-        Team blue = new Team ( 2 );
+        Team blue = new Team ( 2, new Game() );
         Piece soldier = new Soldier ( this.team );
         Piece blueSoldier = new Soldier ( blue );
 
@@ -142,7 +144,7 @@ class SoldierTest {
     void test12soldierMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
         //Assemble
 
-        Team blue = new Team ( 2 );
+        Team blue = new Team ( 2 ,game);
         Piece piece = new Soldier ( this.team );
         Piece healer = new Healer ( blue );
 

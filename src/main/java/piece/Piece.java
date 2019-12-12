@@ -1,6 +1,7 @@
 package piece;
 
 import board.Board;
+import game.Game;
 import javafx.util.Pair;
 import move.Move;
 import piece.battalion.BattalionComposite;
@@ -9,7 +10,7 @@ import team.Team;
 import java.util.ArrayList;
 
 public interface Piece {
-    Team team = new Team ( 5000 );
+    Team team = new Team ( 5000 , new Game ());
     int life = 0;
     int cost = 0;
     BattalionComposite battalion = null;

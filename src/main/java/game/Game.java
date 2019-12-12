@@ -7,23 +7,21 @@ import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
 import player.ThereAreOnlyTwoPlayersPerGameException;
-import team.NoMembersLeftException;
 import team.Team;
-
-import java.util.ArrayList;
-
 public class Game {
 
     private Player player1 = null;
     private Player player2 = null;
-    private Team team1 = new Team ( 1 );
-    private Team team2 = new Team ( 2 );
+    private Team team1;
+    private Team team2;
     private GameState state;
     private Player available;
     private TurnAdministrator turnAdministrator;
 
     public Game () {
-        this.state = new InProgress ( team1, team2);
+        this.team1 = new Team ( 1, this );
+        this.team2 = new Team ( 2, this );
+        this.state = new InProgress ( team1, team2 );
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
@@ -56,19 +54,15 @@ public class Game {
 
     }
 
-    public Piece removePieceFromBoard ( int row, int column ) throws GameHasEndedException, NoMembersLeftException {
+    public Piece removePieceFromBoard ( int row, int column ) throws GameHasEndedException {
         Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
         return this.state.removePieceFromBoard ( this.available, move );
     }
 
-    public void playerAttacks ( int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, NoMembersLeftException, ItIsNotYourTurnException {
+    public void playerAttacks ( int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, ItIsNotYourTurnException {
         Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
-        try {
-            this.state.playerAttacks ( this.available, move );
-            this.changeAvailablePlayer ();
-        } catch (NoMembersLeftException e) {
-            changeState ( new Ended () );
-        }
+        this.state.playerAttacks ( this.available, move );
+        this.changeAvailablePlayer ();
     }
 
     public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {

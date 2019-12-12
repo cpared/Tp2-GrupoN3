@@ -1,5 +1,6 @@
 package team;
 
+import game.Game;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 import piece.Soldier;
@@ -11,7 +12,7 @@ class TeamTest {
     @Test
     void test00CanCreateATeam () {
         //Assemble & Act
-        Team team = new Team (2444);
+        Team team = new Team (2444, new Game ());
         //Assert
         assertNotNull ( team );
     }
@@ -19,8 +20,8 @@ class TeamTest {
     @Test
     void test01CanCreatTwoDifferentTeams () {
         //Assemble & Act
-        Team team1 = new Team (4545);
-        Team team2 = new Team (2333);
+        Team team1 = new Team (4545, new Game ());
+        Team team2 = new Team (2333, new Game ());
         //Assert
         assertFalse ( team1.equals ( team2 ) );
     }
@@ -28,7 +29,7 @@ class TeamTest {
     @Test
     void test02PiecesCanBeAddedToTeamAndTheNumberOfMembersWillIncrease () {
         //Assemble
-        Team team = new Team(8);
+        Team team = new Team(8, new Game ());
         Piece piece = new Soldier (team);
         Piece piece2 = new Soldier (team);
         //Act
@@ -39,9 +40,9 @@ class TeamTest {
     }
 
     @Test
-    void test03PiecesCanBeRemovedFromTeam () throws NoMembersLeftException {
+    void test03PiecesCanBeRemovedFromTeam () {
         //Assemble
-        Team team = new Team (2);
+        Team team = new Team (2, new Game ());
         Piece piece = new Soldier (team);
         Piece piece2 = new Soldier (team);
         Piece piece3 = new Soldier (team);
@@ -59,9 +60,9 @@ class TeamTest {
     }
 
     @Test
-    void test04PiecesCanBeRemovedFromTeamAndRemovingThemReturnsTheExpectedPieces () throws NoMembersLeftException {
+    void test04PiecesCanBeRemovedFromTeamAndRemovingThemReturnsTheExpectedPieces () {
         //Assemble
-        Team team = new Team (2);
+        Team team = new Team (2, new Game ());
         Piece piece = new Soldier (team);
         Piece piece2 = new Soldier (team);
         Piece piece3 = new Soldier (team);
@@ -82,7 +83,7 @@ class TeamTest {
     @Test
     void test05RemoveMorePiecesThanWhatYouCanRemoveRaisesError () {
         //Assemble
-        Team team = new Team(2);
+        Team team = new Team(2, new Game ());
         Piece piece = new Soldier (team);
         team.addPieceToTeam (piece);
 
@@ -90,9 +91,8 @@ class TeamTest {
         try{
             team.subtractPieceFromTeam (piece);
             team.subtractPieceFromTeam (piece);
-            fail();
             //Assert
-        } catch (NoMembersLeftException e) {
+        } catch (PieceDoesNotBelongToTeamException e) {
             assertTrue (  team.isNumberOfMembersStillOnTeam (0) );
         }
     }
