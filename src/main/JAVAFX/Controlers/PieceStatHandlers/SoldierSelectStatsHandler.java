@@ -16,7 +16,7 @@ public class SoldierSelectStatsHandler implements EventHandler<InputEvent>{
     private String attack = "10";
     private String cost = "1";
     private String health = "100";
-    private String info = "Lorem";
+    private String info = "- He can attack an enemy at short distance \n - If there is more than 3 ally soldiers they behave like a batallion and they can all move together at the same turn";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;

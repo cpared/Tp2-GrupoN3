@@ -17,7 +17,7 @@ public class RiderSelectStatsHandler implements EventHandler<InputEvent>{
     private String attack = "15 / 5";
     private String cost = "3";
     private String health = "100";
-    private String info = "Lorem";
+    private String info = "- If there is at least one ally Soldier near by or any enemy, his weapon are arch and arrow \n - If there are enemies close and no ally pieces, his weapon is a sword";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;
