@@ -11,6 +11,7 @@ import Vistas.PieceInformationDuringGame.InformationDuringGameController;
 import game.Game;
 import game.GameHasEndedException;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -37,6 +38,7 @@ import player.Player;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 public class SelectPieceSceneView {
     private Button choosePieceButton;
@@ -118,6 +120,7 @@ public class SelectPieceSceneView {
                 //view.setFitHeight ( 10 );
                 //view.setFitWidth ( 10 );
                 stopButton.setGraphic ( view );
+                //stopButton.getStyleClass ().add ( "Image/speaker-off.png" );
 
             }
         } );
@@ -345,7 +348,37 @@ public class SelectPieceSceneView {
                                              soundEffects.play ();
                                          }
 
+                                         private void moveCells() {
+                                            int row = pair.getKey ();
+                                            int column = pair.getValue ();
+
+
+                                            Pair<Integer, Integer> adj1 = new Pair<>(row,column+1);
+                                            Pair<Integer, Integer> adj2 = new Pair<>(row,column-1);
+
+                                            Pair<Integer, Integer> topAdj1 = new Pair<>(row+1,column+1);
+                                            Pair<Integer, Integer> topAdj2 = new Pair<>(row+1,column);
+                                            Pair<Integer, Integer> topAdj3 = new Pair<>(row+1,column-1);
+
+                                            Pair<Integer, Integer> bottomAdj1 = new Pair<>(row-1,column+1);
+                                            Pair<Integer, Integer> bottomAdj2 = new Pair<>(row-1,column);
+                                            Pair<Integer, Integer> bottomAdj3 = new Pair<>(row-1,column-1);
+
+                                            ObservableList<Node> cells = board.getChildren ();
+                                            ArrayList<Pair> adjacent = new ArrayList<Pair> ();
+                                            adjacent.add ( adj1);
+                                             adjacent.add ( adj2);
+                                             adjacent.add ( topAdj1);
+                                             adjacent.add ( topAdj2);
+                                             adjacent.add ( topAdj3);
+                                             adjacent.add ( bottomAdj1);
+                                             adjacent.add ( bottomAdj2);
+                                             adjacent.add ( bottomAdj3);
+
+                                         }
+
                                          private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button, Label first, Label second ) {
+                                             moveCells ();;
                                              if (moveButton.isSelected ()) {
                                                  game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                                  turn.changeTurn ();

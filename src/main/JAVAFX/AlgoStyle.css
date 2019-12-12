@@ -49,3 +49,11 @@ VBox{
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
+
+.buttonStopMuted{
+    /*-fx-graphic: url("Image/speaker.png");*/
+    -fx-background-image: url("Image/speaker-off.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}

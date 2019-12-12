@@ -1,7 +1,4 @@
-import Controlers.AcceptButtonEventHandler;
-import Controlers.ButtonsThatChangeScenesEventHandler;
-import Controlers.ExitButtonEventHandler;
-import Controlers.NameEventHandler;
+import Controlers.*;
 import Vistas.AlgoChessBackground;
 import Vistas.ButtonView;
 import Vistas.Instructions;
@@ -37,6 +34,8 @@ public class AlgoChess extends Application {
     private Scene scene1;
     private SelectPieceSceneView scene2;
     private MediaPlayer mediaPlayer;
+    private  String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
+    private Media media = new Media ( new File ( path ).toURI ().toString () );
 
     public AlgoChess () {
     }
@@ -51,7 +50,6 @@ public class AlgoChess extends Application {
         stage.setTitle ( " AlgoChess " );
         this.game = new Game ();
 
-        String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
         this.soundtrack ( path );
         this.scene2 = new SelectPieceSceneView (this, this.mediaPlayer);
 
@@ -72,14 +70,7 @@ public class AlgoChess extends Application {
         //Button stop
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new EventHandler<ActionEvent> () {
-            @Override
-            public void handle ( ActionEvent actionEvent ) {
-                mediaPlayer.stop ();
-                stopButton.setStyle ( "-fx-background-image: url('Image/speaker-off.png')" );
-            }
-        } );
-
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
         BorderPane borderPane = new BorderPane ();
 
         // AlgoChess image.
