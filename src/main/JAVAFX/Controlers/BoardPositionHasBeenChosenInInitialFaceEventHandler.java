@@ -49,13 +49,13 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
     public void handleMouse ( MouseEvent event ) {
         if (event.getEventType ().equals ( MouseEvent.MOUSE_CLICKED )) {
             try{
-                Piece piece = game.playerChoosesSoldier(game.getPlayer1());
+                Piece piece = game.playerChoosesSoldier();
                 Pair<Integer,Integer> pair = button.getPosition();
                 Player player = game.getPlayer1();
                 innerMethod(piece, pair,player);
             }
             catch(ItIsNotYourTurnException e){
-                Piece piece = game.playerChoosesSoldier(game.getPlayer2());
+                Piece piece = game.playerChoosesSoldier();
                 Pair<Integer,Integer> pair = button.getPosition();
                 Player player = game.getPlayer2();
                 innerMethod(piece, pair, player);
@@ -67,7 +67,7 @@ public class BoardPositionHasBeenChosenInInitialFaceEventHandler implements Even
     }
 
     private void innerMethod(Piece piece, Pair<Integer, Integer> pair, Player player) {
-        game.playerPlacesPieceOnBoard(player,piece,pair.getKey(),pair.getValue());
+        game.playerPlacesPieceOnBoard(piece,pair.getKey(),pair.getValue());
         ImageView view = new ImageView ( this.image );
         view.setFitWidth ( 15 );
         view.setFitHeight ( 15 );

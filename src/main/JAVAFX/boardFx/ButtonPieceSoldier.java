@@ -16,13 +16,13 @@ public class ButtonPieceSoldier extends ButtonPiece {
     }
 
     @Override
-    public Piece choosePiece(Game game, Player player) {
-        return game.playerChoosesSoldier(player);
+    public Piece choosePiece(Game game) {
+        return game.playerChoosesSoldier();
     }
 
 
     @Override
-    public String getString(Game game, Player player){
+    public String getString(Game game){
         return this.style;
     }
 

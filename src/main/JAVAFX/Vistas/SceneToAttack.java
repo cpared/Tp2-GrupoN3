@@ -28,21 +28,21 @@ public class SceneToAttack extends BorderPane {
                                              } else if (pair != null) {
                                                  Pair<Integer, Integer> newPair = button.getPosition ();
                                                  try {
-                                                     privateMethod ( newPair, game.getPlayer1 () );
+                                                     privateMethod ( newPair);
                                                  } catch (ItIsNotYourTurnException e) {
-                                                     privateMethod ( newPair, game.getPlayer2 () );
+                                                     privateMethod ( newPair);
                                                  } catch (Exception i) {
                                                      System.out.println ( i );
                                                  }
                                              }
                                          }
 
-                                         private void privateMethod ( Pair<Integer, Integer> newPair, Player player ) {
+                                         private void privateMethod ( Pair<Integer, Integer> newPair) {
                                              if (moveButton.isSelected ()) {
-                                                 game.playerMovesPieceOnBoard ( player, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 game.playerMovesPieceOnBoard (  pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                              }
                                              if (attackButton.isSelected ()) {
-                                                 game.playerAttacks ( player, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 game.playerAttacks ( pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                              }
                                          }
                                      }

@@ -31,62 +31,54 @@ public class Game {
 
     }
 
-    public void playerChoosesBattalion ( Player player, int row, int column ) throws ItIsNotYourTurnException {
-        if (!this.isAvailablePlayer ( player )) throw new ItIsNotYourTurnException ();
+    public void playerChoosesBattalion ( int row, int column ) throws ItIsNotYourTurnException {
         Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
-        this.state.playerChoosesBattalion ( player, move );
+        this.state.playerChoosesBattalion ( this.available, move );
 
     }
 
-    public void playerMovesPieceOnBoard ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, ItIsNotYourTurnException {
-        if (!this.isAvailablePlayer ( player )) throw new ItIsNotYourTurnException ();
+    public void playerMovesPieceOnBoard ( int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, ItIsNotYourTurnException {
         Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
-        this.state.playerMovesPieceOnBoard ( player, move );
+        this.state.playerMovesPieceOnBoard ( this.available, move );
         this.changeAvailablePlayer ();
     }
 
-    public void playerPlacesPieceOnBoard ( Player player, Piece piece, int row, int column ) throws ItIsNotYourTurnException {
-        if (!this.isAvailablePlayer ( player )) throw new ItIsNotYourTurnException ();
+    public void playerPlacesPieceOnBoard ( Piece piece, int row, int column ) throws ItIsNotYourTurnException {
         Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
-        this.state.playerPlacesPieceOnBoard ( player, piece, move );
+        this.state.playerPlacesPieceOnBoard ( this.available, piece, move );
         this.changeAvailablePlayer ();
 
     }
 
-    public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
+    public Piece removePieceFromBoard ( int row, int column ) throws GameHasEndedException, NoMembersLeftException {
         Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
-        return this.state.removePieceFromBoard ( player, move );
+        return this.state.removePieceFromBoard ( this.available, move );
     }
 
-    public void playerAttacks ( Player player, int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, NoMembersLeftException, ItIsNotYourTurnException {
-        if (!this.isAvailablePlayer ( player )) throw new ItIsNotYourTurnException ();
+    public void playerAttacks ( int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, NoMembersLeftException, ItIsNotYourTurnException {
         Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
         try {
-            this.state.playerAttacks ( player, move );
+            this.state.playerAttacks ( this.available, move );
         } catch (NoMembersLeftException e) {
             changeState ( new Ended () );
         }
         this.changeAvailablePlayer ();
     }
 
-    public Piece playerChoosesSoldier ( Player player ) throws PlayerHas20PointsOnlyException {
-        return this.state.chooseSoldier ( player );
+    public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {
+        return this.state.chooseSoldier ( this.available );
     }
 
-    public Piece playerChoosesHealer ( Player player ) throws PlayerHas20PointsOnlyException {
-        return this.state.chooseHealer ( player );
+    public Piece playerChoosesHealer () throws PlayerHas20PointsOnlyException {
+        return this.state.chooseHealer ( this.available );
     }
 
-    public Piece playerChoosesRider ( Player player ) throws PlayerHas20PointsOnlyException {
-        return this.state.chooseRider ( player );
+    public Piece playerChoosesRider () throws PlayerHas20PointsOnlyException {
+        return this.state.chooseRider ( this.available );
     }
 
-    public Piece playerChoosesCatapult ( Player player ) throws PlayerHas20PointsOnlyException {
-        return this.state.chooseCatapult ( player );
-    }
-
-    public boolean isNumberOfMembersOnTeam ( Player player, int numberOfMembers ) {
-        return player.isNumberOfPiecesOnTeam ( numberOfMembers );
+    public Piece playerChoosesCatapult () throws PlayerHas20PointsOnlyException {
+        return this.state.chooseCatapult ( this.available );
     }
 
     private void changeState ( GameState newState ) {
@@ -100,10 +92,6 @@ public class Game {
     }
 
     // Private
-
-    private boolean isAvailablePlayer ( Player player ) {
-        return (this.available.equals ( player ));
-    }
 
     public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;

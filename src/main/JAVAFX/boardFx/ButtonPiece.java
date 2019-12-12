@@ -11,9 +11,9 @@ public abstract class ButtonPiece extends Button {
     ButtonPiece(){
         super();
     }
-    public abstract Piece choosePiece(Game game, Player player);
+    public abstract Piece choosePiece(Game game);
 
-    public abstract String getString(Game game, Player player);
+    public abstract String getString(Game game);
 
     public abstract void setString (String style);
 

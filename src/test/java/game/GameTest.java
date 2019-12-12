@@ -72,9 +72,13 @@ class GameTest {
         try {
             game.newPlayer ( "Rose" );
             game.newPlayer ( "Patty" );
-            game.playerChoosesCatapult ( game.getPlayer1 () );
-            game.playerChoosesCatapult ( game.getPlayer2 () );
-            game.playerChoosesHealer ( game.getPlayer2 () );
+            Piece piece = game.playerChoosesCatapult ( );
+            game.playerPlacesPieceOnBoard ( piece, 0,0);
+            Piece piece2 = game.playerChoosesCatapult (  );
+            game.playerPlacesPieceOnBoard (  piece2, 13,13);
+            game.playerIsReadyToPlay (  game.getPlayer1 () );
+            game.playerChoosesHealer ( );
+
 
 
         } catch (ThereAreOnlyTwoPlayersPerGameException | PlayerHas20PointsOnlyException | ThereCantBeTwoPlayersOnTheSameTeamException e) {
@@ -93,7 +97,7 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         //Act
-        Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
+        Piece piece = game.playerChoosesSoldier ( );
         //Assert
         Assertions.assertNotNull ( piece );
     }
@@ -103,9 +107,9 @@ class GameTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
-        Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
+        Piece piece = game.playerChoosesSoldier (  );
         //Act
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
+        game.playerPlacesPieceOnBoard ( piece, 2, 0 );
         //Assert
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 0 ).build ();
         Assertions.assertEquals ( piece, game.getPiece ( move ) );
@@ -117,15 +121,15 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
+        Piece piece = game.playerChoosesSoldier ( );
+        game.playerPlacesPieceOnBoard (  piece, 2, 0 );
 
-        Piece piece3 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11, 0 );
+        Piece piece3 = game.playerChoosesSoldier (  );
+        game.playerPlacesPieceOnBoard (  piece3, 11, 0 );
         game.playerIsReadyToPlay ( game.getPlayer2 ( ));
 
-        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+        Piece piece2 = game.playerChoosesSoldier ( );
+        game.playerPlacesPieceOnBoard (piece2, 3, 0 );
 
         game.playerIsReadyToPlay ( game.getPlayer1 ( ));
 
@@ -142,20 +146,20 @@ class GameTest {
         Game game = new Game ();
         game.newPlayer ( "Rose" );
         game.newPlayer ( "Doyle" );
-        Piece piece = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece, 2, 0 );
+        Piece piece = game.playerChoosesSoldier (  );
+        game.playerPlacesPieceOnBoard (  piece, 2, 0 );
 
-        Piece piece3 = game.playerChoosesSoldier ( game.getPlayer2 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer2 (), piece3, 11, 0 );
+        Piece piece3 = game.playerChoosesSoldier (  );
+        game.playerPlacesPieceOnBoard (  piece3, 11, 0 );
         game.playerIsReadyToPlay ( game.getPlayer2 ( ));
 
-        Piece piece2 = game.playerChoosesSoldier ( game.getPlayer1 () );
-        game.playerPlacesPieceOnBoard ( game.getPlayer1 (), piece2, 3, 0 );
+        Piece piece2 = game.playerChoosesSoldier ( );
+        game.playerPlacesPieceOnBoard (  piece2, 3, 0 );
         game.playerIsReadyToPlay ( game.getPlayer1 ( ));
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
         //Act
-        game.playerMovesPieceOnBoard (  game.getPlayer2 (), 11, 0, 11, 1 );
-        game.playerMovesPieceOnBoard ( game.getPlayer1 (), 2, 0, 2, 1 );
+        game.playerMovesPieceOnBoard (   11, 0, 11, 1 );
+        game.playerMovesPieceOnBoard (  2, 0, 2, 1 );
         Piece removed = game.getPiece ( move );
         //Assert
         Assertions.assertEquals ( piece, removed );

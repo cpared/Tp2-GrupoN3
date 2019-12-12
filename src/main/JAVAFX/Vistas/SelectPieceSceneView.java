@@ -163,7 +163,7 @@ public class SelectPieceSceneView {
             @Override
             public void handle ( MouseEvent mouseEvent ) {
                 try {
-                    game.playerChoosesBattalion ( game.getAvailablePlayer (), pair.getKey (), pair.getValue () );
+                    game.playerChoosesBattalion ( pair.getKey (), pair.getValue () );
                     lastButton.setBattalion ();
                 } catch (Exception e) {
                     System.out.println ( e );
@@ -184,12 +184,11 @@ public class SelectPieceSceneView {
             @Override
             public void handle ( MouseEvent event ) {
                 if (!(lastChosen == null)) {
-                    Player currentPlayer = game.getAvailablePlayer ();
                     try {
-                        Piece piece = lastChosen.choosePiece ( game, currentPlayer );
+                        Piece piece = lastChosen.choosePiece ( game);
                         Pair<Integer, Integer> pair = button.getPosition ();
-                        game.playerPlacesPieceOnBoard ( currentPlayer, piece, pair.getKey (), pair.getValue () );
-                        button.getStyleClass ().add ( lastChosen.getString ( game, game.getAvailablePlayer () ) );
+                        game.playerPlacesPieceOnBoard ( piece, pair.getKey (), pair.getValue () );
+                        button.getStyleClass ().add ( lastChosen.getString ( game ));
                         lastChosen = null;
                         playerPoints = turn.getCurrentPlayersPoints ();
                         HBox playerInfo = turn.getCurrentPlayersName ();
@@ -298,8 +297,8 @@ public class SelectPieceSceneView {
                                          public void handle ( MouseEvent mouseEvent ) {
                                              ButtonCell button = (ButtonCell) each;
                                              if (pair == null && !(button.emptyImage ())) {
-                                                 System.out.println ( "se toco una sola vez" );
                                                  pair = button.getPosition ();
+
                                                  InformationDuringGameController control = new InformationDuringGameController ( button, turn, moveButton, attackButton, game, pair, label1, label2 );
                                                  VBox vertical = control.createPieceView ();
                                                  borderpane.setLeft ( vertical );
@@ -310,7 +309,7 @@ public class SelectPieceSceneView {
                                                  Pair<Integer, Integer> newPair = button.getPosition ();
                                                  try {
 
-                                                     privateMethod ( newPair, game.getAvailablePlayer (), button, label1, label2 );
+                                                     privateMethod ( newPair, button, label1, label2 );
                                                      lastButton = null;
                                                      pair = null;
                                                  } catch (GameHasEndedException e) {
@@ -370,17 +369,17 @@ public class SelectPieceSceneView {
 
                                          }
 
-                                         private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button, Label first, Label second ) {
+                                         private void privateMethod ( Pair<Integer, Integer> newPair, ButtonCell button, Label first, Label second ) {
                                              moveCells ();;
                                              if (moveButton.isSelected ()) {
-                                                 game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 game.playerMovesPieceOnBoard ( pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                                  turn.changeTurn ();
                                                  this.moveSound ();
                                                  button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
                                                  changeLabelMove ( first, second, pair, newPair );
                                              }
                                              if (attackButton.isSelected ()) {
-                                                 game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 game.playerAttacks (pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                                  turn.changeTurn ();
                                                  this.attackSound ();
 

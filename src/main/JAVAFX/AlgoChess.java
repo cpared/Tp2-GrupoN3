@@ -32,9 +32,9 @@ public class AlgoChess extends Application {
     private Scene scene1;
     private SelectPieceSceneView scene2;
     private MediaPlayer mediaPlayer;
-    private  String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
+    private String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
     private Media media = new Media ( new File ( path ).toURI ().toString () );
-    
+
     public AlgoChess () {
     }
 
@@ -49,7 +49,7 @@ public class AlgoChess extends Application {
         this.game = new Game ();
 
         this.soundtrack ( path );
-        this.scene2 = new SelectPieceSceneView (this, this.mediaPlayer);
+        this.scene2 = new SelectPieceSceneView ( this, this.mediaPlayer );
 
         this.scene00InitialStage ( stage );
     }
@@ -68,7 +68,7 @@ public class AlgoChess extends Application {
         //Button stop
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton ) );
         BorderPane borderPane = new BorderPane ();
 
         // AlgoChess image.
@@ -88,7 +88,7 @@ public class AlgoChess extends Application {
         Label instruction = new Label ( "Instructions" );
         instruction.setTextAlignment ( TextAlignment.CENTER );
         instruction.setTextFill ( Color.WHITE );
-        instruction.setStyle("-fx-font-size:40;");
+        instruction.setStyle ( "-fx-font-size:40;" );
 
         Instructions instructions = new Instructions ( borderPane );
 
@@ -146,8 +146,8 @@ public class AlgoChess extends Application {
 
         // Final layout.
         //Scene scene = new Scene ( borderPane, 1500,800 );
-        Scene scene = new Scene ( borderPane);
-        stage.setMaximized(true);
+        Scene scene = new Scene ( borderPane );
+        stage.setMaximized ( true );
         stage.setScene ( scene );
         scene.getStylesheets ().add ( "AlgoStyle.css" );
         stage.show ();
@@ -193,10 +193,10 @@ public class AlgoChess extends Application {
         //Bottom
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton ) );
 
         HBox bottom = new HBox ( stopButton );
-        HBox.setMargin ( stopButton,  new Insets ( 10 ) );
+        HBox.setMargin ( stopButton, new Insets ( 10 ) );
 
 
         //BorderPane
