@@ -17,7 +17,7 @@ public class HealerSelectStatsHandler implements EventHandler<InputEvent>{
     private String attack = "15";
     private String cost = "2";
     private String health = "75";
-    private String info = "Lorem";
+    private String info = "He can heal an ally nearby piece (except catapult)";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;
