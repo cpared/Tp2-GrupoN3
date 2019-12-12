@@ -51,18 +51,28 @@ public class InformationDuringGameController {
             this.piece = game.getPieceOnCell ( row, column );
             this.life = piece.getLife ();
         } catch (EmptyCellException e) {
-            return new DefaultPieceView ( this.turn, first, second );
+            VBox vbox = new DefaultPieceView ( this.turn, first, second );
+            vbox.setPrefWidth ( 300 );
+            return vbox;
         }
 
         VBox moves = new LastMovesView ( first, second );
         if (piece.getClass ().equals ( Soldier.class )) {
-            return checkAdjacents ( moves );
+            VBox vbox = checkAdjacents ( moves );
+            vbox.setPrefWidth ( 300 );
+            return vbox;
         } else if (piece.getClass ().equals ( Healer.class )) {
-            return new HealerInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            VBox vbox = new HealerInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            vbox.setPrefWidth ( 300 );
+            return vbox;
         } else if (piece.getClass ().equals ( Rider.class )) {
-            return new RiderInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            VBox vbox = new RiderInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            vbox.setPrefWidth ( 300 );
+            return vbox;
         } else {
-            return new CatapultInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            VBox vbox = new CatapultInformationDuringGame ( life, turn, moveButton, attackButton, moves );
+            vbox.setPrefWidth ( 300 );
+            return vbox;
         }
     }
 
@@ -91,10 +101,6 @@ public class InformationDuringGameController {
 
         int row = this.pair.getKey ();
         int column = this.pair.getValue ();
-
-        System.out.println ( row );
-        System.out.println ( column );
-
         int column2 = column + 1;
         int column3 = column - 1;
 

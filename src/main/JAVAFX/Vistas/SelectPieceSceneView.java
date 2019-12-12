@@ -5,7 +5,7 @@ import Controlers.MusicButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
-import Vistas.PieceInformationDuringGame.BattalionDuringGame;
+
 import Vistas.PieceInformationDuringGame.DefaultPieceView;
 import Vistas.PieceInformationDuringGame.InformationDuringGameController;
 import boardFx.ButtonCell;
@@ -142,8 +142,9 @@ public class SelectPieceSceneView {
 
         //Left toolbar
         VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ) );
-        vertical.setAlignment ( Pos.CENTER );
+        vertical.setAlignment ( Pos.TOP_CENTER );
         vertical.setSpacing ( 40 );
+        vertical.setPrefWidth ( 300 );
         vertical.getStyleClass ().add ( "piecesGrid" );
 
         borderPane.setLeft ( vertical );
@@ -202,9 +203,10 @@ public class SelectPieceSceneView {
 
 
                         VBox vertical = new VBox ( playerInfo, playerPoints, new PiecesGridPane ( choosePieceButton, view, turn ) );
-                        vertical.setAlignment ( Pos.CENTER );
+                        vertical.setAlignment ( Pos.TOP_CENTER );
                         vertical.setSpacing ( 40 );
                         vertical.getStyleClass ().add ( "piecesGrid" );
+                        vertical.setPrefWidth ( 300 );
                         borderpane.setLeft ( vertical );
 
                     } catch (GameHasEndedException i) {
@@ -365,6 +367,8 @@ public class SelectPieceSceneView {
 
                                              }
                                              VBox vertical = new DefaultPieceView ( turn, first, second );
+                                             vertical.setPrefWidth ( 300 );
+
                                              BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
                                              borderpane.setLeft ( vertical );
                                          }
@@ -383,6 +387,7 @@ public class SelectPieceSceneView {
 
         //Adding the components to the bar
         VBox vertical = new DefaultPieceView ( turn, new Label(), new Label ( ) );
+        vertical.setPrefWidth ( 300 );
         borderPane.setLeft ( vertical );
     }
 

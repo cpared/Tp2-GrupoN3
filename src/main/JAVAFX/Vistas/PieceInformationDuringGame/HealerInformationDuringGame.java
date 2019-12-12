@@ -35,7 +35,7 @@ public class HealerInformationDuringGame extends VBox {
         buttons.setAlignment ( Pos.TOP_CENTER );
 
         this.getChildren ().addAll (  pieceInfo, buttons, moves );
-        this.setAlignment ( Pos.CENTER );
+        this.setAlignment ( Pos.TOP_CENTER );
         this.setSpacing ( 100 );
         this.getStyleClass ().add ( "piecesGrid" );
     }

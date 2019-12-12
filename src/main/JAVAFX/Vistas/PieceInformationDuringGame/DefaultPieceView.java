@@ -12,7 +12,7 @@ public class DefaultPieceView extends VBox {
     public DefaultPieceView ( Turn turn , Label first, Label second) {
         HBox name = turn.getCurrentPlayersName ();
         name.getStyleClass ().add ( "textStyle" );
-        Label piece = new Label ( "Choose a Piece to view options" );
+        Label piece = new Label ( "Choose a Piece" );
         piece.getStyleClass ().add ( "textStyle" );
 
         VBox moves = new LastMovesView ( first,second );
