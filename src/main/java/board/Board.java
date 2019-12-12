@@ -52,12 +52,14 @@ public class Board {
             throw new CanNotMakeThatMoveException ();
         }
     }
-    public void move (Move move, Team team){
-        if (this.originCell(move).getPiece().getTeam() != team){
+
+    public void move ( Move move, Team team ) {
+        if (this.originCell ( move ).getPiece ().getTeam () != team) {
             throw new CanNotMakeThatMoveException ();
         }
-        move(move);
+        move ( move );
     }
+
     public void move ( Move move ) {
         Piece piece = this.originCell ( move ).deletePieceFromCell ();
         this.originCell ( move ).putPieceInCell ( piece );
@@ -67,45 +69,47 @@ public class Board {
     public Piece removePiece ( Move move ) {
         return this.originCell ( move ).deletePieceFromCell ();
     }
-    public void attack(Move move, Team team){
-        if (this.originCell(move).getPiece().getTeam() != team){
+
+    public void attack ( Move move, Team team ) {
+        if (this.originCell ( move ).getPiece ().getTeam () != team) {
             throw new CanNotMakeThatMoveException ();
         }
-        attack(move);
+        attack ( move );
     }
+
     public void attack ( Move move ) {
         int firstRow = move.fromRow;
         int secondRow = move.toRow;
         int firstColumn = move.fromColumn;
         int secondColumn = move.toColumn;
-        Piece piece = originCell(move).getPiece();
-        ArrayList<Piece> array = new ArrayList<Piece>();
-        array.add(piece);
-        Criteria criteria = new CatapultCriteria();
-        if (!criteria.criteria(array).isEmpty()) {
-            this.catapultAttack((Catapult) piece, secondRow, secondColumn);
+        Piece piece = originCell ( move ).getPiece ();
+        ArrayList<Piece> array = new ArrayList<Piece> ();
+        array.add ( piece );
+        Criteria criteria = new CatapultCriteria ();
+        if (!criteria.criteria ( array ).isEmpty ()) {
+            this.catapultAttack ( (Catapult) piece, secondRow, secondColumn );
         } else {
-            ArrayList<Piece> pieceArray = this.adjacentPieces((this.adjacentCells(firstRow, firstColumn)));
-            Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer>(this.destinationCell(move).getPiece(), Math.max(Math.abs(firstRow - secondRow), Math.abs(firstColumn - secondColumn)));
-            piece.attack(pieceArray, pieceToAttack);
+            ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
+            Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
+            piece.attack ( pieceArray, pieceToAttack );
         }
     }
 
-    private void catapultAttack(Catapult piece, int row,int column) {
-        Set<Piece> pieces = new HashSet<Piece>();
-        getAttackPieces(pieces,row, column);
-        piece.attack(pieces,cellArray.get(row).get(column).getPiece());
+    private void catapultAttack ( Catapult piece, int row, int column ) {
+        Set<Piece> pieces = new HashSet<Piece> ();
+        getAttackPieces ( pieces, row, column );
+        piece.attack ( pieces, cellArray.get ( row ).get ( column ).getPiece () );
     }
 
-    private void getAttackPieces(Set<Piece> pieces,int row, int column ) {
-        pieces.add(cellArray.get(row).get(column).getPiece());
-        for (int actualRow = row-1; actualRow < row+2; actualRow++){
-            for (int actualColumn = column-1;actualColumn<column+2;actualColumn++){
-                if (actualRow < 0 || actualRow > 19 || actualColumn < 0 || actualColumn > 19){
+    private void getAttackPieces ( Set<Piece> pieces, int row, int column ) {
+        pieces.add ( cellArray.get ( row ).get ( column ).getPiece () );
+        for (int actualRow = row - 1; actualRow < row + 2; actualRow++) {
+            for (int actualColumn = column - 1; actualColumn < column + 2; actualColumn++) {
+                if (actualRow < 0 || actualRow > 19 || actualColumn < 0 || actualColumn > 19) {
                     continue;
                 }
-                if (!(cellIsEmpty(actualRow,actualColumn) || pieces.contains(cellArray.get(actualRow).get(actualColumn).getPiece()))){
-                    this.getAttackPieces(pieces,actualRow,actualColumn);
+                if (!(cellIsEmpty ( actualRow, actualColumn ) || pieces.contains ( cellArray.get ( actualRow ).get ( actualColumn ).getPiece () ))) {
+                    this.getAttackPieces ( pieces, actualRow, actualColumn );
                 }
             }
         }
@@ -129,7 +133,7 @@ public class Board {
 
         ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
         Boolean isBattalion = this.isBattalion ( possiblePieces );
-        if (!isBattalion) throw  new CanNotMakeBattalion ();
+        if (!isBattalion) throw new CanNotMakeBattalion ();
         BattalionComposite battallion = new BattalionComposite ( possiblePieces );
     }
 
@@ -176,21 +180,22 @@ public class Board {
         return pieces;
     }
 
-    public Piece removeDeadPiece(Move move) {
-        return destinationCell(move).removeDeadPiece();
-    }
-    public boolean cellIsEmpty(int row,int column){
-        return cellArray.get(row).get(column).isEmpty();
+    public Piece removeDeadPiece ( Move move ) {
+        return destinationCell ( move ).removeDeadPiece ();
     }
 
-    public Piece getPiece(Move move) {
-        return originCell(move).getPiece();
+    public boolean cellIsEmpty ( int row, int column ) {
+        return cellArray.get ( row ).get ( column ).isEmpty ();
     }
 
-    public void penalizePieces() {
-        for (ArrayList<Cell> cells: cellArray){
-            for (Cell cell: cells){
-                cell.penalizePiece();
+    public Piece getPiece ( Move move ) {
+        return originCell ( move ).getPiece ();
+    }
+
+    public void penalizePieces () {
+        for (ArrayList<Cell> cells : cellArray) {
+            for (Cell cell : cells) {
+                cell.penalizePiece ();
             }
 
         }

@@ -32,17 +32,11 @@ public class GameFace implements Face {
 
     @Override
     public void playerAttacks ( Move move ) {
-        try {
-            //this.player.attack ( this.board, move );
-            board.attack ( move, team );
-        } catch (NoMembersLeftException e) {
-            throw e;
-        }
+        board.attack ( move, team );
     }
 
     @Override
     public void playerMovesPieceOnBoard ( Move move ) {
-        //player.movePiece ( this.board, move );
         board.move ( move, team );
     }
 

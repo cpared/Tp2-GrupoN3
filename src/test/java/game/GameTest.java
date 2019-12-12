@@ -104,6 +104,7 @@ class GameTest {
         //Assemble
         Game game = new Game ();
         game.newPlayer ( "Rose" );
+        game.newPlayer ( "Mike" );
         Piece piece = game.playerChoosesSoldier ( );
         //Act
         game.playerPlacesPieceOnBoard ( piece, 2, 0 );

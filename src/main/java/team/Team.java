@@ -21,7 +21,6 @@ public class Team {
         if (!this.pieces.contains ( removablePiece )) throw  new PieceDoesNotBelongToTeamException ();
         int index = this.pieces.indexOf ( removablePiece );
         Piece piece = this.pieces.remove ( index );
-        //this.pieces.remove ( removablePiece );
         if (this.pieces.size ()  == 0) throw  new NoMembersLeftException ();
         return piece;
     }

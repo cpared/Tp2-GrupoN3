@@ -4,7 +4,6 @@ import Face.*;
 import board.Board;
 import move.Move;
 import piece.Piece;
-import team.NoMembersLeftException;
 import team.PieceDoesNotBelongToTeamException;
 import team.Team;
 
@@ -27,7 +26,6 @@ public class Player {
     }
 
     public void movePiece (  Move move ) {
-        //board.move ( move, team );
         this.face.playerMovesPieceOnBoard ( move );
     }
 

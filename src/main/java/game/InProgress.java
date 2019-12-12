@@ -18,10 +18,12 @@ public class InProgress implements GameState {
     private Team team1;
     private Team team2;
     public Board board;
+    private Game game;
 
-    public InProgress ( Team team1, Team team2 ) {
+    public InProgress ( Team team1, Team team2) {
         this.team1 = team1;
         this.team2 = team2;
+        this.game = game;
         this.board = new Board ( team1, team2 );
     }
 

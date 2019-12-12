@@ -10,6 +10,8 @@ import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.NoMembersLeftException;
 import team.Team;
 
+import java.util.ArrayList;
+
 public class Game {
 
     private Player player1 = null;
@@ -21,7 +23,7 @@ public class Game {
     private TurnAdministrator turnAdministrator;
 
     public Game () {
-        this.state = new InProgress ( team1, team2 );
+        this.state = new InProgress ( team1, team2);
     }
 
     public void newPlayer ( String name ) throws ThereAreOnlyTwoPlayersPerGameException, ThereCantBeTwoPlayersOnTheSameTeamException {
@@ -32,8 +34,8 @@ public class Game {
         } else if (this.player2 == null) {
             this.player2 = this.state.newPlayer ( name, team2 );
             this.turnAdministrator = new TurnAdministrator ( player1, player2 );
-        } else throw new ThereAreOnlyTwoPlayersPerGameException ();
 
+        } else throw new ThereAreOnlyTwoPlayersPerGameException ();
     }
 
     public void playerChoosesBattalion ( int row, int column ) throws ItIsNotYourTurnException {
@@ -63,10 +65,10 @@ public class Game {
         Move move = new Builder ().fromRow ( firstRow ).fromColumn ( firstColumn ).ToRow ( secondRow ).ToColumn ( secondColumn ).build ();
         try {
             this.state.playerAttacks ( this.available, move );
+            this.changeAvailablePlayer ();
         } catch (NoMembersLeftException e) {
             changeState ( new Ended () );
         }
-        this.changeAvailablePlayer ();
     }
 
     public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {
@@ -85,7 +87,7 @@ public class Game {
         return this.state.chooseCatapult ( this.available );
     }
 
-    private void changeState ( GameState newState ) {
+    public void changeState ( GameState newState ) {
         this.state = newState;
     }
 
