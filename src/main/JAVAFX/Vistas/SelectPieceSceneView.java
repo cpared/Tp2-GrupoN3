@@ -5,15 +5,14 @@ import Controlers.MusicButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
-import boardFx.ButtonCell;
-import boardFx.ButtonPiece;
 import Vistas.PieceInformationDuringGame.DefaultPieceView;
 import Vistas.PieceInformationDuringGame.InformationDuringGameController;
+import boardFx.ButtonCell;
+import boardFx.ButtonPiece;
 import game.Game;
 import game.GameHasEndedException;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
@@ -82,14 +80,16 @@ public class SelectPieceSceneView {
         start.setOnMouseClicked ( new EventHandler<MouseEvent> () {
             @Override
             public void handle ( MouseEvent mouseEvent ) {
-                changeScene ( board, borderPane );
-                setChooseButton ();
-                game.playerIsReadyToPlay ( game.getPlayer1 () );
-                game.playerIsReadyToPlay ( game.getPlayer2 () );
-                String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
-                Media media = new Media ( new File ( path ).toURI ().toString () );
-                mediaPlayer = new MediaPlayer ( media );
-                mediaPlayer.play ();
+                if (!game.getAvailablePlayer().isNumberOfPiecesOnTeam(0)) {
+                    changeScene(board, borderPane);
+                    setChooseButton();
+                    game.playerIsReadyToPlay(game.getPlayer1());
+                    game.playerIsReadyToPlay(game.getPlayer2());
+                    String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+                    Media media = new Media(new File(path).toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaPlayer.play();
+                }
             }
         } );
         start.setOnKeyPressed ( new EventHandler<KeyEvent> () {
