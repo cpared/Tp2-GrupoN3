@@ -32,6 +32,7 @@ public class AlgoChess extends Application {
     private Scene scene1;
     private SelectPieceSceneView scene2;
     private MediaPlayer mediaPlayer;
+    private MediaPlayer soundPlayer;
     private String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
     private Media media = new Media ( new File ( path ).toURI ().toString () );
 
@@ -68,7 +69,7 @@ public class AlgoChess extends Application {
         //Button stop
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton ) );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton, "buttonStop", "buttonStopMuted" ) );
         BorderPane borderPane = new BorderPane ();
 
         // AlgoChess image.
@@ -193,7 +194,7 @@ public class AlgoChess extends Application {
         //Bottom
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton ) );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton , "buttonStop", "buttonStopMuted" ) );
 
         HBox bottom = new HBox ( stopButton );
         HBox.setMargin ( stopButton, new Insets ( 10 ) );

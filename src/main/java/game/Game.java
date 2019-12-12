@@ -34,7 +34,6 @@ public class Game {
     public void playerChoosesBattalion ( int row, int column ) throws ItIsNotYourTurnException {
         Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
         this.state.playerChoosesBattalion ( this.available, move );
-
     }
 
     public void playerMovesPieceOnBoard ( int firstRow, int firstColumn, int secondRow, int secondColumn ) throws GameHasEndedException, ItIsNotYourTurnException {

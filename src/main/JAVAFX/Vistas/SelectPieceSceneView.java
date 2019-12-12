@@ -109,7 +109,7 @@ public class SelectPieceSceneView {
         //Button stop
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton, "buttonStop", "buttonStopMuted" ) );
 
         HBox topContainer = new HBox ( new Label(),start,stopButton );
         stopButton.prefWidthProperty ().bind ( topContainer.widthProperty ().divide ( 50 ) );
@@ -229,11 +229,8 @@ public class SelectPieceSceneView {
             }
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell ( null, actual, i, j );
-                //button.setPrefSize ( 30, 30 );
                 button.setMinSize ( 41, 41 );
                 button.setMaxSize ( 41, 41 );
-                //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
-                //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 gridPane.add ( button, i, j );
             }
         }
@@ -403,24 +400,6 @@ public class SelectPieceSceneView {
         borderPane.setTop ( null );
         borderPane.setBottom ( null );
         Pair<ToggleButton, ToggleButton> pair = setGameStage ( board, borderPane );
-
-        //Left
-        /*
-        ToggleButton move = pair.getValue ();
-        move.getStyleClass ().add ( "button-choose" );
-        ToggleButton attack =   pair.getKey ();
-        attack.getStyleClass ().add ( "button-choose" );
-        */
-        /*
-        Scrollbar barraTemp = new Scrollbar(Scrollbar.HORIZONTAL, 0, 10, -50, 160);
-        Frame frameTemp = new Frame("Error"); //creamos el marco
-        Label
-        frameTemp.add ( new Text ("Player must choose at least one piece to play.") )
-        frameTemp.add("Center", barraTemp); //agregamos la barra
-        frameTemp.setSize(300,100);
-        frameTemp.setVisible(true);  //mostramos el marco
-        frameTemp.addWindowListener(new CloseListener());
-        */
 
         //Adding the components to the bar
         VBox vertical = new DefaultPieceView ( turn, new Label(), new Label ( ) );

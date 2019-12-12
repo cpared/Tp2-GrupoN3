@@ -9,11 +9,15 @@ public class MusicButtonEventHandler implements EventHandler<ActionEvent> {
     private MediaPlayer mediaPlayer;
     private Button stopButton;
     private int count;
+    private String onStyle;
+    private String offStyle;
 
-    public MusicButtonEventHandler (MediaPlayer mediaPlayer, Button stopButton) {
+    public MusicButtonEventHandler (MediaPlayer mediaPlayer, Button stopButton, String onStyle, String offStyle) {
         this.mediaPlayer = mediaPlayer;
         this.stopButton = stopButton;
         this.count=0;
+        this.onStyle= onStyle;
+        this.offStyle = offStyle;
     }
 
     @Override
@@ -22,11 +26,11 @@ public class MusicButtonEventHandler implements EventHandler<ActionEvent> {
         if (count%2==0 ) {
             mediaPlayer.setMute ( false );
             mediaPlayer.play ();
-            stopButton.getStyleClass ().removeAll ( "buttonStopMuted" );
-            stopButton.getStyleClass ().add ( "buttonStop" );
+            stopButton.getStyleClass ().removeAll ( this.offStyle );
+            stopButton.getStyleClass ().add ( this.onStyle );
         } else if (count%2!=0 ) {
             mediaPlayer.setMute ( true );
-            stopButton.getStyleClass ().add ( "buttonStopMuted" );
+            stopButton.getStyleClass ().add ( this.offStyle );
         }
 
     }

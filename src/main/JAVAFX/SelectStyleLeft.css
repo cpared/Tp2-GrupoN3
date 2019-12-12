@@ -304,7 +304,6 @@
 }
 
 .buttonStop{
-    /*-fx-graphic: url("Image/speaker.png");*/
     -fx-background-image: url("Image/speaker.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
@@ -312,8 +311,21 @@
 }
 
 .buttonStopMuted{
-    /*-fx-graphic: url("Image/speaker.png");*/
     -fx-background-image: url("Image/speaker-off.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.buttonMusic{
+    -fx-background-image: url("Image/music.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.buttonMusicMuted{
+    -fx-background-image: url("Image/music-off.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;

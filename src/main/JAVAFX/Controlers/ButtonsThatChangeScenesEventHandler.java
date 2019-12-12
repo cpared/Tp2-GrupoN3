@@ -16,6 +16,7 @@ import java.io.File;
 public class ButtonsThatChangeScenesEventHandler implements EventHandler<InputEvent> {
     private Stage stage;
     private Scene scene;
+    private MediaPlayer player;
 
     public ButtonsThatChangeScenesEventHandler ( Stage initialStage, Scene nextScene ) {
         this.stage = initialStage;
@@ -39,7 +40,6 @@ public class ButtonsThatChangeScenesEventHandler implements EventHandler<InputEv
             this.stage.setWidth ( width );
             this.stage.setHeight ( height );
             this.sound ();
-            //this.stage.show ();
         }
     }
 
@@ -49,11 +49,9 @@ public class ButtonsThatChangeScenesEventHandler implements EventHandler<InputEv
             Double height = stage.getHeight ();
             this.stage.setScene ( this.scene );
             this.stage.setForceIntegerRenderScale ( true );
-            //this.stage.setFullScreen ( true );
             this.stage.setWidth ( width );
             this.stage.setHeight ( height );
             this.sound ();
-            //this.stage.show ();
         }
     }
     private void sound() {
