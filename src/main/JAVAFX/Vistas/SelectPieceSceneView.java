@@ -1,6 +1,7 @@
 package Vistas;
 
 import Controlers.ExitButtonEventHandler;
+import Controlers.MusicButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.NewGameButtonEventHandler;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
@@ -105,26 +106,20 @@ public class SelectPieceSceneView {
         start.setMinWidth ( 150 );
         start.setMinHeight ( 40 );
 
-        HBox topContainer = new HBox ( start );
-        topContainer.setMinHeight ( 50 );
-        topContainer.getStyleClass ().add ( "hbox" );
-
         //Button stop
         Button stopButton = new Button ();
         stopButton.getStyleClass ().add ( "buttonStop" );
-        stopButton.setOnAction ( new EventHandler<ActionEvent> () {
-            @Override
-            public void handle ( ActionEvent actionEvent ) {
-                mediaPlayer.stop ();
-                ImageView view = new ImageView ( "Image/speaker-off.png" );
-                stopButton.getStyleClass ().add ( "buttonStop" );
-                //view.setFitHeight ( 10 );
-                //view.setFitWidth ( 10 );
-                stopButton.setGraphic ( view );
-                //stopButton.getStyleClass ().add ( "Image/speaker-off.png" );
+        stopButton.setOnAction ( new MusicButtonEventHandler ( this.mediaPlayer, stopButton) );
 
-            }
-        } );
+        HBox topContainer = new HBox ( new Label(),start,stopButton );
+        stopButton.prefWidthProperty ().bind ( topContainer.widthProperty ().divide ( 50 ) );
+        stopButton.prefHeightProperty ().bind ( topContainer.widthProperty ().divide ( 50 ) );
+        topContainer.setAlignment ( Pos.CENTER );
+        topContainer.setSpacing ( 450 );
+
+
+        topContainer.setMinHeight ( 50 );
+        topContainer.getStyleClass ().add ( "hbox" );
 
         choosePieceButton = new Button ( "Choose Piece" );
         choosePieceButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
@@ -151,10 +146,7 @@ public class SelectPieceSceneView {
         vertical.getStyleClass ().add ( "piecesGrid" );
 
         borderPane.setLeft ( vertical );
-        //BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
-        //BorderPane.setMargin ( topContainer, new Insets ( 12, 12, 12, 12 ) );
         borderPane.setTop ( topContainer );
-        //borderPane.setTop ( horizontal );
         borderPane.setCenter ( board );
         BorderPane.setAlignment ( board, Pos.CENTER );
 

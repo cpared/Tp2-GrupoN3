@@ -145,7 +145,8 @@ public class AlgoChess extends Application {
         borderPane.setBackground ( this.background );
 
         // Final layout.
-        Scene scene = new Scene ( borderPane, 1500,800 );
+        //Scene scene = new Scene ( borderPane, 1500,800 );
+        Scene scene = new Scene ( borderPane);
         stage.setMaximized(true);
         stage.setScene ( scene );
         scene.getStylesheets ().add ( "AlgoStyle.css" );

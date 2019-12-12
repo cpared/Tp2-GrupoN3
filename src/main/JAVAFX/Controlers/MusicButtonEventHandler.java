@@ -19,9 +19,7 @@ public class MusicButtonEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle ( ActionEvent actionEvent ) {
         count++;
-        System.out.println ( count );
         if (count%2==0 ) {
-            System.out.println ( "entro" );
             mediaPlayer.setMute ( false );
             mediaPlayer.play ();
             stopButton.getStyleClass ().removeAll ( "buttonStopMuted" );

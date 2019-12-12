@@ -302,3 +302,19 @@
     -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #5c7fea 0%, #0564ff 100%), #0369fb, #168ad8,radial-gradient(center 50% 50%, radius 100%, rgba(22, 165, 255, 0.63), rgba(3, 108, 255, 0.62));
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
 }
+
+.buttonStop{
+    /*-fx-graphic: url("Image/speaker.png");*/
+    -fx-background-image: url("Image/speaker.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.buttonStopMuted{
+    /*-fx-graphic: url("Image/speaker.png");*/
+    -fx-background-image: url("Image/speaker-off.png");
+    -fx-background-size: 40px 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
