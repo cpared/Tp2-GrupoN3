@@ -5,8 +5,6 @@ import Vistas.Instructions;
 import Vistas.SelectPieceSceneView;
 import game.Game;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -36,8 +34,7 @@ public class AlgoChess extends Application {
     private MediaPlayer mediaPlayer;
     private  String path = "src/main/JAVAFX/SoundEffects/Metallica-Master_Of_Puppets.mp3";
     private Media media = new Media ( new File ( path ).toURI ().toString () );
-
-    Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    
     public AlgoChess () {
     }
 
