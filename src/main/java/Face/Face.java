@@ -5,19 +5,18 @@ import move.Move;
 import piece.Piece;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
-import team.Team;
+import team.PieceDoesNotBelongToTeamException;
 
 public interface Face {
     Player player = null;
     Board board = null;
 
-    Player newPlayer ( String name, Team team );
 
     void playerMovesPieceOnBoard ( Move move );
 
     void playerPlacesPieceOnBoard ( Piece piece, Move move );
 
-    Piece removePieceFromBoard ( Move move );
+    Piece removeDeadPieceFromBoard(Move move ) throws PieceDoesNotBelongToTeamException;
 
     void playerAttacks ( Move move );
 
@@ -34,4 +33,8 @@ public interface Face {
     // This getter is only for testing, they dont belong in the model.
     public Player getPlayer ();
 
+    // This getter is only for views
+    public int getPoints ();
+
+    Piece getPiece(Move move4);
 }

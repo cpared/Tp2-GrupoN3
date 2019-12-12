@@ -1,30 +1,24 @@
 package piece;
 
 import board.Board;
+import game.Game;
 import javafx.util.Pair;
 import move.Move;
+import piece.battalion.BattalionComposite;
 import team.Team;
 
 import java.util.ArrayList;
 
 public class NullPiece implements Piece {
-    @Override
-    public int getLife () {
-        return this.life;
-    }
-
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
+    public Team team = new Team(500, new Game ());
 
     @Override
     public void move ( Board board , Move move) {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.team );
     }
 
     @Override
@@ -47,12 +41,32 @@ public class NullPiece implements Piece {
     }
 
     @Override
-    public void decorate ( PieceDecorator decorator ) {
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
+    }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public void penalize(Team team) {
 
     }
 
     @Override
-    public PieceDecorator undecorate ( PieceDecorator decorator ) {
-        return null;
+    public int getLife () {
+        return this.life;
     }
 }

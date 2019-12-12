@@ -1,13 +1,18 @@
 package board;
 
+import criteria.BattalionCriteria;
+import criteria.CatapultCriteria;
+import criteria.Criteria;
 import javafx.util.Pair;
 import move.Move;
-import piece.BattalionProxy;
-import piece.IAmDeadException;
+import piece.Catapult;
 import piece.Piece;
+import piece.battalion.BattalionComposite;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Board {
     protected ArrayList<ArrayList<Cell>> cellArray;
@@ -30,7 +35,7 @@ public class Board {
 
     public void placePiece ( Piece piece, Move move ) {
         Cell cell = this.destinationCell ( move );
-        cell.putPieceInCell ( piece, piece.getTeam () );
+        cell.placePieceInCell ( piece );
     }
 
     public void movePiece ( Move move ) {
@@ -48,6 +53,13 @@ public class Board {
         }
     }
 
+    public void move ( Move move, Team team ) {
+        if (this.originCell ( move ).getPiece ().getTeam () != team) {
+            throw new CanNotMakeThatMoveException ();
+        }
+        move ( move );
+    }
+
     public void move ( Move move ) {
         Piece piece = this.originCell ( move ).deletePieceFromCell ();
         this.originCell ( move ).putPieceInCell ( piece );
@@ -58,18 +70,48 @@ public class Board {
         return this.originCell ( move ).deletePieceFromCell ();
     }
 
+    public void attack ( Move move, Team team ) {
+        if (this.originCell ( move ).getPiece ().getTeam () != team) {
+            throw new CanNotMakeThatMoveException ();
+        }
+        attack ( move );
+    }
+
     public void attack ( Move move ) {
         int firstRow = move.fromRow;
         int secondRow = move.toRow;
         int firstColumn = move.fromColumn;
         int secondColumn = move.toColumn;
-        ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
-        Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
-        try {
-            this.originCell ( move ).getPiece ().attack ( pieceArray, pieceToAttack );
-        } catch (IAmDeadException e) {
-            removePiece ( move );
-            throw e;
+        Piece piece = originCell ( move ).getPiece ();
+        ArrayList<Piece> array = new ArrayList<Piece> ();
+        array.add ( piece );
+        Criteria criteria = new CatapultCriteria ();
+        if (!criteria.criteria ( array ).isEmpty ()) {
+            this.catapultAttack ( (Catapult) piece, secondRow, secondColumn );
+        } else {
+            ArrayList<Piece> pieceArray = this.adjacentPieces ( (this.adjacentCells ( firstRow, firstColumn )) );
+            Pair<Piece, Integer> pieceToAttack = new Pair<Piece, Integer> ( this.destinationCell ( move ).getPiece (), Math.max ( Math.abs ( firstRow - secondRow ), Math.abs ( firstColumn - secondColumn ) ) );
+            piece.attack ( pieceArray, pieceToAttack );
+        }
+    }
+
+    private void catapultAttack ( Catapult piece, int row, int column ) {
+        Set<Piece> pieces = new HashSet<Piece> ();
+        getAttackPieces ( pieces, row, column );
+        piece.attack ( pieces, cellArray.get ( row ).get ( column ).getPiece () );
+    }
+
+    private void getAttackPieces ( Set<Piece> pieces, int row, int column ) {
+        pieces.add ( cellArray.get ( row ).get ( column ).getPiece () );
+        for (int actualRow = row - 1; actualRow < row + 2; actualRow++) {
+            for (int actualColumn = column - 1; actualColumn < column + 2; actualColumn++) {
+                if (actualRow < 0 || actualRow > 19 || actualColumn < 0 || actualColumn > 19) {
+                    continue;
+                }
+                if (!(cellIsEmpty ( actualRow, actualColumn ) || pieces.contains ( cellArray.get ( actualRow ).get ( actualColumn ).getPiece () ))) {
+                    this.getAttackPieces ( pieces, actualRow, actualColumn );
+                }
+            }
         }
     }
 
@@ -90,8 +132,15 @@ public class Board {
     public void createBattalion ( Move move ) {
 
         ArrayList<Piece> possiblePieces = this.adjacentPieces ( adjacentRowCells ( move ) );
-        BattalionProxy proxy = new BattalionProxy ( this, possiblePieces, move );
-        proxy.createBattalion ();
+        Boolean isBattalion = this.isBattalion ( possiblePieces );
+        if (!isBattalion) throw new CanNotMakeBattalion ();
+        BattalionComposite battallion = new BattalionComposite ( possiblePieces );
+    }
+
+    private boolean isBattalion ( ArrayList<Piece> possiblePieces ) {
+        BattalionCriteria battalion = new BattalionCriteria ();
+        ArrayList<Piece> pieces = battalion.criteria ( possiblePieces );
+        return pieces.size () == 3;
     }
 
     //Private methods.
@@ -129,5 +178,26 @@ public class Board {
             }
         }
         return pieces;
+    }
+
+    public Piece removeDeadPiece ( Move move ) {
+        return destinationCell ( move ).removeDeadPiece ();
+    }
+
+    public boolean cellIsEmpty ( int row, int column ) {
+        return cellArray.get ( row ).get ( column ).isEmpty ();
+    }
+
+    public Piece getPiece ( Move move ) {
+        return originCell ( move ).getPiece ();
+    }
+
+    public void penalizePieces () {
+        for (ArrayList<Cell> cells : cellArray) {
+            for (Cell cell : cells) {
+                cell.penalizePiece ();
+            }
+
+        }
     }
 }

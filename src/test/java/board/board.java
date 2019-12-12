@@ -1,5 +1,6 @@
 package board;
 
+import game.Game;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
     //Assemble
-    Team team = new Team ( 1 );
-    private Board board = new Board ( team, new Team ( 2 ) );
+    Game game=  new Game ();
+    Team team = new Team ( 1 ,game);
+    private Board board = new Board ( team, new Team ( 2 ,game) );
     private PieceFactory factory = new PieceFactory ( team );
     private Piece piece = factory.createSoldier ();
 

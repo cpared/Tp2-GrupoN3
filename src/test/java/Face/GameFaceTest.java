@@ -2,49 +2,47 @@ package Face;
 
 import board.Board;
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import move.Builder;
 import move.Move;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
+import piece.PieceFactory;
 import piece.Soldier;
 import player.APlayerAlreadyExistsException;
 import player.Player;
 import player.PlayerHas20PointsOnlyException;
+import player.ThereAreOnlyTwoPlayersPerGameException;
 import team.Team;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameFaceTest {
-    private Team team = new Team ( 1 );
-    private Team team2 = new Team ( 2 );
+    Game game = new Game ();
+    private Team team = new Team ( 1 ,game);
+    private Team team2 = new Team ( 2 ,game);
     private Board board = new Board ( team, team2 );
-    private Player player = new Player ( "Mike", team );
+    private Player player = new Player ( "Mike", team ,board);
+    private PieceFactory factory = new PieceFactory ( team );
+    private Piece soldier1 = this.factory.createSoldier ();
+    private Piece soldier2 = this.factory.createSoldier ();
+    private Piece soldier3 = this.factory.createSoldier ();
+
+
 
     @Test
     void test00AGameFaceCanBeCreated () {
         //Act
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         //Assert
         assertNotNull ( face );
     }
 
-    @Test
-    void test01ANewPlayerCanBeCreatedInGameFace () {
-        //Assemble
-        Face face = new GameFace ( board, player );
-        //Act
-        try {
-            Player player = face.newPlayer ( "George", team );
-        } catch (APlayerAlreadyExistsException e) {
-            //Assert
-            assertNotNull ( player );
-        }
-    }
 
     @Test
     void test02ASoldierCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             face.playerChoosesSoldier ();
@@ -57,7 +55,7 @@ class GameFaceTest {
     @Test
     void test03ARiderCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player ,team);
         //Act
         try {
             face.playerChoosesRider ();
@@ -70,7 +68,7 @@ class GameFaceTest {
     @Test
     void test04AHealerCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team);
         //Act
         //Act
         try {
@@ -84,7 +82,7 @@ class GameFaceTest {
     @Test
     void test05ACatapultCantBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             face.playerChoosesCatapult ();
@@ -97,7 +95,7 @@ class GameFaceTest {
     @Test
     void test06APieceCantBePlacedOnTheBoardInGameFace () {
         //Assemble
-        Face face = new GameFace ( board, player );
+        Face face = new GameFace ( board, player,team );
         //Act
         try {
             Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
@@ -111,16 +109,18 @@ class GameFaceTest {
     @Test
     void test07APieceCanBeRemovedFromTheBoardInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Piece soldier1 = this.player.chooseSoldier ();
-        Piece soldier2 = this.player.chooseSoldier ();
+        this.player.chosePiece ( soldier1 );
+        this.player.chosePiece ( soldier2 );
+        this.player.chosePiece ( soldier3 );
+
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
-        this.board.placePiece ( soldier1, move1 );
+        this.board.placePiece ( this.soldier1, move1 );
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
-        this.board.placePiece ( soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        this.board.placePiece ( this.soldier2, move2 );
+        Face face = new GameFace ( board, player,team );
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-        Piece removed = face.removePieceFromBoard ( move );
+        Piece removed = face.getPiece( move );
         //Assert
         assertNotNull ( removed );
     }
@@ -128,16 +128,17 @@ class GameFaceTest {
     @Test
     void test08ABattalionCanBeCreatedInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Piece soldier1 = this.player.chooseSoldier ();
-        Piece soldier2 = this.player.chooseSoldier ();
-        Piece soldier3 = this.player.chooseSoldier ();
+        this.player.chosePiece ( soldier1 );
+        this.player.chosePiece ( soldier2 );
+        this.player.chosePiece ( soldier3 );
+
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
         Move move3 = new Builder ().ToRow ( 2 ).ToColumn ( 3 ).build ();
-        this.board.placePiece ( soldier1, move1 );
-        this.board.placePiece ( soldier2, move2 );
-        this.board.placePiece ( soldier3, move3 );
-        Face face = new GameFace ( board, player );
+        this.board.placePiece ( this.soldier1, move1 );
+        this.board.placePiece ( this.soldier2, move2 );
+        this.board.placePiece ( this.soldier3, move3 );
+        Face face = new GameFace ( board, player ,team);
 
         //Act
         Move move = new Builder ().fromRow ( 2 ).fromColumn ( 2 ).build ();
@@ -148,39 +149,43 @@ class GameFaceTest {
         Move move4 = new Builder ().fromRow ( 3 ).fromColumn ( 2 ).build ();
         Move move5 = new Builder ().fromRow ( 3 ).fromColumn ( 1 ).build ();
         Move move6 = new Builder ().fromRow ( 3 ).fromColumn ( 3 ).build ();
-        assertEquals ( soldier2, face.removePieceFromBoard ( move4 ) );
-        assertEquals ( soldier1, face.removePieceFromBoard ( move5 ) );
-        assertEquals ( soldier3, face.removePieceFromBoard ( move6 ) );
+        assertEquals ( this.soldier2, face.getPiece ( move4 ) );
+        assertEquals ( this.soldier1, face.getPiece ( move5 ) );
+        assertEquals ( this.soldier3, face.getPiece ( move6 ) );
     }
 
     @Test
     void test9APieceCanBeMovedOnTheBoardInInitialFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Piece soldier1 = this.player.chooseSoldier ();
-        Piece soldier2 = this.player.chooseSoldier ();
+        this.player.chosePiece ( soldier1 );
+        this.player.chosePiece ( soldier2 );
+        this.player.chosePiece ( soldier3 );
+
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
-        this.board.placePiece ( soldier1, move1 );
-        this.board.placePiece ( soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        this.board.placePiece ( this.soldier1, move1 );
+        this.board.placePiece ( this.soldier2, move2 );
+        Face face = new GameFace ( board, player ,team);
         //Act
         Move movement = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 3 ).ToColumn ( 1 ).build ();
         face.playerMovesPieceOnBoard ( movement );
         //Assert
         Move move = new Builder ().fromRow ( 3 ).fromColumn ( 1 ).build ();
-        assertEquals ( soldier1, face.removePieceFromBoard ( move ) );
+        assertEquals ( soldier1, face.getPiece( move ) );
     }
 
     @Test
     void test10APieceCanBeMovedOnTheBoardAndIsLimitedToMovingToAdjacentCellsInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Piece soldier1 = this.player.chooseSoldier ();
-        Piece soldier2 = this.player.chooseSoldier ();
+        this.player.chosePiece ( soldier1 );
+        this.player.chosePiece ( soldier2 );
+        this.player.chosePiece ( soldier3 );
+
         Move move1 = new Builder ().ToRow ( 2 ).ToColumn ( 1 ).build ();
         Move move2 = new Builder ().ToRow ( 2 ).ToColumn ( 2 ).build ();
-        this.board.placePiece ( soldier1, move1 );
-        this.board.placePiece ( soldier2, move2 );
-        Face face = new GameFace ( board, player );
+        this.board.placePiece ( this.soldier1, move1 );
+        this.board.placePiece ( this.soldier2, move2 );
+        Face face = new GameFace ( board, player,team);
         //Act
         Move movement = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).ToRow ( 8 ).ToColumn ( 9 ).build ();
         try {
@@ -188,7 +193,7 @@ class GameFaceTest {
         } catch (CanNotMakeThatMoveException e) {
             //Assert
             Move move = new Builder ().fromRow ( 2 ).fromColumn ( 1 ).build ();
-            assertEquals ( soldier1, face.removePieceFromBoard ( move ) );
+            assertEquals ( soldier1, face.getPiece( move ) );
         }
 
     }
@@ -196,21 +201,24 @@ class GameFaceTest {
     @Test
     void test011PiecesCanAttackInGameFace () throws PlayerHas20PointsOnlyException {
         //Assemble
-        Player enemy = new Player ( "Anna", team2 );
-        Piece soldier1 = this.player.chooseSoldier ();
-        Piece soldier2 = enemy.chooseSoldier ();
+        this.player.chosePiece ( soldier1 );
+        this.player.chosePiece ( soldier2 );
+        this.player.chosePiece ( soldier3 );
+
+        PieceFactory enemy = new PieceFactory ( team2 );
+        Piece enemysoldier = enemy.createSoldier ();
         Move move1 = new Builder ().ToRow ( 9 ).ToColumn ( 1 ).build ();
         Move move2 = new Builder ().ToRow ( 10 ).ToColumn ( 2 ).build ();
         this.board.placePiece ( soldier1, move1 );
-        this.board.placePiece ( soldier2, move2 );
-        Face face = new GameFace ( board, player );
-        int life = soldier2.getLife ();
+        this.board.placePiece ( enemysoldier, move2 );
+        Face face = new GameFace ( board, player ,team);
+        int life = enemysoldier.getLife ();
         //Act
         Move movement = new Builder ().fromRow ( 9 ).fromColumn ( 1 ).ToRow ( 10 ).ToColumn ( 2 ).build ();
         face.playerAttacks ( movement );
         //Assert
         Move remove = new Builder ().fromRow ( 10 ).fromColumn ( 2 ).build ();
-        assertNotEquals ( life, face.removePieceFromBoard ( remove ).getLife () );
+        assertNotEquals ( life, board.removePiece ( remove ).getLife () );
     }
 
 

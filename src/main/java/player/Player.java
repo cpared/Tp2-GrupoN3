@@ -1,97 +1,99 @@
 package player;
 
+import Face.*;
 import board.Board;
 import move.Move;
-import piece.IAmDeadException;
 import piece.Piece;
-import piece.PieceFactory;
-
-import team.NoMembersLeftException;
+import team.PieceDoesNotBelongToTeamException;
 import team.Team;
 
-import java.util.Scanner;
-
 public class Player {
-    private String name;
+    private String name = "";
     private Team team;
-    private PieceFactory factory;
+    private Face face;
+    private Board board;
 
-    public Player ( String name, Team team ) {
+    public Player ( String name, Team team, Board board ) {
         this.name = name;
         this.team = team;
-        this.factory = new PieceFactory ( this.team );
+        this.board = board;
+        this.face = new InitialFace ( board, team );
     }
 
-    public void placePieceOnBoard ( Piece piece, Board board, Move move ) {
-        board.placePiece ( piece, move );
+    public void placePieceOnBoard ( Piece piece,  Move move ) {
+        //board.placePiece ( piece, move );
+        this.face.playerPlacesPieceOnBoard ( piece, move );
     }
 
-    public void movePiece ( Board board, Move move ) {
-        board.move ( move );
+    public void movePiece (  Move move ) {
+        this.face.playerMovesPieceOnBoard ( move );
     }
 
-    public void removePieceFromTeam () throws NoMembersLeftException {
-        try {
-            this.team.subtractPieceFromTeam ();
-        } catch (NoMembersLeftException e) {
-            throw e;
-        }
+    public Piece removePieceFromTeam ( Piece removablePiece ) {
+        if (removablePiece == null) return null;
+        return this.team.subtractPieceFromTeam ( removablePiece );
     }
 
-    public Piece chooseSoldier () throws PlayerHas20PointsOnlyException {
-        Piece soldier = this.factory.createSoldier ();
-        team.addPieceToTeam ();
-
-        return soldier;
-    }
-
-    public Piece chooseRider () throws PlayerHas20PointsOnlyException {
-        Piece rider = this.factory.createRider ();
-        team.addPieceToTeam ();
-
-        return rider;
-    }
-
-    public Piece chooseHealer () throws PlayerHas20PointsOnlyException {
-        Piece healer = this.factory.createHealer ();
-        team.addPieceToTeam ();
-
-        return healer;
-    }
-
-    public Piece chooseCatapult () throws PlayerHas20PointsOnlyException {
-        Piece catapult = this.factory.createCatapult ();
-        team.addPieceToTeam ();
-
-        return catapult;
+    public void chosePiece ( Piece chosenPiece ) throws PlayerHas20PointsOnlyException {
+        team.addPieceToTeam ( chosenPiece );
     }
 
     public boolean isNumberOfPiecesOnTeam ( int numberOfMembers ) {
         return this.team.isNumberOfMembersStillOnTeam ( numberOfMembers );
     }
 
-    public int numberOfPiecesOnTeam () {
-        return this.team.numberOfMembersStillOnTeam ();
-    }
-
     public boolean equals ( Player player ) {
         return this.name.equals ( player.name ) && this.team.equals ( player.team );
     }
 
-    public void chooseBattalion (Board board, Move move) {
-        board.createBattalion ( move );
+    public void chooseBattalion ( Move move ) {
+        this.face.playerChoosesBattalion ( move );
     }
 
-    public void attack (Board board, Move move) {
-        try {
-            board.attack ( move );
-        } catch (IAmDeadException e) {
-            this.removePieceFromTeam ();
-        }
+    public void attack ( Move move ) throws PieceDoesNotBelongToTeamException {
+        this.face.playerAttacks ( move );
+    }
+
+    public Piece playerChoosesSoldier () throws PlayerHas20PointsOnlyException {
+        Piece piece = this.face.playerChoosesSoldier ();
+        this.chosePiece ( piece );
+        return piece;
+    }
+
+    public Piece playerChoosesHealer () throws PlayerHas20PointsOnlyException {
+        Piece piece = this.face.playerChoosesHealer ();
+        this.chosePiece ( piece );
+        return piece;
+    }
+
+    public Piece playerChoosesRider () throws PlayerHas20PointsOnlyException {
+        Piece piece = this.face.playerChoosesRider ();
+        this.chosePiece ( piece );
+        return piece;
+    }
+
+    public Piece playerChoosesCatapult () throws PlayerHas20PointsOnlyException {
+        Piece piece = this.face.playerChoosesCatapult ();
+        this.chosePiece ( piece );
+        return piece;
+    }
+
+    public Piece removeDeadPieceFromBoard ( Move move ) throws PieceDoesNotBelongToTeamException {
+        Piece piece = this.face.removeDeadPieceFromBoard ( move );
+        return piece;
+    }
+
+    public void changeFace () {
+        if (this.isNumberOfPiecesOnTeam ( 0 )) throw new PlayerMustChooseAtLeastOnePieceToStartGameException ();
+        this.face = new GameFace ( this.board, this, team );
     }
 
     // This getter is only for testing, they dont belong in the model.
     public String name () {
         return this.name;
+    }
+
+    public int getPoints () {
+        return this.face.getPoints ();
     }
 }

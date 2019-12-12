@@ -1,55 +1,58 @@
 package piece;
 
 import board.Board;
+import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.DistanceAttack;
+import piece.battalion.BattalionComposite;
+import team.SameTeamException;
 import team.Team;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Catapult implements Piece {
-    private Team team;
-    private int cost = 5;
+    public Team team;
+    private int cost;
     private int life = 50;
     private int attackRange = 20;
     private DistanceAttack distanceAttack = new DistanceAttack(20);
-    private PieceDecorator decoration = null;
+    private boolean alive = true;
 
     public Catapult ( Team team ) {
         this.team = team;
+        this.cost = 5;
     }
 
-    @Override
-    public int getLife () {
-        return this.life;
-    }
-
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
 
     @Override
     public void move ( Board board , Move move) {
-        board.movePiece ( move );
+        throw new CanNotMakeThatMoveException();
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.getTeam() );
     }
-
 
     @Override
     public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life <= 0) throw new IAmDeadException();
+        if (this.life <= 0) alive = false;;
     }
 
     @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
-        if (attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.distanceAttack.attack(attackedPiece, this.attackRange);
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
+        if (this.isSameTeamAs ( attackedPieces.getKey() )) throw new SameTeamException ();
+        this.distanceAttack.attack(attackedPieces, this.attackRange);
+    }
+
+    public void attack(Set<Piece> pieces, Piece piece) {
+        if (this.isSameTeamAs ( piece )) throw new SameTeamException ();
+        for (Piece attackedPiece: pieces){
+            attackedPiece.receiveAttacked(20);
+        }
     }
 
     @Override
@@ -61,13 +64,35 @@ public class Catapult implements Piece {
     }
 
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
     }
 
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion(BattalionComposite battalion) {
+
     }
+
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return alive;
+    }
+
+    @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
+
+    @Override
+    public int getLife () {
+        return this.life;
+    }
+
 }

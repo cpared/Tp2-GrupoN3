@@ -1,50 +1,48 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.BodyAttack;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class Soldier implements Piece {
-    private Team team;
+    public Team team;
     private int cost = 1;
     private int life = 100;
     private int attackRange = 1;
-    private BodyAttack myAttack = new BodyAttack(10);
-    private PieceDecorator decoration = null;
-
+    private AttackState myAttack = new BodyAttack(10);
+    public BattalionComposite battalion = null;
+    private boolean alive = true;
     public Soldier ( Team team ) {
         this.team = team;
     }
 
-    //Método creado solamente para las pruebas
     @Override
-    public int getCost () {
-        return this.cost;
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
+        if(this.isSameTeamAs (attackedPieces.getKey())) throw new SameTeamException();
+        this.myAttack.attack(attackedPieces, this.attackRange);
     }
 
     @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
-        if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.myAttack.attack(attackedPiece, this.attackRange);
-    }
-
-    @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team == otherPiece.getTeam();
     }
 
     @Override
     public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life <= 0) throw new IAmDeadException();
+        if (this.life <= 0){
+            alive = false;
+        }
     }
 
+    @Override
     public void receiveHealed ( int heal ) {
         this.life += heal;
         if (this.life > 100) this.life = 100;
@@ -52,8 +50,8 @@ public class Soldier implements Piece {
 
     @Override
     public void move ( Board board , Move move) {
-        if (this.decoration == null) board.movePiece ( move );
-        else decoration.move ( board, move );
+        if (this.battalion == null) board.movePiece ( move );
+        else battalion.move ( board, move );
     }
 
     @Override
@@ -61,20 +59,30 @@ public class Soldier implements Piece {
         return this.cost == expectedCost;
     }
 
-
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+        this.battalion = battalion;
     }
-
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+        this.battalion = null;
     }
-
+    @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
+    }
     @Override
     public int getLife () {
         return this.life;
+    }
+    @Override
+    public boolean isAlive() {
+        return alive;
     }
 }

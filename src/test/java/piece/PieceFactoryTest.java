@@ -1,5 +1,6 @@
 package piece;
 
+import game.Game;
 import org.junit.jupiter.api.Test;
 import player.PlayerHas20PointsOnlyException;
 import team.Team;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PieceFactoryTest {
     //Assemble
-    private Team team = new Team (1);
+    private Team team = new Team (1, new Game ());
     private PieceFactory factory = new PieceFactory ( team );
 
     // verifies board creation.

@@ -1,65 +1,60 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
 import team.Team;
 
 import java.util.ArrayList;
 
 class SoldierTest {
+    Game game = new Game ();
+    private Team team = new Team ( 1,game );
 
     @Test
     void test00CreateSoldierWithATeamAndGetTheCorrectTeam () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
+        Piece piece = new Soldier ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( gold, soldier.getTeam () );
+        //Act & Assert
+        assertTrue ( this.team.equals ( piece.getTeam () ) );
 
     }
 
     @Test
     void test01CreateSoldierAndGetLifeIs100 () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
 
-        //Act
-
-        //Assert
-        assertEquals ( 100, soldier.getLife () );
+        Piece piece = new Soldier ( this.team );
+        //Act & Assert
+        assertEquals ( 100, piece.getLife () );
     }
 
     @Test
     void test02SoldierGetCostIs1 () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
+        Piece piece = new Soldier ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( 1, soldier.getCost () );
+        //Act & Assert
+        assertTrue ( piece.isCost ( 1 ) );
     }
 
     @Test
     void test03soldierReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Soldier soldier = new Soldier ( gold );
-        Soldier blueSoldier = new Soldier ( blue );
+        //Assemble
+
+        Team blue = new Team ( 2, new Game() );
+        Piece soldier = new Soldier ( this.team );
+        Piece blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack ( new ArrayList<>(), new Pair<>(soldier,1 ));
+        blueSoldier.attack ( new ArrayList<> (), new Pair<> ( soldier, 1 ) );
 
         //Assert
         assertEquals ( 90, soldier.getLife () );
@@ -67,29 +62,28 @@ class SoldierTest {
 
     @Test
     void test04SoldierReceiveDamageAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
+
+        Piece piece = new Soldier ( this.team );
 
         //Act
-        soldier.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
 
         //Assert
-        assertEquals ( 80, soldier.getLife () );
+        assertEquals ( 80, piece.getLife () );
     }
 
     @Test
     void test05SoldierReceiveDamageAndReduceHisLifeToCero () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
+
+        Piece piece = new Soldier ( this.team );
 
         //Act
-        try{
-            soldier.receiveAttacked ( 100 );
-        }
-        catch(IAmDeadException e){
-            assertEquals ( 0, soldier.getLife () );
+        try {
+            piece.receiveAttacked ( 100 );
+        } catch (IAmDeadException e) {
+            assertEquals ( 0, piece.getLife () );
         }
 
         //Assert
@@ -97,13 +91,13 @@ class SoldierTest {
 
     @Test
     void test06soldierReceiveDamageAndReduceHisLifeAndCantReduceMoreThanZero () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
+        //Assemble
+
+        Piece piece = new Soldier ( this.team );
 
         //Act
         try {
-            soldier.receiveAttacked(120);
+            piece.receiveAttacked ( 120 );
         }
         //Assert
         catch (IAmDeadException e) {
@@ -119,44 +113,44 @@ class SoldierTest {
 
     @Test
     void test10SoldierReceiveHealAndHisLifeUp () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
-        Healer healer = new Healer ( gold );
+        //Assemble
+
+        Piece piece = new Soldier ( this.team );
+        Piece healer = new Healer ( this.team );
 
         //Act
-        soldier.receiveAttacked ( 20 );
-        healer.attack( new ArrayList<>(), new Pair<>(soldier,1 ));
+        piece.receiveAttacked ( 20 );
+        healer.attack ( new ArrayList<> (), new Pair<> ( piece, 1 ) );
 
         //Assert
-        assertEquals ( 95, soldier.getLife () );
+        assertEquals ( 95, piece.getLife () );
     }
 
     @Test
     void test11soldierReceiveHealWithOutDamageAndHisLifeCantUp () {
-        //Assign
-        Team gold = new Team (1);
-        Soldier soldier = new Soldier ( gold );
-        Healer healer = new Healer ( gold );
+        //Assemble
+
+        Piece piece = new Soldier ( this.team );
+        Piece healer = new Healer ( this.team );
 
         //Act
-        healer.attack( new ArrayList<>(), new Pair<>(soldier,1 ));
+        healer.attack ( new ArrayList<> (), new Pair<> ( piece, 1 ) );
 
         //Assert
-        assertEquals ( 100, soldier.getLife () );
+        assertEquals ( 100, piece.getLife () );
     }
 
     @Test
     void test12soldierMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Soldier soldier = new Soldier ( gold );
-        Healer healer = new Healer ( blue );
+        //Assemble
+
+        Team blue = new Team ( 2 ,game);
+        Piece piece = new Soldier ( this.team );
+        Piece healer = new Healer ( blue );
 
         //Act - Assert
         try {
-            soldier.attack( new ArrayList<>(), new Pair<>(healer,1 ));
+            piece.attack ( new ArrayList<> (), new Pair<> ( healer, 1 ) );
         } catch (CanNotMakeThatMoveException e) {
             assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
         }

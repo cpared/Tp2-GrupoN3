@@ -1,38 +1,44 @@
 package team;
 
+import game.Ended;
+import game.Game;
 import piece.Piece;
 
 import java.util.ArrayList;
 
 public class Team {
-    private int pieces;
-    private int identifier;
-    private ArrayList<Piece> piece;
+    public int identifier;
+    private ArrayList<Piece> pieces;
+    private Game game;
 
-    public Team (int identifier) {
-        this.pieces = 0;
+    public Team (int identifier, Game game) {
         this.identifier = identifier;
-        this.piece = new ArrayList<Piece> ( );
+        this.pieces = new ArrayList<Piece> ( );
+        this.game = game;
     }
 
-    public void addPieceToTeam () {
-        this.pieces = this.pieces + 1;
+    public void addPieceToTeam (Piece newPiece) {
+        this.pieces.add ( newPiece );
     }
 
-    public void subtractPieceFromTeam () throws NoMembersLeftException{
-        if (this.pieces == 0){ throw new NoMembersLeftException (); }
-        else this.pieces = this.pieces - 1;
+    public Piece subtractPieceFromTeam (Piece removablePiece) throws  PieceDoesNotBelongToTeamException {
+        if (!this.pieces.contains ( removablePiece )) throw  new PieceDoesNotBelongToTeamException ();
+        int index = this.pieces.indexOf ( removablePiece );
+        Piece piece = this.pieces.remove ( index );
+        if (this.pieces.size ()  == 0) game.changeState ( new Ended () );
+        return piece;
     }
 
     public boolean isNumberOfMembersStillOnTeam ( int numberOfMembers ) {
-        return this.pieces == numberOfMembers;
-    }
-
-    public int numberOfMembersStillOnTeam ( ) {
-        return this.pieces;
+        return this.pieces.size () == numberOfMembers;
     }
 
     public boolean equals (Team team) {
-        return this.pieces == team.pieces && this.identifier == team.identifier;
+        return this.identifier == team.identifier;
     }
+
+    public void playerIsReadyToPlay() {
+        this.game.playerIsReadyToPlay ( game.getAvailablePlayer () );
+    }
+
 }

@@ -8,7 +8,7 @@ public class Move {
 
 
     public boolean isValidMove () {
-        return this.isForward () || this.isBackwards () || this.isLeft () || this.isRight () ;
+        return (this.isForward () || this.isBackwards () || this.isLeft () || this.isRight ()) && (Math.max(Math.abs(fromRow - toRow), Math.abs(fromColumn - toColumn)) <2) ;
     }
 
     private boolean isForward () {

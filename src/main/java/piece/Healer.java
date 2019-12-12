@@ -1,35 +1,26 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
 import javafx.util.Pair;
 import move.Move;
-import team.*;
+import piece.AttackState.Heal;
+import piece.battalion.BattalionComposite;
+import team.Team;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Healer implements Piece {
-    private Team team;
-    private int cost = 2;
+    public Team team;
+    private int cost;
     private int life = 75;
     private int healRange = 1;
-    private Heal heal = new Heal(15);
-    private PieceDecorator decoration = null;
-
+    private Heal heal = new Heal ( 15 );
+    private boolean alive = true;
     public Healer ( Team team ) {
         this.team = team;
+        this.cost = 2;
     }
 
-    @Override
-    public int getLife () {
-        return this.life;
-    }
-
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
 
     @Override
     public void receiveHealed ( int heal ) {
@@ -40,38 +31,57 @@ public class Healer implements Piece {
     @Override
     public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life <= 0) throw new IAmDeadException();
+        if (this.life <= 0) alive = false;;
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ) {
+        return this.team.equals ( otherPiece.getTeam() );
     }
 
     @Override
-    public void move ( Board board ,Move move ) {
+    public void move ( Board board, Move move ) {
         board.movePiece ( move );
     }
 
     @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece ) {
-        if(attackedPiece.getKey().getTeam() != this.team) throw new ThisPieceCantAttackException();
-        this.heal.heal(attackedPiece, this.healRange);
+    public void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces ) {
+        if (!this.isSameTeamAs ( attackedPieces.getKey () )) throw new ThisPieceCantAttackException ();
+        this.heal.attack ( attackedPieces, this.healRange );
     }
 
     @Override
-    public boolean isCost (int expectedCost) {
+    public boolean isCost ( int expectedCost ) {
         return this.cost == expectedCost;
     }
 
+
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
     }
 
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public boolean isAlive() {
+        return alive;
+    }
+
+    @Override
+    public int getLife () {
+        return this.life;
     }
 }

@@ -2,16 +2,15 @@ package game;
 
 import board.Board;
 import move.Move;
-import piece.NullPiece;
 import piece.Piece;
 import player.Player;
-import player.ThereAreOnlyTwoPlayersPerGameException;
+import team.Team;
 
 public class Ended implements GameState {
 
     @Override
-    public Player newPlayer ( String name ) {
-       throw new ThereAreOnlyTwoPlayersPerGameException ();
+    public Player newPlayer ( String name , Team team) {
+       throw new GameHasEndedException ();
     }
 
     @Override
@@ -70,4 +69,20 @@ public class Ended implements GameState {
         throw new GameHasEndedException ();
     }
 
+
+    // This getter is only for views,
+    @Override
+    public int getPoints (Player player){
+        return 0;
+    }
+
+    @Override
+    public Piece getPieceOnCell (int row, int column) {
+        throw new GameHasEndedException ();
+    }
+
+    @Override
+    public void penalizePieces() {
+        throw new GameHasEndedException ();
+    }
 }

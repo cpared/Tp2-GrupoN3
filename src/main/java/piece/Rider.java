@@ -1,61 +1,57 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
+import criteria.Criteria;
 import criteria.SoldierCriteria;
 import javafx.util.Pair;
 import move.Move;
+import piece.AttackState.AttackState;
+import piece.AttackState.BodyAttack;
+import piece.AttackState.DistanceAttack;
+import piece.battalion.BattalionComposite;
 import team.*;
 
 import java.util.ArrayList;
 
 public class Rider implements Piece {
-    private Team team;
-    private int cost = 3;
+    public Team team;
+    private int cost ;
     private int life = 100;
     private int attackRange;
-    private AttackStrategy riderAttack;
-    private PieceDecorator decoration = null;
+    private AttackState riderAttack;
+    private boolean alive = true;
+    private Criteria attackCriteria= new SoldierCriteria();
+
 
     public Rider ( Team team ) {
         this.team = team;
+        this.cost = 3;
     }
 
     @Override
-    public int getLife () {
-        return this.life;
-    }
-
-    @Override
-    public int getCost () {
-        return this.cost;
-    }
-
-    @Override
-    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece) {
+    public void attack (ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPieces) {
         this.setMyAttack(adjacentPieces);
-        if(attackedPiece.getKey().getTeam() == this.team) throw new SameTeamException();
-        this.riderAttack.attack(attackedPiece, this.attackRange);
+        if(this.isSameTeamAs (attackedPieces.getKey())) throw new SameTeamException();
+        this.riderAttack.attack(attackedPieces, this.attackRange);
     }
 
     private void setMyAttack(ArrayList<Piece> adjacentPieces){
-        SoldierCriteria soldierCriteria = new SoldierCriteria();
         ArrayList<Piece> allyPieces = new ArrayList<Piece>();
         ArrayList<Piece> enemyPieces = new ArrayList<Piece>();
         adjacentPieces.forEach(piece ->{
-            if(piece.getTeam() == this.team) allyPieces.add(piece);
+            if(this.isSameTeamAs ( piece )) allyPieces.add(piece);
             else{
                 enemyPieces.add(piece);
             }
         });
 
-        if (soldierCriteria.criteria(allyPieces).size() != 0 || enemyPieces.size() == 0){
-            this.riderAttack = new DistanceAttack(15);
-            this.attackRange = 2;
+        if (this.attackCriteria.criteria(allyPieces).size() != 0 || enemyPieces.size() == 0){
+            this.riderAttack = new DistanceAttack (15);
+            this.attackRange = 8;
 
         }
         else{
-            this.riderAttack = new BodyAttack(5);
+            this.riderAttack = new BodyAttack (5);
             this.attackRange = 1;
         }
     }
@@ -63,7 +59,7 @@ public class Rider implements Piece {
     @Override
     public void receiveAttacked ( int damage ) {
         this.life -= damage;
-        if (this.life <= 0) throw new IAmDeadException();
+        if (this.life <= 0) alive = false;;
     }
 
     @Override
@@ -73,8 +69,8 @@ public class Rider implements Piece {
     }
 
     @Override
-    public Team getTeam () {
-        return this.team;
+    public boolean isSameTeamAs ( Piece otherPiece ){
+        return this.team.equals ( otherPiece.getTeam() );
     }
 
     @Override
@@ -89,13 +85,32 @@ public class Rider implements Piece {
     }
 
     @Override
-    public void decorate (PieceDecorator decorator){
-        this. decoration = decorator;
+    public void formPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void notFormPartOfBattalion ( BattalionComposite battalion){
+
+    }
+    @Override
+    public void penalize(Team team) {
+        if (!this.team.equals(team)){
+            life -= life * 0.05;        }
+    }
+    // These getters are for testing only.
+    @Override
+    public Team getTeam(){
+        return this.team;
     }
 
     @Override
-    public PieceDecorator undecorate (PieceDecorator decorator) {
-        this.decoration = null;
-        return decorator;
+    public boolean isAlive() {
+        return alive;
     }
+
+    @Override
+    public int getLife () {
+        return this.life;
+    }
+
 }

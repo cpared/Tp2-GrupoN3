@@ -1,128 +1,109 @@
 package piece;
 
 import board.CanNotMakeThatMoveException;
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.fail;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CatapultTest {
+    Game game = new Game ();
+    private Team team = new Team (1,game);
 
     @Test
     void test00CreateCatapultWithATeamAndGetTheCorrectTeam () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( gold, catapult.getTeam () );
+        //Assemble
+        Catapult piece = new Catapult ( this.team );
+        //Act & Assert
+        assertTrue ( this.team.equals ( piece.team ) );
 
     }
 
     @Test
     void test01CreateCatapultAndGetLifeIs50 () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-
-        //Act
-
-        //Assert
-        assertEquals ( 50, catapult.getLife () );
+        //Assemble
+        Catapult piece = new Catapult ( this.team );
+        //Act & Assert
+        assertEquals ( 50, piece.getLife () );
     }
 
     @Test
     void test02CatapultGetCostIs1 () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece piece = new Catapult ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( 5, catapult.getCost () );
+        //Act & Assert
+        assertTrue ( piece.isCost ( 5 ) );
     }
 
     @Test
     void test03CatapultReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Catapult catapult = new Catapult ( gold );
-        Soldier blueSoldier = new Soldier ( blue );
+        //Assemble
+        Team blue = new Team (2, new Game());
+        Piece piece = new Catapult ( this.team );
+        Piece blueSoldier = new Soldier ( blue );
 
         //Act
-        blueSoldier.attack ( new ArrayList<>(), new Pair<>(catapult,1 ) );
+        blueSoldier.attack ( new ArrayList<>(), new Pair<>(piece,1 ) );
 
         //Assert
-        assertEquals ( 40, catapult.getLife () );
+        assertEquals ( 40, piece.getLife () );
     }
 
     @Test
     void test04CatapultReceiveDamageAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece piece = new Catapult ( this.team );
 
         //Act
-        catapult.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
 
         //Assert
-        assertEquals ( 30, catapult.getLife () );
+        assertEquals ( 30, piece.getLife () );
     }
 
     @Test
     void test05CatapultReceiveDamageAndReduceHisLifeToCero () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece piece = new Catapult ( this.team );
 
         //Act
         try{
-            catapult.receiveAttacked ( 50 );
+            piece.receiveAttacked ( 50 );
         }
         catch(IAmDeadException e){
-            assertEquals ( 0, catapult.getLife () );
+            assertEquals ( 0, piece.getLife () );
         }
     }
 
     @Test
     void test06CatapultReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
+        //Assemble
+        Piece piece = new Catapult ( this.team );
 
-        //Act
-        try{
-            catapult.receiveAttacked ( 120 );
-            fail();
-        }
-        catch(IAmDeadException e){
-            assert true;
-        }
+    //Act
+        piece.receiveAttacked ( 120 );
+        assertFalse(piece.isAlive());
     }
 
 
 
     @Test
     void test07CatapultReceiveHealAndRaiseAndError () {
-        //Assign
-        Team gold = new Team (1);
-        Catapult catapult = new Catapult ( gold );
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Catapult ( this.team );
+        Piece healer = new Healer ( this.team );
 
         //Act
-        catapult.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
         try {
-            healer.attack ( new ArrayList<>(), new Pair<>(catapult,1 ) );
+            healer.attack ( new ArrayList<>(), new Pair<>(piece,1 ) );
         } catch (CanNotMakeThatMoveException e) {
             assertThat ( e.getMessage (), containsString ( "Piece cannot move in that direction" ) );
         }
@@ -130,14 +111,13 @@ class CatapultTest {
 
     @Test
     void test08CatapultMakeDistanceAttackAndTheOtherPieceReceiveDamage () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Catapult catapult = new Catapult ( gold );
-        Healer healer = new Healer ( blue );
+        //Assemble
+        Team blue = new Team (2,game);
+        Piece piece = new Catapult ( this.team );
+        Piece healer = new Healer ( blue );
 
         //Act
-        catapult.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
+        piece.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
 
         //Assert
         assertEquals ( 55, healer.getLife () );

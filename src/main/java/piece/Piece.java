@@ -1,38 +1,43 @@
 package piece;
 
 import board.Board;
-import board.CanNotMakeThatMoveException;
+import game.Game;
 import javafx.util.Pair;
 import move.Move;
-import team.*;
+import piece.battalion.BattalionComposite;
+import team.Team;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface Piece {
-    Team team = null;
+    Team team = new Team ( 5000 , new Game ());
     int life = 0;
     int cost = 0;
-    PieceDecorator decoration = null;
+    BattalionComposite battalion = null;
 
-    Team getTeam ();
+    boolean isSameTeamAs ( Piece otherPiece );
 
-    void move ( Board board ,Move move );
-
-    int getLife ();
+    void move ( Board board, Move move );
 
     void receiveHealed ( int heal );
 
-    void attack(ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece);
+    void attack ( ArrayList<Piece> adjacentPieces, Pair<Piece, Integer> attackedPiece );
 
-    void receiveAttacked(int damage);
+    void receiveAttacked ( int damage );
 
-    int getCost ();
+    boolean isCost ( int expectedCost );
 
-    boolean isCost (int expectedCost);
+    void formPartOfBattalion ( BattalionComposite battalion);
 
-    void decorate (PieceDecorator decorator);
+    void notFormPartOfBattalion ( BattalionComposite battalion);
 
-    PieceDecorator undecorate (PieceDecorator decorator);
+    // These getters are for testing only.
+    int getLife ();
+
+    Team getTeam();
+
+    boolean isAlive();
+
+    void penalize(Team team);
 }
 

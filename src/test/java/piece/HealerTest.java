@@ -1,5 +1,6 @@
 package piece;
 
+import game.Game;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import team.Team;
@@ -7,56 +8,48 @@ import team.Team;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HealerTest {
+    Game game =  new Game ();
+    Team team = new Team ( 1 ,game);
 
     @Test
     void test00CreateHealerWithATeamAndGetTheCorrectTeam () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( gold, healer.getTeam () );
-
+        //Act & Assert
+        assertTrue ( this.team.equals ( piece.getTeam () ) );
     }
 
     @Test
     void test01CreateHealerAndGetLifeIs75 () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( 75, healer.getLife () );
+        //Act & Assert
+        assertEquals ( 75, piece.getLife () );
     }
 
     @Test
     void test02HealerGetCostIs2 () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
-        //Act
-
-        //Assert
-        assertEquals ( 2, healer.getCost () );
+        //Act & Assert
+        assertTrue ( piece.isCost ( 2 ) );
     }
 
     @Test
     void test03HealerReceiveDamageFromAnotherTeamPieceAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Team blue = new Team (2);
-        Healer healer = new Healer ( gold );
-        Soldier blueSoldier = new Soldier ( blue );
+        //Assemble
+        Team team2 = new Team ( 2 , game);
+        Piece healer = new Healer ( this.team );
+        Piece soldier = new Soldier ( team2 );
 
         //Act
-        blueSoldier.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
+        soldier.attack ( new ArrayList<> (), new Pair<> ( healer, 1 ) );
 
         //Assert
         assertEquals ( 65, healer.getLife () );
@@ -64,44 +57,39 @@ class HealerTest {
 
     @Test
     void test04HealerReceiveDamageAndReduceHisLife () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
         //Act
-        healer.receiveAttacked ( 20 );
+        piece.receiveAttacked ( 20 );
 
         //Assert
-        assertEquals ( 55, healer.getLife () );
+        assertEquals ( 55, piece.getLife () );
     }
 
     @Test
     void test05HealerReceiveDamageAndReduceHisLifeToCero () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
         //Act
         try {
-            healer.receiveAttacked(75);
-        }
-        catch (IAmDeadException e){
-            assertEquals ( 0, healer.getLife () );
+            piece.receiveAttacked ( 75 );
+        } catch (IAmDeadException e) {
+            assertEquals ( 0, piece.getLife () );
         }
         //Assert
     }
 
     @Test
     void test06HealerReceiveDamageAndReduceHisLifeAndCantReduceMoreThanCero () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
         //Act
         try {
-            healer.receiveAttacked ( 120 );
-        }
-        catch (IAmDeadException e){
+            piece.receiveAttacked ( 120 );
+        } catch (IAmDeadException e) {
             assert true;
         }
     }
@@ -109,29 +97,27 @@ class HealerTest {
 
     @Test
     void test10HealerReceiveHealAndHisLifeUp () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
         //Act
-        healer.receiveAttacked ( 20 );
-        healer.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
+        piece.receiveAttacked ( 20 );
+        piece.attack ( new ArrayList<> (), new Pair<> ( piece, 1 ) );
 
         //Assert
-        assertEquals ( 70, healer.getLife () );
+        assertEquals ( 70, piece.getLife () );
     }
 
     @Test
     void test11HealerReceiveHealWithOutDamageAndHisLifeCantUp () {
-        //Assign
-        Team gold = new Team (1);
-        Healer healer = new Healer ( gold );
+        //Assemble
+        Piece piece = new Healer ( this.team );
 
         //Act
-        healer.attack ( new ArrayList<>(), new Pair<>(healer,1 ) );
+        piece.attack ( new ArrayList<> (), new Pair<> ( piece, 1 ) );
 
         //Assert
-        assertEquals ( 75, healer.getLife () );
+        assertEquals ( 75, piece.getLife () );
     }
 
 }

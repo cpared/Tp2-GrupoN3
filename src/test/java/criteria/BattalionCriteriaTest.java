@@ -1,5 +1,6 @@
 package criteria;
 
+import game.Game;
 import org.junit.jupiter.api.Test;
 import piece.Piece;
 import piece.PieceFactory;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BattalionCriteriaTest {
     // Assemble
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
-    private PieceFactory factory = new PieceFactory ( new Team (1) );
+    private PieceFactory factory = new PieceFactory ( new Team (1, new Game ()) );
     private Piece soldier1 = factory.createSoldier ();
     private Piece soldier2 = factory.createSoldier ();
     private Piece soldier3 = factory.createSoldier ();
