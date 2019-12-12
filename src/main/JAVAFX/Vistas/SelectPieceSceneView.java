@@ -6,6 +6,8 @@ import HaganmeElFavorDeNoBorrarLoQueNoCodean.PiecesGridPane;
 import HaganmeElFavorDeNoBorrarLoQueNoCodean.Turn;
 import boardFx.ButtonCell;
 import boardFx.ButtonPiece;
+import Vistas.PieceInformationDuringGame.DefaultPieceView;
+import Vistas.PieceInformationDuringGame.InformationDuringGameController;
 import game.Game;
 import game.GameHasEndedException;
 import javafx.application.Application;
@@ -27,7 +29,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
@@ -50,10 +51,10 @@ public class SelectPieceSceneView {
     private Stage stage;
     private Application app;
     private Background background = new AlgoChessBackground ( "Image/scene00background.jpg" ).createBackground ();
-    private  MediaPlayer mediaPlayer;
-    private  MediaPlayer soundEffects;
-    private Label label1 = new Label();
-    private Label label2 = new Label();
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer soundEffects;
+    private Label label1 = new Label ();
+    private Label label2 = new Label ();
 
     public SelectPieceSceneView ( Application game, MediaPlayer mediaPlayer ) {
         this.app = game;
@@ -83,7 +84,7 @@ public class SelectPieceSceneView {
                 game.playerIsReadyToPlay ( game.getPlayer2 () );
                 String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
                 Media media = new Media ( new File ( path ).toURI ().toString () );
-                mediaPlayer = new MediaPlayer( media );
+                mediaPlayer = new MediaPlayer ( media );
                 mediaPlayer.play ();
             }
         } );
@@ -101,9 +102,9 @@ public class SelectPieceSceneView {
         start.setMinWidth ( 150 );
         start.setMinHeight ( 40 );
 
-        HBox topContainer = new HBox(start);
-        topContainer.setMinHeight(100);
-        topContainer.getStyleClass().add("hbox");
+        HBox topContainer = new HBox ( start );
+        topContainer.setMinHeight ( 100 );
+        topContainer.getStyleClass ().add ( "hbox" );
 
         //Button stop
         Button stopButton = new Button ();
@@ -116,7 +117,7 @@ public class SelectPieceSceneView {
                 stopButton.getStyleClass ().add ( "buttonStop" );
                 //view.setFitHeight ( 10 );
                 //view.setFitWidth ( 10 );
-                stopButton.setGraphic (view  );
+                stopButton.setGraphic ( view );
 
             }
         } );
@@ -139,33 +140,11 @@ public class SelectPieceSceneView {
         board.getStyleClass ().add ( "board" );
         setBoardCellAction ( board, this );
 
-        //Circle
-        Circle playerOneBoard = new Circle(10);
-        Circle playerTwoBoard = new Circle(10);
-        playerOneBoard.setStyle("-fx-fill: #1a7749;");
-        playerTwoBoard.setStyle("-fx-fill: #8f9779;");
-
-        Label labelOne = new Label("Player One");
-        Label labelTwo = new Label("Player Two");
-        labelOne.setPadding(new Insets(5));
-        labelTwo.setPadding(new Insets(5));
-        labelOne.getStyleClass().add("textStyle");
-        labelTwo.getStyleClass().add("textStyle");
-
-        Region leftRegion = new Region();
-        HBox.setHgrow(leftRegion, Priority.ALWAYS);
-
-        Region rightRegion = new Region();
-        HBox.setHgrow(rightRegion, Priority.ALWAYS);
-
-        HBox playerOneInfo = new HBox(playerOneBoard,leftRegion, labelOne, rightRegion);
-        HBox playerTwoInfo = new HBox(playerTwoBoard,leftRegion, labelTwo, rightRegion);
-
         //Left toolbar
-        VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ), playerOneInfo, playerTwoInfo );
+        VBox vertical = new VBox ( this.turn.getCurrentPlayersName (), this.turn.getCurrentPlayersPoints (), new PiecesGridPane ( choosePieceButton, this, turn ) );
         vertical.setAlignment ( Pos.CENTER );
         vertical.setSpacing ( 40 );
-        vertical.getStyleClass().add("piecesGrid");
+        vertical.getStyleClass ().add ( "piecesGrid" );
 
         borderPane.setLeft ( vertical );
         //BorderPane.setAlignment ( start, Pos.BOTTOM_CENTER );
@@ -204,21 +183,20 @@ public class SelectPieceSceneView {
         }
     }
 
-    private void setButtonCellAction ( ButtonCell button , SelectPieceSceneView view) {
+    private void setButtonCellAction ( ButtonCell button, SelectPieceSceneView view ) {
         button.setOnMouseClicked ( new EventHandler<MouseEvent> () {
             @Override
             public void handle ( MouseEvent event ) {
                 if (!(lastChosen == null)) {
                     Player currentPlayer = game.getAvailablePlayer ();
                     try {
-                        System.out.println ( "puso pieza tablero" );
                         Piece piece = lastChosen.choosePiece ( game, currentPlayer );
                         Pair<Integer, Integer> pair = button.getPosition ();
                         game.playerPlacesPieceOnBoard ( currentPlayer, piece, pair.getKey (), pair.getValue () );
                         button.getStyleClass ().add ( lastChosen.getString ( game, game.getAvailablePlayer () ) );
                         lastChosen = null;
                         playerPoints = turn.getCurrentPlayersPoints ();
-                        player = turn.getCurrentPlayersName ();
+                        HBox playerInfo = turn.getCurrentPlayersName ();
                         turn.changeTurn ();
 
                         String path = "src/main/JAVAFX/SoundEffects/placePiece.mp3";
@@ -227,11 +205,10 @@ public class SelectPieceSceneView {
                         mediaPlayer.play ();
 
 
-
-                        VBox vertical = new VBox (player, playerPoints, new PiecesGridPane ( choosePieceButton, view, turn ) );
+                        VBox vertical = new VBox ( playerInfo, playerPoints, new PiecesGridPane ( choosePieceButton, view, turn ) );
                         vertical.setAlignment ( Pos.CENTER );
                         vertical.setSpacing ( 40 );
-                        vertical.getStyleClass().add("piecesGrid");
+                        vertical.getStyleClass ().add ( "piecesGrid" );
                         borderpane.setLeft ( vertical );
 
                     } catch (GameHasEndedException i) {
@@ -244,31 +221,31 @@ public class SelectPieceSceneView {
         } );
     }
 
-    private GridPane makeGridPane() {
+    private GridPane makeGridPane () {
         String left = "-fx-background-color: #1a7749; -fx-border-color: black; -fx-border-width: 1px;";
         String right = "-fx-background-color: #8f9779; -fx-border-color: black; -fx-border-width: 1px;";
 
 
         String actual = left;
-        AlgoGrid gridPane = new AlgoGrid();
-        for (int i = 0 ; i< 20;i++) {
-            if (i == 10){
+        AlgoGrid gridPane = new AlgoGrid ();
+        for (int i = 0; i < 20; i++) {
+            if (i == 10) {
                 actual = right;
             }
             for (int j = 0; j < 20; j++) {
                 ButtonCell button = new ButtonCell ( null, actual, i, j );
                 //button.setPrefSize ( 30, 30 );
-                button.setMinSize(41,41);
-                button.setMaxSize(41,41);
+                button.setMinSize ( 41, 41 );
+                button.setMaxSize ( 41, 41 );
                 //button.setOnKeyPressed ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 //button.setOnMouseClicked ( new BoardPositionHasBeenChosenInInitialFaceEventHandler ( null, this, button) );
                 gridPane.add ( button, i, j );
             }
         }
-        gridPane.setHgap(1);
-        gridPane.setVgap(1);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap ( 1 );
+        gridPane.setVgap ( 1 );
+        gridPane.setPadding ( new Insets ( 20, 20, 20, 20 ) );
+        gridPane.setAlignment ( Pos.CENTER );
         return gridPane;
     }
 
@@ -277,36 +254,37 @@ public class SelectPieceSceneView {
         final ToggleGroup group = new ToggleGroup ();
         ToggleButton moveButton = new ToggleButton ( "Move" );
         moveButton.setToggleGroup ( group );
-        moveButton.getStyleClass().add("button-choose");
-        //movePiece.setSelected ( true );
+        moveButton.getStyleClass ().add ( "button-choose" );
         moveButton.setPadding ( new Insets ( 0, 0, 0, 1100 ) );
 
         ToggleButton attackButton = new ToggleButton ( "Attack" );
         attackButton.setToggleGroup ( group );
-        attackButton.getStyleClass().add("button-choose");
+        attackButton.getStyleClass ().add ( "button-choose" );
         attackButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
-                @Override
-                public void handle ( MouseEvent mouseEvent ) {
-                    attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
-                    moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+                                             @Override
+                                             public void handle ( MouseEvent mouseEvent ) {
+                                                 attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
+                                                 moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+                                                 moveButton.prefWidthProperty ().bind ( borderPane.widthProperty ().divide ( 12 ) );
+                                                 attackButton.prefWidthProperty ().bind ( borderPane.widthProperty ().divide ( 12 ) );
 
-                }
-            }
+                                             }
+                                         }
         );
 
         moveButton.setOnMouseClicked ( new EventHandler<MouseEvent> () {
-              @Override
-              public void handle ( MouseEvent mouseEvent ) {
-                  moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
-                  attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+                                           @Override
+                                           public void handle ( MouseEvent mouseEvent ) {
+                                               moveButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30; -fx-text-fill: green;" );
+                                               attackButton.setStyle ( "-fx-opacity: 1.5;-fx-font-size:30;-fx-text-fill: white;" );
+                                               moveButton.prefWidthProperty ().bind ( borderPane.widthProperty ().divide ( 12 ) );
+                                               attackButton.prefWidthProperty ().bind ( borderPane.widthProperty ().divide ( 12 ) );
 
-              }
-          }
+                                           }
+                                       }
         );
 
-
         SceneToAttack ( this.game, grid, moveButton, attackButton, borderPane );
-        //nope.setOnAction ( new ButtonsThatChangeScenesEventHandler ( stage, this.scene03Game ( stage ) ) );
 
         return new Pair<ToggleButton, ToggleButton> ( moveButton, attackButton );
     }
@@ -320,110 +298,94 @@ public class SelectPieceSceneView {
 
         for (Node each : board.getChildren ()) {
             each.setOnMouseClicked ( new EventHandler<MouseEvent> () {
-                 @Override
-                 public void handle ( MouseEvent mouseEvent ) {
-                     ButtonCell button = (ButtonCell) each;
-                     if (pair == null && !(button.emptyImage ())) {
-                         pair = button.getPosition ();
-                         lastButton = button;
-                     } else if (pair != null) {
-                         Pair<Integer, Integer> newPair = button.getPosition ();
-                         try {
-                             privateMethod ( newPair, game.getAvailablePlayer (), button );
-                             lastButton = null;
-                             pair = null;
-                         } catch (GameHasEndedException e) {
-                             String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
-                             Media media = new Media ( new File ( path ).toURI ().toString () );
-                             MediaPlayer mp = new MediaPlayer ( media );
-                             mp.play ();
-                             sceneFinal ( game.getAvailablePlayer (), border );
-                         } catch (Exception i) {
-                             System.out.println ( i );
-                             lastButton = null;
-                             pair = null;
-                         }
-                     }
-                 }
-                 private void attackSound () {
-                     String path = "src/main/JAVAFX/SoundEffects/punch.mp3";
-                     Media media = new Media ( new File ( path ).toURI ().toString () );
-                     soundEffects = new MediaPlayer ( media );
-                     soundEffects.play ();
-                 }
+                                         @Override
+                                         public void handle ( MouseEvent mouseEvent ) {
+                                             ButtonCell button = (ButtonCell) each;
+                                             if (pair == null && !(button.emptyImage ())) {
+                                                 System.out.println ( "se toco una sola vez" );
+                                                 pair = button.getPosition ();
+                                                 InformationDuringGameController control = new InformationDuringGameController ( button, turn, moveButton, attackButton, game, pair, label1, label2 );
+                                                 VBox vertical = control.createPieceView ();
+                                                 borderpane.setLeft ( vertical );
+                                                 BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
 
-                private void moveSound () {
-                    String path = "src/main/JAVAFX/SoundEffects/walking.mp3";
-                    Media media = new Media ( new File ( path ).toURI ().toString () );
-                    soundEffects = new MediaPlayer ( media );
-                    soundEffects.play ();
-                }
+                                                 lastButton = button;
+                                             } else if (pair != null) {
+                                                 Pair<Integer, Integer> newPair = button.getPosition ();
+                                                 try {
 
-                 private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button ) {
-                     if (moveButton.isSelected ()) {
-                         game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
-                         player = turn.getCurrentPlayersName ();
-                         this.moveSound ();
-                         turn.changeTurn ();
+                                                     privateMethod ( newPair, game.getAvailablePlayer (), button, label1, label2 );
+                                                     lastButton = null;
+                                                     pair = null;
+                                                 } catch (GameHasEndedException e) {
+                                                     String path = "src/main/JAVAFX/SoundEffects/readytoplay.mp3";
+                                                     Media media = new Media ( new File ( path ).toURI ().toString () );
+                                                     MediaPlayer mp = new MediaPlayer ( media );
+                                                     mp.play ();
+                                                     sceneFinal ( game.getAvailablePlayer (), border );
+                                                 } catch (Exception i) {
+                                                     System.out.println ( i );
+                                                     lastButton = null;
+                                                     pair = null;
+                                                 }
+                                             }
+                                         }
 
-                         moveButton.getStyleClass ().add ( "button-choose" );
-                         attackButton.getStyleClass ().add ( "button-choose" );
+                                         private void attackSound () {
+                                             String path = "src/main/JAVAFX/SoundEffects/punch.mp3";
+                                             Media media = new Media ( new File ( path ).toURI ().toString () );
+                                             soundEffects = new MediaPlayer ( media );
+                                             soundEffects.play ();
+                                         }
 
-                         VBox vertical = new VBox (player, moveButton, attackButton, label1, label2 );
-                         vertical.setAlignment ( Pos.CENTER );
-                         vertical.setSpacing ( 40 );
-                         vertical.getStyleClass().add("piecesGrid");
-                         borderpane.setLeft ( vertical);
-                         BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
+                                         private void moveSound () {
+                                             String path = "src/main/JAVAFX/SoundEffects/walking.mp3";
+                                             Media media = new Media ( new File ( path ).toURI ().toString () );
+                                             soundEffects = new MediaPlayer ( media );
+                                             soundEffects.play ();
+                                         }
 
-                         button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
-                         changeLabelMove(pair,newPair);
-                     }
-                     if (attackButton.isSelected ()) {
-                         game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
-                         player = turn.getCurrentPlayersName ();
-                         this.attackSound ();
-                         turn.changeTurn ();
-                         moveButton.getStyleClass ().add ( "button-choose" );
-                         attackButton.getStyleClass ().add ( "button-choose" );
+                                         private void privateMethod ( Pair<Integer, Integer> newPair, Player currentPlayer, ButtonCell button, Label first, Label second ) {
+                                             if (moveButton.isSelected ()) {
+                                                 game.playerMovesPieceOnBoard ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 turn.changeTurn ();
+                                                 this.moveSound ();
+                                                 button.getStyleClass ().add ( lastButton.getStyleClass ().remove ( 1 ) );
+                                                 changeLabelMove ( first, second, pair, newPair );
+                                             }
+                                             if (attackButton.isSelected ()) {
+                                                 game.playerAttacks ( currentPlayer, pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
+                                                 turn.changeTurn ();
+                                                 this.attackSound ();
 
-                         VBox vertical = new VBox (player, moveButton, attackButton, label1, label2 );
-                         vertical.setAlignment ( Pos.CENTER );
-                         vertical.setSpacing ( 40 );
-                         vertical.getStyleClass().add("piecesGrid");
-                         borderpane.setLeft ( vertical);
-                         BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
-                         changeLabelAttack(pair,newPair);
-                         if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () )) {
-                             changeLabelPieceDied(newPair);
-                             button.getStyleClass().remove(1);
-                         }
+                                                 if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () )) {
+                                                     changeLabelPieceDied ( first, second, newPair );
+                                                     button.getStyleClass ().remove ( 1 );
+                                                 }
 
-                     }
-                 }
-             }
+                                             }
+                                             VBox vertical = new DefaultPieceView ( turn, first, second );
+                                             BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
+                                             borderpane.setLeft ( vertical );
+                                         }
+                                     }
             );
         }
     }
 
 
     private void changeScene ( GridPane board, BorderPane borderPane ) {
-        // borderPane.setLeft(null);
         borderPane.setTop ( null );
         borderPane.setBottom ( null );
         Pair<ToggleButton, ToggleButton> pair = setGameStage ( board, borderPane );
 
-
         //Left
-        Label name = turn.getCurrentPlayersName ();
-        name.getStyleClass ().add ( "textStyle" );
-        Label piece = new Label ( "Choose a Piece" );
-        piece.getStyleClass ().add ( "textStyle" );
-
+        /*
         ToggleButton move = pair.getValue ();
         move.getStyleClass ().add ( "button-choose" );
-        ToggleButton attack =   pair.getKey ();attack.getStyleClass ().add ( "button-choose" );
-
+        ToggleButton attack =   pair.getKey ();
+        attack.getStyleClass ().add ( "button-choose" );
+        */
         /*
         Scrollbar barraTemp = new Scrollbar(Scrollbar.HORIZONTAL, 0, 10, -50, 160);
         Frame frameTemp = new Frame("Error"); //creamos el marco
@@ -436,15 +398,8 @@ public class SelectPieceSceneView {
         */
 
         //Adding the components to the bar
-        VBox vertical = new VBox (name, piece, move,attack);
-        //VBox vertical = new VBox (name, piece);
-        vertical.getStyleClass().add("piecesGrid");
-        vertical.setAlignment ( Pos.TOP_CENTER );
-        vertical.setSpacing ( 40 );
-        BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
+        VBox vertical = new DefaultPieceView ( turn, new Label(), new Label ( ) );
         borderPane.setLeft ( vertical );
-        //BorderPane.setAlignment ( vertical, Pos.CENTER );
-
     }
 
 
@@ -476,7 +431,7 @@ public class SelectPieceSceneView {
         // Play again button.
         Button playAgain = new Button ( "New Game" );
         playAgain.getStyleClass ().add ( "button-choose" );
-        playAgain.setOnAction ( new NewGameButtonEventHandler (this.app, exit) );
+        playAgain.setOnAction ( new NewGameButtonEventHandler ( this.app, exit ) );
 
         // Horizontal box containing exit & playAgain
         HBox horizontalEndButtons = new HBox ( exit, playAgain );
@@ -494,7 +449,6 @@ public class SelectPieceSceneView {
         contrast.prefHeightProperty ().bind ( contrast.widthProperty ().divide ( 6 ) );
 
 
-
         // Vertical Box
         VBox vertical = new VBox ( gameOverView, contrast );
         vertical.setSpacing ( 100 );
@@ -508,20 +462,23 @@ public class SelectPieceSceneView {
     }
 
     public static class CloseListener extends WindowAdapter {
-        public void windowClosing( WindowEvent e) {
-            e.getWindow().setVisible(false);
+        public void windowClosing ( WindowEvent e ) {
+            e.getWindow ().setVisible ( false );
         }
     }
-    private void changeLabelMove(Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
-        label1.setText(label2.getText());
-        label2.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has moved to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+
+    private void changeLabelMove ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
+        firstLabel.setText ( secondLabel.getText () );
+        secondLabel.setText ( "The piece from (" + firstPair.getKey () + "," + firstPair.getValue () + ") has moved to (" + secondPair.getKey () + "," + secondPair.getValue () + ")" );
     }
-    private void changeLabelAttack(Pair<Integer,Integer> firstPair, Pair<Integer,Integer> secondPair){
-        label1.setText(label2.getText());
-        label2.setText("The piece from (" + firstPair.getKey() + "," + firstPair.getValue() + ") has attacked to (" + secondPair.getKey() + "," + secondPair.getValue() + ")");
+
+    private void changeLabelAttack ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> firstPair, Pair<Integer, Integer> secondPair ) {
+        firstLabel.setText ( secondLabel.getText () );
+        secondLabel.setText ( "The piece from (" + firstPair.getKey () + "," + firstPair.getValue () + ") has attacked to (" + secondPair.getKey () + "," + secondPair.getValue () + ")" );
     }
-    private void changeLabelPieceDied( Pair<Integer,Integer> ripPiece){
-        label1.setText(label2.getText());
-        label2.setText("The piece from (" + ripPiece.getKey() + "," + ripPiece.getValue() + ") has died");
+
+    private void changeLabelPieceDied ( Label firstLabel, Label secondLabel, Pair<Integer, Integer> ripPiece ) {
+        firstLabel.setText ( secondLabel.getText () );
+        secondLabel.setText ( "The piece from (" + ripPiece.getKey () + "," + ripPiece.getValue () + ") has died" );
     }
 }

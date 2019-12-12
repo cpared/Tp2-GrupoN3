@@ -148,6 +148,16 @@
     -fx-text-fill: white;
 }
 
+.movesStyle{
+     -fx-font-size:18;
+     -fx-text-fill: white;
+ }
+
+.lastStyle{
+    -fx-font-size:20;
+    -fx-text-fill: white;
+}
+
 .board{
     -fx-background-image: url("Image/waterfall.jpg");
     -fx-background-size: cover;

@@ -2,6 +2,7 @@ package game;
 
 import Face.GameFace;
 import board.Board;
+import move.Builder;
 import move.Move;
 import piece.Piece;
 import player.Player;
@@ -129,6 +130,11 @@ public class InProgress implements GameState {
     public int getPoints (Player player){
         if (player == player1) return player1Face.getPoints ();
         return player2Face.getPoints ();
+    }
+    @Override
+    public Piece getPieceOnCell (int row, int column) {
+        Move move = new Builder ().fromRow ( row ).fromColumn ( column ).build ();
+        return this.board.getPiece ( move );
     }
 
     @Override

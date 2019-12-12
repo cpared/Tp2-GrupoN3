@@ -156,3 +156,9 @@
     -fx-font-size:30;
     -fx-text-fill: white;
 }
+
+
+.movesStyle{
+    -fx-font-size:20;
+    -fx-text-fill: white;
+}

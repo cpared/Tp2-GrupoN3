@@ -35,4 +35,5 @@ public class NewGameButtonEventHandler implements EventHandler<ActionEvent> {
             e.printStackTrace ();
         }
     }
+
 }

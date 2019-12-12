@@ -49,7 +49,8 @@ public class Game {
         if (!this.isAvailablePlayer ( player )) throw new ItIsNotYourTurnException ();
         Move move = new Builder ().ToRow ( row ).ToColumn ( column ).build ();
         this.state.playerPlacesPieceOnBoard ( player, piece, move );
-        this.changeAvailablePlayer ();;
+        this.changeAvailablePlayer ();
+
     }
 
     public Piece removePieceFromBoard ( Player player, int row, int column ) throws GameHasEndedException, NoMembersLeftException {
@@ -103,12 +104,13 @@ public class Game {
     private boolean isAvailablePlayer ( Player player ) {
         return (this.available.equals ( player ));
     }
+
     public void changeAvailablePlayer () {
         if (this.player1 == null || this.player2 == null) return;
         if (this.player1.equals ( this.available )) this.available = this.player2;
-        else{
+        else {
             this.available = this.player1;
-            state.penalizePieces();
+            state.penalizePieces ();
         }
     }
 
@@ -124,17 +126,25 @@ public class Game {
     public Board getBoard () {
         return this.state.getBoard ();
     }
-    public Piece getPiece(Move move){
-        return getBoard().getPiece(move);
+
+    public Piece getPiece ( Move move ) {
+        return getBoard ().getPiece ( move );
     }
-    public Player getAvailablePlayer(){
+
+    public Player getAvailablePlayer () {
         return available;
     }
+
     //These getters are for the views.
     public int getPoints ( Player player ) {
         return this.state.getPoints ( player );
     }
-    public boolean cellIsEmpty(int row, int column){
-        return getBoard().cellIsEmpty(row,column);
+
+    public boolean cellIsEmpty ( int row, int column ) {
+        return getBoard ().cellIsEmpty ( row, column );
+    }
+
+    public Piece getPieceOnCell ( int row, int column ) {
+        return this.state.getPieceOnCell ( row, column );
     }
 }

@@ -76,6 +76,11 @@ public class Ended implements GameState {
     }
 
     @Override
+    public Piece getPieceOnCell (int row, int column) {
+        throw new GameHasEndedException ();
+    }
+
+    @Override
     public void penalizePieces() {
         throw new GameHasEndedException ();
     }
