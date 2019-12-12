@@ -44,7 +44,7 @@ public class AlgoChess extends Application {
 
     @Override
     public void start ( Stage stage ) throws Exception {
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
         stage.setTitle ( " AlgoChess " );
         this.game = new Game ();
 
@@ -88,6 +88,7 @@ public class AlgoChess extends Application {
         Label instruction = new Label ( "Instructions" );
         instruction.setTextAlignment ( TextAlignment.CENTER );
         instruction.setTextFill ( Color.WHITE );
+        instruction.setStyle("-fx-font-size:40;");
 
         Instructions instructions = new Instructions ( borderPane );
 
@@ -145,8 +146,8 @@ public class AlgoChess extends Application {
 
         // Final layout.
         Scene scene = new Scene ( borderPane, 1500,800 );
-        stage.setScene ( scene );
         stage.setMaximized(true);
+        stage.setScene ( scene );
         scene.getStylesheets ().add ( "AlgoStyle.css" );
         stage.show ();
     }

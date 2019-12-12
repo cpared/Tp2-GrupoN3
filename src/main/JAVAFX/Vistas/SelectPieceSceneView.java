@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import piece.Piece;
@@ -105,7 +106,7 @@ public class SelectPieceSceneView {
         start.setMinHeight ( 40 );
 
         HBox topContainer = new HBox ( start );
-        topContainer.setMinHeight ( 100 );
+        topContainer.setMinHeight ( 50 );
         topContainer.getStyleClass ().add ( "hbox" );
 
         //Button stop

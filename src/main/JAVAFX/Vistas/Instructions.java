@@ -11,7 +11,8 @@ public class Instructions extends TextFlow {
     private TextAlignment textAlignment = TextAlignment.CENTER;
 
     public Instructions ( BorderPane pane ) {
-        this.addText ( createText ( "Each player must choose the pieces with which they wish to play the game." ) );
+        //this.addText ( createText ( "Each player must choose the pieces with which they wish to play the game." ) );
+        this.addText ( createText ( "Each player must choose the pieces they wish to play with." ) );
         this.addText ( createText ( "Each player has 20 points available for use. The pieces in this game have a certain value so that when a player chooses a piece, the value of the piece is subtracted from the points the player currently has. The players must choose their pieces to start the game and place them on their side of the board." ) );
         this.addText ( createText ( "The game is won when the opponent has no pieces left on the board." ) );
         this.setLineSpacing ( 5 );
