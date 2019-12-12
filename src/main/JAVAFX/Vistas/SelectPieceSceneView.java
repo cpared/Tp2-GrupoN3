@@ -422,14 +422,9 @@ public class SelectPieceSceneView {
         frameTemp.setVisible(true);  //mostramos el marco
         frameTemp.addWindowListener(new CloseListener());
         */
-
+        
         //Adding the components to the bar
-        VBox vertical = new VBox (name, piece, move,attack);
-        //VBox vertical = new VBox (name, piece);
-        vertical.getStyleClass().add("piecesGrid");
-        vertical.setAlignment ( Pos.TOP_CENTER );
-        vertical.setSpacing ( 40 );
-        BorderPane.setMargin ( vertical, new Insets ( 12, 12, 12, 12 ) );
+        VBox vertical = new DefaultPieceView ( turn, new Label(), new Label ( ) );
         borderPane.setLeft ( vertical );
     }
 
