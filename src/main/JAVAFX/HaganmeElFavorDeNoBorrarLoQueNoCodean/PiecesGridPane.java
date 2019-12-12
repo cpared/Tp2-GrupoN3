@@ -89,7 +89,7 @@ public class PiecesGridPane extends GridPane {
         this.add(priceView,0,6);
         this.add(priceInformation,1,6);
         this.add(behaviorView,0,7);
-        this.add(information,1,7);
+        this.add(information,0,8);
         this.setAlignment( Pos.CENTER);
         //this.getStyleClass().add("piecesGrid");
     }

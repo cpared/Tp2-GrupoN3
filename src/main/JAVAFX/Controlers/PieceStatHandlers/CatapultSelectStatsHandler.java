@@ -17,7 +17,7 @@ public class CatapultSelectStatsHandler implements EventHandler<InputEvent> {
     private String attack = "20";
     private String cost = "5";
     private String health = "50";
-    private String info = "- It can't move \n - Only long distance attacks";
+    private String info = "-It can't move \n-Only long distance attacks";
     private Label attackInfo;
     private Label healthInfo;
     private Label priceInfo;

@@ -38,7 +38,7 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/rider2.png");
-    -fx-background-size: 47px 47px;
+    -fx-background-size: 45px 45px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
@@ -95,7 +95,7 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
-    -fx-background-image: url("Image/pieces/catapult.png");
+    -fx-background-image: url("Image/pieces/catapult2.png");
     -fx-background-size: 45px 45px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
@@ -229,7 +229,7 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
     -fx-background-image: url("Image/pieces/rider.png");
-    -fx-background-size: 50px 50px;
+    -fx-background-size: 45px 45px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
@@ -286,7 +286,7 @@
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
-    -fx-background-image: url("Image/pieces/catapult2.png");
+    -fx-background-image: url("Image/pieces/catapult.png");
     -fx-background-size: 45px 45px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
