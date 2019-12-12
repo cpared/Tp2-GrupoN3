@@ -379,6 +379,7 @@ public class SelectPieceSceneView {
                                                  game.playerAttacks (pair.getKey (), pair.getValue (), newPair.getKey (), newPair.getValue () );
                                                  turn.changeTurn ();
                                                  this.attackSound ();
+                                                 changeLabelAttack ( first,second,pair,newPair );
 
                                                  if (game.cellIsEmpty ( newPair.getKey (), newPair.getValue () )) {
                                                      changeLabelPieceDied ( first, second, newPair );
