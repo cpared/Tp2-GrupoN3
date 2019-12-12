@@ -27,7 +27,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import player.Player;
 
-import java.awt.*;
 import java.io.File;
 
 
@@ -151,10 +150,10 @@ public class AlgoChess extends Application {
         borderPane.setBackground ( this.background );
 
         // Final layout.
-        Scene scene = new Scene ( borderPane, screenSize.getWidth() / 3, screenSize.getHeight() / 2 );
+        Scene scene = new Scene ( borderPane, 1500,800 );
         stage.setScene ( scene );
+        stage.setMaximized(true);
         scene.getStylesheets ().add ( "AlgoStyle.css" );
-        stage.setMaximized ( true );
         stage.show ();
     }
 
